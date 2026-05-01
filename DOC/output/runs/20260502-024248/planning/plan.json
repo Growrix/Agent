@@ -1,0 +1,967 @@
+{
+  "request_type": "local_service_business_website",
+  "business_profile": {
+    "industry": "plumbing",
+    "market": "Australia",
+    "audiences": [
+      "homeowners",
+      "landlords",
+      "property_managers",
+      "builders",
+      "small_commercial_clients"
+    ],
+    "primary_goals": [
+      "phone_calls",
+      "quote_requests",
+      "emergency_enquiries"
+    ],
+    "tone": [
+      "clear",
+      "practical",
+      "reassuring",
+      "local",
+      "non_corporate"
+    ],
+    "language_locale": "en-AU"
+  },
+  "features": [
+    "auth",
+    "dashboard",
+    "marketing_pages",
+    "blog",
+    "testimonials",
+    "emails",
+    "analytics"
+  ],
+  "integrations": {
+    "auth": "clerk",
+    "dashboard": "database",
+    "marketing_pages": "sanity",
+    "blog": "sanity",
+    "testimonials": "sanity",
+    "emails": "resend",
+    "analytics": "posthog"
+  },
+  "architecture_template": "content_saas",
+  "template_adaptation": {
+    "mode": "local_service_lead_generation",
+    "disabled_template_features": [
+      "payments"
+    ],
+    "notes": [
+      "No public customer account area is required for conversion goals.",
+      "Auth is retained for internal admin lead queue only.",
+      "Pricing page is replaced with quote-first conversion page.",
+      "CMS remains the source of truth for public marketing content."
+    ]
+  },
+  "frontend": {
+    "framework": "nextjs_app_router",
+    "language": "typescript",
+    "styling": "tailwindcss",
+    "forms": "react_hook_form_plus_zod",
+    "mobile_first": true,
+    "global_conversion_components": [
+      "sticky_mobile_call_button",
+      "header_call_now_cta",
+      "header_request_quote_cta",
+      "emergency_cta_banner",
+      "tap_to_call_links",
+      "service_area_quick_selector",
+      "trust_badges_row"
+    ],
+    "pages": [
+      {
+        "path": "/",
+        "purpose": "homepage",
+        "data_source": "cms",
+        "query": "getHomepageBySlug('home')",
+        "cache": "revalidate: 60",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error"
+        ],
+        "required_sections": [
+          "hero_local_positioning",
+          "immediate_call_cta",
+          "quote_cta",
+          "trust_signals",
+          "service_cards",
+          "why_choose_us",
+          "reviews_preview",
+          "process_steps",
+          "service_area_summary",
+          "faq_preview",
+          "final_conversion_cta"
+        ]
+      },
+      {
+        "path": "/about",
+        "purpose": "trust_and_local_story",
+        "data_source": "cms",
+        "query": "getMarketingPageBySlug('about')",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/services",
+        "purpose": "services_overview",
+        "data_source": "cms",
+        "query": "getAllServices()",
+        "cache": "revalidate: 60",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error"
+        ]
+      },
+      {
+        "path": "/services/[slug]",
+        "purpose": "major_service_detail_pages",
+        "data_source": "cms",
+        "query": "getServiceBySlug(slug)",
+        "cache": "revalidate: 60",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/emergency-plumbing",
+        "purpose": "high_intent_emergency_landing",
+        "data_source": "cms",
+        "query": "getMarketingPageBySlug('emergency-plumbing')",
+        "cache": "revalidate: 30",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/areas",
+        "purpose": "service_areas_overview",
+        "data_source": "cms",
+        "query": "getAllServiceAreas()",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error"
+        ]
+      },
+      {
+        "path": "/areas/[slug]",
+        "purpose": "suburb_landing_pages_for_local_seo",
+        "data_source": "cms",
+        "query": "getServiceAreaBySlug(slug)",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/quote",
+        "purpose": "quote_request_conversion_page",
+        "data_source": "cms",
+        "query": "getMarketingPageBySlug('quote')",
+        "cache": "revalidate: 60",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/testimonials",
+        "purpose": "reviews_and_social_proof",
+        "data_source": "cms",
+        "query": "getApprovedTestimonials()",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error"
+        ]
+      },
+      {
+        "path": "/faq",
+        "purpose": "homeowner_questions",
+        "data_source": "cms",
+        "query": "getFaqItems()",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error"
+        ]
+      },
+      {
+        "path": "/contact",
+        "purpose": "contact_and_booking",
+        "data_source": "cms",
+        "query": "getMarketingPageBySlug('contact')",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/blog",
+        "purpose": "advice_hub",
+        "data_source": "cms",
+        "query": "getPublishedPosts()",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error"
+        ]
+      },
+      {
+        "path": "/blog/[slug]",
+        "purpose": "blog_post_detail",
+        "data_source": "cms",
+        "query": "getPostBySlug(slug)",
+        "cache": "revalidate: 120",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/thank-you",
+        "purpose": "post_enquiry_confirmation",
+        "data_source": "static",
+        "query": "none",
+        "cache": "force-cache",
+        "metadata": "static",
+        "states": []
+      },
+      {
+        "path": "/privacy",
+        "purpose": "privacy_policy",
+        "data_source": "cms",
+        "query": "getMarketingPageBySlug('privacy-policy')",
+        "cache": "revalidate: 3600",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/terms",
+        "purpose": "terms_and_conditions",
+        "data_source": "cms",
+        "query": "getMarketingPageBySlug('terms')",
+        "cache": "revalidate: 3600",
+        "metadata": "from_cms",
+        "states": [
+          "loading",
+          "error",
+          "not-found"
+        ]
+      },
+      {
+        "path": "/sign-in",
+        "purpose": "admin_authentication",
+        "data_source": "integration",
+        "query": "clerk_sign_in_component",
+        "cache": "no-store",
+        "metadata": "static",
+        "states": []
+      },
+      {
+        "path": "/admin/leads",
+        "purpose": "internal_lead_dashboard",
+        "data_source": "database",
+        "query": "getLeadEnquiriesPaginated()",
+        "cache": "no-store",
+        "metadata": "static",
+        "states": [
+          "loading",
+          "error"
+        ]
+      }
+    ]
+  },
+  "routes": [
+    {
+      "path": "/api/lead-enquiries",
+      "method": "POST",
+      "auth": "public",
+      "input_schema": "CreateLeadEnquiryInput",
+      "service": "leadEnquiries.create",
+      "rate_limit": "10/min/ip"
+    },
+    {
+      "path": "/api/callback-requests",
+      "method": "POST",
+      "auth": "public",
+      "input_schema": "CreateCallbackRequestInput",
+      "service": "callbackRequests.create",
+      "rate_limit": "8/min/ip"
+    },
+    {
+      "path": "/api/admin/leads",
+      "method": "GET",
+      "auth": "required",
+      "input_schema": "LeadListQueryInput",
+      "service": "leadEnquiries.list",
+      "rate_limit": "60/min/user"
+    },
+    {
+      "path": "/api/admin/leads/[id]/status",
+      "method": "POST",
+      "auth": "required",
+      "input_schema": "UpdateLeadStatusInput",
+      "service": "leadEnquiries.updateStatus",
+      "rate_limit": "60/min/user"
+    },
+    {
+      "path": "/api/webhooks/sanity",
+      "method": "POST",
+      "auth": "signature",
+      "input_schema": "SanityWebhookInput",
+      "service": "sanityWebhook.revalidate",
+      "rate_limit": "120/min/ip"
+    },
+    {
+      "path": "/api/webhooks/resend",
+      "method": "POST",
+      "auth": "signature",
+      "input_schema": "ResendWebhookInput",
+      "service": "emailWebhook.updateDeliveryStatus",
+      "rate_limit": "120/min/ip"
+    },
+    {
+      "path": "/api/webhooks/clerk",
+      "method": "POST",
+      "auth": "signature",
+      "input_schema": "ClerkWebhookInput",
+      "service": "users.syncFromClerk",
+      "rate_limit": "120/min/ip"
+    },
+    {
+      "path": "/api/draft",
+      "method": "GET",
+      "auth": "required",
+      "input_schema": "DraftModeInput",
+      "service": "draftMode.enable",
+      "rate_limit": "30/min/user"
+    },
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "auth": "public",
+      "input_schema": "none",
+      "service": "health.check",
+      "rate_limit": "120/min/ip"
+    }
+  ],
+  "backend": {
+    "runtime": "nextjs_route_handlers",
+    "validation": "zod",
+    "response_shape": {
+      "success": "{ data: ... }",
+      "error": "{ error: { code, message } }"
+    },
+    "services": [
+      {
+        "name": "lead-enquiries",
+        "file": "src/server/services/lead-enquiries.ts",
+        "depends_on": [
+          "lead-enquiries-repository",
+          "resend-service",
+          "analytics-service"
+        ]
+      },
+      {
+        "name": "callback-requests",
+        "file": "src/server/services/callback-requests.ts",
+        "depends_on": [
+          "callback-requests-repository",
+          "resend-service",
+          "analytics-service"
+        ]
+      },
+      {
+        "name": "users",
+        "file": "src/server/services/users.ts",
+        "depends_on": [
+          "users-repository"
+        ]
+      },
+      {
+        "name": "email",
+        "file": "src/server/services/email.ts",
+        "depends_on": [
+          "resend-lib",
+          "email-logs-repository"
+        ]
+      },
+      {
+        "name": "analytics",
+        "file": "src/server/services/analytics.ts",
+        "depends_on": [
+          "posthog-lib"
+        ]
+      }
+    ],
+    "repositories": [
+      {
+        "name": "users",
+        "file": "src/server/repositories/users.ts",
+        "aggregate": "user"
+      },
+      {
+        "name": "lead-enquiries",
+        "file": "src/server/repositories/lead-enquiries.ts",
+        "aggregate": "lead_enquiry"
+      },
+      {
+        "name": "callback-requests",
+        "file": "src/server/repositories/callback-requests.ts",
+        "aggregate": "callback_request"
+      },
+      {
+        "name": "email-logs",
+        "file": "src/server/repositories/email-logs.ts",
+        "aggregate": "email_log"
+      },
+      {
+        "name": "audit-logs",
+        "file": "src/server/repositories/audit-logs.ts",
+        "aggregate": "audit_log"
+      }
+    ]
+  },
+  "db_schema": {
+    "engine": "postgres",
+    "owner_integration": "database",
+    "tables": [
+      {
+        "name": "users",
+        "columns": [
+          "id",
+          "clerk_user_id",
+          "email",
+          "full_name",
+          "avatar_url",
+          "created_at",
+          "updated_at"
+        ],
+        "indexes": [
+          "users_clerk_user_id_key",
+          "users_email_idx",
+          "users_created_at_idx"
+        ],
+        "foreign_keys": []
+      },
+      {
+        "name": "lead_enquiries",
+        "columns": [
+          "id",
+          "name",
+          "phone",
+          "email",
+          "suburb",
+          "service_slug",
+          "urgency",
+          "message",
+          "consent",
+          "source_page",
+          "status",
+          "assigned_to_user_id",
+          "created_at",
+          "updated_at"
+        ],
+        "indexes": [
+          "lead_enquiries_status_created_at_idx",
+          "lead_enquiries_service_slug_idx",
+          "lead_enquiries_suburb_idx",
+          "lead_enquiries_created_at_idx"
+        ],
+        "foreign_keys": [
+          "lead_enquiries_assigned_to_user_id_fkey -> users.id"
+        ],
+        "pii_fields": [
+          "phone",
+          "email",
+          "suburb"
+        ]
+      },
+      {
+        "name": "callback_requests",
+        "columns": [
+          "id",
+          "name",
+          "phone",
+          "preferred_time",
+          "suburb",
+          "message",
+          "source_page",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "indexes": [
+          "callback_requests_status_created_at_idx",
+          "callback_requests_created_at_idx"
+        ],
+        "foreign_keys": [],
+        "pii_fields": [
+          "phone",
+          "suburb"
+        ]
+      },
+      {
+        "name": "email_logs",
+        "columns": [
+          "id",
+          "user_id",
+          "template",
+          "to_address",
+          "status",
+          "provider_message_id",
+          "sent_at",
+          "error",
+          "created_at",
+          "updated_at"
+        ],
+        "indexes": [
+          "email_logs_provider_message_id_idx",
+          "email_logs_status_idx",
+          "email_logs_created_at_idx"
+        ],
+        "foreign_keys": [
+          "email_logs_user_id_fkey -> users.id"
+        ]
+      },
+      {
+        "name": "audit_logs",
+        "columns": [
+          "id",
+          "action",
+          "actor_id",
+          "target_id",
+          "target_type",
+          "ip_hash",
+          "occurred_at",
+          "created_at",
+          "updated_at"
+        ],
+        "indexes": [
+          "audit_logs_actor_id_occurred_at_idx",
+          "audit_logs_target_type_target_id_idx"
+        ],
+        "foreign_keys": [
+          "audit_logs_actor_id_fkey -> users.id"
+        ]
+      }
+    ]
+  },
+  "forms": [
+    {
+      "name": "quote_request_form",
+      "surface": [
+        "/quote",
+        "/services/[slug]",
+        "/contact"
+      ],
+      "fields": [
+        "name",
+        "phone",
+        "email",
+        "suburb",
+        "service_slug",
+        "urgency",
+        "message",
+        "consent"
+      ],
+      "submission_route": "/api/lead-enquiries",
+      "success_redirect": "/thank-you?type=quote",
+      "validation": "zod",
+      "spam_controls": [
+        "honeypot_field",
+        "min_submit_time_threshold",
+        "ip_rate_limit"
+      ]
+    },
+    {
+      "name": "callback_request_form",
+      "surface": [
+        "/",
+        "/emergency-plumbing",
+        "/contact"
+      ],
+      "fields": [
+        "name",
+        "phone",
+        "preferred_time",
+        "suburb",
+        "message"
+      ],
+      "submission_route": "/api/callback-requests",
+      "success_redirect": "/thank-you?type=callback",
+      "validation": "zod",
+      "spam_controls": [
+        "honeypot_field",
+        "ip_rate_limit"
+      ]
+    }
+  ],
+  "cms": {
+    "provider": "sanity",
+    "studio": "studio/",
+    "content_types": [
+      "page",
+      "service",
+      "serviceArea",
+      "testimonial",
+      "faqItem",
+      "post",
+      "author",
+      "category",
+      "seo",
+      "siteSettings"
+    ],
+    "required_slug_types": [
+      "page",
+      "service",
+      "serviceArea",
+      "post"
+    ],
+    "editorial_governance": {
+      "statuses": [
+        "draft",
+        "review",
+        "published"
+      ],
+      "approval_required_for": [
+        "service_pages",
+        "testimonials",
+        "legal_pages"
+      ]
+    }
+  },
+  "seo_strategy": {
+    "metadata": "generateMetadata_per_public_route",
+    "structured_data": [
+      "LocalBusiness",
+      "Plumber",
+      "Service",
+      "FAQPage",
+      "Review",
+      "BreadcrumbList"
+    ],
+    "local_seo": {
+      "service_x_suburb_strategy": true,
+      "core_service_pages": [
+        "emergency_plumbing",
+        "blocked_drains",
+        "hot_water_systems",
+        "leak_detection",
+        "burst_pipes",
+        "toilet_repairs",
+        "tap_fixture_repairs",
+        "gas_fitting",
+        "roof_plumbing"
+      ],
+      "suburb_landing_pages": "one_page_per_served_suburb_with_unique_local_copy",
+      "internal_linking": "service_to_suburb_and_suburb_to_service_crosslinks",
+      "au_spelling": true
+    },
+    "content_program": {
+      "blog_frequency": "2_to_4_posts_per_month",
+      "topics": [
+        "homeowner_maintenance_tips",
+        "emergency_checklists",
+        "cost_explainers",
+        "when_to_call_a_licensed_plumber"
+      ]
+    }
+  },
+  "analytics_events": [
+    "phone_cta_clicked",
+    "quote_cta_clicked",
+    "emergency_cta_clicked",
+    "callback_cta_clicked",
+    "quote_request_submitted",
+    "callback_requested",
+    "contact_form_submitted",
+    "service_page_viewed",
+    "suburb_page_viewed",
+    "faq_item_expanded",
+    "thank_you_page_viewed",
+    "admin_lead_status_updated"
+  ],
+  "webhooks": [
+    {
+      "integration": "sanity",
+      "endpoint": "/api/webhooks/sanity",
+      "events": [
+        "document.created",
+        "document.updated",
+        "document.deleted"
+      ]
+    },
+    {
+      "integration": "resend",
+      "endpoint": "/api/webhooks/resend",
+      "events": [
+        "email.sent",
+        "email.delivered",
+        "email.bounced",
+        "email.complained",
+        "email.opened",
+        "email.clicked"
+      ]
+    },
+    {
+      "integration": "clerk",
+      "endpoint": "/api/webhooks/clerk",
+      "events": [
+        "user.created",
+        "user.updated",
+        "user.deleted",
+        "session.created",
+        "session.ended"
+      ]
+    }
+  ],
+  "setup_steps": {
+    "clerk": [
+      "create_clerk_application",
+      "configure_auth_methods_in_dashboard",
+      "install_clerk_packages",
+      "wrap_root_layout_with_clerk_provider",
+      "add_clerk_middleware_for_route_protection",
+      "implement_webhook_handler_with_signature_verification"
+    ],
+    "database": [
+      "provision_managed_postgres_instance",
+      "install_prisma_and_client_packages",
+      "initialize_prisma_schema",
+      "define_models_for_each_required_table",
+      "run_prisma_migrate_dev_for_local_schema",
+      "implement_db_client_singleton_to_avoid_connection_exhaustion"
+    ],
+    "sanity": [
+      "create_sanity_project_and_dataset",
+      "install_sanity_studio_in_studio_folder",
+      "define_schemas_for_all_content_types",
+      "implement_dynamic_route_handlers_using_slug",
+      "implement_revalidation_webhook_in_app",
+      "deploy_studio_to_sanity_managed_hosting_or_vercel"
+    ],
+    "resend": [
+      "create_resend_account",
+      "verify_sending_domain_with_dns_records",
+      "create_api_key",
+      "create_emails_folder_with_react_email_templates",
+      "register_webhook_endpoint_for_delivery_events",
+      "persist_email_logs_to_database"
+    ],
+    "posthog": [
+      "create_posthog_project",
+      "install_posthog_js_in_app",
+      "install_posthog_node_in_server_runtime",
+      "wrap_root_layout_with_posthog_provider",
+      "define_typed_event_constants_to_avoid_string_drift",
+      "implement_server_side_capture_for_critical_conversion_events"
+    ]
+  },
+  "flows": {
+    "auth": "DOC/flows/data-flows/auth-flow.md",
+    "dashboard": "DOC/output/runs/20260502-024248/planning/flows/operations-dashboard-flow.md",
+    "marketing_pages": "DOC/flows/data-flows/blog-flow.md",
+    "blog": "DOC/flows/data-flows/blog-flow.md",
+    "testimonials": "DOC/output/runs/20260502-024248/planning/flows/testimonials-flow.md",
+    "emails": "DOC/output/runs/20260502-024248/planning/flows/lead-enquiry-flow.md",
+    "analytics": "DOC/flows/data-flows/analytics-flow.md"
+  },
+  "data_flows": [
+    "DOC/flows/data-flows/auth-flow.md",
+    "DOC/output/runs/20260502-024248/planning/flows/operations-dashboard-flow.md",
+    "DOC/flows/data-flows/blog-flow.md",
+    "DOC/output/runs/20260502-024248/planning/flows/testimonials-flow.md",
+    "DOC/output/runs/20260502-024248/planning/flows/lead-enquiry-flow.md",
+    "DOC/flows/data-flows/analytics-flow.md"
+  ],
+  "env_vars": [
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+    "CLERK_SECRET_KEY",
+    "CLERK_WEBHOOK_SIGNING_SECRET",
+    "NEXT_PUBLIC_CLERK_SIGN_IN_URL",
+    "NEXT_PUBLIC_CLERK_SIGN_UP_URL",
+    "NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL",
+    "NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL",
+    "DATABASE_URL",
+    "DIRECT_URL",
+    "NEXT_PUBLIC_SANITY_PROJECT_ID",
+    "NEXT_PUBLIC_SANITY_DATASET",
+    "NEXT_PUBLIC_SANITY_API_VERSION",
+    "SANITY_API_READ_TOKEN",
+    "SANITY_API_WRITE_TOKEN",
+    "SANITY_REVALIDATE_SECRET",
+    "RESEND_API_KEY",
+    "RESEND_FROM_ADDRESS",
+    "RESEND_REPLY_TO",
+    "NEXT_PUBLIC_POSTHOG_KEY",
+    "NEXT_PUBLIC_POSTHOG_HOST",
+    "POSTHOG_API_KEY"
+  ],
+  "env_var_scopes": [
+    {
+      "name": "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      "scope": "client-safe"
+    },
+    {
+      "name": "CLERK_SECRET_KEY",
+      "scope": "server-only"
+    },
+    {
+      "name": "CLERK_WEBHOOK_SIGNING_SECRET",
+      "scope": "server-only"
+    },
+    {
+      "name": "NEXT_PUBLIC_CLERK_SIGN_IN_URL",
+      "scope": "client-safe"
+    },
+    {
+      "name": "NEXT_PUBLIC_CLERK_SIGN_UP_URL",
+      "scope": "client-safe"
+    },
+    {
+      "name": "NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL",
+      "scope": "client-safe"
+    },
+    {
+      "name": "NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL",
+      "scope": "client-safe"
+    },
+    {
+      "name": "DATABASE_URL",
+      "scope": "server-only"
+    },
+    {
+      "name": "DIRECT_URL",
+      "scope": "server-only"
+    },
+    {
+      "name": "NEXT_PUBLIC_SANITY_PROJECT_ID",
+      "scope": "client-safe"
+    },
+    {
+      "name": "NEXT_PUBLIC_SANITY_DATASET",
+      "scope": "client-safe"
+    },
+    {
+      "name": "NEXT_PUBLIC_SANITY_API_VERSION",
+      "scope": "client-safe"
+    },
+    {
+      "name": "SANITY_API_READ_TOKEN",
+      "scope": "server-only"
+    },
+    {
+      "name": "SANITY_API_WRITE_TOKEN",
+      "scope": "server-only"
+    },
+    {
+      "name": "SANITY_REVALIDATE_SECRET",
+      "scope": "server-only"
+    },
+    {
+      "name": "RESEND_API_KEY",
+      "scope": "server-only"
+    },
+    {
+      "name": "RESEND_FROM_ADDRESS",
+      "scope": "server-only"
+    },
+    {
+      "name": "RESEND_REPLY_TO",
+      "scope": "server-only"
+    },
+    {
+      "name": "NEXT_PUBLIC_POSTHOG_KEY",
+      "scope": "client-safe"
+    },
+    {
+      "name": "NEXT_PUBLIC_POSTHOG_HOST",
+      "scope": "client-safe"
+    },
+    {
+      "name": "POSTHOG_API_KEY",
+      "scope": "server-only"
+    }
+  ],
+  "dashboards": [
+    "clerk",
+    "sanity",
+    "resend",
+    "posthog",
+    "vercel",
+    "managed_postgres"
+  ],
+  "dns": [
+    "configure_apex_and_www_records_for_primary_domain",
+    "verify_resend_sending_domain_with_spf_and_dkim",
+    "add_dmarc_policy_record",
+    "force_www_or_apex_canonical_redirect"
+  ],
+  "devops": {
+    "platform": "vercel",
+    "environments": [
+      "local",
+      "preview",
+      "staging",
+      "production"
+    ],
+    "health_endpoint": "/api/health",
+    "backup": {
+      "frequency": "daily",
+      "retention_days": 30,
+      "rto_minutes": 60,
+      "rpo_minutes": 15,
+      "restore_runbook": "DOC/output/specs/runbook.md"
+    }
+  },
+  "slo_targets": {
+    "web_vitals": {
+      "lcp_ms": 2500,
+      "fid_ms": 100,
+      "cls": 0.1
+    },
+    "api": {
+      "p99_latency_ms": 500
+    },
+    "db": {
+      "query_p99_ms": 100
+    },
+    "uptime_percent": 99.9
+  },
+  "lock_status": "LOCKED"
+}
