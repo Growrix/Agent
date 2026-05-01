@@ -1,0 +1,57 @@
+integration: upstash
+category: cache_and_rate_limit
+package_name: "@upstash/redis"
+client_packages: []
+server_packages:
+  - "@upstash/redis"
+  - "@upstash/ratelimit"
+
+use_cases:
+  - kv_cache_for_hot_reads
+  - rate_limiting_per_ip_or_per_user
+  - short_lived_session_state
+  - feature_flag_overrides_optional
+  - dedup_keys_for_idempotency
+
+required_components:
+  backend:
+    - upstash_redis_client_singleton
+    - upstash_ratelimit_helpers_per_scope
+    - cache_helpers_with_typed_keys_and_ttl
+
+env_vars:
+  - UPSTASH_REDIS_REST_URL
+  - UPSTASH_REDIS_REST_TOKEN
+
+webhooks:
+  endpoint: null
+  events: []
+
+setup_steps:
+  - provision_upstash_redis_database
+  - install_upstash_redis_and_ratelimit_packages
+  - create_redis_client_singleton_using_rest_url_and_token
+  - define_cache_namespaces_and_ttl_policy
+  - define_rate_limit_helpers_per_scope
+  - integrate_cache_helpers_into_services_for_hot_reads
+  - integrate_rate_limit_helpers_into_route_handlers
+
+constraints:
+  - rest_token_must_only_be_used_server_side
+  - cache_keys_must_include_user_or_org_scope_when_data_is_user_specific
+  - rate_limit_keys_must_be_chosen_to_avoid_collision_across_routes
+  - ttls_must_be_explicit_per_namespace
+  - cached_data_must_be_invalidated_on_relevant_writes
+
+best_practices:
+  - one_namespace_per_aggregate_user_post_subscription
+  - centralize_cache_helpers_in_a_single_module
+  - use_atomic_pipeline_for_multi_key_writes
+  - prefer_short_ttls_over_aggressive_invalidation
+  - log_cache_hit_miss_for_observability
+
+common_failures:
+  - leaking_rest_token_to_client
+  - cache_poisoning_via_unscoped_keys_returning_other_users_data
+  - unbounded_ttls_causing_stale_data
+  - missing_invalidation_on_writes

@@ -1,0 +1,66 @@
+integration: openai
+category: ai_llm
+package_name: openai
+client_packages: []
+server_packages:
+  - openai
+  - ai
+
+use_cases:
+  - chat_completions
+  - structured_output_via_zod_schemas
+  - streaming_responses_to_clients
+  - embeddings_for_semantic_search
+  - tool_calling_function_calling
+  - moderation_endpoints
+
+required_components:
+  frontend:
+    - chat_ui_with_streaming_optional
+    - vercel_ai_sdk_useChat_hook_when_streaming
+  backend:
+    - openai_client_singleton
+    - service_per_use_case_chat_embeddings_moderation
+    - rate_limit_per_user_for_ai_routes
+    - cost_tracking_per_user_per_route
+  database:
+    - table_or_collection: ai_usage
+      fields: [id, user_id, route, model, prompt_tokens, completion_tokens, cost_cents, occurred_at]
+
+env_vars:
+  - OPENAI_API_KEY
+  - OPENAI_ORG_ID
+
+webhooks:
+  endpoint: null
+  events: []
+
+setup_steps:
+  - create_openai_account_and_project_and_api_key
+  - install_openai_and_ai_packages
+  - create_openai_client_singleton
+  - implement_service_functions_per_use_case
+  - implement_rate_limit_via_upstash_per_user_for_ai_routes
+  - implement_cost_tracking_via_ai_usage_table
+  - configure_moderation_pre_check_for_user_supplied_prompts_when_required
+  - configure_alerts_for_cost_and_error_rate
+
+constraints:
+  - api_key_must_only_be_used_server_side
+  - never_proxy_raw_user_messages_without_moderation_when_required_by_policy
+  - structured_outputs_must_be_validated_against_zod_schemas_before_use
+  - streaming_responses_must_set_correct_headers_and_use_edge_or_nodejs_runtime_appropriately
+  - rate_limit_per_user_is_mandatory_to_prevent_cost_runaway
+
+best_practices:
+  - centralize_model_selection_in_a_constants_module
+  - log_token_usage_and_cost_per_call
+  - cache_deterministic_completions_when_appropriate_via_upstash
+  - prefer_smaller_models_with_validation_loops_over_largest_models
+  - emit_inngest_events_for_long_running_completions
+
+common_failures:
+  - leaking_api_key_to_client_bundle
+  - missing_rate_limit_letting_a_single_user_drain_quota
+  - relying_on_unstructured_text_outputs_breaking_consumers
+  - blocking_request_threads_on_long_completions_instead_of_streaming_or_jobbing

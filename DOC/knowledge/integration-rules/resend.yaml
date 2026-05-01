@@ -1,0 +1,84 @@
+integration: resend
+category: email
+package_name: resend
+client_packages: []
+server_packages:
+  - resend
+  - react-email
+  - "@react-email/components"
+
+use_cases:
+  - transactional_emails
+  - welcome_emails
+  - password_reset_emails
+  - magic_link_emails
+  - subscription_receipt_emails
+  - billing_failure_emails
+  - notification_emails
+  - newsletter_broadcasts
+
+required_components:
+  frontend: []
+  backend:
+    - service_resend_client
+    - email_template_components_in_react_email
+    - api_route_send_transactional
+    - service_email_sender_with_typed_template_props
+  templates_folder:
+    - emails/welcome.tsx
+    - emails/password-reset.tsx
+    - emails/payment-receipt.tsx
+    - emails/payment-failed.tsx
+  database:
+    - table_or_collection: email_logs
+      fields: [id, user_id, template, to_address, status, provider_message_id, sent_at, error]
+
+env_vars:
+  - RESEND_API_KEY
+  - RESEND_FROM_ADDRESS
+  - RESEND_REPLY_TO
+
+webhooks:
+  endpoint: /api/webhooks/resend
+  events:
+    - email.sent
+    - email.delivered
+    - email.bounced
+    - email.complained
+    - email.opened
+    - email.clicked
+
+setup_steps:
+  - create_resend_account
+  - verify_sending_domain_with_dns_records
+  - create_api_key
+  - install_resend_and_react_email_packages
+  - add_env_vars_to_local_and_hosted_environments
+  - create_emails_folder_with_react_email_templates
+  - implement_send_email_service_with_typed_template_map
+  - register_webhook_endpoint_for_delivery_events
+  - persist_email_logs_to_database
+  - run_dev_preview_with_react_email_dev_server
+
+constraints:
+  - sending_domain_must_be_verified_before_production
+  - api_key_must_only_be_used_server_side
+  - from_address_must_match_verified_domain
+  - emails_must_be_sent_from_server_or_queue_never_client
+  - bounce_and_complaint_events_must_suppress_future_sends_to_address
+
+best_practices:
+  - use_react_email_templates_for_consistency_and_previewability
+  - centralize_send_email_in_a_single_service_function
+  - tag_each_send_with_template_name_for_observability
+  - retry_with_exponential_backoff_on_transient_failures
+  - separate_transactional_and_marketing_streams_with_distinct_from_addresses
+  - log_provider_message_id_for_support_lookup
+
+common_failures:
+  - sending_from_unverified_domain
+  - leaking_api_key_to_client_bundle
+  - missing_dkim_or_spf_records_causing_delivery_failures
+  - ignoring_bounce_events_and_continuing_to_send
+  - hardcoding_html_strings_instead_of_templates
+  - not_configuring_reply_to_for_user_replies

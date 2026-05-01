@@ -1,0 +1,68 @@
+integration: uploadthing
+category: file_storage
+package_name: uploadthing
+client_packages:
+  - "@uploadthing/react"
+  - uploadthing
+server_packages:
+  - uploadthing
+
+use_cases:
+  - direct_browser_to_storage_uploads
+  - signed_url_generation
+  - typed_file_routes_per_use_case
+  - image_avatar_document_uploads
+  - file_size_and_mime_validation_per_route
+
+required_components:
+  frontend:
+    - uploadthing_provider_at_root
+    - upload_button_or_dropzone_per_use_case
+    - typed_file_route_helpers
+  backend:
+    - file_router_definition
+    - per_route_auth_middleware
+    - per_route_size_and_mime_constraints
+    - api_route_at_app_api_uploadthing
+  database:
+    - table_or_collection: files
+      fields: [id, user_id, key, url, name, size, mime, route, uploaded_at]
+
+env_vars:
+  - UPLOADTHING_TOKEN
+  - UPLOADTHING_SECRET
+  - NEXT_PUBLIC_UPLOADTHING_APP_ID
+
+webhooks:
+  endpoint: /api/uploadthing
+  events:
+    - upload.completed
+
+setup_steps:
+  - create_uploadthing_account_and_app
+  - install_uploadthing_and_react_packages
+  - define_file_router_with_per_route_auth_and_constraints
+  - add_app_api_uploadthing_route_handler
+  - wrap_root_layout_with_uploadthing_ssr_plugin_if_app_router
+  - render_upload_button_or_dropzone_per_use_case
+  - persist_file_metadata_to_database_on_upload_completed
+  - configure_cdn_caching_in_dashboard
+
+constraints:
+  - per_route_auth_must_resolve_user_via_clerk_before_signing
+  - file_router_must_declare_max_file_size_and_allowed_mime_per_route
+  - secret_token_must_only_be_used_server_side
+  - direct_uploads_must_be_validated_via_returned_metadata_before_persistence
+
+best_practices:
+  - one_route_per_logical_use_case_avatar_attachment_etc
+  - persist_provider_key_so_files_can_be_deleted_via_api
+  - generate_responsive_image_urls_via_provider_when_supported
+  - rate_limit_upload_initiation_per_user
+
+common_failures:
+  - missing_per_route_auth_allowing_anonymous_uploads
+  - mime_or_size_constraint_omitted_letting_through_dangerous_files
+  - leaking_secret_to_client_bundle
+  - not_persisting_file_key_blocking_deletion
+  - unbounded_file_routes_used_for_arbitrary_uploads

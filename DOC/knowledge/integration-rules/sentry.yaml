@@ -1,0 +1,69 @@
+integration: sentry
+category: error_tracking
+package_name: "@sentry/nextjs"
+client_packages:
+  - "@sentry/nextjs"
+server_packages:
+  - "@sentry/nextjs"
+
+use_cases:
+  - frontend_error_tracking
+  - backend_error_tracking
+  - performance_traces
+  - release_tracking
+  - source_map_uploads
+  - alerts_on_error_spikes
+
+required_components:
+  frontend:
+    - sentry_init_client_at_root
+    - error_boundary_optional_per_route
+  backend:
+    - sentry_init_server
+    - sentry_capture_in_central_error_handler
+  build:
+    - sentry_webpack_plugin_or_next_config_wrapper_for_source_maps
+
+env_vars:
+  - NEXT_PUBLIC_SENTRY_DSN
+  - SENTRY_DSN
+  - SENTRY_ORG
+  - SENTRY_PROJECT
+  - SENTRY_AUTH_TOKEN
+  - SENTRY_ENVIRONMENT
+
+webhooks:
+  endpoint: null
+  events: []
+
+setup_steps:
+  - create_sentry_org_and_project
+  - install_sentry_nextjs_via_wizard_or_manual_config
+  - configure_sentry_client_config_and_server_config_files
+  - wrap_next_config_with_withSentryConfig
+  - add_SENTRY_AUTH_TOKEN_in_ci_for_source_map_uploads
+  - integrate_sentry_capture_into_central_error_handler
+  - tag_releases_with_git_sha_during_deploy
+  - configure_alerts_for_error_rate_thresholds_in_dashboard
+
+constraints:
+  - dsn_is_safe_to_expose_to_client_but_auth_token_is_not
+  - source_maps_must_be_uploaded_in_ci_only_not_committed
+  - tunnel_route_should_be_used_to_bypass_ad_blockers_in_browser_capture
+  - sample_rates_must_be_set_explicitly_to_avoid_quota_exhaustion
+  - never_log_pii_in_breadcrumbs_or_extra_data
+
+best_practices:
+  - tag_every_event_with_release_environment_and_request_id
+  - attach_user_id_only_after_clerk_auth_resolves
+  - use_sentry_capture_in_central_error_to_response_helper
+  - configure_traces_sample_rate_per_environment
+  - use_release_health_to_block_bad_deploys
+  - integrate_with_alert_routing_so_pages_reach_oncall
+
+common_failures:
+  - missing_source_map_uploads_causing_unsymbolicated_stacks
+  - leaking_pii_in_event_payloads
+  - sample_rate_too_high_exhausting_quota
+  - dsn_swapped_between_environments
+  - tunnel_route_misconfigured_blocking_browser_events
