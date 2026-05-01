@@ -206,3 +206,22 @@ Any plan that names an unknown feature or integration triggers `MISSING_KNOWLEDG
 
 When rules conflict, higher-precedence rules win. Agents must not override core rules.
 
+---
+
+## OUTPUT LOCATION
+
+Canonical output root:
+
+`DOC/output/`
+
+Recommended per-run structure:
+
+- `DOC/output/runs/<timestamp>/planning/plan.json`
+- `DOC/output/runs/<timestamp>/planning/decisions.json`
+- `DOC/output/runs/<timestamp>/planning/validation_report.json`
+- `DOC/output/runs/<timestamp>/specs/*`
+- `DOC/output/runs/<timestamp>/reports/*`
+- `DOC/output/runs/<timestamp>/codegen/*`
+
+See `DOC/output/README.md` for the full contract.
+
