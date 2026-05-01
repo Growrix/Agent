@@ -26,6 +26,7 @@ DOC/
 │   ├── security_auditor.agent.md          # Security review and scoring
 │   ├── performance_auditor.agent.md       # Performance review against SLOs
 │   ├── reviewer.agent.md                  # Validation gatekeeper (PASS/BLOCK)
+│   ├── execution_orchestrator.agent.md     # Post-plan execution coordinator
 │   ├── diagram_writer.agent.md            # Architecture diagram generation
 │   ├── openapi_writer.agent.md            # OpenAPI spec generation
 │   ├── adr_writer.agent.md                # Architecture Decision Record generation
@@ -165,7 +166,7 @@ All architecture templates and rules target this default stack:
 
 ### Generating code
 
-7. The executor consumes `plan.json` per `flows/system-flows/codegen-flow.md`.
+7. `execution_orchestrator.agent.md` consumes LOCKED planning artifacts and runs spec emission + codegen flows.
 8. Codegen agents follow `execution/codegen-rules/` and use `execution/spec-templates/` to emit structured specs before writing files.
 9. Post-deploy: run `validation/checklists/post-deploy-checklist.md`.
 
@@ -193,6 +194,7 @@ Any plan that names an unknown feature or integration triggers `MISSING_KNOWLEDG
 | `security_auditor` | OWASP review, constraint scoring, security report |
 | `performance_auditor` | SLO gap analysis, caching, bundle review |
 | `reviewer` | Validation gatekeeper — PASS or BLOCK |
+| `execution_orchestrator` | Runs spec emission and deterministic codegen after plan LOCK |
 | `diagram_writer` | Mermaid architecture and flow diagrams |
 | `openapi_writer` | OpenAPI 3.1.0 spec from plan |
 | `adr_writer` | Architecture Decision Records |
