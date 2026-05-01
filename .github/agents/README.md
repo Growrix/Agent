@@ -1,11 +1,13 @@
 # Agent Prompts
 
-This folder mirrors DOC/agents for Copilot agent selection.
+This folder intentionally contains only two entrypoint agents for Copilot selection.
 
 ## Recommended Entry Points
 - master_planner.agent.md: end-to-end planning orchestrator
 - execution_orchestrator.agent.md: post-plan execution orchestrator
-- reviewer.agent.md: validation gatekeeper
 
-## Synchronization Rule
-When DOC/agents files change, mirror updates into .github/agents to keep selection and behavior aligned.
+## Workflow
+1. Start with master_planner.agent.md for planning and validation.
+2. Move to execution_orchestrator.agent.md after LOCKED + passed validation.
+
+Sub-agent files stay in DOC/agents and are orchestrated internally by the entrypoints.
