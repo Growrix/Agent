@@ -9,7 +9,10 @@ loads:
   - DOC/knowledge/integration-rules/*.yaml
   - DOC/knowledge/feature-maps/feature-integration-map.json
   - DOC/knowledge/architecture-templates/*.yaml
-  - DOC/knowledge/frontend-rules/frontend-rules.md
+  - DOC/knowledge/frontend-rules/*.md
+  - DOC/knowledge/frontend-rules/visual-archetypes/*.md
+  - DOC/knowledge/industries/*.md
+  - DOC/knowledge/references/README.md
   - DOC/knowledge/backend-rules/backend-rules.md
   - DOC/knowledge/devops-rules/devops-rules.md
   - DOC/knowledge/security-rules/security-rules.md
@@ -25,6 +28,7 @@ loads:
   - DOC/validation/checklists/security-checklist.md
   - DOC/validation/checklists/integration-checklist.md
   - DOC/validation/constraints/constraints.md
+  - DOC/validation/constraints/frontend-constraints.md
   - DOC/validation/constraints/security-constraints.md
   - DOC/validation/constraints/performance-constraints.md
   - DOC/validation/constraints/data-constraints.md
@@ -64,22 +68,23 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 1. **CHECKLIST: PRE-PLANNING** — for each item, verify or fail.
 2. **CHECKLIST: PRE-BUILD** — for each item, verify or fail.
 3. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
-4. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
-5. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
-6. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
-7. **ANTI-HALLUCINATION SWEEP**:
+4. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
+5. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
+6. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
+7. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
+8. **ANTI-HALLUCINATION SWEEP**:
    - Every package referenced is in some integration rule's `*_packages`.
    - Every env var is in some integration rule's `env_vars` or template.
    - Every endpoint is in some integration rule's `webhooks` or template `required_routes`.
    - Every SDK method invoked is documented in the integration rule.
-5. **OWNERSHIP SWEEP**:
+9. **OWNERSHIP SWEEP**:
    - Identity owned by auth integration; mirrored in `users` table only.
    - Billing state owned by Stripe; mirrored only via webhooks.
    - Content owned by CMS; not duplicated in DB.
-6. **DRIFT SWEEP**:
+10. **DRIFT SWEEP**:
    - Plan does not contain entities outside the knowledge base.
    - Codegen output (if provided) matches plan exactly.
-7. **EMIT** `validation_report.json`.
+11. **EMIT** `validation_report.json`.
 
 ## OUTPUT FORMAT
 ```json
@@ -118,6 +123,23 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
     { "id": "C23", "status": "passed|failed", "reason": "...", "evidence": "..." },
     { "id": "C24", "status": "passed|failed", "reason": "...", "evidence": "..." }
   ],
+  "frontend": {
+    "status": "passed|failed",
+    "checks": [
+      { "id": "F1", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F2", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F3", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F4", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F5", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F6", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F7", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F8", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F9", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F10", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F11", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "F12", "status": "passed|failed", "reason": "...", "evidence": "..." }
+    ]
+  },
   "security_constraints": [
     { "id": "SC1",  "status": "passed|failed", "reason": "...", "evidence": "..." },
     { "id": "SC2",  "status": "passed|failed", "reason": "...", "evidence": "..." },

@@ -13,7 +13,9 @@ loads:
   - DOC/knowledge/integration-rules/*.yaml
   - DOC/knowledge/feature-maps/feature-integration-map.json
   - DOC/knowledge/architecture-templates/*.yaml
-  - DOC/knowledge/frontend-rules/frontend-rules.md
+  - DOC/knowledge/frontend-rules/*.md
+  - DOC/knowledge/frontend-rules/visual-archetypes/*.md
+  - DOC/knowledge/industries/*.md
   - DOC/knowledge/backend-rules/backend-rules.md
   - DOC/knowledge/devops-rules/devops-rules.md
   - DOC/knowledge/security-rules/security-rules.md
@@ -41,14 +43,15 @@ loads:
 Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a LOCKED, deterministic, validated plan that downstream agents can execute without further decisions.
 
 ## RESPONSIBILITIES
-1. Extract features from the user request.
-2. Map features → integrations using `feature-integration-map.json`.
-3. Load all required integration rules.
-4. Select an architecture template that fully covers required integrations.
-5. Coordinate `integration_planner`, `frontend_planner`, `backend_planner`.
-6. Aggregate the sub-plans into a single `plan.json`.
-7. Produce `decisions.json` and `validation_report.json`.
-8. Hand the LOCKED plan to the executor.
+1. Run `intake_strategist` to produce a deterministic `brief.json` from minimal or detailed input.
+2. Extract features from the resolved brief.
+3. Map features → integrations using `feature-integration-map.json`.
+4. Load all required integration rules.
+5. Select an architecture template that fully covers required integrations.
+6. Coordinate `integration_planner`, `frontend_planner`, `backend_planner`.
+7. Aggregate the sub-plans into a single `plan.json`.
+8. Produce `decisions.json` and `validation_report.json`.
+9. Hand the LOCKED plan to the executor.
 
 ## STRICT RULES
 - MUST follow `core/system-rules.md` and `core/anti-hallucination-rules.md`.
@@ -61,6 +64,12 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 ```json
 {
   "user_request": "string (free text describing the SaaS app)",
+  "client_brief": {
+    "brand_name": "string|null",
+    "brand_voice": "string|null",
+    "target_locale": "string|null",
+    "target_regions": ["string"]
+  },
   "constraints": {
     "deployment_platform": "vercel|other (optional)",
     "database": "postgres|mongodb (optional)"
@@ -70,18 +79,19 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 
 ## WORKFLOW
 1. **LOAD** all listed knowledge artifacts. If any fail to load → BLOCK.
-2. **PRE-PLANNING CHECKLIST** — run `validation/checklists/pre-planning-checklist.md`. BLOCK on failure.
-3. **EXTRACT FEATURES** — produce a feature list from `feature-integration-map.json`. Unknown features → `MISSING_KNOWLEDGE` BLOCK.
-4. **MAP INTEGRATIONS** — delegate to `integration_planner`.
-5. **SELECT TEMPLATE** — score every template; pick the smallest fully-covering one. Tie-break by deterministic alphabetical order. No match → BLOCK `NO_MATCHING_TEMPLATE`.
-6. **DESIGN FRONTEND** — delegate to `frontend_planner`.
-7. **DESIGN BACKEND** — delegate to `backend_planner`.
-8. **ATTACH DATA FLOWS** — link each feature to a flow file from `flows/data-flows/`. Missing flow → produce a custom flow following the same shape.
-9. **AGGREGATE ENV + OPS** — union of env vars, webhooks, dashboards, DNS steps.
-10. **ATTACH QUALITY GATES** — include zero-problem, env readiness, runtime bootstrap, and CI gate expectations.
-11. **PRE-BUILD CHECKLIST** — run `validation/checklists/pre-build-checklist.md`. BLOCK on failure.
-12. **REVIEWER** — invoke `reviewer.agent.md`. BLOCK on any failed constraint.
-13. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
+2. **INTAKE** — delegate to `intake_strategist` and produce `brief.json` + `brief.md`.
+3. **PRE-PLANNING CHECKLIST** — run `validation/checklists/pre-planning-checklist.md`. BLOCK on failure.
+4. **EXTRACT FEATURES** — produce a feature list from `feature-integration-map.json`. Unknown features → `MISSING_KNOWLEDGE` BLOCK.
+5. **MAP INTEGRATIONS** — delegate to `integration_planner`.
+6. **SELECT TEMPLATE** — score every template; pick the smallest fully-covering one. Tie-break by deterministic alphabetical order. No match → BLOCK `NO_MATCHING_TEMPLATE`.
+7. **DESIGN FRONTEND** — delegate to `frontend_planner`.
+8. **DESIGN BACKEND** — delegate to `backend_planner`.
+9. **ATTACH DATA FLOWS** — link each feature to a flow file from `flows/data-flows/`. Missing flow → produce a custom flow following the same shape.
+10. **AGGREGATE ENV + OPS** — union of env vars, webhooks, dashboards, DNS steps.
+11. **ATTACH QUALITY GATES** — include zero-problem, env readiness, runtime bootstrap, and CI gate expectations.
+12. **PRE-BUILD CHECKLIST** — run `validation/checklists/pre-build-checklist.md`. BLOCK on failure.
+13. **REVIEWER** — invoke `reviewer.agent.md`. BLOCK on any failed constraint.
+14. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
 
 ## OUTPUT FORMAT
 Three artifacts, in machine-readable form:
@@ -139,7 +149,7 @@ Three artifacts, in machine-readable form:
 ## VALIDATION STEPS
 - Pre-planning checklist must be fully `[x]`.
 - Pre-build checklist must be fully `[x]`.
-- All C1..C20 constraints must pass.
+- All C1..C24 constraints must pass.
 - No item in `plan.json` may name an entity absent from the knowledge base.
 
 ## FAILURE MODES
