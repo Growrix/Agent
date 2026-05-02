@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  new
+  contacted
+  quoted
+  converted
+  closed
+}
+
+enum EmailStatus {
+  pending
+  sent
+  delivered
+  bounced
+  complained
+  opened
+  clicked
+  failed
+}
+
+model User {
+  id          String   @id @default(cuid())
+  clerkId     String   @unique
+  email       String   @unique
+  firstName   String?
+  lastName    String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  auditLogs   AuditLog[]
+
+  @@index([clerkId])
+  @@index([email])
+  @@map("users")
+}
+
+model LeadEnquiry {
+  id          String      @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  suburb      String?
+  serviceSlug String?
+  urgency     String      @default("standard")
+  message     String?
+  sourcePage  String?
+  status      LeadStatus  @default(new)
+  ipHash      String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  emailLogs   EmailLog[]
+  auditLogs   AuditLog[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+  @@map("lead_enquiries")
+}
+
+model CallbackRequest {
+  id            String    @id @default(cuid())
+  name          String
+  phone         String
+  preferredTime String?
+  suburb        String?
+  message       String?
+  sourcePage    String?
+  ipHash        String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  emailLogs     EmailLog[]
+  auditLogs     AuditLog[]
+
+  @@index([createdAt])
+  @@map("callback_requests")
+}
+
+model EmailLog {
+  id                String      @id @default(cuid())
+  providerId        String?     @unique
+  template          String
+  toEmail           String
+  subject           String
+  status            EmailStatus @default(pending)
+  leadEnquiryId     String?
+  callbackRequestId String?
+  sentAt            DateTime?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  leadEnquiry     LeadEnquiry?     @relation(fields: [leadEnquiryId], references: [id])
+  callbackRequest CallbackRequest? @relation(fields: [callbackRequestId], references: [id])
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([leadEnquiryId])
+  @@index([callbackRequestId])
+  @@map("email_logs")
+}
+
+model AuditLog {
+  id                String   @id @default(cuid())
+  action            String
+  entityType        String
+  entityId          String
+  userId            String?
+  ipHash            String?
+  metadata          Json?
+  createdAt         DateTime @default(now())
+
+  user              User?            @relation(fields: [userId], references: [id])
+  leadEnquiry       LeadEnquiry?     @relation(fields: [entityId], references: [id])
+  callbackRequest   CallbackRequest? @relation(fields: [entityId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
