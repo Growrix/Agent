@@ -25,6 +25,7 @@ loads:
   - DOC/flows/system-flows/validation-flow.md
   - DOC/validation/checklists/pre-planning-checklist.md
   - DOC/validation/checklists/pre-build-checklist.md
+  - DOC/validation/checklists/reviewer-audit-checklist.md
   - DOC/validation/checklists/security-checklist.md
   - DOC/validation/checklists/integration-checklist.md
   - DOC/validation/constraints/constraints.md
@@ -32,6 +33,7 @@ loads:
   - DOC/validation/constraints/security-constraints.md
   - DOC/validation/constraints/performance-constraints.md
   - DOC/validation/constraints/data-constraints.md
+  - DOC/execution/spec-templates/validation-report.template.json
 ---
 
 # AGENT: REVIEWER
@@ -48,7 +50,10 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 6. Detect missing components vs integration rules.
 7. Validate quality gates from `core/quality-gates.md`.
 8. Validate operation-mode compliance (run/verify vs fix mode behavior).
-9. Emit a `validation_report.json` with per-rule status.
+9. Run `validation/checklists/reviewer-audit-checklist.md` end-to-end.
+10. Emit both:
+  - `reports/reviewer_audit.md` (human-readable)
+  - `reports/validation_report.json` (machine-readable)
 
 ## STRICT RULES
 - MUST NOT modify the plan.
@@ -67,24 +72,25 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 ## WORKFLOW
 1. **CHECKLIST: PRE-PLANNING** — for each item, verify or fail.
 2. **CHECKLIST: PRE-BUILD** — for each item, verify or fail.
-3. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
-4. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
-5. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
-6. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
-7. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
-8. **ANTI-HALLUCINATION SWEEP**:
+3. **CHECKLIST: REVIEWER-AUDIT** — execute `reviewer-audit-checklist.md` and record section-wise pass/fail.
+4. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
+5. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
+6. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
+7. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
+8. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
+9. **ANTI-HALLUCINATION SWEEP**:
    - Every package referenced is in some integration rule's `*_packages`.
    - Every env var is in some integration rule's `env_vars` or template.
    - Every endpoint is in some integration rule's `webhooks` or template `required_routes`.
    - Every SDK method invoked is documented in the integration rule.
-9. **OWNERSHIP SWEEP**:
+10. **OWNERSHIP SWEEP**:
    - Identity owned by auth integration; mirrored in `users` table only.
    - Billing state owned by Stripe; mirrored only via webhooks.
    - Content owned by CMS; not duplicated in DB.
-10. **DRIFT SWEEP**:
+11. **DRIFT SWEEP**:
    - Plan does not contain entities outside the knowledge base.
    - Codegen output (if provided) matches plan exactly.
-11. **EMIT** `validation_report.json`.
+12. **EMIT** `reviewer_audit.md` and `validation_report.json`.
 
 ## OUTPUT FORMAT
 ```json
