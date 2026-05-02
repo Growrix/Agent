@@ -57,7 +57,7 @@ Map every feature to its integrations and produce a complete, deterministic inte
    - Look up entry in `feature-integration-map.json`.
    - If absent → BLOCK `MISSING_KNOWLEDGE`.
    - Resolve `primary` integration. Check preset to confirm it's not forbidden; if it is, use the preset's alternative for that role.
-4. **Activate optional integrations** — For each entry in preset `optional[]`, activate if the matching feature is in `brief.features`.
+4. **Activate optional integrations** — Parse preset `optional[]` as role-to-integration mappings (for example, `- sms: twilio`, `- booking: calcom`). Activate an optional mapping only when the corresponding role is required by `brief.features` or explicit `client_overrides`.
 5. **For each unique integration resolved**:
    - Load `knowledge/integration-rules/<category>/<name>.yaml`.
    - If missing → BLOCK `MISSING_KNOWLEDGE`.
