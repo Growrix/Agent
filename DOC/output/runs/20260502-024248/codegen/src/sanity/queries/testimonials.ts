@@ -13,12 +13,16 @@ export interface SanityTestimonial {
 
 export async function getApprovedTestimonials(): Promise<SanityTestimonial[]> {
   const client = await getSanityClient()
-  return client.fetch<SanityTestimonial[]>(
-    `*[_type == "testimonial" && approved == true && !(_id in path("drafts.**"))] | order(publishedAt desc){
-      _id, name, suburb, rating, body, approved, publishedAt,
-      service->{ title, slug }
-    }`,
-    {},
-    { next: { revalidate: 120 } },
-  )
+  try {
+    return await client.fetch<SanityTestimonial[]>(
+      `*[_type == "testimonial" && approved == true && !(_id in path("drafts.**"))] | order(publishedAt desc){
+        _id, name, suburb, rating, body, approved, publishedAt,
+        service->{ title, slug }
+      }`,
+      {},
+      { next: { revalidate: 120 } },
+    )
+  } catch {
+    return []
+  }
 }

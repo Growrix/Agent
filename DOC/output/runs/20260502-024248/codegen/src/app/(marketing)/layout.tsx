@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/site-header'
 import { SiteFooter } from '@/components/layout/site-footer'
-import { StickyCtaBar } from '@/components/layout/sticky-cta-bar'
+import { StickyCTABar } from '@/components/layout/sticky-cta-bar'
 
 export default function MarketingLayout({
   children,
@@ -12,7 +12,7 @@ export default function MarketingLayout({
       <SiteHeader />
       <main>{children}</main>
       <SiteFooter />
-      <StickyCtaBar />
+      <StickyCTABar />
     </>
   )
 }

@@ -22,34 +22,46 @@ export interface SanityPost {
 
 export async function getPublishedPosts(): Promise<SanityPost[]> {
   const client = await getSanityClient()
-  return client.fetch<SanityPost[]>(
-    `*[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= now()] | order(publishedAt desc){
-      _id, title, slug, excerpt, coverImage, publishedAt,
-      author->{ name, avatar },
-      categories[]->{ title, slug }
-    }`,
-    {},
-    { next: { revalidate: 120 } },
-  )
+  try {
+    return await client.fetch<SanityPost[]>(
+      `*[_type == "post" && !(_id in path("drafts.**")) && publishedAt <= now()] | order(publishedAt desc){
+        _id, title, slug, excerpt, coverImage, publishedAt,
+        author->{ name, avatar },
+        categories[]->{ title, slug }
+      }`,
+      {},
+      { next: { revalidate: 120 } },
+    )
+  } catch {
+    return []
+  }
 }
 
 export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
   const client = await getSanityClient()
-  return client.fetch<SanityPost | null>(
-    `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
-      _id, title, slug, excerpt, coverImage, publishedAt, body, seo,
-      author->{ name, avatar },
-      categories[]->{ title, slug }
-    }`,
-    { slug },
-    { next: { revalidate: 120 } },
-  )
+  try {
+    return await client.fetch<SanityPost | null>(
+      `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
+        _id, title, slug, excerpt, coverImage, publishedAt, body, seo,
+        author->{ name, avatar },
+        categories[]->{ title, slug }
+      }`,
+      { slug },
+      { next: { revalidate: 120 } },
+    )
+  } catch {
+    return null
+  }
 }
 
 export async function getAllPostSlugs(): Promise<string[]> {
   const client = await getSanityClient()
-  const posts = await client.fetch<{ slug: { current: string } }[]>(
-    `*[_type == "post" && !(_id in path("drafts.**"))]{slug}`,
-  )
-  return posts.map((p) => p.slug.current)
+  try {
+    const posts = await client.fetch<{ slug: { current: string } }[]>(
+      `*[_type == "post" && !(_id in path("drafts.**"))]{slug}`,
+    )
+    return posts.map((p) => p.slug.current)
+  } catch {
+    return []
+  }
 }

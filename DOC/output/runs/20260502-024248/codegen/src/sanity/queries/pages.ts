@@ -14,38 +14,50 @@ export interface SanityPage {
 
 export async function getMarketingPageBySlug(slug: string): Promise<SanityPage | null> {
   const client = await getSanityClient()
-  return client.fetch<SanityPage | null>(
-    `*[_type == "page" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
-      _id,
-      title,
-      slug,
-      body,
-      seo
-    }`,
-    { slug },
-    { next: { revalidate: 120 } },
-  )
+  try {
+    return await client.fetch<SanityPage | null>(
+      `*[_type == "page" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
+        _id,
+        title,
+        slug,
+        body,
+        seo
+      }`,
+      { slug },
+      { next: { revalidate: 120 } },
+    )
+  } catch {
+    return null
+  }
 }
 
 export async function getHomepageBySlug(slug: string): Promise<SanityPage | null> {
   const client = await getSanityClient()
-  return client.fetch<SanityPage | null>(
-    `*[_type == "page" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
-      _id,
-      title,
-      slug,
-      body,
-      seo
-    }`,
-    { slug },
-    { next: { revalidate: 60 } },
-  )
+  try {
+    return await client.fetch<SanityPage | null>(
+      `*[_type == "page" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
+        _id,
+        title,
+        slug,
+        body,
+        seo
+      }`,
+      { slug },
+      { next: { revalidate: 120 } },
+    )
+  } catch {
+    return null
+  }
 }
 
 export async function getAllPageSlugs(): Promise<string[]> {
   const client = await getSanityClient()
-  const pages = await client.fetch<{ slug: { current: string } }[]>(
-    `*[_type == "page" && !(_id in path("drafts.**"))]{slug}`,
-  )
-  return pages.map((p) => p.slug.current)
+  try {
+    const pages = await client.fetch<{ slug: { current: string } }[]>(
+      `*[_type == "page" && !(_id in path("drafts.**"))]{slug}`,
+    )
+    return pages.map((p) => p.slug.current)
+  } catch {
+    return []
+  }
 }

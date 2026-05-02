@@ -4,7 +4,7 @@ import { getHomepageBySlug } from '@/sanity/queries/pages'
 import { getAllServices } from '@/sanity/queries/services'
 import { getApprovedTestimonials } from '@/sanity/queries/testimonials'
 import { getFaqItems } from '@/sanity/queries/faq'
-import { EmergencyCtaBanner } from '@/components/conversion/emergency-cta-banner'
+import { EmergencyCTABanner } from '@/components/conversion/emergency-cta-banner'
 import { TrustBadges } from '@/components/conversion/trust-badges'
 import { CallbackRequestForm } from '@/components/forms/callback-request-form'
 import { Phone, Star, CheckCircle, Clock } from 'lucide-react'
@@ -67,7 +67,7 @@ export default async function HomePage() {
       </section>
 
       {/* Emergency CTA Banner */}
-      <EmergencyCtaBanner phoneHref={phoneHref} phoneNumber={phoneNumber} />
+      <EmergencyCTABanner />
 
       {/* Trust Badges */}
       <section className="py-8 bg-gray-50 border-b">
