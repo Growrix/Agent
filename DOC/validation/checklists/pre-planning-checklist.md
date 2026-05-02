@@ -12,7 +12,7 @@ Run this checklist BEFORE the planner starts producing a plan. Every item MUST b
 - [ ] `core/system-rules.md` loaded.
 - [ ] `core/anti-hallucination-rules.md` loaded.
 - [ ] `core/planning-principles.md` loaded.
-- [ ] All `knowledge/integration-rules/*.yaml` loaded.
+- [ ] All `knowledge/integration-rules/**/*.yaml` loaded.
 - [ ] `knowledge/feature-maps/feature-integration-map.json` loaded.
 - [ ] All `knowledge/architecture-templates/*.yaml` loaded.
 - [ ] `knowledge/frontend-rules/frontend-rules.md` loaded.

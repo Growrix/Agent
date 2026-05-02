@@ -6,7 +6,7 @@ loads:
   - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/knowledge/backend-rules/backend-rules.md
-  - DOC/knowledge/integration-rules/*.yaml
+  - DOC/knowledge/integration-rules/**/*.yaml
   - DOC/knowledge/architecture-templates/*.yaml
 ---
 

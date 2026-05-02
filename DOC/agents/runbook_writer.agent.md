@@ -5,7 +5,7 @@ loads:
   - DOC/core/system-rules.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/execution/spec-rules/runbook-rules.md
-  - DOC/knowledge/integration-rules/*.yaml
+  - DOC/knowledge/integration-rules/**/*.yaml
 ---
 
 # AGENT: RUNBOOK WRITER

@@ -9,7 +9,7 @@ Applies to every agent, every output, every phase.
    - Tools, packages, env vars, endpoints, SDK methods, dashboards, file paths, or pricing.
 
 2. ALWAYS verify against the knowledge base.
-   - Source of truth: `knowledge/integration-rules/*.yaml`.
+   - Source of truth: `knowledge/integration-rules/**/*.yaml`.
    - Source of truth for mappings: `knowledge/feature-maps/feature-integration-map.json`.
    - Source of truth for stack: `knowledge/architecture-templates/*.yaml`.
 

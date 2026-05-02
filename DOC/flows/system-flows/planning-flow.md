@@ -18,7 +18,7 @@ Load every artifact in this OS:
 - `core/system-rules.md`
 - `core/anti-hallucination-rules.md`
 - `core/planning-principles.md`
-- `knowledge/integration-rules/*.yaml`
+- `knowledge/integration-rules/**/*.yaml`
 - `knowledge/feature-maps/feature-integration-map.json`
 - `knowledge/architecture-templates/*.yaml`
 - `knowledge/frontend-rules/frontend-rules.md`

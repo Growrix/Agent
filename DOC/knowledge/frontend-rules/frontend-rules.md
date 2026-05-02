@@ -19,12 +19,12 @@ If ANY of the following is present, a CMS MUST be declared:
 - changelog
 - testimonials, case studies, team pages
 
-The CMS MUST come from `knowledge/integration-rules/sanity.yaml` unless another CMS rule exists.
+The CMS MUST come from `knowledge/integration-rules/cms/sanity.yaml` unless another CMS rule exists.
 
 ## RULE F3 — SCHEMA IS MANDATORY
 Every CMS-backed content type MUST have:
 - a schema file in `studio/schemas/<name>.ts`
-- field definitions matching `knowledge/integration-rules/sanity.yaml`
+- field definitions matching `knowledge/integration-rules/cms/sanity.yaml`
 - explicit field types and `required` flags
 - references resolved (no orphan reference fields)
 

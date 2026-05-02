@@ -26,7 +26,7 @@ The **default** is the deterministic pick; the **alternatives** are fallbacks.
 | Role | Category | Tier | Default | Alternatives |
 |---|---|---|---|---|
 | hosting | infra | basic | vercel | netlify, cloudflare-pages |
-| dns | infra | basic | cloudflare | route53 |
+| dns | infra | basic | cloudflare-dns | route53 |
 | email_transactional | email | basic | resend | postmark, sendgrid |
 | analytics | analytics | basic | posthog | plausible, vercel-analytics |
 | error_tracking | observability | basic | sentry | bugsnag, rollbar |
@@ -54,6 +54,7 @@ The **default** is the deterministic pick; the **alternatives** are fallbacks.
 | status_page | observability | standard | betterstack-status | instatus, statuspage |
 | uptime_monitoring | observability | standard | betterstack-uptime | uptimerobot |
 | sso_saml | auth | advanced | workos | okta |
+| audit_logs | auth | advanced | workos-audit-logs | native-audit-table |
 | compliance_automation | compliance | advanced | vanta | drata, secureframe |
 | rbac_service | auth | advanced | permit-io | casbin |
 | feature_flags | analytics | advanced | posthog | statsig, growthbook |

@@ -9,7 +9,7 @@ loads:
   - DOC/core/security-principles.md
   - DOC/core/devops-principles.md
   - DOC/core/testing-principles.md
-  - DOC/knowledge/integration-rules/*.yaml
+  - DOC/knowledge/integration-rules/**/*.yaml
   - DOC/knowledge/feature-maps/feature-integration-map.json
   - DOC/knowledge/architecture-templates/*.yaml
   - DOC/knowledge/frontend-rules/frontend-rules.md

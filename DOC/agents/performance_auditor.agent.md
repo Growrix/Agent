@@ -5,7 +5,7 @@ loads:
   - DOC/core/system-rules.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/knowledge/performance-rules/performance-rules.md
-  - DOC/knowledge/integration-rules/upstash.yaml
+  - DOC/knowledge/integration-rules/cache/upstash.yaml
   - DOC/validation/constraints/performance-constraints.md
 ---
 

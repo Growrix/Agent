@@ -206,7 +206,7 @@ For the "1 year free support / paid maintenance" offering:
 
 ## Priority order for adding YAML rules to the OS
 
-If the OS needs to back this catalog with `integration-rules/*.yaml` so the planner can activate them, the priority order is:
+If the OS needs to back this catalog with `integration-rules/**/*.yaml` so the planner can activate them, the priority order is:
 
 1. **Twilio** (SMS / WhatsApp / voice) — basic for many templates.
 2. **Knock** (notifications fan-out) — bridges email/SMS/in-app.

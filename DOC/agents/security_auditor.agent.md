@@ -7,7 +7,7 @@ loads:
   - DOC/core/security-principles.md
   - DOC/knowledge/security-rules/security-rules.md
   - DOC/knowledge/security-rules/compliance-rules.md
-  - DOC/knowledge/integration-rules/*.yaml
+  - DOC/knowledge/integration-rules/**/*.yaml
   - DOC/validation/constraints/security-constraints.md
   - DOC/validation/checklists/security-checklist.md
 ---
