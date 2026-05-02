@@ -82,6 +82,13 @@ Adding a tool requires explicit feature justification.
 Once a plan is locked, the codegen phase may not introduce new tools, env vars, or features.
 Changes require returning to the PLAN phase.
 
+### P11 — Runtime Readiness Is Planned
+Every plan MUST include deterministic post-build environment setup and startup verification using `npm run dev`.
+
+### P12 — Intent-Safe Execution
+Run/verify requests are execution-only by default.
+If blocked, agents must report blockers first and only enter fix mode explicitly.
+
 ## DECISION RECORD
 
 Every plan MUST emit a `decisions.json` containing:

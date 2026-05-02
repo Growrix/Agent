@@ -100,3 +100,13 @@ For each generated file:
 - Confirm no invented identifiers.
 - Confirm no placeholders.
 If any check fails, regenerate the file.
+
+## CG21 — ZERO-WARNING QUALITY ENFORCEMENT
+- Generated scripts and configs MUST support lint/typecheck/test with zero warnings.
+- Lint configuration MUST fail on warnings.
+
+## CG22 — OPERATION MODE SAFETY
+- Execution-only requests MUST NOT trigger code edits or package installs unless a blocker is reported and fix mode is entered.
+
+## CG23 — DEV STARTUP READINESS
+- Generated projects MUST include scripts so `npm run dev` starts the app from project root after setup.

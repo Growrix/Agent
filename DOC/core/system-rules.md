@@ -9,6 +9,7 @@ Generate complete, production-ready SaaS applications with:
 - Zero missing integrations
 - Zero mid-build planning
 - Zero hallucinations
+- Zero warnings and zero errors at completion
 - Full frontend + backend + integration alignment
 
 ## STRICT BEHAVIOR
@@ -43,6 +44,14 @@ Generate complete, production-ready SaaS applications with:
    - Every recommended endpoint MUST be reachable.
    - Every config MUST be runnable as-is.
 
+8. Quality gates are mandatory.
+   - All applicable gates in `core/quality-gates.md` MUST pass before completion.
+   - Any warning is a blocking failure unless explicitly marked `not-applicable` with rationale.
+
+9. Operation mode must match user intent.
+   - Run/verify requests are execution-only by default.
+   - Code edits or installations during run/verify are allowed only after a blocker is reported and fix mode is explicitly entered.
+
 ## CONTRACT FOR ALL AGENTS
 
 | Phase     | Required Action                                        |
@@ -64,6 +73,8 @@ Generate complete, production-ready SaaS applications with:
 - DO NOT hardcode secrets.
 - DO NOT introduce a tool not declared in `knowledge/integration-rules/`.
 - DO NOT proceed if any checklist item is unverified.
+- DO NOT claim completion when any warning remains.
+- DO NOT modify code when the user requested run/verify-only mode unless fix mode is approved.
 
 ## FAILURE PROTOCOL
 

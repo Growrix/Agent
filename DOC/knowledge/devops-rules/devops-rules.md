@@ -75,6 +75,10 @@ Every production request MUST:
 - Manual console changes are forbidden in staging and production.
 - Default IaC approach: Vercel project config for frontend/functions; Terraform or provider-native config for databases and external services.
 
+## RULE DO13 — ZERO-WARNING DELIVERY GATE
+- CI MUST enforce zero warnings on lint/type/build/test quality stages.
+- Any warning is merge-blocking and promotion-blocking.
+
 ## OUTPUT REQUIREMENT
 Every plan MUST emit `devops.json`:
 ```json

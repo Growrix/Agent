@@ -63,6 +63,25 @@ Forbidden: Redux, MobX, Recoil, custom global stores beyond zustand.
 - No CSS-in-JS runtime libraries.
 - Theme tokens declared in `tailwind.config.ts`.
 
+## RULE F14 — MOBILE-FIRST APP EXPERIENCE
+- Every page and flow MUST be designed mobile-first.
+- Mobile UI MUST feel app-like: touch-first interactions, compact spacing, clear thumb-zone actions, and strong visual hierarchy.
+- Desktop may diverge in layout/components, but mobile parity for core outcomes is mandatory.
+
+## RULE F15 — SECTION + CONTENT PLANNING
+- Every public page MUST declare section-level structure (hero, proof, feature/service blocks, FAQ, CTA, footer CTA).
+- Every section MUST include content intent (goal), primary message, and CTA target.
+- Pages with weak or placeholder content are invalid.
+
+## RULE F16 — MOTION + INTERACTION QUALITY
+- Plans MUST include purposeful motion for key transitions (page load, section reveal, feedback states).
+- Motion MUST support comprehension and conversion, not decorative noise.
+- Respect reduced-motion preferences.
+
+## RULE F17 — HOME NAVIGATION GUARANTEE
+- Primary navigation MUST include a visible Home path (explicit Home item or brand link behavior documented in the plan).
+- Users must be able to return to home from every primary page in one interaction.
+
 ## RULE F9 — ACCESSIBILITY
 - All interactive elements MUST be keyboard accessible.
 - All form inputs MUST have associated labels.

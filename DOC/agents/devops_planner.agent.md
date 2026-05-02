@@ -3,6 +3,7 @@ agent: devops_planner
 version: 1
 loads:
   - DOC/core/system-rules.md
+  - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/devops-principles.md
   - DOC/knowledge/devops-rules/devops-rules.md
@@ -33,6 +34,8 @@ Design the operational layer: environments, secrets, CI/CD pipelines, IaC, monit
 
 ## STRICT RULES
 - MUST follow `core/devops-principles.md` (D1..D12).
+- MUST enforce fully automated CI/CD promotion after all required gates pass.
+- MUST enforce zero-warning quality policy in CI (lint/type/build/test gates).
 - MUST NOT invent platforms, pipelines, IaC tools.
 - MUST NOT plan a deploy without rollback.
 - MUST NOT plan an alert without a runbook.

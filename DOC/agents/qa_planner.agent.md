@@ -3,6 +3,7 @@ agent: qa_planner
 version: 1
 loads:
   - DOC/core/system-rules.md
+  - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/testing-principles.md
   - DOC/knowledge/testing-rules/testing-rules.md
@@ -28,6 +29,8 @@ Design the testing strategy: pyramid, frameworks, fixtures, CI gates, coverage t
 
 ## STRICT RULES
 - MUST follow `core/testing-principles.md` (T1..T12).
+- MUST enforce zero warnings and zero errors in all CI quality stages.
+- MUST treat any failing gate as merge-blocking and deploy-blocking.
 - MUST NOT mock the database for integration tests.
 - MUST NOT mock internal services.
 - MUST NOT skip negative tests for auth-protected routes.

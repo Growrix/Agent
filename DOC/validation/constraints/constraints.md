@@ -90,7 +90,23 @@ Hard rules that prevent invalid plans and broken architectures. Each constraint 
 **Rule:** Every feature in the plan MUST be linked to a data flow file.
 **Failure:** `BLOCK C20: feature <name> has no data flow`.
 
+## C21 — ZERO-WARNING QUALITY GATE
+**Rule:** The plan MUST define zero-warning enforcement for lint/typecheck/test in CI.
+**Failure:** `BLOCK C21: zero-warning quality gate missing or weak`.
+
+## C22 — POST-BUILD ENVIRONMENT BOOTSTRAP
+**Rule:** The plan MUST include deterministic post-build environment setup including env bootstrap and startup verification.
+**Failure:** `BLOCK C22: post-build environment setup not declared`.
+
+## C23 — NPM DEV RUNTIME READINESS
+**Rule:** Generated projects MUST be runnable from project root with `npm run dev` after setup.
+**Failure:** `BLOCK C23: npm run dev readiness missing`.
+
+## C24 — OPERATION MODE COMPLIANCE
+**Rule:** Execution behavior MUST respect user intent mode (run/verify-only vs fix mode) and report blockers before modifying code.
+**Failure:** `BLOCK C24: operation mode policy missing`.
+
 ## ENFORCEMENT
-- Constraints are evaluated in order C1..C20 by the reviewer agent.
+- Constraints are evaluated in order C1..C24 by the reviewer agent.
 - Any failure halts the pipeline.
 - Resolution requires updating the plan and re-running validation.

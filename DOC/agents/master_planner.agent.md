@@ -4,6 +4,7 @@ version: 2
 model_hint: high-capability planning model
 loads:
   - DOC/core/system-rules.md
+  - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/planning-principles.md
   - DOC/core/security-principles.md
@@ -51,6 +52,7 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 
 ## STRICT RULES
 - MUST follow `core/system-rules.md` and `core/anti-hallucination-rules.md`.
+- MUST include all applicable quality gates from `core/quality-gates.md` in emitted artifacts.
 - MUST NOT proceed past any stage with unresolved BLOCKs.
 - MUST NOT invent features, integrations, or env vars.
 - MUST NOT modify the plan after LOCK.
@@ -76,9 +78,10 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 7. **DESIGN BACKEND** — delegate to `backend_planner`.
 8. **ATTACH DATA FLOWS** — link each feature to a flow file from `flows/data-flows/`. Missing flow → produce a custom flow following the same shape.
 9. **AGGREGATE ENV + OPS** — union of env vars, webhooks, dashboards, DNS steps.
-10. **PRE-BUILD CHECKLIST** — run `validation/checklists/pre-build-checklist.md`. BLOCK on failure.
-11. **REVIEWER** — invoke `reviewer.agent.md`. BLOCK on any failed constraint.
-12. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
+10. **ATTACH QUALITY GATES** — include zero-problem, env readiness, runtime bootstrap, and CI gate expectations.
+11. **PRE-BUILD CHECKLIST** — run `validation/checklists/pre-build-checklist.md`. BLOCK on failure.
+12. **REVIEWER** — invoke `reviewer.agent.md`. BLOCK on any failed constraint.
+13. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
 
 ## OUTPUT FORMAT
 Three artifacts, in machine-readable form:

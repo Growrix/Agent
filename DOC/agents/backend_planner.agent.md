@@ -3,6 +3,7 @@ agent: backend_planner
 version: 1
 loads:
   - DOC/core/system-rules.md
+  - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/knowledge/backend-rules/backend-rules.md
   - DOC/knowledge/integration-rules/*.yaml
@@ -26,6 +27,10 @@ Design the complete backend surface: route handlers, services, repositories, dat
 
 ## STRICT RULES
 - MUST follow every rule in `backend-rules.md` (B1..B14).
+- MUST design for horizontal scalability, stateless route handlers, and failure isolation.
+- MUST include explicit reliability controls (timeouts, retries where safe, idempotency boundaries, and backpressure/rate limits).
+- MUST include observability hooks for every critical route/service path.
+- MUST satisfy zero-warning quality gate requirements before completion.
 - MUST NOT bypass services from route handlers.
 - MUST NOT reference DB or integration SDKs from client code.
 - MUST NOT skip webhook signature verification.

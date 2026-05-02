@@ -3,6 +3,7 @@ agent: reviewer
 version: 2
 loads:
   - DOC/core/system-rules.md
+  - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/planning-principles.md
   - DOC/knowledge/integration-rules/*.yaml
@@ -37,11 +38,13 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 ## RESPONSIBILITIES
 1. Run pre-planning checklist.
 2. Run pre-build checklist.
-3. Run constraints C1..C20.
+3. Run constraints C1..C24.
 4. Detect anti-hallucination violations.
 5. Detect responsibility leaks (frontend/backend mixing).
 6. Detect missing components vs integration rules.
-7. Emit a `validation_report.json` with per-rule status.
+7. Validate quality gates from `core/quality-gates.md`.
+8. Validate operation-mode compliance (run/verify vs fix mode behavior).
+9. Emit a `validation_report.json` with per-rule status.
 
 ## STRICT RULES
 - MUST NOT modify the plan.
@@ -60,7 +63,7 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 ## WORKFLOW
 1. **CHECKLIST: PRE-PLANNING** — for each item, verify or fail.
 2. **CHECKLIST: PRE-BUILD** — for each item, verify or fail.
-3. **CONSTRAINTS** — evaluate C1..C20 in order, recording status.
+3. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
 4. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
 5. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
 6. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
@@ -109,7 +112,11 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
     { "id": "C17", "status": "passed|failed", "reason": "...", "evidence": "..." },
     { "id": "C18", "status": "passed|failed", "reason": "...", "evidence": "..." },
     { "id": "C19", "status": "passed|failed", "reason": "...", "evidence": "..." },
-    { "id": "C20", "status": "passed|failed", "reason": "...", "evidence": "..." }
+    { "id": "C20", "status": "passed|failed", "reason": "...", "evidence": "..." },
+    { "id": "C21", "status": "passed|failed", "reason": "...", "evidence": "..." },
+    { "id": "C22", "status": "passed|failed", "reason": "...", "evidence": "..." },
+    { "id": "C23", "status": "passed|failed", "reason": "...", "evidence": "..." },
+    { "id": "C24", "status": "passed|failed", "reason": "...", "evidence": "..." }
   ],
   "security_constraints": [
     { "id": "SC1",  "status": "passed|failed", "reason": "...", "evidence": "..." },

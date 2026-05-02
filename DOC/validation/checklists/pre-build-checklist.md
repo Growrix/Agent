@@ -46,6 +46,17 @@ Run this checklist BEFORE codegen begins. Every item MUST be `[x]` or codegen MU
 - [ ] CMS project is provisionable.
 - [ ] Database instance is provisionable.
 
+## QUALITY GATES
+- [ ] Zero warnings policy is defined and enforceable in CI.
+- [ ] Lint command is configured with max warnings = 0.
+- [ ] Reviewer has explicit quality-gate validation responsibility.
+
+## RUNTIME READINESS
+- [ ] Post-build environment setup flow is declared.
+- [ ] `ENV.example` generation and `.env.local` bootstrap steps are declared.
+- [ ] `npm run dev` startup verification is declared.
+- [ ] Smoke probes for `/`, auth entry route, and `/api/health` are declared.
+
 ## ANTI-HALLUCINATION GATE
 - [ ] No invented packages.
 - [ ] No invented env var names.

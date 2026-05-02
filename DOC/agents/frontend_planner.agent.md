@@ -3,6 +3,7 @@ agent: frontend_planner
 version: 1
 loads:
   - DOC/core/system-rules.md
+  - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/knowledge/frontend-rules/frontend-rules.md
   - DOC/knowledge/integration-rules/*.yaml
@@ -24,6 +25,11 @@ Design the complete frontend surface: routes, pages, data sources, CMS schemas, 
 
 ## STRICT RULES
 - MUST follow every rule in `frontend-rules.md` (F1..F13).
+- MUST design mobile-first with app-like UX as the primary experience.
+- MUST define explicit mobile and desktop component behavior when they differ.
+- MUST include page-level content planning and section-level layout planning for every public page.
+- MUST include meaningful motion/animation plans tied to user outcomes (not decorative-only).
+- MUST include a visible Home navigation path in primary navigation.
 - MUST source CMS schemas from the integration rule (`sanity.yaml.required_schemas_when_blog_feature_present`).
 - MUST NOT create a content feature without a CMS, schema, and slug.
 - MUST NOT use any CMS or state library outside the architecture template's declared stack.
@@ -52,9 +58,11 @@ Design the complete frontend surface: routes, pages, data sources, CMS schemas, 
    - Pull schema from `sanity.yaml`.
    - Declare slug field, source field, uniqueness.
    - Declare studio location under `studio/schemas/`.
-5. **COMPONENTS** — list shared components and their files.
-6. **INTEGRATION CLIENTS** — list `src/lib/*` imports each route depends on.
-7. **VALIDATION** — ensure every F-rule is satisfied.
+5. **CONTENT + SECTIONS** — for each public page, define narrative intent, section order, section purpose, and CTA coverage.
+6. **RESPONSIVE UX** — define mobile-first behaviors, gesture/interaction priorities, and where mobile/desktop components diverge.
+7. **COMPONENTS** — list shared components and their files.
+8. **INTEGRATION CLIENTS** — list `src/lib/*` imports each route depends on.
+9. **VALIDATION** — ensure every F-rule is satisfied.
 
 ## OUTPUT FORMAT
 ```yaml

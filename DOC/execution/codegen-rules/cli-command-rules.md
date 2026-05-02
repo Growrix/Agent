@@ -28,6 +28,8 @@ cp ENV.example .env.local
 # Fill in every value in .env.local before continuing
 ```
 
+`ENV.example` MUST be generated from the exact planned env var set.
+
 ## CL5 — DATABASE COMMANDS (POSTGRES + PRISMA)
 ```bash
 pnpm prisma generate
@@ -50,6 +52,11 @@ cd ..
 ```bash
 pnpm dev
 # App runs on http://localhost:3000
+```
+
+Also verify root runtime command compatibility:
+```bash
+npm run dev
 ```
 
 ## CL8 — BUILD
@@ -81,6 +88,8 @@ curl -i http://localhost:3000/
 curl -i http://localhost:3000/sign-in
 curl -i http://localhost:3000/api/webhooks/stripe -X POST   # expects 400 (no signature)
 ```
+
+`npm run dev` must pass the same smoke checks.
 
 ## CL12 — DEPLOYMENT (VERCEL DEFAULT)
 ```bash

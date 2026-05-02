@@ -82,6 +82,20 @@ Every webhook route MUST:
 - Response shape MUST be `{ ok: true, data }` or `{ ok: false, error }`.
 - HTTP status codes MUST match semantics (`400`, `401`, `403`, `404`, `409`, `429`, `5xx`).
 
+## RULE B15 — SCALABILITY BY DEFAULT
+- Route handlers and services MUST remain stateless to allow horizontal scaling.
+- Expensive operations MUST be queued or offloaded from request-response paths.
+- Caching strategy for read-heavy endpoints MUST be declared.
+
+## RULE B16 — RESILIENCE CONTROLS
+- External integration calls MUST define timeout behavior and failure mapping.
+- Retries are allowed only for idempotent operations and must use bounded attempts.
+- Circuit-breaking or graceful degradation MUST be defined for critical upstream outages.
+
+## RULE B17 — WARNING-FREE BACKEND QUALITY
+- Backend code MUST pass lint/typecheck/test with zero warnings.
+- Any warning in backend-owned files is a blocking failure.
+
 ## OUTPUT CONTRACT
 Every backend plan MUST emit:
 ```yaml

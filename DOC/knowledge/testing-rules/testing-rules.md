@@ -84,6 +84,14 @@ After every production deploy, the following MUST be verified automatically:
 - Primary authenticated route responds correctly with a test account.
 - Smoke test failure MUST trigger automatic rollback.
 
+## RULE T13 — ZERO-WARNING QUALITY GATE
+- Lint, typecheck, and test stages MUST run with zero warnings allowed.
+- Any warning in CI is a blocking failure for merge and deploy promotion.
+
+## RULE T14 — CRITICAL FLOW COMPLETENESS
+- Test plans MUST cover unit, integration, and E2E for each declared critical business flow.
+- Missing a test layer for a critical flow is a blocking validation failure.
+
 ## CI STAGE ORDER
 ```
 1. lint (eslint --max-warnings 0)
