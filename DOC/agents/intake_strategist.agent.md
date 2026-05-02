@@ -143,13 +143,29 @@ If absent → `en-US`. If multi-region → mark `i18n_required: true` and add `l
 ### R12 — Compliance defaults
 If `industry` matches a regulated vertical (`health`, `finance`, `legal`, `kids`) → add applicable compliance flags (HIPAA-aware copy, financial-disclosure footer, etc.) as `compliance_notes`.
 
+### R13 — Tier band detection
+Derive the `tier_band` from the combination of `project.archetype`, feature count, and `client_brief.budget_band`:
+
+| Archetype | Budget band | Feature signals | tier_band |
+|---|---|---|---|
+| marketing_site / content_site / portfolio_site / landing_page | any | — | `basic` |
+| saas_app / ecommerce / marketplace / dashboard_tool | low/null | < 5 integration roles | `basic` |
+| saas_app / ecommerce / marketplace / dashboard_tool | medium/null | 5–12 integration roles | `standard` |
+| saas_app / ecommerce / marketplace / dashboard_tool | high | 12+ integration roles OR b2b enterprise flags | `advanced` |
+| ai_product flag present | any | any | `advanced` |
+| multi_tenant flag or B2B SSO required | any | any | `advanced` |
+
+If unsure → default to `standard`. Add an assumption.
+
+`tier_band` MUST be emitted in `brief.json` and used by `integration_planner` to load the correct tier preset.
+
 ## WORKFLOW
 1. **LOAD** all referenced files.
 2. **PARSE** user_request + client_brief.
 3. **CLASSIFY** project archetype (R1).
 4. **CLASSIFY** industry (R2).
 5. **PICK** visual archetype (R3).
-6. **DERIVE** audience (R4), journeys (R5), site map (R6), features (R7), trust + conversion (R8), tone (R9), palette (R10), locale (R11), compliance (R12).
+6. **DERIVE** audience (R4), journeys (R5), site map (R6), features (R7), trust + conversion (R8), tone (R9), palette (R10), locale (R11), compliance (R12), tier band (R13).
 7. **MAP** features → integrations.
 8. **LIST** every assumption made, with the rule id that produced it.
 9. **EMIT** `brief.json` and `brief.md`.
@@ -185,6 +201,7 @@ If `industry` matches a regulated vertical (`health`, `finance`, `legal`, `kids`
   "conversion_mechanics": ["click_to_call","quote_form","booking","checkout","chat","whatsapp"],
   "locale": { "default": "en-US", "i18n_required": false, "regions": ["string"] },
   "compliance_notes": ["string"],
+  "tier_band": "basic|standard|advanced",
   "constraints": { "deployment_platform": "vercel", "database": "postgres|none", "no_auth": false, "no_payments": false },
   "assumptions": [
     { "rule": "R1", "field": "project.archetype", "value": "marketing_site", "reason": "no SaaS/ecommerce keywords detected" },

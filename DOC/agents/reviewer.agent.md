@@ -6,7 +6,7 @@ loads:
   - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/planning-principles.md
-  - DOC/knowledge/integration-rules/*.yaml
+  - DOC/knowledge/integration-rules/**/*.yaml
   - DOC/knowledge/feature-maps/feature-integration-map.json
   - DOC/knowledge/architecture-templates/*.yaml
   - DOC/knowledge/frontend-rules/*.md
@@ -25,6 +25,8 @@ loads:
   - DOC/flows/system-flows/validation-flow.md
   - DOC/validation/checklists/pre-planning-checklist.md
   - DOC/validation/checklists/pre-build-checklist.md
+  - DOC/validation/checklists/pre-deployment-checklist.md
+  - DOC/validation/checklists/post-deploy-checklist.md
   - DOC/validation/checklists/reviewer-audit-checklist.md
   - DOC/validation/checklists/security-checklist.md
   - DOC/validation/checklists/integration-checklist.md
@@ -33,6 +35,13 @@ loads:
   - DOC/validation/constraints/security-constraints.md
   - DOC/validation/constraints/performance-constraints.md
   - DOC/validation/constraints/data-constraints.md
+  - DOC/validation/constraints/testing-constraints.md
+  - DOC/validation/constraints/accessibility-constraints.md
+  - DOC/validation/constraints/integration-constraints.md
+  - DOC/knowledge/integration-presets/*.yaml
+  - DOC/knowledge/skills/_index.md
+  - DOC/knowledge/support-tools/_index.md
+  - DOC/knowledge/automation-rules/outbound-event-taxonomy.md
   - DOC/execution/spec-templates/validation-report.template.json
 ---
 
@@ -72,25 +81,35 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 ## WORKFLOW
 1. **CHECKLIST: PRE-PLANNING** — for each item, verify or fail.
 2. **CHECKLIST: PRE-BUILD** — for each item, verify or fail.
-3. **CHECKLIST: REVIEWER-AUDIT** — execute `reviewer-audit-checklist.md` and record section-wise pass/fail.
-4. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
-5. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
-6. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
-7. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
-8. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
-9. **ANTI-HALLUCINATION SWEEP**:
-   - Every package referenced is in some integration rule's `*_packages`.
-   - Every env var is in some integration rule's `env_vars` or template.
-   - Every endpoint is in some integration rule's `webhooks` or template `required_routes`.
-   - Every SDK method invoked is documented in the integration rule.
-10. **OWNERSHIP SWEEP**:
-   - Identity owned by auth integration; mirrored in `users` table only.
-   - Billing state owned by Stripe; mirrored only via webhooks.
-   - Content owned by CMS; not duplicated in DB.
-11. **DRIFT SWEEP**:
-   - Plan does not contain entities outside the knowledge base.
-   - Codegen output (if provided) matches plan exactly.
-12. **EMIT** `reviewer_audit.md` and `validation_report.json`.
+3. **CHECKLIST: PRE-DEPLOYMENT** — for each item, verify or fail (run only when reviewer is invoked at the deployment gate).
+4. **CHECKLIST: REVIEWER-AUDIT** — execute `reviewer-audit-checklist.md` and record section-wise pass/fail.
+5. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
+6. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
+7. **ACCESSIBILITY CONSTRAINTS** — evaluate AC1..AC12 from `validation/constraints/accessibility-constraints.md`.
+8. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
+9. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
+10. **DATA CONSTRAINTS** — evaluate DC1..DC11 from `validation/constraints/data-constraints.md`.
+11. **TESTING CONSTRAINTS** — evaluate TC1..TCn from `validation/constraints/testing-constraints.md`.
+12. **INTEGRATION CONSTRAINTS** — evaluate I1..I6 from `validation/constraints/integration-constraints.md`:
+    - I1: every integration in plan resolves to a YAML rule file.
+    - I2: every `required_skills` entry resolves to a skill file.
+    - I3: every outbound event appears in `outbound-event-taxonomy.md`.
+    - I4: every `support_stack` tool resolves to a support-tools YAML.
+    - I5: every preset override recorded in `assumptions[]`.
+    - I6: compliance regime not violated by chosen integrations.
+13. **ANTI-HALLUCINATION SWEEP**:
+    - Every package referenced is in some integration rule's `*_packages`.
+    - Every env var is in some integration rule's `env_vars` or template.
+    - Every endpoint is in some integration rule's `webhooks` or template `required_routes`.
+    - Every SDK method invoked is documented in the integration rule.
+13. **OWNERSHIP SWEEP**:
+    - Identity owned by auth integration; mirrored in `users` table only.
+    - Billing state owned by Stripe; mirrored only via webhooks.
+    - Content owned by CMS; not duplicated in DB.
+14. **DRIFT SWEEP**:
+    - Plan does not contain entities outside the knowledge base.
+    - Codegen output (if provided) matches plan exactly.
+15. **EMIT** `reviewer_audit.md` and `validation_report.json`.
 
 ## OUTPUT FORMAT
 ```json
@@ -101,6 +120,10 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
   },
   "pre_build": {
     "status": "passed|failed",
+    "items": [{ "id": "...", "status": "passed|failed", "reason": "..." }]
+  },
+  "pre_deployment": {
+    "status": "passed|failed|skipped",
     "items": [{ "id": "...", "status": "passed|failed", "reason": "..." }]
   },
   "constraints": [
@@ -187,6 +210,42 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
     { "id": "DC10", "status": "passed|failed", "reason": "...", "evidence": "..." },
     { "id": "DC11", "status": "passed|failed", "reason": "...", "evidence": "..." }
   ],
+  "accessibility": {
+    "status": "passed|failed",
+    "checks": [
+      { "id": "AC1",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC2",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC3",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC4",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC5",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC6",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC7",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC8",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC9",  "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC10", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC11", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "AC12", "status": "passed|failed", "reason": "...", "evidence": "..." }
+    ]
+  },
+  "testing_constraints": {
+    "status": "passed|failed",
+    "checks": [
+      { "id": "TC1", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "TC2", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "TC3", "status": "passed|failed", "reason": "...", "evidence": "..." }
+    ]
+  },
+  "integration_constraints": {
+    "status": "passed|failed",
+    "checks": [
+      { "id": "I1", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "I2", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "I3", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "I4", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "I5", "status": "passed|failed", "reason": "...", "evidence": "..." },
+      { "id": "I6", "status": "passed|failed", "reason": "...", "evidence": "..." }
+    ]
+  },
   "anti_hallucination": {
     "status": "passed|failed",
     "violations": [{ "kind": "package|env|endpoint|method", "name": "...", "where": "..." }]

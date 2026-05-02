@@ -9,9 +9,10 @@ loads:
   - DOC/knowledge/devops-rules/devops-rules.md
   - DOC/knowledge/devops-rules/cicd-rules.md
   - DOC/knowledge/devops-rules/monitoring-rules.md
-  - DOC/knowledge/integration-rules/sentry.yaml
-  - DOC/knowledge/integration-rules/axiom.yaml
-  - DOC/knowledge/integration-rules/upstash.yaml
+  - DOC/knowledge/integration-rules/observability/sentry.yaml
+  - DOC/knowledge/integration-rules/observability/axiom.yaml
+  - DOC/knowledge/integration-rules/cache/upstash.yaml
+  - DOC/knowledge/support-tools/**/*.yaml
   - DOC/knowledge/architecture-templates/*.yaml
 ---
 
@@ -31,6 +32,7 @@ Design the operational layer: environments, secrets, CI/CD pipelines, IaC, monit
 8. Define backup schedule, retention, restore drill.
 9. Declare RTO and RPO.
 10. Declare cost ceilings and budget alert thresholds.
+11. Select the agency-side support stack from `knowledge/support-tools/` based on `brief.tier_band`.
 
 ## STRICT RULES
 - MUST follow `core/devops-principles.md` (D1..D12).
@@ -45,7 +47,8 @@ Design the operational layer: environments, secrets, CI/CD pipelines, IaC, monit
 {
   "architecture_template": "standard_saas",
   "integrations": { "...": "..." },
-  "compliance": ["gdpr","soc2"]
+  "compliance": ["gdpr","soc2"],
+  "tier_band": "standard"
 }
 ```
 
@@ -63,7 +66,8 @@ Design the operational layer: environments, secrets, CI/CD pipelines, IaC, monit
 11. **HEALTH** — `/api/health` and uptime probes.
 12. **ON-CALL** — rotation, escalation, paging tool.
 13. **COST** — monthly ceiling + alert threshold.
-14. **EMIT** `devops.json`.
+14. **SUPPORT STACK** — Load `knowledge/support-tools/_index.md`. Match `tier_band` to the selection rules table. Pick one tool per support role (uptime monitor, status page, backup tool, security scanner, SEO, analytics). Record each pick with its YAML path. Emit `support_stack[]`.
+15. **EMIT** `devops.json` (includes `support_stack[]`).
 
 ## OUTPUT FORMAT
 ```yaml
@@ -130,6 +134,23 @@ on_call:
 cost:
   monthly_ceiling_usd: 250
   alert_threshold_pct: 80
+
+support_stack:
+  - role: uptime_monitor
+    tool: betterstack-uptime
+    yaml: knowledge/support-tools/uptime/betterstack-uptime.yaml
+  - role: status_page
+    tool: betterstack-status
+    yaml: knowledge/support-tools/status/betterstack-status.yaml
+  - role: error_tracking
+    tool: sentry
+    yaml: knowledge/integration-rules/observability/sentry.yaml
+  - role: backup
+    tool: neon-branching
+    yaml: knowledge/support-tools/backups/neon-branching.yaml
+  - role: security_scanning
+    tool: snyk
+    yaml: knowledge/support-tools/security-ongoing/snyk.yaml
 ```
 
 ## VALIDATION STEPS
@@ -138,6 +159,8 @@ cost:
 - Every integration appears in `monitoring` (logs or errors).
 - Every alert has a runbook path.
 - Health endpoint covers every critical dependency.
+- `support_stack[]` is present and every tool has a YAML path in `knowledge/support-tools/`.
+- Every `support_stack` tool YAML path exists in the loaded `support-tools/**/*.yaml` files.
 
 ## FAILURE MODES
 - `MISSING_ENV_BINDING` — env var without scope/environment binding.
