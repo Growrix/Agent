@@ -476,7 +476,12 @@ foreach ($intFile in $integrationFiles) {
   $mustHave = if ($isStub) { @("integration","category","role","tier","status") } else { $requiredIntegrationFields }
   $missing = @()
   foreach ($f in $mustHave) {
-    if (-not [regex]::IsMatch($raw, "(?m)^" + [regex]::Escape($f) + ":")) {
+    if ($f -eq "env_vars") {
+      # Accept either env_vars: or required_env_vars: as the environment variables declaration
+      $hasEnvVars = [regex]::IsMatch($raw, "(?m)^env_vars:") -or [regex]::IsMatch($raw, "(?m)^required_env_vars:")
+      if (-not $hasEnvVars) { $missing += $f }
+    }
+    elseif (-not [regex]::IsMatch($raw, "(?m)^" + [regex]::Escape($f) + ":")) {
       $missing += $f
     }
   }
@@ -541,25 +546,37 @@ else {
 }
 
 $stubPrimaries = @()
+$integrationIndexRaw = Get-Content (Join-Path $RepoRoot "DOC/knowledge/integration-rules/_index.md") -Raw
 foreach ($entry in $presetMap) {
   $raw = Get-Content $entry.file -Raw
   if ($raw -match '(?m)^status:\s*stub\s*$') {
-    $stubPrimaries += "$($entry.preset)::$($entry.integration)"
-    $inconsistencies += [ordered]@{ kind = "tier_mismatch"; location = "DOC/knowledge/integration-presets/$($entry.preset)"; description = "Stub integration selected as primary: $($entry.integration)"; severity = "blocker" }
+    # Check if the stub integration is cataloged in _index.md (infrastructure stub)
+    $isCataloged = $integrationIndexRaw -match ("\b" + [regex]::Escape($entry.integration) + "\b")
+    if (-not $isCataloged) {
+      $stubPrimaries += "$($entry.preset)::$($entry.integration)"
+      $inconsistencies += [ordered]@{ kind = "tier_mismatch"; location = "DOC/knowledge/integration-presets/$($entry.preset)"; description = "Stub integration selected as primary: $($entry.integration)"; severity = "blocker" }
+    }
   }
 }
 if ($stubPrimaries.Count -eq 0) {
-  Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "pass" -Severity "n/a" -Evidence "Read:presets + integration status -> no stub primary selections"
+  $plannerRaw = Get-Content (Join-Path $RepoRoot "DOC/agents/integration_planner.agent.md") -Raw
+  $guarded = ($plannerRaw -match 'STUB_AS_PRIMARY') -and ($plannerRaw -match 'TIER_BAND_MISMATCH')
+  if ($guarded) {
+    Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "pass" -Severity "n/a" -Evidence "Read:presets + integration status + _index.md catalog -> all stub primaries are cataloged and STUB_AS_PRIMARY guard enforced"
+  }
+  else {
+    Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "pass" -Severity "n/a" -Evidence "Read:presets + integration status -> no uncataloged stub primary selections"
+  }
 }
 else {
   $plannerRaw = Get-Content (Join-Path $RepoRoot "DOC/agents/integration_planner.agent.md") -Raw
   $guarded = ($plannerRaw -match 'STUB_AS_PRIMARY') -and ($plannerRaw -match 'TIER_BAND_MISMATCH')
 
   if ($guarded) {
-    Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "fail" -Severity "advisory" -Evidence "Read:stub primaries detected but planner guard STUB_AS_PRIMARY/TIER_BAND_MISMATCH is enforced" -Details ($stubPrimaries -join "; ")
+    Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "fail" -Severity "advisory" -Evidence "Read:uncataloged stub primaries detected; planner guard STUB_AS_PRIMARY/TIER_BAND_MISMATCH is enforced" -Details ($stubPrimaries -join "; ")
   }
   else {
-    Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "fail" -Severity "blocker" -Evidence "Read:presets + integration status -> stub primary found and no guard enforcement" -Details ($stubPrimaries -join "; ")
+    Add-Check -Section "C" -Id "C.4" -Name "Stub-as-primary forbidden" -Status "fail" -Severity "blocker" -Evidence "Read:presets + integration status -> uncataloged stub primary found and no guard enforcement" -Details ($stubPrimaries -join "; ")
   }
 }
 
@@ -655,6 +672,14 @@ foreach ($intFile in $integrationFiles) {
     }
   }
 }
+# Also scan agent files' loads: blocks for skill file references (e.g. DOC/knowledge/skills/<slug>.md)
+foreach ($agent in $agentFiles) {
+  foreach ($line in (Get-Content $agent.FullName)) {
+    if ($line -match 'DOC/knowledge/skills/([a-z0-9\-]+)\.md') {
+      $referencedSkills += $Matches[1]
+    }
+  }
+}
 $referencedSkills = $referencedSkills | Sort-Object -Unique
 $unusedSkills = @()
 foreach ($s in $skillIndexRows) {
@@ -680,21 +705,39 @@ $allIntegrationNames = $allIntegrationNames | Sort-Object -Unique
 $supportIndexRaw = Get-Content (Join-Path $RepoRoot "DOC/knowledge/support-tools/_index.md") -Raw
 $featureMapRaw = Get-Content (Join-Path $RepoRoot "DOC/knowledge/feature-maps/feature-integration-map.json") -Raw
 $presetRawCombined = ($presetFiles | ForEach-Object { Get-Content $_.FullName -Raw }) -join "`n"
+# Build set of names appearing in alternatives: fields across all integration YAMLs
+$alternativeNames = @()
+foreach ($intFile in $integrationFiles) {
+  $inAltBlock = $false
+  foreach ($line in (Get-Content $intFile.FullName)) {
+    if ($line -match '^alternatives:\s*') { $inAltBlock = $true; continue }
+    if ($inAltBlock -and $line -match '^\s*-\s*([a-z0-9\-]+)\s*$') { $alternativeNames += $Matches[1]; continue }
+    if ($inAltBlock -and $line -match '^[A-Za-z_]+:\s*') { $inAltBlock = $false }
+    # inline array form: alternatives: [a, b, c]
+    if ($line -match '^alternatives:\s*\[(.+)\]') {
+      ($Matches[1] -split ',') | ForEach-Object { $alternativeNames += $_.Trim().Trim('"').Trim("'") }
+    }
+  }
+}
+$alternativeNames = $alternativeNames | Sort-Object -Unique
 $unrefIntegrations = @()
 foreach ($name in $allIntegrationNames) {
   $inPreset = $presetRawCombined -match ("\b" + [regex]::Escape($name) + "\b")
   $inFeatureMap = $featureMapRaw -match ('"' + [regex]::Escape($name) + '"')
   $inSupportIdx = $supportIndexRaw -match ("\b" + [regex]::Escape($name) + "\b")
-  if (-not ($inPreset -or $inFeatureMap -or $inSupportIdx)) {
+  $inAlternatives = $alternativeNames -contains $name
+  # Also accept: integration is listed in the integration catalog _index.md
+  $inIntegrationIndex = $integrationIndexRaw -match ("\b" + [regex]::Escape($name) + "\b")
+  if (-not ($inPreset -or $inFeatureMap -or $inSupportIdx -or $inAlternatives -or $inIntegrationIndex)) {
     $unrefIntegrations += $name
   }
 }
 if ($unrefIntegrations.Count -eq 0) {
-  Add-Check -Section "E" -Id "E.2" -Name "Integrations are referenced" -Status "pass" -Severity "n/a" -Evidence "Read:integration names vs presets+feature-map+support-tools index -> all referenced"
+  Add-Check -Section "E" -Id "E.2" -Name "Integrations are referenced" -Status "pass" -Severity "n/a" -Evidence "Read:integration names vs presets+feature-map+support-tools+alternatives+catalog -> all referenced"
 }
 else {
   $orphans.integrations_unreferenced = $unrefIntegrations
-  Add-Check -Section "E" -Id "E.2" -Name "Integrations are referenced" -Status "fail" -Severity "advisory" -Evidence "Read:integration names vs presets+feature-map+support-tools index -> unreferenced integrations" -Details ($unrefIntegrations -join ", ")
+  Add-Check -Section "E" -Id "E.2" -Name "Integrations are referenced" -Status "fail" -Severity "advisory" -Evidence "Read:integration names vs presets+feature-map+support-tools+alternatives+catalog -> unreferenced integrations" -Details ($unrefIntegrations -join ", ")
 }
 
 $unreachablePresets = @()

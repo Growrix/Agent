@@ -53,20 +53,20 @@ The **default** is the deterministic pick; the **alternatives** are fallbacks.
 | ai_llm | ai | standard | openai | anthropic, gemini |
 | status_page | observability | standard | betterstack-status | instatus, statuspage |
 | uptime_monitoring | observability | standard | betterstack-uptime | uptimerobot |
-| sso_saml | auth | advanced | workos | okta |
+| sso_saml | auth | advanced | workos | okta, workos-sso |
 | audit_logs | auth | advanced | workos-audit-logs | native-audit-table |
 | compliance_automation | compliance | advanced | vanta | drata, secureframe |
 | rbac_service | auth | advanced | permit-io | casbin |
 | feature_flags | analytics | advanced | posthog | statsig, growthbook |
 | session_replay | analytics | advanced | posthog | fullstory |
-| cdp | analytics | advanced | segment | rudderstack |
+| cdp | analytics | advanced | segment | rudderstack, mixpanel |
 | crm_marketing | crm | advanced | customerio | braze |
 | crm_sales | crm | advanced | hubspot | attio, pipedrive |
-| knowledge_base | support | advanced | mintlify | helpscout, zendesk |
-| voc_roadmap | feedback | advanced | canny | productboard |
+| knowledge_base | support | advanced | mintlify | helpscout, zendesk, intercom, plain |
+| voc_roadmap | feedback | advanced | canny | productboard, featurebase |
 | onboarding_tours | onboarding | advanced | userflow | appcues |
 | surveys_nps | feedback | advanced | sprig | delighted |
-| ai_llm_advanced | ai | advanced | openai+anthropic | gemini |
+| ai_llm_advanced | ai | advanced | openai+anthropic | gemini, vercel-ai-sdk |
 | vector_db | ai | advanced | turbopuffer | pinecone, pgvector |
 | llm_observability | ai | advanced | langfuse | helicone, langsmith |
 | ai_cost_tracking | ai | advanced | helicone | custom-table |

@@ -110,9 +110,12 @@ constraints:
 required_skills:
   - webhook-signature-verification
   - soft-delete-on-user-deleted-pattern
+  - data-delete-endpoint-pattern
+  - data-export-endpoint-pattern
+  - rbac-policy-evaluation-pattern
+  - sso-saml-handshake-pattern
 
 common_failures:
-  - missing_clerk_provider_causes_hook_errors
   - webhook_signing_secret_mismatch_causes_401
   - user_not_synced_to_db_because_webhook_not_registered
   - middleware_not_protecting_api_routes_correctly

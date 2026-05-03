@@ -266,6 +266,13 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 - `status` is `passed` only if every section is `passed`.
 - Any `failed` section → overall `failed` → master_planner BLOCKs.
 
+## VALIDATION STEPS
+- Confirm input `plan` has all required top-level keys before evaluating constraints.
+- Confirm each constraint block has a `status` and `reason` before emitting.
+- Confirm `validation_report.json` is emitted even when overall status is `failed`.
+- Confirm no constraint is skipped: each C1..C24 plus F, SC, PC, DC, AC, TC, I series must appear in output.
+- Confirm every `failed` result includes a non-empty `evidence` field citing the artifact path.
+
 ## FAILURE MODES
 - `VALIDATION_FAILURE` — one or more rules failed.
 

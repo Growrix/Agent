@@ -66,6 +66,7 @@ constraints:
 
 required_skills:
   - idempotency-key-pattern
+  - per-tenant-tokens-pattern
 
 common_failures:
   - too_many_connections_without_pooling

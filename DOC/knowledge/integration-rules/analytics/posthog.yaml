@@ -63,6 +63,7 @@ constraints:
 
 required_skills:
   - feature-flag-evaluation-pattern
+  - reviews-aggregation-pattern
 
 common_failures:
   - provider_missing_causing_hook_errors

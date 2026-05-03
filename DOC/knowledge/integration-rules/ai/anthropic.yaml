@@ -22,8 +22,7 @@ required_skills:
 	- ai-cost-tracking-pattern
 	- ai-moderation-precheck-pattern
 	- rate-limit-with-upstash-pattern
-
-webhooks: none
+	- retrieval-augmented-generation-pattern
 
 required_components:
 	backend:

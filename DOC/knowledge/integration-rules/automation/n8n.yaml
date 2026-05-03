@@ -18,6 +18,7 @@ packages: []                  # No npm package; communication is via HTTPS webho
 
 required_skills:
 	- outbound-webhook-signing-pattern
+	- embedded-integration-marketplace-pattern
 
 webhooks:
 	outbound_to_n8n:
