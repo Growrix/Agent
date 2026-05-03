@@ -25,7 +25,7 @@ support-tools/
 |---|---|---|---|---|---|---|---|
 | basic | betterstack-uptime | — | simplebackups | snyk | google-search-console | — | — |
 | standard | betterstack-uptime | betterstack-status | simplebackups | snyk + gitguardian | google-search-console + screaming-frog | better-stack-oncall | crisp |
-| advanced | betterstack-uptime + checkly | betterstack-status | simplebackups + snaplet | snyk + socket + gitguardian + cloudflare-waf | ahrefs + google-search-console + screaming-frog | pagerduty | intercom |
+| advanced | betterstack-uptime + checkly | betterstack-status | simplebackups + snaplet | snyk + socket + gitguardian + cloudflare-waf | ahrefs + google-search-console + screaming-frog | pagerduty | crisp + helpjuice |
 
 ## Boundary
 

@@ -67,6 +67,11 @@ Design the operational layer: environments, secrets, CI/CD pipelines, IaC, monit
 12. **ON-CALL** — rotation, escalation, paging tool.
 13. **COST** — monthly ceiling + alert threshold.
 14. **SUPPORT STACK** — Load `knowledge/support-tools/_index.md`. Match `tier_band` to the selection rules table. Pick one tool per support role (uptime monitor, status page, backup tool, security scanner, SEO, analytics). Record each pick with its YAML path. Emit `support_stack[]`.
+    - Tier cascade is additive:
+      - `basic` = baseline ops stack only.
+      - `standard` = `basic` + status page + on-call + customer chat + extra security/SEO tools.
+      - `advanced` = `standard` + synthetic monitoring + backup hardening + expanded security/SEO set.
+    - If the selected preset contains explicit `support_tools[]`, those values override generic tier defaults and MUST be echoed in `support_stack[]`.
 15. **EMIT** `devops.json` (includes `support_stack[]`).
 
 ## OUTPUT FORMAT

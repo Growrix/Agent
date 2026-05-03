@@ -41,3 +41,14 @@ automation_surface:
     - user.created
 
 support_stack_tier: standard
+
+support_tools:
+  - betterstack-uptime
+  - betterstack-status
+  - simplebackups
+  - snyk
+  - gitguardian
+  - google-search-console
+  - screaming-frog
+  - better-stack-oncall
+  - crisp
