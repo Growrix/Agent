@@ -36,6 +36,13 @@ integrations:
   spam_guard:     cloudflare-turnstile
   cookie_consent: cookiebot
 
+forbidden: []
+
+optional:
+  - knowledge_base: mintlify
+  - sms: twilio
+  - onboarding_tours: userflow
+
 required_skills:
   - sso-saml-handshake-pattern
   - rbac-policy-evaluation-pattern

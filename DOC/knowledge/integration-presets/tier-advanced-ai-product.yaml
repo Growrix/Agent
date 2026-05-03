@@ -31,6 +31,13 @@ integrations:
   spam_guard:     cloudflare-turnstile
   cookie_consent: cookiebot
 
+forbidden: []
+
+optional:
+  - ai_llm_alt: anthropic
+  - onboarding_tours: userflow
+  - document_signing: documenso
+
 required_skills:
   - streaming-llm-response-pattern
   - ai-cost-tracking-pattern

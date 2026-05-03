@@ -28,6 +28,8 @@ integrations:
   spam_guard:     cloudflare-turnstile
   cookie_consent: cookiebot
 
+forbidden: []
+
 optional:
   - maps: mapbox           # activate for local delivery / store locator
   - sms: twilio            # activate for order SMS notifications

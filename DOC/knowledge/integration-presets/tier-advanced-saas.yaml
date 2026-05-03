@@ -37,6 +37,8 @@ integrations:
   spam_guard:     cloudflare-turnstile
   cookie_consent: cookiebot
 
+forbidden: []
+
 optional:
   - booking: calcom
   - document_signing: documenso
