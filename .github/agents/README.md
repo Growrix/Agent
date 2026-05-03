@@ -11,3 +11,8 @@ This folder intentionally contains only two entrypoint agents for Copilot select
 2. Move to execution_orchestrator.agent.md after LOCKED + passed validation.
 
 Sub-agent files stay in DOC/agents and are orchestrated internally by the entrypoints.
+
+## Specialized Agent
+- system_architect.agent.md: out-of-band system manager for DESIGN, AUDIT, FIX, SMOKE, and DETERMINISM of the agentic OS itself.
+
+Use this specialized agent for system-level wiring and quality hardening, not for normal planning/execution runs.

@@ -164,6 +164,14 @@ All architecture templates and rules target this default stack:
 5. `reviewer.agent.md` validates the aggregated plan against all constraints (C1–C20, SC1–SC12, PC1–PC12, DC1–DC11).
 6. On `validation_report.status == "passed"` → plan is LOCKED.
 
+### Auditing the agentic system itself
+
+1. Invoke `agents/system_architect.agent.md` (or `.github/agents/system_architect.agent.md`) with `mode: "AUDIT"`.
+2. The agent executes deterministic checks from `validation/audit-template.md` and emits a structured report using `validation/audit-report.template.md`.
+3. Run fixture-based chain checks from `validation/audit-fixtures/` using `mode: "SMOKE"`.
+4. Run two-pass drift checks using `mode: "DETERMINISM"`.
+5. Treat any report with blockers as `NOT_READY` until fixed and re-audited.
+
 ### Generating code
 
 7. `execution_orchestrator.agent.md` consumes LOCKED planning artifacts and runs spec emission + codegen flows.
