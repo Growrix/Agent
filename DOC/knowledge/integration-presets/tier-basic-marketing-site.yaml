@@ -31,6 +31,12 @@ automation_surface:
 
 support_stack_tier: basic
 
+support_tools:
+  - betterstack-uptime
+  - simplebackups
+  - snyk
+  - google-search-console
+
 plan_json_notes:
   - "No auth, no database, no background jobs."
   - "CMS is conditional on content volume (activate if > 3 editable pages)."

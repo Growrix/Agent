@@ -60,3 +60,19 @@ automation_surface:
     - subscription.updated
 
 support_stack_tier: advanced
+
+support_tools:
+  - betterstack-uptime
+  - checkly
+  - betterstack-status
+  - simplebackups
+  - snaplet
+  - snyk
+  - socket
+  - gitguardian
+  - cloudflare-waf
+  - ahrefs
+  - google-search-console
+  - screaming-frog
+  - pagerduty
+  - crisp

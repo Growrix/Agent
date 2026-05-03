@@ -29,3 +29,9 @@ automation_surface:
   outbound: disabled
 
 support_stack_tier: basic
+
+support_tools:
+  - betterstack-uptime
+  - simplebackups
+  - snyk
+  - google-search-console

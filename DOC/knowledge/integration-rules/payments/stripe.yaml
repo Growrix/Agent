@@ -76,8 +76,8 @@ emits_outbound_events:
   - subscription.created
   - subscription.updated
   - subscription.canceled
-  - payment.succeeded
-  - payment.failed
+  - invoice.paid
+  - invoice.payment_failed
 ingests_inbound_events:
   - checkout.session.completed
   - customer.subscription.created

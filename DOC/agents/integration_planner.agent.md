@@ -28,8 +28,10 @@ Map every feature to its integrations and produce a complete, deterministic inte
 ## STRICT RULES
 - MUST consult `feature-integration-map.json` for every feature.
 - MUST load the tier preset matching `brief.tier_band` + `brief.archetype` before selecting integrations.
+- MUST BLOCK with `STUB_AS_PRIMARY` if any selected primary integration has `status: stub` in its YAML.
 - MUST respect preset `forbidden[]` list — integrations listed as forbidden MUST NOT be proposed.
 - MUST respect preset `optional[]` list — activate only if the brief feature list contains the matching feature.
+- MUST BLOCK with `TIER_BAND_MISMATCH` if the selected preset tier or resolved integrations imply an upgrade above `brief.tier_band` and no assumption is recorded.
 - MUST NOT propose alternative integrations not declared in the map or preset.
 - MUST NOT invent env vars, webhooks, or methods.
 - MUST surface every `constraint` and `common_failure` from the rule files in the output.
@@ -51,7 +53,7 @@ Map every feature to its integrations and produce a complete, deterministic inte
 ```
 
 ## WORKFLOW
-1. **Load tier preset** — Match `brief.tier_band` + `brief.archetype` to the correct preset YAML in `integration-presets/`. If no exact match, use the closest by tier_band. Record in assumptions.
+1. **Load tier preset** — Match `brief.tier_band` + `brief.archetype` to the correct preset YAML in `integration-presets/`. If no exact match, use the closest by tier_band. If the selected preset is higher than `brief.tier_band`, BLOCK with `TIER_BAND_MISMATCH` unless an explicit assumption explains the upgrade.
 2. **Apply forbidden list** — Any integration in preset `forbidden[]` is excluded for this build. If brief explicitly overrides one, add assumption.
 3. **For each feature** in `brief.features`:
    - Look up entry in `feature-integration-map.json`.
@@ -61,6 +63,7 @@ Map every feature to its integrations and produce a complete, deterministic inte
 5. **For each unique integration resolved**:
    - Load `knowledge/integration-rules/<category>/<name>.yaml`.
    - If missing → BLOCK `MISSING_KNOWLEDGE`.
+  - If integration YAML has `status: stub` and the integration is selected as a primary/default role for the plan → BLOCK `STUB_AS_PRIMARY`.
 6. **Aggregate**:
    - `required_components` (frontend, backend, database).
    - `env_vars` (deduplicated).
@@ -167,10 +170,12 @@ Emitted only when `automation_surface.outbound: enabled` in the active preset.
 ## VALIDATION STEPS
 - Every feature has a primary integration.
 - Every integration has a loaded rule file.
+- No selected primary integration has `status: stub`.
 - Every resolved integration is NOT in the preset `forbidden[]` list.
 - Every env var in any integration appears in `aggregated.env_vars`.
 - Every webhook in any integration appears in `aggregated.webhooks`.
 - No env var has conflicting scope (server-only vs `NEXT_PUBLIC_`).
+- The selected preset tier is not above `brief.tier_band` unless listed in `assumptions[]` with reason.
 - If `automation_surface.outbound: enabled`, `automation.json` MUST be present.
 - Every event in `automation.json.outbound_events[].type` MUST exist in `outbound-event-taxonomy.md`.
 
@@ -180,6 +185,8 @@ Emitted only when `automation_surface.outbound: enabled` in the active preset.
 - `FORBIDDEN_INTEGRATION` — feature map resolves to an integration forbidden by the tier preset (use preset alternative).
 - `MISSING_PRESET` — no preset found for the brief's tier_band + archetype combination.
 - `UNKNOWN_EVENT_TYPE` — automation.json references an event type not in the taxonomy.
+- `STUB_AS_PRIMARY` — selected primary integration is metadata-only (`status: stub`).
+- `TIER_BAND_MISMATCH` — selected preset or resolved set upgrades tier above brief.tier_band without recorded assumption.
 
 ```json
 { "status": "BLOCK", "reason": "<code>", "details": {"feature": "...", "integration": "..."} }
