@@ -114,6 +114,13 @@ DOC/
 **Evidence:** list of unexpected files (DRIFT).
 **Failure:** DRIFT (recorded, not blocking).
 
+### A.5 Audit runner covers template
+**Command:** extract every check id from this file (`### <id>`) and confirm the audit runner implements them (or that the generated audit report includes them).
+**Expected:** no template check is silently skipped by the runner.
+**Pass if:** template id set minus runner id set is empty.
+**Evidence:** `Read:audit-template ids → <count>; runner ids → <count>; missing → <list>`.
+**Failure:** BLOCKER. Any missing id invalidates a `READY` verdict.
+
 ---
 
 ## SECTION B — Reference integrity (the highest-yield section)

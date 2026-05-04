@@ -71,6 +71,22 @@ function Get-FrontmatterLoads {
   return $loads
 }
 
+function Find-FirstMatchLocation {
+  param(
+    [string]$FilePath,
+    [string]$Pattern
+  )
+
+  $m = Select-String -Path $FilePath -Pattern $Pattern -SimpleMatch -AllMatches | Select-Object -First 1
+  if (-not $m) { return "" }
+
+  $rel = $m.Path
+  if ($rel.StartsWith($RepoRoot)) {
+    $rel = $rel.Substring($RepoRoot.Length).TrimStart('\\').Replace('\\','/')
+  }
+  return "${rel}:$($m.LineNumber)"
+}
+
 $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $reportsDir = Join-Path $RepoRoot (Join-Path $OutputRoot "$timestamp/reports")
 New-DirIfMissing -Path $reportsDir
@@ -825,6 +841,53 @@ else {
 
 Add-Check -Section "F" -Id "F.3" -Name "Two-run hash match" -Status "not-applicable" -Severity "n/a" -Evidence "Bash:executor unavailable in documentation-only audit run" -Details "reason=executor-not-available"
 
+# F.4 Marketing quality fixture parity (documentation-level parity check)
+$marketingFixturePath = Join-Path $RepoRoot "DOC/validation/audit-fixtures/brief-marketing-quality-depth.json"
+$marketingExpectedPath = Join-Path $RepoRoot "DOC/validation/audit-fixtures/expected-outputs/brief-marketing-quality-depth.expected.json"
+
+if ((-not (Test-Path $marketingFixturePath)) -or (-not (Test-Path $marketingExpectedPath))) {
+  $missing = @()
+  if (-not (Test-Path $marketingFixturePath)) { $missing += "missing_fixture" }
+  if (-not (Test-Path $marketingExpectedPath)) { $missing += "missing_expected" }
+  Add-Check -Section "F" -Id "F.4" -Name "Marketing quality fixture parity" -Status "fail" -Severity "blocker" -Evidence "Read:marketing quality fixture + expected output -> missing" -Details ($missing -join ", ")
+}
+else {
+  $fixtureObj = Get-Content $marketingFixturePath -Raw | ConvertFrom-Json
+  $expectedObj = Get-Content $marketingExpectedPath -Raw | ConvertFrom-Json
+
+  $requiredBlocks = @($fixtureObj.expected_quality_contract.validation_schema_required_blocks)
+  $expectedBlocks = @($expectedObj.expected_validation_report.required_top_level_blocks)
+  $missingBlocks = @($requiredBlocks | Where-Object { $expectedBlocks -notcontains $_ })
+
+  $requiredFrontendConstraints = @($fixtureObj.expected_quality_contract.frontend_constraints_required)
+  $minPassed = @($expectedObj.expected_validation_report.constraints_min_passed)
+  $missingConstraints = @($requiredFrontendConstraints | Where-Object { $minPassed -notcontains $_ })
+
+  $modeExpected = [string]$fixtureObj.expected_quality_contract.content_library_mode
+  $modeActual = if ($expectedObj.expected_frontend_quality) { [string]$expectedObj.expected_frontend_quality.content_library_mode } else { "" }
+  $hasSectionDetail = $false
+  $routeOnlyParity = $true
+  if ($expectedObj.expected_frontend_quality) {
+    $hasSectionDetail = [bool]$expectedObj.expected_frontend_quality.page_specs_have_section_detail
+    $routeOnlyParity = [bool]$expectedObj.expected_frontend_quality.route_only_parity
+  }
+
+  $issues = @()
+  if (-not $expectedObj.expected_frontend_quality) { $issues += "missing_expected_frontend_quality" }
+  if ($missingBlocks.Count -gt 0) { $issues += ("missing_required_blocks=" + ($missingBlocks -join ",")) }
+  if ($missingConstraints.Count -gt 0) { $issues += ("missing_required_constraints=" + ($missingConstraints -join ",")) }
+  if ($modeActual -ne $modeExpected) { $issues += "content_library_mode_mismatch(expected=$modeExpected actual=$modeActual)" }
+  if ($hasSectionDetail -ne $true) { $issues += "page_specs_have_section_detail_expected_true" }
+  if ($routeOnlyParity -ne $false) { $issues += "route_only_parity_expected_false" }
+
+  if ($issues.Count -eq 0) {
+    Add-Check -Section "F" -Id "F.4" -Name "Marketing quality fixture parity" -Status "pass" -Severity "n/a" -Evidence "Read:brief-marketing-quality-depth fixture + expected -> required quality signals present"
+  }
+  else {
+    Add-Check -Section "F" -Id "F.4" -Name "Marketing quality fixture parity" -Status "fail" -Severity "blocker" -Evidence "Read:brief-marketing-quality-depth fixture + expected -> quality/parity gaps" -Details ($issues -join "; ")
+  }
+}
+
 # SECTION G
 $constraintFilesFull = Get-ChildItem -Path (Join-Path $RepoRoot "DOC/validation/constraints") -Filter *.md
 $noDetection = @()
@@ -909,6 +972,85 @@ if ($artifactProducerIssues.Count -eq 0) {
 }
 else {
   Add-Check -Section "H" -Id "H.3" -Name "Expected artifacts have producers" -Status "fail" -Severity "blocker" -Evidence "Read:expected output artifacts vs DOC/agents/_index.md map -> missing producers" -Details ($artifactProducerIssues -join "; ")
+}
+
+# H.4 Delivery classification consistency
+$orch = Join-Path $RepoRoot "DOC/agents/execution_orchestrator.agent.md"
+$qg = Join-Path $RepoRoot "DOC/core/quality-gates.md"
+$acc = Join-Path $RepoRoot "DOC/validation/checklists/execution-acceptance-checklist.md"
+
+$policyIssues = @()
+
+function Require-Pattern {
+  param(
+    [string]$FilePath,
+    [string]$Label,
+    [string]$Pattern
+  )
+  if (-not (Select-String -Path $FilePath -Pattern $Pattern -SimpleMatch -Quiet)) {
+    $script:policyIssues += "$Label missing pattern: $Pattern"
+  }
+}
+
+if ((-not (Test-Path $orch)) -or (-not (Test-Path $qg)) -or (-not (Test-Path $acc))) {
+  $missing = @()
+  if (-not (Test-Path $orch)) { $missing += "missing_execution_orchestrator" }
+  if (-not (Test-Path $qg)) { $missing += "missing_quality_gates" }
+  if (-not (Test-Path $acc)) { $missing += "missing_execution_acceptance_checklist" }
+  Add-Check -Section "H" -Id "H.4" -Name "Delivery classification consistency" -Status "fail" -Severity "blocker" -Evidence "Read:delivery classification sources -> missing" -Details ($missing -join ", ")
+}
+else {
+  $enumTokens = @("production_candidate","baseline_prototype","blocked")
+
+  Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern "delivery_class"
+  foreach ($t in $enumTokens) { Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern $t }
+  Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern "delivery_class=blocked"
+  Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern "status=failed"
+
+  Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern "delivery_class"
+  foreach ($t in $enumTokens) { Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern $t }
+  Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern "delivery_class=blocked"
+  Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern "status=failed"
+
+  Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern "delivery_class"
+  foreach ($t in $enumTokens) { Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern $t }
+  Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern 'delivery_class is `blocked`'
+  Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern 'status must be `failed`'
+
+  if ($policyIssues.Count -eq 0) {
+    $orchLoc = Find-FirstMatchLocation -FilePath $orch -Pattern "delivery_class"
+    $qgLoc = Find-FirstMatchLocation -FilePath $qg -Pattern "delivery_class"
+    $accLoc = Find-FirstMatchLocation -FilePath $acc -Pattern "DELIVERY CLASS RULE"
+    Add-Check -Section "H" -Id "H.4" -Name "Delivery classification consistency" -Status "pass" -Severity "n/a" -Evidence "Grep:delivery_class policy -> $orchLoc; $qgLoc; $accLoc"
+  }
+  else {
+    Add-Check -Section "H" -Id "H.4" -Name "Delivery classification consistency" -Status "fail" -Severity "blocker" -Evidence "Grep:delivery_class policy -> missing/contradictory" -Details ($policyIssues -join "; ")
+  }
+}
+
+# A.5 Audit template coverage (prevent false READY when template grows)
+$templatePath = Join-Path $RepoRoot "DOC/validation/audit-template.md"
+if (-not (Test-Path $templatePath)) {
+  Add-Check -Section "A" -Id "A.5" -Name "Audit template coverage" -Status "fail" -Severity "blocker" -Evidence "Read:DOC/validation/audit-template.md -> missing" -Details "missing_audit_template"
+}
+else {
+  $templateRaw = Get-Content $templatePath -Raw
+  $templateIds = [regex]::Matches($templateRaw, '(?m)^###\s+([A-H]\.\d+)\b') | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
+  $runnerIds = @()
+  foreach ($s in $sectionOrder) {
+    foreach ($c in $sections[$s].checks) {
+      $runnerIds += $c.id
+    }
+  }
+  $runnerIds = $runnerIds | Sort-Object -Unique
+
+  $missing = @($templateIds | Where-Object { $_ -ne "A.5" -and ($runnerIds -notcontains $_) })
+  if ($missing.Count -eq 0) {
+    Add-Check -Section "A" -Id "A.5" -Name "Audit template coverage" -Status "pass" -Severity "n/a" -Evidence "Read:audit-template check IDs -> template=$($templateIds.Count), runner=$($runnerIds.Count), missing=0"
+  }
+  else {
+    Add-Check -Section "A" -Id "A.5" -Name "Audit template coverage" -Status "fail" -Severity "blocker" -Evidence "Read:audit-template check IDs -> missing runner implementations" -Details ("missing=" + ($missing -join ", "))
+  }
 }
 
 $sectionsPassed = ($sectionOrder | Where-Object { $sections[$_].status -eq "passed" }).Count
