@@ -40,6 +40,16 @@ Integration YAMLs declare `required_skills[]` naming the skills they need. The c
 | frontmatter-schema-validation-pattern | system_architect audit section C |
 | synthetic-fixture-smoke-test-pattern | system_architect smoke section H |
 | determinism-diff-pattern | system_architect determinism section F |
+| onboarding-checklist-pattern | userflow, appcues, onboarding flows |
+| feature-tour-pattern | userflow, appcues |
+| empty-state-pattern | first-run app surfaces |
+| notification-preferences-pattern | knock, novu, onesignal |
+| activity-feed-pattern | activity timeline surfaces |
+| ai-citation-pattern | openai, rag answers |
+| ai-regenerate-feedback-pattern | openai chat UX |
+| ai-streaming-with-tool-use-pattern | openai tool-calling UX |
+| ai-cost-meter-pattern | openai usage UI, helicone |
+| comments-mentions-pattern | liveblocks collaboration |
 
 ## Usage in codegen
 

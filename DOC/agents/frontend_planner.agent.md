@@ -15,6 +15,20 @@ loads:
   - DOC/knowledge/frontend-rules/page-archetype-rules.md
   - DOC/knowledge/frontend-rules/responsive-rules.md
   - DOC/knowledge/frontend-rules/accessibility-rules.md
+   - DOC/knowledge/frontend-rules/onboarding-rules.md
+   - DOC/knowledge/frontend-rules/in-app-help-rules.md
+   - DOC/knowledge/frontend-rules/empty-state-rules.md
+   - DOC/knowledge/frontend-rules/multi-tenant-ux-rules.md
+   - DOC/knowledge/frontend-rules/notification-ux-rules.md
+   - DOC/knowledge/frontend-rules/activity-feed-rules.md
+   - DOC/knowledge/frontend-rules/saved-views-rules.md
+   - DOC/knowledge/frontend-rules/undo-revert-rules.md
+   - DOC/knowledge/frontend-rules/ai-ux-rules.md
+   - DOC/knowledge/frontend-rules/comments-mentions-rules.md
+   - DOC/knowledge/ux-patterns/*.md
+   - DOC/knowledge/skills/onboarding-checklist-pattern.md
+   - DOC/knowledge/skills/feature-tour-pattern.md
+   - DOC/knowledge/skills/empty-state-pattern.md
   - DOC/validation/constraints/frontend-constraints.md
   - DOC/execution/spec-rules/master-ui-architecture-spec.md
   - DOC/execution/spec-rules/design-system-spec.md
@@ -33,6 +47,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 
 ## RESPONSIBILITIES
 1. Consume `brief.json` produced by `intake_strategist`.
+2. Resolve dynamic UX requirements (real-time, tables, charts, command flows, onboarding, collaboration, AI UX) from loaded pattern/rule files.
 2. Orchestrate sub-planners in deterministic order:
    - `ux_director`
    - `design_system_planner`
@@ -44,6 +59,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 3. Emit a complete docs-first frontend artifact set under `docs/frontend/`.
 4. Emit machine-readable frontend summary for `plan.json` aggregation.
 5. Enforce frontend constraints F1..F12 before returning `status=passed`.
+6. Ensure every selected UX pattern declares states, accessibility behavior, and performance boundaries.
 
 ## STRICT RULES
 - MUST follow all frontend rule files loaded above.
@@ -52,6 +68,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 - MUST plan content, sections, interaction, states, responsive behavior, and motion before build.
 - MUST include visible Home navigation path on all primary surfaces.
 - MUST remain generic and reusable across industries and projects.
+- MUST map feature-driven UX patterns into page specs when the brief includes matching capabilities (for example: data tables, notifications, onboarding, collaboration, AI interactions).
 
 ## INPUT FORMAT
 ```json
@@ -80,14 +97,15 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 6. **CONTENT STAGE** — run `content_planner` to emit:
    - `docs/frontend/content-library.md`
    - `docs/frontend/content.<locale>.json`
-7. **INTERACTION STAGE** — run `interaction_planner` to emit:
+7. **UX PATTERN STAGE** — resolve and apply loaded UX patterns and SaaS UX rules to component/page planning.
+8. **INTERACTION STAGE** — run `interaction_planner` to emit:
    - `docs/frontend/interaction-matrix.md`
-8. **PAGE STAGE** — run `page_planner` to emit:
+9. **PAGE STAGE** — run `page_planner` to emit:
    - `docs/frontend/pages/*.md`
-9. **HUMAN INDEX STAGE** — emit:
+10. **HUMAN INDEX STAGE** — emit:
    - `docs/frontend/README.md` (human-first navigation)
-10. **FRONTEND VALIDATION** — evaluate F1..F12 and output pass/fail matrix.
-11. **SUMMARY EMIT** — emit `frontend.json` summary block for `plan.json` aggregation.
+11. **FRONTEND VALIDATION** — evaluate F1..F12 and output pass/fail matrix.
+12. **SUMMARY EMIT** — emit `frontend.json` summary block for `plan.json` aggregation.
 
 ## OUTPUT FORMAT
 ```yaml

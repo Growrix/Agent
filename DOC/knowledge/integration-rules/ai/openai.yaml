@@ -62,6 +62,10 @@ required_skills:
   - streaming-llm-response-pattern
   - ai-moderation-precheck-pattern
   - ai-cost-tracking-pattern
+  - ai-citation-pattern
+  - ai-regenerate-feedback-pattern
+  - ai-streaming-with-tool-use-pattern
+  - ai-cost-meter-pattern
 
 common_failures:
   - api_key_exposed_in_client_bundle

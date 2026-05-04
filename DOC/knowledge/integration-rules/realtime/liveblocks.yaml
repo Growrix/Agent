@@ -67,6 +67,7 @@ required_skills:
   - presence-tracking-pattern
   - websocket-reconnect-pattern
   - optimistic-ui-pattern
+  - comments-mentions-pattern
 
 common_failures:
   - auth_endpoint_allows_unscoped_room_access
