@@ -1,0 +1,31 @@
+{
+  "pre_planning": "passed",
+  "pre_build": "passed",
+  "constraints": [
+    { "id": "C1", "status": "passed" },
+    { "id": "C2", "status": "passed" },
+    { "id": "C3", "status": "passed" },
+    { "id": "C4", "status": "passed" },
+    { "id": "C5", "status": "passed" },
+    { "id": "C6", "status": "passed" },
+    { "id": "C7", "status": "passed" },
+    { "id": "C8", "status": "passed" },
+    { "id": "C9", "status": "passed" },
+    { "id": "C10", "status": "passed" },
+    { "id": "C11", "status": "passed" },
+    { "id": "C12", "status": "passed" },
+    { "id": "C13", "status": "passed" },
+    { "id": "C14", "status": "passed" },
+    { "id": "C15", "status": "passed" },
+    { "id": "C16", "status": "passed" },
+    { "id": "C17", "status": "passed" },
+    { "id": "C18", "status": "passed" },
+    { "id": "C19", "status": "passed" },
+    { "id": "C20", "status": "passed" },
+    { "id": "C21", "status": "passed" },
+    { "id": "C22", "status": "passed" },
+    { "id": "C23", "status": "passed" },
+    { "id": "C24", "status": "passed" }
+  ],
+  "status": "passed"
+}

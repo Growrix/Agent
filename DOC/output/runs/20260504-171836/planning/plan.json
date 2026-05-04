@@ -1,0 +1,250 @@
+{
+  "features": [
+    "marketing_pages",
+    "transactional_emails",
+    "analytics",
+    "ai_chat"
+  ],
+  "tier_band": "standard",
+  "preset_used": "custom-local-services-au",
+  "integrations": {
+    "marketing_pages": "sanity",
+    "transactional_emails": "resend",
+    "analytics": "posthog",
+    "ai_chat": "openai"
+  },
+  "architecture_template": "content_saas",
+  "frontend": {
+    "framework": "nextjs",
+    "project_archetype": "marketing_site",
+    "visual_archetype": "local-business-trust",
+    "site_map": [
+      "/",
+      "/services",
+      "/services/[slug]",
+      "/areas",
+      "/areas/[slug]",
+      "/reviews",
+      "/about",
+      "/contact",
+      "/quote",
+      "/book",
+      "/faq",
+      "/blog",
+      "/privacy",
+      "/terms"
+    ],
+    "floating_actions": {
+      "placement": "bottom-right",
+      "stack_order": [
+        "call",
+        "whatsapp",
+        "ai_chat"
+      ],
+      "desktop_behavior": "expanded rail on hover, icon-only at rest",
+      "mobile_behavior": "always-visible compact dock",
+      "actions": {
+        "call": {
+          "type": "deep_link",
+          "target": "tel:+61XXXXXXXXX"
+        },
+        "whatsapp": {
+          "type": "deep_link",
+          "target": "https://wa.me/61XXXXXXXXX"
+        },
+        "ai_chat": {
+          "type": "in_app_widget",
+          "target": "/api/chat"
+        }
+      }
+    },
+    "core_sections": [
+      "emergency hero with response-time promise",
+      "services grid with transparent inclusions",
+      "before-after gallery",
+      "live suburb coverage proof",
+      "review wall with source attribution",
+      "licensed-insured trust strip",
+      "quote funnel with postcode-first UX",
+      "faq for emergency + pricing objections"
+    ],
+    "interactive_modules": [
+      "instant quote estimator",
+      "service urgency selector",
+      "suburb eligibility checker",
+      "sticky call bar",
+      "AI troubleshooting assistant"
+    ]
+  },
+  "backend": {
+    "runtime": "nextjs_route_handlers",
+    "routes": [
+      "/api/chat",
+      "/api/leads",
+      "/api/webhooks/sanity",
+      "/api/health"
+    ],
+    "services": [
+      "lead_intake_service",
+      "email_dispatch_service",
+      "ai_assistant_service",
+      "sanity_revalidation_service"
+    ],
+    "webhook_requirements": [
+      "verify_sanity_webhook_secret",
+      "idempotent_revalidation_events"
+    ]
+  },
+  "devops": {
+    "platform": "vercel",
+    "environments": [
+      "development",
+      "preview",
+      "production"
+    ],
+    "ci_gates": [
+      "lint_zero_warnings",
+      "typecheck_zero_errors",
+      "unit_and_integration_tests",
+      "build_success"
+    ],
+    "ops": {
+      "monitoring": [
+        "betterstack-uptime"
+      ],
+      "error_tracking": [
+        "sentry"
+      ],
+      "alerts": [
+        "5xx_spike",
+        "chat_route_latency_p95",
+        "lead_submission_failures"
+      ]
+    }
+  },
+  "testing": {
+    "strategy": "pyramid",
+    "coverage_thresholds": {
+      "lines": 85,
+      "branches": 80
+    },
+    "critical_paths": [
+      "call_click_from_hero",
+      "whatsapp_click_from_fab",
+      "quote_submission_success",
+      "ai_chat_first_response_under_2s",
+      "sanity_publish_revalidation"
+    ],
+    "ci_smoke": [
+      "/",
+      "/services",
+      "/contact",
+      "/api/health"
+    ]
+  },
+  "security": {
+    "controls": [
+      "csp_enforced",
+      "rate_limit_public_post_routes",
+      "zod_validation_all_inputs",
+      "webhook_signature_verification",
+      "pii_tagging_for_lead_payloads"
+    ],
+    "privacy": {
+      "region": "AU",
+      "requirements": [
+        "privacy_policy_disclosure",
+        "consent_notice_for_ai_chat",
+        "minimum_data_retention_for_leads"
+      ]
+    }
+  },
+  "performance": {
+    "targets": {
+      "lcp_ms": 2500,
+      "inp_ms": 200,
+      "cls": 0.1,
+      "api_chat_first_token_ms": 2000
+    },
+    "budgets": {
+      "home_js_kb_gzip": 180,
+      "route_js_kb_gzip": 220
+    },
+    "strategy": [
+      "image_optimization_with_responsive_sizes",
+      "route-level_cache_policies",
+      "defer_non_critical_scripts",
+      "server-side_streaming_for_ai_chat"
+    ]
+  },
+  "required_skills": [
+    "webhook-signature-verification",
+    "cache-invalidation-on-write-pattern",
+    "streaming-llm-response-pattern",
+    "ai-moderation-precheck-pattern",
+    "ai-cost-tracking-pattern",
+    "form-spam-guard-pattern"
+  ],
+  "support_stack": [
+    {
+      "role": "uptime_monitor",
+      "tool": "betterstack-uptime",
+      "yaml": "knowledge/support-tools/uptime/betterstack-uptime.yaml"
+    },
+    {
+      "role": "error_tracking",
+      "tool": "sentry",
+      "yaml": "knowledge/integration-rules/observability/sentry.yaml"
+    },
+    {
+      "role": "backup",
+      "tool": "simplebackups",
+      "yaml": "knowledge/support-tools/backups/simplebackups.yaml"
+    },
+    {
+      "role": "security_scanning",
+      "tool": "snyk",
+      "yaml": "knowledge/support-tools/security-ongoing/snyk.yaml"
+    }
+  ],
+  "outbound_events": [
+    {
+      "type": "lead.created",
+      "source": "POST /api/leads"
+    }
+  ],
+  "data_flows": [
+    "blog-flow.md",
+    "email-flow.md",
+    "analytics-flow.md",
+    "ai-chat-flow.md"
+  ],
+  "env_vars": [
+    "NEXT_PUBLIC_SANITY_PROJECT_ID",
+    "NEXT_PUBLIC_SANITY_DATASET",
+    "SANITY_API_READ_TOKEN",
+    "SANITY_WEBHOOK_SECRET",
+    "RESEND_API_KEY",
+    "RESEND_FROM_EMAIL",
+    "NEXT_PUBLIC_POSTHOG_KEY",
+    "NEXT_PUBLIC_POSTHOG_HOST",
+    "OPENAI_API_KEY",
+    "OPENAI_MODEL"
+  ],
+  "webhooks": [
+    "/api/webhooks/sanity"
+  ],
+  "dashboards": [
+    "sanity_project",
+    "resend_domain_and_logs",
+    "posthog_project",
+    "openai_usage",
+    "vercel_deployments"
+  ],
+  "dns": [
+    "configure_apex_and_www_to_vercel",
+    "add_domain_verification_records",
+    "route_dns_via_cloudflare"
+  ],
+  "lock_status": "LOCKED"
+}

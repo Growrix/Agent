@@ -1,0 +1,28 @@
+{
+  "user_request": "Plan a modern, interactive plumbing service website for Australia with call, WhatsApp, and AI chat assistant floating icons at bottom-right.",
+  "client_brief": {
+    "brand_name": "UNKNOWN",
+    "brand_voice": "trustworthy, urgent-aware, locally rooted",
+    "target_locale": "en-AU",
+    "target_regions": [
+      "Sydney",
+      "Melbourne",
+      "Brisbane",
+      "Perth",
+      "Adelaide"
+    ]
+  },
+  "constraints": {
+    "deployment_platform": "vercel",
+    "database": "postgres"
+  },
+  "resolved_scope": {
+    "industry_pack": "local-services",
+    "business_vertical": "plumbing",
+    "contact_channels": [
+      "call",
+      "whatsapp",
+      "ai_chat"
+    ]
+  }
+}
