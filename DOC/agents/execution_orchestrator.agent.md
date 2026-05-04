@@ -41,6 +41,10 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - MUST fail execution if any planned frontend component, route, or integration artifact is missing from emitted code.
 - MUST fail execution if test coverage is placeholder-only (for example echo/no-op scripts) for declared critical paths.
 - MUST fail execution if frontend artifacts required by frontend_planner are absent when frontend scope is present.
+- MUST set `status=failed` (not partial-success) when any execution acceptance checklist item fails.
+- MUST emit `delivery_class` as one of: `production_candidate`, `baseline_prototype`, `blocked`.
+- MUST set `delivery_class=blocked` whenever `quality_gate=failed` or any blocker failure code is present.
+- MUST NOT classify output as `production_candidate` if any parity, placeholder, depth, semantic, or testing gate failed.
 
 ## INPUT FORMAT
 ```json
@@ -62,7 +66,8 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 4. Run ADR emission (when required).
 5. Run runbook emission.
 6. Run codegen flow.
-7. Run execution acceptance checklist (plan/spec/code parity + integration completeness + frontend artifact presence).
+7. Run execution acceptance checklist (plan/spec/code parity + integration completeness + frontend artifact presence + frontend depth + semantic parity + content-key parity).
+8. If any checklist line item fails, stop normal progression and classify delivery as `blocked`.
 8. Run post-build environment setup flow.
 9. Verify local startup using `npm run dev` and smoke probes.
 10. Run post-codegen validation + quality gate.
@@ -79,7 +84,8 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 ```json
 {
   "run_id": "<timestamp>",
-  "status": "success|partial|failed",
+  "status": "success|failed",
+  "delivery_class": "production_candidate|baseline_prototype|blocked",
   "specs_emitted": ["..."],
   "codegen_completed": true,
   "quality_gate": "passed|failed",
@@ -103,6 +109,9 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - Confirm tests are non-placeholder and cover declared critical paths (unit/integration/e2e as applicable).
 - Confirm `execution_summary.json` exists and has `status` field set.
 - Confirm no output artifacts exist outside `DOC/output/runs/<timestamp>/`.
+- Confirm `delivery_class` is emitted and consistent with gate outcomes.
+- Confirm any failed acceptance item forces `status=failed` and `delivery_class=blocked`.
+- Confirm `status=success` is emitted only when all acceptance checks and quality gates pass.
 
 ## FAILURE MODES
 - EXECUTION_BLOCKED_INVALID_PLAN

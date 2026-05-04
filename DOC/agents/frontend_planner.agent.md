@@ -69,6 +69,9 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 - MUST include visible Home navigation path on all primary surfaces.
 - MUST remain generic and reusable across industries and projects.
 - MUST map feature-driven UX patterns into page specs when the brief includes matching capabilities (for example: data tables, notifications, onboarding, collaboration, AI interactions).
+- MUST NOT emit summary-only page specs; every public page spec must include section-level composition and state detail.
+- MUST NOT emit summary-only content libraries; content output must be key-based and implementation-ready.
+- MUST block with `FRONTEND_SPEC_INCOMPLETE` when page specs or content artifacts are too shallow for codegen.
 
 ## INPUT FORMAT
 ```json
@@ -144,6 +147,8 @@ frontend_constraints:
 - Frontend constraints F1..F12 are all passed.
 - No unresolved TODO/placeholder remains in frontend specs.
 - Mobile parity and reduced-motion coverage are explicitly declared.
+- `docs/frontend/pages/*.md` contain section-level composition (purpose, components, states, responsive, motion, conversion path), not single-line summaries.
+- `docs/frontend/content-library.md` and locale JSON are keyed and route/component scoped, not bullet summaries.
 
 ## FAILURE MODES
 - `FRONTEND_SPEC_INCOMPLETE`

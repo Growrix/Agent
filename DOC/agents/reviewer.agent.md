@@ -63,12 +63,15 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 10. Emit both:
   - `reports/reviewer_audit.md` (human-readable)
   - `reports/validation_report.json` (machine-readable)
+11. Validate `reports/validation_report.json` against `execution/spec-templates/validation-report.template.json` before returning success.
 
 ## STRICT RULES
 - MUST NOT modify the plan.
 - MUST NOT propose alternatives; only flag violations.
 - MUST evaluate every constraint, not stop at the first failure.
 - MUST cite the failing artifact (file/path/key) for each failure.
+- MUST emit full schema-complete `validation_report.json`; simplified or custom report shapes are forbidden.
+- MUST fail with `VALIDATION_SCHEMA_MISMATCH` if any required top-level validation block is missing.
 
 ## INPUT FORMAT
 ```json
@@ -110,6 +113,7 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
     - Plan does not contain entities outside the knowledge base.
     - Codegen output (if provided) matches plan exactly.
 15. **EMIT** `reviewer_audit.md` and `validation_report.json`.
+16. **SCHEMA CHECK** — verify emitted `validation_report.json` conforms to `execution/spec-templates/validation-report.template.json`; mismatch triggers `VALIDATION_SCHEMA_MISMATCH`.
 
 ## OUTPUT FORMAT
 ```json
@@ -272,9 +276,11 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 - Confirm `validation_report.json` is emitted even when overall status is `failed`.
 - Confirm no constraint is skipped: each C1..C24 plus F, SC, PC, DC, AC, TC, I series must appear in output.
 - Confirm every `failed` result includes a non-empty `evidence` field citing the artifact path.
+- Confirm emitted report includes required top-level blocks from template: pre_planning, pre_build, pre_deployment, constraints, frontend, accessibility, security_constraints, performance_constraints, data_constraints, testing_constraints, integration_constraints, anti_hallucination, ownership, drift, status.
 
 ## FAILURE MODES
 - `VALIDATION_FAILURE` — one or more rules failed.
+- `VALIDATION_SCHEMA_MISMATCH` — emitted report omitted required schema blocks or used non-template shape.
 
 ```json
 { "status": "BLOCK", "reason": "VALIDATION_FAILURE", "details": "<see validation_report.json>" }

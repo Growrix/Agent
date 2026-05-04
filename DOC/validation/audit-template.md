@@ -327,6 +327,12 @@ Combined with B.8.
 **Failure:** BLOCKER per mismatch with the drifting field reported.
 **Note:** if the auditor cannot execute sub-planners, mark this check `not-applicable: reason=executor-not-available`.
 
+### F.4 Marketing quality fixture parity
+**Command:** run `brief-marketing-quality-depth.json` through the same chain used in F.1 and compare to `expected-outputs/brief-marketing-quality-depth.expected.json`.
+**Pass if:** expected frontend quality signals are present (depth/content-key/schema completeness expectations).
+**Evidence:** `<fixture> → quality_keys_present=<list>, drift=[<keys>]`.
+**Failure:** BLOCKER when quality fixture expectations are absent or drift.
+
 ---
 
 ## SECTION G — Constraint evaluability
@@ -367,6 +373,12 @@ For each fixture, confirm every artifact in `expected-outputs/<fixture>.expected
 **Pass if:** every expected artifact has a producer.
 **Evidence:** `<fixture>:<artifact> → producer=<agent>`.
 **Failure:** BLOCKER per missing producer.
+
+### H.4 Delivery classification consistency
+**Command:** inspect `DOC/agents/execution_orchestrator.agent.md`, `DOC/core/quality-gates.md`, and `DOC/validation/checklists/execution-acceptance-checklist.md`.
+**Pass if:** all three enforce equivalent delivery classification semantics (`production_candidate|baseline_prototype|blocked`, blocker->blocked, blocked->failed status).
+**Evidence:** `<path>#<line> → <matched policy summary>`.
+**Failure:** BLOCKER if any source is missing or contradictory.
 
 ---
 

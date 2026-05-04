@@ -40,3 +40,18 @@ Define non-negotiable acceptance gates that must pass before an agent may mark w
 ## QG8 — NON-PLACEHOLDER TEST GATE
 - Placeholder tests (for example echo/no-op scripts) are forbidden for declared critical paths.
 - Execution MUST include runnable test evidence for critical paths declared in planning artifacts.
+
+## QG9 — SEMANTIC PARITY GATE
+- Execution MUST verify semantic parity between plan/spec/code, not only file existence.
+- If a spec promises behavior (for example filters, calculators, carousels, coverage checks, dynamic proof blocks), code MUST implement that behavior contract.
+- Static placeholders that mimic planned behavior are blocking failures.
+
+## QG10 — FRONTEND DEPTH + CONTENT KEY GATE
+- Public marketing pages MUST satisfy section-depth rules from frontend constraints unless explicitly exempt.
+- Content libraries MUST be implementation-grade (keyed and route/component scoped), not summary bullets.
+- No inline user-facing copy in JSX/TSX where content keys are required by frontend constraints.
+
+## QG11 — DELIVERY CLASSIFICATION GATE
+- Every execution summary MUST emit `delivery_class` as one of `production_candidate|baseline_prototype|blocked`.
+- Any blocker failure forces `delivery_class=blocked` and `status=failed`.
+- `production_candidate` is forbidden unless all applicable quality gates pass.

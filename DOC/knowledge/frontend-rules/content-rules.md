@@ -6,6 +6,12 @@ The content layer is the source of truth for every visible word in the UI. Compo
 
 The content_planner emits `docs/frontend/content-library.md` and a machine-readable `docs/frontend/content.<locale>.json` per locale.
 
+Minimum depth requirements for implementation-ready output:
+- The locale JSON MUST include route-scoped key groups for every public route in scope.
+- The locale JSON MUST include component-scoped key groups for shared interactive components.
+- `content-library.md` MUST document key namespaces and ownership by route/component; summary bullet lists are invalid.
+- If a route exists in planning but has no route-scoped content key group, planning MUST BLOCK.
+
 ### Naming convention
 
 Keys are dot-notated, namespaced by surface and component:
@@ -166,5 +172,10 @@ The content_planner emits per page:
 - Hardcoded English strings inside JSX/TSX (other than third-party labels we cannot translate, which require a documented exception).
 - Concatenated strings ("`Hello, ${name}!`") instead of templated keys.
 - Stringly-typed status values that double as user-facing copy.
+
+## Content readiness gate
+
+- Content output is considered `implementation-ready` only when route and component key maps are complete for all non-exempt public surfaces.
+- Summary-only content output is considered `planning-incomplete` and MUST block codegen handoff.
 
 The reviewer enforces via constraint **F5**.

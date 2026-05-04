@@ -64,6 +64,7 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 - MUST NOT proceed past any stage with unresolved BLOCKs.
 - MUST NOT invent features, integrations, or env vars.
 - MUST NOT modify the plan after LOCK.
+- MUST NOT set `lock_status=LOCKED` unless reviewer output conforms to `execution/spec-templates/validation-report.template.json`.
 
 ## INPUT FORMAT
 ```json
@@ -100,7 +101,8 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 15. **ATTACH QUALITY GATES** — include zero-problem, env readiness, runtime bootstrap, and CI gate expectations.
 16. **PRE-BUILD CHECKLIST** — run `validation/checklists/pre-build-checklist.md`. BLOCK on failure.
 17. **REVIEWER** — invoke `reviewer.agent.md`. BLOCK on any failed constraint.
-18. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
+18. **VALIDATION SCHEMA CHECK** — ensure `validation_report.json` includes the full reviewer schema (C/F/AC/SC/PC/DC/TC/I blocks and required checklist blocks). Missing blocks → BLOCK `VALIDATION_SCHEMA_MISMATCH`.
+19. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
 
 ## OUTPUT FORMAT
 Three artifacts, in machine-readable form:
@@ -189,6 +191,7 @@ Three artifacts, in machine-readable form:
 - `MISSING_KNOWLEDGE` — feature or integration not in knowledge base.
 - `NO_MATCHING_TEMPLATE` — no template covers required integrations.
 - `VALIDATION_FAILURE` — checklist or constraint failed.
+- `VALIDATION_SCHEMA_MISMATCH` — reviewer output shape did not match template requirements.
 
 On any failure, emit:
 ```json

@@ -110,3 +110,23 @@ If any check fails, regenerate the file.
 
 ## CG23 — DEV STARTUP READINESS
 - Generated projects MUST include scripts so `npm run dev` starts the app from project root after setup.
+
+## CG24 — CONTENT-KEY ENFORCEMENT
+- User-facing copy MUST resolve through the planned content library keys when frontend constraints require key-based content.
+- Hardcoded UI copy in JSX/TSX is forbidden unless marked as documented third-party exception.
+- If content keys are missing, codegen MUST BLOCK with `EXECUTION_DRIFT` rather than fallback to inline copy.
+
+## CG25 — FRONTEND DEPTH MINIMUMS
+- For non-exempt public pages, generated composition MUST satisfy required section-depth posture from frontend constraints.
+- List-only implementations for trust-critical pages (services, reviews, proof) are forbidden when richer planned sections exist.
+- Placeholder visual shells (for example empty media boxes) are forbidden for planned real-content surfaces.
+
+## CG26 — SEMANTIC PARITY ENFORCEMENT
+- If plan/spec declares an interactive behavior, codegen MUST emit real implementation wiring for that behavior.
+- If plan/spec declares CMS-backed data, codegen MUST emit data fetch/query bindings and not static-only placeholder arrays.
+- Any semantic mismatch MUST fail generation with `PLAN_SPEC_CODE_MISMATCH`.
+
+## CG27 — DELIVERY CLASSIFICATION OUTPUT
+- Codegen execution summary MUST include `delivery_class`.
+- `delivery_class=production_candidate` is allowed only when all execution acceptance gates pass.
+- Any blocker gate failure MUST force `delivery_class=blocked` and overall execution `status=failed`.

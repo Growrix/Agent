@@ -9,6 +9,8 @@ Hard acceptance gate between codegen and final success status. If any check fail
 - [ ] Every integration in plan has required generated artifacts (client/service/webhook) present.
 - [ ] Every webhook in plan appears as an implemented route.
 - [ ] Every env var in plan appears in src/env.ts validation and ENV.example.
+- [ ] Every page-level promise in build-plan/specs has a corresponding implemented surface (not just route existence).
+- [ ] Every declared critical conversion path in planning has matching page wiring and implementation primitives.
 
 ## FRONTEND QUALITY PARITY
 - [ ] Frontend planner artifact bundle exists when frontend scope is present:
@@ -24,6 +26,21 @@ Hard acceptance gate between codegen and final success status. If any check fail
 - [ ] No hardcoded page-level placeholder copy where content keys are required.
 - [ ] Motion declarations exist for key interactive surfaces and include reduced-motion fallback.
 - [ ] Form specs map to implemented zod schemas and submission handlers.
+- [ ] No user-facing inline copy in JSX/TSX where content-library keys are required (documented third-party exceptions only).
+- [ ] Content library is implementation-ready (keyed entries by section/component), not summary bullets.
+- [ ] Per-page specs include section-level composition detail, conversion paths, and state declarations.
+
+## FRONTEND DEPTH GATE
+- [ ] Every non-exempt public page implements a full section architecture (header, hero, value, proof, conversion, supporting content, footer).
+- [ ] Trust-led pages include real trust signals (compliance data slots, proof blocks, and clear contact pathways).
+- [ ] Media-heavy sections use real media binding contracts (CMS/data source) instead of visual placeholder shells.
+- [ ] Service, review, and proof pages include meaningful narrative and decision-support content (not just card lists).
+
+## SEMANTIC PARITY GATE
+- [ ] If plan/spec says a surface is interactive (filters, carousel, map, checker, estimator), implementation provides the interaction contract.
+- [ ] If plan/spec says a page is CMS-backed, implementation uses data modules/queries and not static hardcoded arrays.
+- [ ] If plan/spec calls for proof mechanisms (reviews aggregate, case outcomes), implementation includes data-backed proof rendering.
+- [ ] If plan/spec declares local-business trust posture, implementation includes trust-copy blocks in hero/utility/footer surfaces.
 
 ## TESTING + RUNTIME
 - [ ] Test scripts are real (no placeholder echo/no-op scripts).
@@ -35,6 +52,13 @@ Hard acceptance gate between codegen and final success status. If any check fail
 ## REPORTING
 - [ ] execution_summary.json includes explicit pass/fail evidence per checklist section.
 - [ ] environment_setup_report.json includes exact blocker details when failed.
+- [ ] execution_summary.json includes `delivery_class` and its rationale.
+
+## DELIVERY CLASS RULE
+- [ ] delivery_class is `production_candidate` only when every applicable gate passes.
+- [ ] delivery_class is `baseline_prototype` only when non-blocking advisories remain and no blocker check fails.
+- [ ] delivery_class is `blocked` when any blocker gate fails.
+- [ ] status must be `failed` whenever delivery_class is `blocked`.
 
 ## FAILURE CODES
 - EXECUTION_ACCEPTANCE_FAILED
