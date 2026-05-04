@@ -1,0 +1,53 @@
+{
+  "run_id": "20260504-plumber",
+  "status": "partial",
+  "specs_emitted": [
+    "DOC/output/runs/20260504-plumber/specs/plan.json",
+    "DOC/output/runs/20260504-plumber/specs/decisions.json",
+    "DOC/output/runs/20260504-plumber/specs/validation_report.json"
+  ],
+  "codegen_completed": true,
+  "quality_gate": "failed",
+  "failure_mode": "EXECUTION_ACCEPTANCE_FAILED",
+  "artifacts": {
+    "specs": "DOC/output/runs/20260504-plumber/specs/",
+    "reports": "DOC/output/runs/20260504-plumber/reports/",
+    "codegen": "DOC/output/runs/20260504-plumber/codegen/"
+  },
+  "acceptance_checklist": {
+    "plan_spec_code_parity": {
+      "routes_in_plan_exist": "partial",
+      "components_in_specs_exist": "passed",
+      "integrations_have_artifacts": "failed",
+      "webhooks_implemented": "partial",
+      "env_vars_validated_and_exampled": "failed"
+    },
+    "frontend_quality_parity": {
+      "frontend_bundle_exists": "passed",
+      "no_page_placeholder_copy": "failed",
+      "motion_plus_reduced_motion": "passed",
+      "forms_map_to_zod_and_handlers": "failed"
+    },
+    "testing_runtime": {
+      "real_test_scripts": "passed",
+      "critical_paths_have_tests": "failed",
+      "build_passes": "passed",
+      "dev_starts": "passed",
+      "smoke_probes": "passed"
+    },
+    "reporting": {
+      "execution_summary_emitted": "passed",
+      "environment_setup_report_emitted": "passed"
+    }
+  },
+  "evidence": {
+    "build": "next build passed",
+    "smoke": [
+      "GET / -> 200",
+      "GET /emergency -> 200",
+      "GET /quote -> 200",
+      "GET /api/health -> 200"
+    ],
+    "tests": "vitest 2/2 passing"
+  }
+}

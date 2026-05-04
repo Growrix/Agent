@@ -1,0 +1,93 @@
+{
+  "decisions_version": "1.0",
+  "generated_at": "2026-05-04T18:21:00+10:00",
+  "branch": "Plumber_test",
+
+  "feature_to_integration": {
+    "marketing_pages":  "sanity (CMS) + vercel (hosting)",
+    "forms":            "react-hook-form + zod + resend + cloudflare-turnstile",
+    "reviews":          "sanity (CMS) — native; Google Business Profile surface: advisory (Phase 2)",
+    "analytics":        "posthog",
+    "seo":              "next-sitemap + @vercel/og + next/head Metadata API",
+    "ai_chat":          "openai-gpt4o-mini (streaming via /api/chat route handler)",
+    "booking":          "calendly-embed (no-auth, no backend required)",
+    "gallery":          "sanity (before/after gallery documents) + next/image",
+    "blog":             "sanity (blogPost document type)"
+  },
+
+  "template_choice": {
+    "chosen": "tier-basic-marketing-site preset",
+    "reason": "No auth, no payments, no DB in Phase 1. Marketing site with CMS and AI chat is the full scope. No SaaS template matched — using the preset stack directly.",
+    "cms_activated": true,
+    "cms_activation_reason": "Content volume: 8 service pages, 20+ area pages, blog, reviews, FAQs, gallery — exceeds 3-page threshold."
+  },
+
+  "ai_chat_decision": {
+    "provider": "OpenAI",
+    "model": "gpt-4o-mini",
+    "reason": "Low latency, cost-effective for single-session triage; no memory required per session for a service-inquiry bot. Streaming for responsive UX. Not a persistent AI product — lead capture only.",
+    "not_chosen": {
+      "claude-haiku": "Anthropic API adds another vendor; not needed at this scale",
+      "custom_fine_tuned": "No training data available; premature for Phase 1"
+    }
+  },
+
+  "booking_decision": {
+    "chosen": "Calendly embed",
+    "reason": "Zero backend complexity; client already has or can create a free Calendly account; swap-able for any booking provider later. Not building custom calendar in Phase 1.",
+    "phase_2_options": ["acuity", "square-appointments", "custom-next-js-calendar"]
+  },
+
+  "maps_decision": {
+    "chosen": "Google Maps Platform embed",
+    "reason": "Best coverage for AU suburb data; Static Maps API for area landing pages (no heavy JS load); Interactive Maps JS API only on /areas page (lazy loaded).",
+    "cost_note": "Static Maps < $2/1000 requests; Interactive Maps free tier covers 28,000 loads/month"
+  },
+
+  "cms_schema_decisions": {
+    "service_slug_strategy": "kebab-case, e.g. blocked-drains, hot-water-systems",
+    "area_slug_strategy": "suburb-state, e.g. parramatta-nsw, richmond-vic",
+    "cross_page_strategy": "/services/[service-slug]/[area-slug] generated via generateStaticParams from Sanity",
+    "revalidation_strategy": "ISR with revalidate: 3600; on-demand revalidation via Sanity webhook → /api/revalidate"
+  },
+
+  "colour_palette_decision": {
+    "primary": "#0F4C81 — deep navy (trust, credibility, water association)",
+    "accent": "#F59E0B — amber (urgency, CTA, warmth)",
+    "background": "#FAF9F7 — warm off-white (approachable, not sterile)",
+    "surface": "#FFFFFF",
+    "rationale": "Follows local-business-trust archetype: credible deep hue + warm CTA accent. Blue-water association reinforces plumbing vertical."
+  },
+
+  "font_decision": {
+    "display": "Poppins (confident, humanist warmth)",
+    "body": "Inter (highly legible, web-native)",
+    "loading": "next/font with preload; display: swap; subset latin"
+  },
+
+  "floating_dock_animation_decision": {
+    "entry": "Slide up from bottom-right on page load after 1.5s delay",
+    "idle_pulse": "AI chat button pulses after 30s of no interaction (draws attention without being disruptive)",
+    "reduced_motion": "Static position, no animation; WCAG 2.1 AA compliant",
+    "mobile": "Smaller FABs (44×44px touch targets); always visible above page content"
+  },
+
+  "phase_2_features_deferred": [
+    "Customer account / job history portal (requires auth + DB)",
+    "Online payments / deposits (requires Stripe + auth)",
+    "Google Business Profile live review sync (requires Google Business API OAuth)",
+    "SMS confirmation via Twilio (requires budget approval)",
+    "Custom calendar booking (replace Calendly embed)",
+    "Multi-location / franchise support (requires multi-tenant architecture)",
+    "Technician GPS ETA tracker (requires real-time backend)"
+  ],
+
+  "assumptions": [
+    "Brand name 'AusPlumb Pro' is a placeholder — client to supply real brand before launch",
+    "Phone number and WhatsApp number are placeholders — client to supply",
+    "ABN and licence numbers are placeholders — client to supply before launch",
+    "Suburbs covered will be seeded from a client-supplied list",
+    "Calendly account creation and configuration is client responsibility",
+    "Real photos of staff, vehicles, and completed jobs are client responsibility"
+  ]
+}
