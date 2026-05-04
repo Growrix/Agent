@@ -1,0 +1,67 @@
+{
+  "project_name": "plumbing-service-website",
+  "output_root": "DOC/output/runs/20260505-002447/planning/frontend",
+  "visual_reference_lock": {
+    "hero_layout": "split hero with left blue content plane and right real plumber photography",
+    "nav_style": "white navigation over hero",
+    "transition": "rounded white testimonial shell overlaps hero bottom",
+    "accent": "warm copper highlight used sparingly"
+  },
+  "routes": [
+    "/",
+    "/services",
+    "/services/[slug]",
+    "/areas",
+    "/areas/[slug]",
+    "/reviews",
+    "/about",
+    "/quote",
+    "/contact",
+    "/faq",
+    "/privacy",
+    "/terms",
+    "/404"
+  ],
+  "core_components": [
+    "Header",
+    "HeroSplit",
+    "ContentBand",
+    "QuoteFormCard",
+    "ServiceGridSection",
+    "TestimonialCard",
+    "FAQAccordion",
+    "StickyContactDock",
+    "Footer"
+  ],
+  "content_files": [
+    "content-library.md",
+    "content.en-AU.json"
+  ],
+  "page_specs": [
+    "pages/home.md",
+    "pages/services.md",
+    "pages/services-[slug].md",
+    "pages/areas.md",
+    "pages/areas-[slug].md",
+    "pages/reviews.md",
+    "pages/about.md",
+    "pages/quote.md",
+    "pages/contact.md",
+    "pages/faq.md",
+    "pages/privacy.md",
+    "pages/terms.md",
+    "pages/not-found.md"
+  ],
+  "forms": [
+    {
+      "route": "/quote",
+      "submit_endpoint": "/api/leads",
+      "spam_guard": "cloudflare-turnstile"
+    },
+    {
+      "route": "/contact",
+      "submit_endpoint": "/api/leads",
+      "spam_guard": "cloudflare-turnstile"
+    }
+  ]
+}

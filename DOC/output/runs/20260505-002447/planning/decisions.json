@@ -1,0 +1,36 @@
+{
+  "feature_to_integration": {
+    "marketing_pages": "sanity",
+    "emails": "resend",
+    "analytics": "posthog"
+  },
+  "template_choice": {
+    "selected": "content_saas",
+    "alternatives_rejected": [
+      "standard_saas (no CMS marketing surface)",
+      "api_saas (adds API, auth, billing, and background layers not requested)",
+      "marketplace_saas (two-sided marketplace scope is unrelated)"
+    ],
+    "reason": "content_saas is the smallest architecture template in the current knowledge base that covers CMS-backed marketing pages, editorial content structures, and webhook-driven revalidation."
+  },
+  "assumptions": [
+    {
+      "type": "integration_override",
+      "role": "cms_optional",
+      "preset_default": "sanity optional",
+      "selected": "sanity active",
+      "reason": "This site has more than three editor-controlled routes and dynamic service and area pages."
+    },
+    {
+      "type": "template_scope_exception",
+      "field": "content_saas.auth_payments_database",
+      "value": "disabled",
+      "reason": "The brief explicitly disables auth, payments, and an application database for this marketing-site run."
+    }
+  ],
+  "deferred": [
+    "Online booking integration until a provider is named.",
+    "Exact suburb list and coverage map until the service area is confirmed.",
+    "Brand name, phone, and license details until client data is supplied."
+  ]
+}

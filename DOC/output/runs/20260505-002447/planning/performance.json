@@ -1,0 +1,23 @@
+{
+  "web_vitals": {
+    "lcp_ms": 2500,
+    "cls": 0.1,
+    "inp_ms": 200
+  },
+  "api": {
+    "p99_latency_ms": 350
+  },
+  "db": {
+    "query_p99_ms": 0,
+    "note": "No application database in scope for this run."
+  },
+  "uptime_percent": 99.9,
+  "image_strategy": "next/image for all meaningful imagery",
+  "font_strategy": "next/font only",
+  "cache_strategy": {
+    "cms_reads": "revalidate: 300 to 600",
+    "legal_reads": "revalidate: 3600",
+    "lead_post": "no-store"
+  },
+  "bundle_budget_public_kb_gz": 90
+}

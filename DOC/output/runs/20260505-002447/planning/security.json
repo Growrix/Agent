@@ -1,0 +1,31 @@
+{
+  "csp": "default-src 'self'; img-src 'self' https: data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.sanity.io https://*.posthog.com; frame-src https://challenges.cloudflare.com;",
+  "cors": {
+    "same_origin_routes": [
+      "/api/leads",
+      "/api/health"
+    ],
+    "external_allowlist": []
+  },
+  "rate_limits": [
+    {
+      "route": "/api/leads",
+      "scope": "ip",
+      "limit": "5/min"
+    }
+  ],
+  "pii_tags": [
+    "name",
+    "phone",
+    "postcode",
+    "message"
+  ],
+  "spam_guard": "cloudflare-turnstile",
+  "secret_handling": "All secrets validated in src/env.ts and stored in Vercel environment variables.",
+  "webhook_security": [
+    {
+      "route": "/api/webhooks/sanity",
+      "verification": "SANITY_WEBHOOK_SECRET"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "runtime": "nextjs_route_handlers",
+  "database": "none",
+  "routes": [
+    {
+      "path": "/api/leads",
+      "method": "POST",
+      "input_schema": "LeadCaptureInput",
+      "auth": "public",
+      "service": "leadCapture.submitLead",
+      "rate_limit": "5/min/ip",
+      "spam_guard": "cloudflare-turnstile",
+      "response_shape": "{ ok: true, data } | { ok: false, error }"
+    },
+    {
+      "path": "/api/webhooks/sanity",
+      "method": "POST",
+      "input_schema": "SanityWebhookPayload",
+      "auth": "provider",
+      "service": "cmsWebhook.revalidateContent",
+      "signature_verification": "SANITY_WEBHOOK_SECRET",
+      "response_shape": "{ ok: true, data } | { ok: false, error }"
+    },
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "input_schema": "none",
+      "auth": "public",
+      "service": "health.readiness",
+      "response_shape": "{ status: 'ok' }"
+    }
+  ],
+  "services": [
+    {
+      "name": "leadCapture",
+      "file": "src/server/services/lead-capture.ts",
+      "depends_on": [
+        "resend_client_singleton",
+        "posthog_server_capture_optional",
+        "verifyTurnstile"
+      ]
+    },
+    {
+      "name": "cmsWebhook",
+      "file": "src/server/services/cms-webhook.ts",
+      "depends_on": [
+        "sanity_client_singleton",
+        "revalidation_helper"
+      ]
+    },
+    {
+      "name": "health",
+      "file": "src/server/services/health.ts",
+      "depends_on": [
+        "env_validation"
+      ]
+    }
+  ],
+  "repositories": [],
+  "env_validation": {
+    "file": "src/env.ts",
+    "required_vars": [
+      "NEXT_PUBLIC_SANITY_PROJECT_ID",
+      "NEXT_PUBLIC_SANITY_DATASET",
+      "SANITY_API_READ_TOKEN",
+      "SANITY_WEBHOOK_SECRET",
+      "RESEND_API_KEY",
+      "RESEND_FROM_EMAIL",
+      "NEXT_PUBLIC_POSTHOG_KEY",
+      "NEXT_PUBLIC_POSTHOG_HOST",
+      "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+      "TURNSTILE_SECRET_KEY"
+    ]
+  }
+}

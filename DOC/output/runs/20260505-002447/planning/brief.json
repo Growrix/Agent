@@ -1,0 +1,295 @@
+{
+  "project": {
+    "name": "plumbing-service-website",
+    "display_name": "Plumbing Service Website",
+    "archetype": "marketing_site",
+    "industry": {
+      "class": "local_services",
+      "vertical": "plumbing",
+      "industry_pack": "knowledge/industries/local-services.md"
+    },
+    "deliverable_kind": "custom_build",
+    "tagline": "Reliable plumbing support with fast quote capture and trust-first presentation."
+  },
+  "brand": {
+    "voice": "trustworthy",
+    "tone": [
+      "clear",
+      "reassuring",
+      "local"
+    ],
+    "visual_archetype": "knowledge/frontend-rules/visual-archetypes/local-business-trust.md",
+    "palette_seed": "#0B5EA8",
+    "forbidden_words": [
+      "synergy",
+      "world-class",
+      "best-in-class",
+      "leverage",
+      "disruptive",
+      "innovative"
+    ]
+  },
+  "audience": {
+    "primary": {
+      "persona": "Australian homeowner needing urgent or planned plumbing help",
+      "needs": [
+        "Confirm the plumber is licensed, insured, and easy to reach",
+        "Understand services and response times quickly",
+        "Request a quote without a long form"
+      ],
+      "pains": [
+        "Low-trust trade websites",
+        "Hidden phone numbers",
+        "Unclear service coverage or arrival expectations"
+      ]
+    },
+    "secondary": {
+      "persona": "Property manager handling repeat maintenance requests",
+      "needs": [
+        "Fast contact path for repeat jobs",
+        "Evidence of reliability and coverage",
+        "Clear service categories"
+      ],
+      "pains": [
+        "Slow response from suppliers",
+        "Inconsistent service documentation",
+        "No obvious after-hours contact path"
+      ]
+    }
+  },
+  "goals": [
+    {
+      "id": "g1",
+      "description": "Convert high-intent visitors into phone calls or quote requests from the hero and sticky contact paths.",
+      "kpi": "combined call and quote conversion rate"
+    },
+    {
+      "id": "g2",
+      "description": "Establish credibility immediately with visible proof, coverage, and licensing trust signals.",
+      "kpi": "hero-to-proof scroll depth"
+    },
+    {
+      "id": "g3",
+      "description": "Support service discovery for common plumbing jobs and service areas.",
+      "kpi": "service-detail CTR from home and services pages"
+    }
+  ],
+  "journeys": [
+    {
+      "id": "j1",
+      "name": "Emergency call path",
+      "steps": [
+        "Home hero",
+        "Sticky mobile call CTA",
+        "Phone contact"
+      ]
+    },
+    {
+      "id": "j2",
+      "name": "Quote request path",
+      "steps": [
+        "Home hero",
+        "Services overview",
+        "Service detail",
+        "Quote page",
+        "Lead confirmation"
+      ]
+    },
+    {
+      "id": "j3",
+      "name": "Service research path",
+      "steps": [
+        "Home",
+        "Services overview",
+        "Service detail",
+        "FAQ",
+        "Contact"
+      ]
+    },
+    {
+      "id": "j4",
+      "name": "Area trust path",
+      "steps": [
+        "Home",
+        "Areas overview",
+        "Area detail",
+        "Quote page"
+      ]
+    }
+  ],
+  "site_map": [
+    {
+      "path": "/",
+      "name": "Home",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/services",
+      "name": "Services",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/services/[slug]",
+      "name": "Service Detail",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/areas",
+      "name": "Areas",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/areas/[slug]",
+      "name": "Area Detail",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/reviews",
+      "name": "Reviews",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/about",
+      "name": "About",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/quote",
+      "name": "Quote",
+      "required": true,
+      "data_source": "static"
+    },
+    {
+      "path": "/contact",
+      "name": "Contact",
+      "required": true,
+      "data_source": "static"
+    },
+    {
+      "path": "/faq",
+      "name": "FAQ",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/privacy",
+      "name": "Privacy",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/terms",
+      "name": "Terms",
+      "required": true,
+      "data_source": "cms"
+    },
+    {
+      "path": "/404",
+      "name": "404",
+      "required": true,
+      "data_source": "static"
+    }
+  ],
+  "features": [
+    "marketing_pages",
+    "emails",
+    "analytics"
+  ],
+  "integrations": {
+    "marketing_pages": "sanity",
+    "emails": "resend",
+    "analytics": "posthog"
+  },
+  "trust_signals": [
+    "licensed_and_insured_badges",
+    "years_in_business",
+    "areas_served_list",
+    "review_aggregate",
+    "same_day_availability_badge",
+    "response_time_promise"
+  ],
+  "conversion_mechanics": [
+    "click_to_call",
+    "quote_form",
+    "sticky_mobile_call_cta"
+  ],
+  "locale": {
+    "default": "en-AU",
+    "i18n_required": false,
+    "regions": []
+  },
+  "compliance_notes": [
+    "Display license number where regulator requires.",
+    "Display business hours in the header utility and footer.",
+    "Display service address or service-area-only wording once confirmed."
+  ],
+  "tier_band": "basic",
+  "constraints": {
+    "deployment_platform": "vercel",
+    "database": "none",
+    "no_auth": true,
+    "no_payments": true
+  },
+  "assumptions": [
+    {
+      "rule": "R1",
+      "field": "project.archetype",
+      "value": "marketing_site",
+      "reason": "The request is for a plumber website with public marketing surfaces and no app keywords."
+    },
+    {
+      "rule": "R2",
+      "field": "project.industry.vertical",
+      "value": "plumbing",
+      "reason": "The user explicitly requested a plumber website."
+    },
+    {
+      "rule": "R3",
+      "field": "brand.visual_archetype",
+      "value": "local-business-trust",
+      "reason": "marketing_site + local_services maps deterministically to local-business-trust."
+    },
+    {
+      "rule": "R7",
+      "field": "features",
+      "value": [
+        "marketing_pages",
+        "emails",
+        "analytics"
+      ],
+      "reason": "The live feature map supports CMS-driven marketing pages, quote-follow-up emails, and analytics; quote forms and testimonials are implemented as surfaces within those features."
+    },
+    {
+      "rule": "R10",
+      "field": "brand.palette_seed",
+      "value": "#0B5EA8",
+      "reason": "The supplied hero reference is anchored by a deep professional blue primary."
+    },
+    {
+      "rule": "R11",
+      "field": "locale.default",
+      "value": "en-AU",
+      "reason": "The conversation history already established an Australian plumbing website target."
+    },
+    {
+      "rule": "R13",
+      "field": "tier_band",
+      "value": "basic",
+      "reason": "marketing_site defaults to the basic tier with no auth, no payments, and no database."
+    }
+  ],
+  "open_questions_for_human": [
+    "Confirm the business name, phone number, and service email for hero and footer trust blocks.",
+    "Confirm the exact service suburbs or metro coverage for area landing pages and locality copy.",
+    "Confirm license number wording and whether to surface emergency after-hours availability.",
+    "Confirm whether an online booking provider should be added later, or if phone plus quote form is the only conversion path."
+  ],
+  "lock_status": "LOCKED"
+}

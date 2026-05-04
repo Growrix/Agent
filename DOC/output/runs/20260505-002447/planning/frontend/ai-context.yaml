@@ -1,0 +1,54 @@
+project_name: plumbing-service-website
+project_archetype: marketing_site
+industry_pack: knowledge/industries/local-services.md
+visual_archetype: knowledge/frontend-rules/visual-archetypes/local-business-trust.md
+default_locale: en-AU
+output_root: DOC/output/runs/20260505-002447/planning/frontend
+hero_reference_lock:
+  composition: split hero with left text shell and right real-photography subject
+  background: deep blue geometric field with diagonal break into media
+  navigation: transparent over hero with white links and white pill CTA
+  media: real plumber portrait, visible work vehicle context, warm metallic service-tool accent
+  transition: white rounded surface overlaps the hero bottom into the testimonial section
+primary_ctas:
+  desktop:
+    - Call Now
+    - Get a Quote
+  mobile:
+    - Sticky Call
+    - Sticky Quote
+routes:
+  - /
+  - /services
+  - /services/[slug]
+  - /areas
+  - /areas/[slug]
+  - /reviews
+  - /about
+  - /quote
+  - /contact
+  - /faq
+  - /privacy
+  - /terms
+components:
+  - Header
+  - HeroSplit
+  - TrustBadgeRow
+  - ServiceCard
+  - TestimonialCard
+  - QuoteFormCard
+  - StickyContactDock
+  - FAQAccordion
+  - Footer
+read_order:
+  - master-ui-architecture.md
+  - design-system.md
+  - component-system.md
+  - motion-system.md
+  - interaction-matrix.md
+  - content-library.md
+  - pages/home.md
+planner_notes:
+  - Use the supplied reference for hero structure and rhythm, not for brand naming.
+  - Keep all visible copy on content keys in content-library.md.
+  - Prioritise phone and quote actions over lower-intent navigation paths.
