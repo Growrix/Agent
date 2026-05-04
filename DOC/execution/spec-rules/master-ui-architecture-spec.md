@@ -119,10 +119,10 @@ List of organisms shared across pages: header, footer, chat widget, cookie banne
 - Image (next/image)
 
 ### 18. Route Map
-A flat list of every route the site exposes, in canonical order.
+A flat list of every route the site exposes, in canonical order. This route map is the canonical source that `page_planner` must reconcile against `docs/frontend/ai-context.yaml` and later `docs/frontend/pages/*.md`.
 
 ### 19. File Output Inventory
-The list of files this frontend planning round will produce, with paths under `docs/frontend/`.
+The list of files this frontend planning round will produce, with paths under `docs/frontend/`. It MUST include one page spec artifact per route declared in the Route Map (dynamic routes may use one parameterized page spec per route pattern).
 
 ### 20. AI Consumption Guidance
 A short block explaining:

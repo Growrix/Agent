@@ -270,6 +270,14 @@ Combined with B.8.
 **Evidence:** `<plan-key> → produced_by=<sub-planner>`.
 **Failure:** BLOCKER per orphaned plan key.
 
+### D.5 Frontend route inventory coverage contract
+**Command:**
+1. `Read DOC/agents/frontend_planner.agent.md`, `DOC/agents/page_planner.agent.md`, `DOC/agents/reviewer.agent.md`, `DOC/validation/constraints/frontend-constraints.md`, `DOC/execution/spec-rules/master-ui-architecture-spec.md`, and `DOC/execution/spec-rules/per-page-spec.md`.
+2. Confirm the contract chain explicitly states that frontend route inventory (`ai-context` + Route Map) must reconcile to emitted page specs.
+**Pass if:** every artifact above contains explicit route-coverage language and missing page specs are a blocking failure.
+**Evidence:** `<artifact> → route_coverage_contract=<true|false>`.
+**Failure:** BLOCKER if any contract link is missing.
+
 ---
 
 ## SECTION E — Orphans

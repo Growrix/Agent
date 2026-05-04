@@ -674,6 +674,37 @@ else {
   Add-Check -Section "D" -Id "D.4" -Name "plan.json key producer mapping" -Status "fail" -Severity "blocker" -Evidence "Read:DOC/agents/_index.md output artifact map -> missing plan key rows" -Details ($missingPlanMap -join ", ")
 }
 
+$routeCoverageContracts = @(
+  @{ Path = "DOC/agents/frontend_planner.agent.md"; Patterns = @("docs/frontend/ai-context.yaml", "master-ui-architecture.md", "docs/frontend/README.md", "docs/frontend/pages/*.md") },
+  @{ Path = "DOC/agents/page_planner.agent.md"; Patterns = @("frontend_ai_context", "exactly one page spec", "MISSING_PAGE_SPEC") },
+  @{ Path = "DOC/agents/reviewer.agent.md"; Patterns = @("frontend route inventory", "page specs", "F7") },
+  @{ Path = "DOC/validation/constraints/frontend-constraints.md"; Patterns = @("master-ui-architecture.md", "docs/frontend/ai-context.yaml", "missing page spec") },
+  @{ Path = "DOC/execution/spec-rules/master-ui-architecture-spec.md"; Patterns = @("Route Map", "docs/frontend/ai-context.yaml", "one page spec artifact per route") },
+  @{ Path = "DOC/execution/spec-rules/per-page-spec.md"; Patterns = @("route source of truth", "Missing or duplicate page specs", "Route Map") }
+)
+
+$routeCoverageIssues = @()
+foreach ($entry in $routeCoverageContracts) {
+  $fullPath = Join-Path $RepoRoot ($entry.Path -replace '/','\\')
+  if (-not (Test-Path $fullPath)) {
+    $routeCoverageIssues += "$($entry.Path)::missing_file"
+    continue
+  }
+
+  foreach ($pattern in $entry.Patterns) {
+    if (-not (Select-String -Path $fullPath -Pattern $pattern -SimpleMatch -Quiet)) {
+      $routeCoverageIssues += "$($entry.Path)::missing_pattern=$pattern"
+    }
+  }
+}
+
+if ($routeCoverageIssues.Count -eq 0) {
+  Add-Check -Section "D" -Id "D.5" -Name "Frontend route inventory coverage contract" -Status "pass" -Severity "n/a" -Evidence "Read:frontend planner + page planner + reviewer + frontend constraints + spec rules -> route coverage contract present"
+}
+else {
+  Add-Check -Section "D" -Id "D.5" -Name "Frontend route inventory coverage contract" -Status "fail" -Severity "blocker" -Evidence "Read:frontend planner + page planner + reviewer + frontend constraints + spec rules -> route coverage contract gaps" -Details ($routeCoverageIssues -join "; ")
+}
+
 # SECTION E
 $skillIndexPath = Join-Path $RepoRoot "DOC/knowledge/skills/_index.md"
 $skillIndexRows = Select-String -Path $skillIndexPath -Pattern '^\|\s*([a-z0-9\-]+)\s*\|' | ForEach-Object { $_.Matches[0].Groups[1].Value } | Sort-Object -Unique

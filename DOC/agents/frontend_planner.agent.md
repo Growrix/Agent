@@ -71,6 +71,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 - MUST map feature-driven UX patterns into page specs when the brief includes matching capabilities (for example: data tables, notifications, onboarding, collaboration, AI interactions).
 - MUST NOT emit summary-only page specs; every public page spec must include section-level composition and state detail.
 - MUST NOT emit summary-only content libraries; content output must be key-based and implementation-ready.
+- MUST reconcile `docs/frontend/ai-context.yaml`, `master-ui-architecture.md` Route Map, `docs/frontend/README.md`, and `docs/frontend/pages/*.md` before returning `status=passed`.
 - MUST block with `FRONTEND_SPEC_INCOMPLETE` when page specs or content artifacts are too shallow for codegen.
 
 ## INPUT FORMAT
@@ -105,10 +106,11 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
    - `docs/frontend/interaction-matrix.md`
 9. **PAGE STAGE** — run `page_planner` to emit:
    - `docs/frontend/pages/*.md`
-10. **HUMAN INDEX STAGE** — emit:
+10. **ROUTE COVERAGE STAGE** — verify declared route inventory matches emitted page specs and the human index route inventory.
+11. **HUMAN INDEX STAGE** — emit:
    - `docs/frontend/README.md` (human-first navigation)
-11. **FRONTEND VALIDATION** — evaluate F1..F12 and output pass/fail matrix.
-12. **SUMMARY EMIT** — emit `frontend.json` summary block for `plan.json` aggregation.
+12. **FRONTEND VALIDATION** — evaluate F1..F12 and output pass/fail matrix.
+13. **SUMMARY EMIT** — emit `frontend.json` summary block for `plan.json` aggregation.
 
 ## OUTPUT FORMAT
 ```yaml
@@ -147,6 +149,8 @@ frontend_constraints:
 - Frontend constraints F1..F12 are all passed.
 - No unresolved TODO/placeholder remains in frontend specs.
 - Mobile parity and reduced-motion coverage are explicitly declared.
+- Every route declared in `docs/frontend/ai-context.yaml` and `master-ui-architecture.md` has exactly one corresponding page spec in `docs/frontend/pages/*.md`.
+- `docs/frontend/README.md` route inventory matches the emitted page spec set.
 - `docs/frontend/pages/*.md` contain section-level composition (purpose, components, states, responsive, motion, conversion path), not single-line summaries.
 - `docs/frontend/content-library.md` and locale JSON are keyed and route/component scoped, not bullet summaries.
 
