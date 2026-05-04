@@ -1,0 +1,97 @@
+{
+  "validation_version": "1.0",
+  "generated_at": "2026-05-04T18:21:00+10:00",
+  "branch": "Plumber_test",
+  "verdict": "READY",
+  "verdict_reason": "Zero blockers. All mandatory features mapped to integrations. Industry pack, visual archetype, and preset fully applied. All deferred items are Phase 2 and do not block Phase 1 execution.",
+
+  "sections": {
+    "A_brief": {
+      "status": "PASS",
+      "checks": [
+        { "id": "A1", "check": "Industry pack identified and applied",         "result": "PASS", "evidence": "local-services.md applied; vertical=plumbing" },
+        { "id": "A2", "check": "Visual archetype identified and applied",      "result": "PASS", "evidence": "local-business-trust.md applied" },
+        { "id": "A3", "check": "Project archetype resolved",                   "result": "PASS", "evidence": "marketing_site — no auth/dashboard/billing in scope" },
+        { "id": "A4", "check": "Target locale set",                            "result": "PASS", "evidence": "en-AU; regions: NSW, VIC, QLD, WA, SA" },
+        { "id": "A5", "check": "Compliance requirements listed",               "result": "PASS", "evidence": "ABN, licence, GST, Privacy Act, Spam Act" }
+      ]
+    },
+
+    "B_features": {
+      "status": "PASS",
+      "checks": [
+        { "id": "B1", "check": "All requested features have integration mappings", "result": "PASS", "evidence": "marketing_pages→sanity, forms→resend, ai_chat→openai, booking→calendly" },
+        { "id": "B2", "check": "Floating dock all 3 items mapped",                 "result": "PASS", "evidence": "call=tel:, whatsapp=wa.me/, ai_chat=drawer" },
+        { "id": "B3", "check": "No forbidden integrations used",                   "result": "PASS", "evidence": "No clerk, stripe, neon, inngest, upstash, meilisearch, knock, twilio in Phase 1" },
+        { "id": "B4", "check": "AI chat lead capture schema defined",              "result": "PASS", "evidence": "name, phone, service_type, postcode, urgency_level" }
+      ]
+    },
+
+    "C_site_map": {
+      "status": "PASS",
+      "checks": [
+        { "id": "C1", "check": "All required pages present",         "result": "PASS", "evidence": "/, /services, /services/[slug], /areas, /areas/[slug], /reviews, /about, /contact, /privacy, /terms, /404" },
+        { "id": "C2", "check": "Recommended pages planned",          "result": "PASS", "evidence": "/quote, /book, /faq, /blog, /blog/[slug], /gallery, /emergency, /pricing" },
+        { "id": "C3", "check": "SEO cross-cut pages defined",        "result": "PASS", "evidence": "/services/[service-slug]/[area-slug] via generateStaticParams" }
+      ]
+    },
+
+    "D_schema_seo": {
+      "status": "PASS",
+      "checks": [
+        { "id": "D1", "check": "JSON-LD schema defined per page type",  "result": "PASS", "evidence": "LocalBusiness+PlumbingService on all; Service, FAQPage, BlogPosting, Review" },
+        { "id": "D2", "check": "Sitemap generation planned",            "result": "PASS", "evidence": "next-sitemap" },
+        { "id": "D3", "check": "OG images planned",                     "result": "PASS", "evidence": "@vercel/og dynamic for service+area pages" }
+      ]
+    },
+
+    "E_security": {
+      "status": "PASS",
+      "checks": [
+        { "id": "E1", "check": "CSP defined",                  "result": "PASS", "evidence": "strict-dynamic in next.config.js headers" },
+        { "id": "E2", "check": "Input validation on all POSTs", "result": "PASS", "evidence": "Zod schema on every route handler" },
+        { "id": "E3", "check": "Rate limiting",                 "result": "PASS", "evidence": "Cloudflare at edge, 100 req/min per IP" },
+        { "id": "E4", "check": "Spam protection on forms",      "result": "PASS", "evidence": "Cloudflare Turnstile on all public POST endpoints" },
+        { "id": "E5", "check": "HTTPS enforced",               "result": "PASS", "evidence": "Vercel enforces HTTPS; HSTS header configured" }
+      ]
+    },
+
+    "F_performance": {
+      "status": "PASS",
+      "checks": [
+        { "id": "F1", "check": "LCP target defined",    "result": "PASS", "evidence": "≤ 2000ms on AU 4G mobile" },
+        { "id": "F2", "check": "Bundle splitting planned", "result": "PASS", "evidence": "Dynamic imports for AIChatDrawer, Maps, CalendlyEmbed" },
+        { "id": "F3", "check": "Image strategy defined",   "result": "PASS", "evidence": "next/image + Sanity CDN WebP/AVIF" }
+      ]
+    },
+
+    "G_compliance": {
+      "status": "PASS",
+      "checks": [
+        { "id": "G1", "check": "ABN display planned",              "result": "PASS", "evidence": "footer component — siteSettings.abn from Sanity" },
+        { "id": "G2", "check": "Licence number display planned",   "result": "PASS", "evidence": "footer + header utility strip" },
+        { "id": "G3", "check": "GST disclosure planned",           "result": "PASS", "evidence": "pricing page — 'All prices include GST'" },
+        { "id": "G4", "check": "Spam Act 2003 compliance",         "result": "PASS", "evidence": "opt-in checkbox + double-opt-in on maintenance signup" },
+        { "id": "G5", "check": "Privacy Act 1988 compliance",      "result": "PASS", "evidence": "privacy policy page required; form data handling documented" }
+      ]
+    },
+
+    "H_quality_gates": {
+      "status": "PASS",
+      "checks": [
+        { "id": "H1", "check": "All quality gates listed in plan",  "result": "PASS", "evidence": "plan.json quality_gates array: 11 gates" },
+        { "id": "H2", "check": "E2E critical paths defined",        "result": "PASS", "evidence": "6 critical paths covering all P0 flows" },
+        { "id": "H3", "check": "Lighthouse target set",             "result": "PASS", "evidence": "≥ 90 all categories" }
+      ]
+    }
+  },
+
+  "blockers": [],
+  "advisories": [
+    { "id": "ADV-01", "note": "Brand name, phone, ABN, and licence numbers are placeholders — must be replaced before launch" },
+    { "id": "ADV-02", "note": "Real photos of staff/work are client responsibility; stock imagery only until provided" },
+    { "id": "ADV-03", "note": "Calendly account setup is client responsibility" },
+    { "id": "ADV-04", "note": "Google Maps API billing account must be set up before go-live" },
+    { "id": "ADV-05", "note": "OpenAI API key rate limits should be reviewed against expected chat volume before launch" }
+  ]
+}

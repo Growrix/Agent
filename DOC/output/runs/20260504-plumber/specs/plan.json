@@ -1,0 +1,347 @@
+{
+  "plan_version": "1.0",
+  "generated_at": "2026-05-04T18:21:00+10:00",
+  "branch": "Plumber_test",
+  "lock_status": "LOCKED",
+
+  "brief_ref": "DOC/output/runs/20260504-plumber/planning/brief.json",
+
+  "industry_pack": "local-services",
+  "vertical": "plumbing",
+  "project_archetype": "marketing_site",
+  "visual_archetype": "local-business-trust",
+  "tier_band": "basic",
+  "preset_used": "tier-basic-marketing-site",
+  "architecture_template": "N/A — marketing_site uses preset stack, not a SaaS template",
+
+  "features": [
+    "marketing_pages",
+    "forms",
+    "reviews",
+    "analytics",
+    "seo",
+    "ai_chat",
+    "booking",
+    "gallery",
+    "blog"
+  ],
+
+  "integrations": {
+    "hosting":         "vercel",
+    "dns":             "cloudflare-dns",
+    "cms":             "sanity",
+    "email_tx":        "resend",
+    "analytics":       "posthog",
+    "error_tracking":  "sentry",
+    "logging":         "axiom",
+    "spam_guard":      "cloudflare-turnstile",
+    "cookie_consent":  "cookiebot",
+    "ai_chat":         "openai-gpt4o-mini",
+    "maps":            "google-maps-platform",
+    "booking":         "calendly-embed",
+    "uptime_monitor":  "betterstack-uptime",
+    "security_scan":   "snyk"
+  },
+
+  "frontend": {
+    "framework":         "Next.js 14 App Router",
+    "language":          "TypeScript",
+    "styling":           "Tailwind CSS + shadcn/ui",
+    "cms_client":        "@sanity/client + next-sanity",
+    "forms":             "React Hook Form + Zod",
+    "animation":         "Framer Motion (motion.dev)",
+    "maps_embed":        "@vis.gl/react-google-maps",
+    "image_optimization":"next/image + Sanity image pipeline",
+    "font_strategy":     "next/font (Google Fonts: Inter + Poppins)",
+    "color_primary":     "#0F4C81 (deep navy — trust anchor)",
+    "color_accent":      "#F59E0B (amber — CTA)",
+    "color_background":  "#FAF9F7 (warm off-white)",
+    "color_surface":     "#FFFFFF",
+
+    "pages": [
+      { "route": "/",                                "component": "HomePage",              "priority": "P0" },
+      { "route": "/services",                        "component": "ServicesOverviewPage",  "priority": "P0" },
+      { "route": "/services/[slug]",                 "component": "ServiceDetailPage",     "priority": "P0" },
+      { "route": "/areas",                           "component": "AreasOverviewPage",     "priority": "P0" },
+      { "route": "/areas/[slug]",                    "component": "AreaLandingPage",       "priority": "P0" },
+      { "route": "/reviews",                         "component": "ReviewsPage",           "priority": "P0" },
+      { "route": "/about",                           "component": "AboutPage",             "priority": "P0" },
+      { "route": "/contact",                         "component": "ContactPage",           "priority": "P0" },
+      { "route": "/privacy",                         "component": "PrivacyPage",           "priority": "P0" },
+      { "route": "/terms",                           "component": "TermsPage",             "priority": "P0" },
+      { "route": "/404",                             "component": "NotFoundPage",          "priority": "P0" },
+      { "route": "/quote",                           "component": "QuotePage",             "priority": "P1" },
+      { "route": "/book",                            "component": "BookingPage",           "priority": "P1" },
+      { "route": "/faq",                             "component": "FaqPage",               "priority": "P1" },
+      { "route": "/blog",                            "component": "BlogIndexPage",         "priority": "P1" },
+      { "route": "/blog/[slug]",                     "component": "BlogPostPage",          "priority": "P1" },
+      { "route": "/gallery",                         "component": "GalleryPage",           "priority": "P1" },
+      { "route": "/emergency",                       "component": "EmergencyLandingPage",  "priority": "P1" },
+      { "route": "/pricing",                         "component": "PricingPage",           "priority": "P1" },
+      { "route": "/maintenance",                     "component": "MaintenancePlanPage",   "priority": "P2" },
+      { "route": "/sitemap",                         "component": "SitemapPage",           "priority": "P2" },
+      { "route": "/services/[service-slug]/[area-slug]", "component": "ServiceAreaCrossPage", "priority": "P1" }
+    ],
+
+    "global_components": [
+      "Header (utility strip + nav + CTA)",
+      "Footer (dense: licence, ABN, hours, areas, contacts)",
+      "FloatingContactDock (call + whatsapp + ai-chat)",
+      "AIChatDrawer (Max — sliding drawer, streaming responses)",
+      "SeoHead (JSON-LD schema per page type)",
+      "CookieBanner (Cookiebot)",
+      "AnnouncementBanner (emergency hours / promotions)"
+    ],
+
+    "floating_dock": {
+      "position": "fixed bottom-6 right-6",
+      "z_index": 50,
+      "items": [
+        {
+          "id": "call",
+          "label": "Call Now",
+          "icon": "PhoneIcon",
+          "color": "bg-green-600 hover:bg-green-700",
+          "href": "tel:+611300PLUMBER",
+          "tooltip": "Call us now — 24/7",
+          "pulse_when": "always_on_mobile"
+        },
+        {
+          "id": "whatsapp",
+          "label": "WhatsApp",
+          "icon": "WhatsappIcon",
+          "color": "bg-[#25D366] hover:bg-[#1da851]",
+          "href": "https://wa.me/61XXXXXXXXXX?text=Hi%2C+I+need+a+plumber",
+          "tooltip": "Chat on WhatsApp"
+        },
+        {
+          "id": "ai_chat",
+          "label": "Ask Max",
+          "icon": "ChatBubbleIcon",
+          "color": "bg-primary hover:bg-primary/90",
+          "action": "open_chat_drawer",
+          "tooltip": "Ask our AI plumbing assistant",
+          "pulse_animation": "idle_after_30s"
+        }
+      ]
+    },
+
+    "ai_chat_system": {
+      "persona": "Max",
+      "model": "gpt-4o-mini",
+      "streaming": true,
+      "api_route": "/api/chat",
+      "system_prompt_location": "lib/ai/plumber-system-prompt.ts",
+      "lead_capture_schema": {
+        "fields": ["name", "phone", "service_type", "postcode", "urgency_level"],
+        "submit_action": "POST /api/leads"
+      },
+      "escalation_keywords": ["emergency", "urgent", "gas leak", "burst", "flooding", "speak to someone"],
+      "escalation_action": "Surface call CTA with direct phone number immediately"
+    },
+
+    "interactive_sections": {
+      "postcode_checker": {
+        "location": "Hero section + Areas page",
+        "source": "Sanity areas dataset (postcode array per area doc)"
+      },
+      "quote_estimator": {
+        "location": "/quote page + Homepage secondary CTA section",
+        "steps": ["Select service", "Describe issue briefly", "Enter postcode", "View ballpark range + submit for firm quote"]
+      },
+      "before_after_gallery": {
+        "location": "/gallery + service detail pages",
+        "component": "BeforeAfterSlider",
+        "source": "Sanity gallery documents"
+      },
+      "animated_stats": {
+        "location": "Homepage below-hero trust strip",
+        "values": [
+          { "stat": "500+",  "label": "Jobs Completed" },
+          { "stat": "10+",   "label": "Years in Business" },
+          { "stat": "4.9★",  "label": "Average Review Rating" },
+          { "stat": "24/7",  "label": "Emergency Availability" }
+        ],
+        "animation": "count-up on viewport entry (Framer Motion)"
+      },
+      "urgency_triage": {
+        "location": "Emergency page + floating dock overflow menu",
+        "questions": [
+          "Is there active water flooding?",
+          "Is there a gas smell?",
+          "Is the issue worsening?"
+        ],
+        "output": { "yes_any": "Call Now CTA", "no_all": "Book online CTA" }
+      },
+      "water_calculator": {
+        "location": "Blog post + /maintenance page",
+        "inputs": ["household_size", "shower_duration", "old_fixtures"],
+        "output": "Estimated annual water savings (litres + AUD)"
+      }
+    }
+  },
+
+  "backend": {
+    "runtime": "Next.js Route Handlers (App Router)",
+    "api_routes": [
+      {
+        "route": "POST /api/quote",
+        "purpose": "Submit quote request form",
+        "actions": ["validate with Zod", "send email via Resend to business + confirmation to user", "spam check via Cloudflare Turnstile"]
+      },
+      {
+        "route": "POST /api/contact",
+        "purpose": "Submit contact form",
+        "actions": ["validate with Zod", "send email via Resend", "spam check"]
+      },
+      {
+        "route": "POST /api/leads",
+        "purpose": "AI chat lead capture",
+        "actions": ["validate", "send lead notification email via Resend"]
+      },
+      {
+        "route": "POST /api/chat",
+        "purpose": "Streaming AI chat (Max)",
+        "actions": ["stream OpenAI gpt-4o-mini response", "rate limit per IP via Cloudflare"]
+      },
+      {
+        "route": "POST /api/maintenance-signup",
+        "purpose": "Maintenance plan email signup",
+        "actions": ["validate + opt-in flag", "send welcome email via Resend", "Spam Act 2003 compliant"]
+      },
+      {
+        "route": "GET /api/coverage-check",
+        "purpose": "Postcode/suburb coverage check",
+        "actions": ["query static coverage JSON from Sanity build export"]
+      }
+    ],
+    "no_database": true,
+    "no_auth": true,
+    "data_storage": "Sanity CMS + static JSON builds only"
+  },
+
+  "cms_schema": {
+    "sanity_datasets": ["production"],
+    "document_types": [
+      { "type": "service",    "fields": ["title", "slug", "description", "body", "heroImage", "gallery", "faqs", "schema_service_type", "areas_covered"] },
+      { "type": "area",       "fields": ["name", "slug", "postcodes", "description", "servicesOffered", "heroImage", "localLandmarks"] },
+      { "type": "review",     "fields": ["authorName", "rating", "reviewText", "service", "area", "date", "source", "videoUrl"] },
+      { "type": "blogPost",   "fields": ["title", "slug", "excerpt", "body", "coverImage", "author", "publishedAt", "tags", "seo"] },
+      { "type": "galleryItem","fields": ["title", "beforeImage", "afterImage", "service", "area", "description"] },
+      { "type": "teamMember", "fields": ["name", "role", "photo", "bio", "licenceNumber"] },
+      { "type": "faq",        "fields": ["question", "answer", "category", "service"] },
+      { "type": "siteSettings","fields": ["businessName", "phone", "whatsapp", "email", "address", "abn", "licenceNumber", "businessHours", "areasServed"] }
+    ]
+  },
+
+  "seo": {
+    "json_ld_schemas": [
+      { "page_type": "all",            "schema": "LocalBusiness + PlumbingService" },
+      { "page_type": "service_detail", "schema": "Service" },
+      { "page_type": "area_landing",   "schema": "LocalBusiness scoped to area" },
+      { "page_type": "faq",            "schema": "FAQPage" },
+      { "page_type": "blog_post",      "schema": "BlogPosting + BreadcrumbList" },
+      { "page_type": "review",         "schema": "Review + AggregateRating" }
+    ],
+    "sitemap":      "auto-generated via next-sitemap",
+    "robots_txt":   "allow all except /api/",
+    "og_images":    "dynamic via @vercel/og (service + area pages)",
+    "canonical":    "absolute canonical on every page",
+    "meta_defaults": "defined in app/layout.tsx via Next.js Metadata API"
+  },
+
+  "devops": {
+    "environments": ["preview", "production"],
+    "ci_cd": "Vercel GitHub integration (auto-deploy on push to main)",
+    "branch_previews": true,
+    "env_vars": [
+      "NEXT_PUBLIC_POSTHOG_KEY",
+      "NEXT_PUBLIC_POSTHOG_HOST",
+      "NEXT_PUBLIC_SANITY_PROJECT_ID",
+      "NEXT_PUBLIC_SANITY_DATASET",
+      "SANITY_API_TOKEN",
+      "RESEND_API_KEY",
+      "OPENAI_API_KEY",
+      "NEXT_PUBLIC_GOOGLE_MAPS_KEY",
+      "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+      "TURNSTILE_SECRET_KEY",
+      "SENTRY_DSN",
+      "NEXT_PUBLIC_SENTRY_DSN",
+      "AXIOM_TOKEN",
+      "BETTERSTACK_SOURCE_TOKEN"
+    ],
+    "monitoring":  "BetterStack Uptime (synthetic + real-user)",
+    "error_tracking": "Sentry (Next.js SDK, source maps uploaded on deploy)",
+    "logging":     "Axiom (structured logs from route handlers)",
+    "backups":     "Sanity built-in versioning + export on schedule"
+  },
+
+  "testing": {
+    "unit_tests":        "Vitest (form validation, schema checks)",
+    "e2e_tests":         "Playwright",
+    "e2e_critical_paths": [
+      "Homepage → Quote form → Submission confirmation",
+      "Homepage → Floating dock Call button → tel: link fires",
+      "Homepage → Floating dock AI Chat → Max responds",
+      "Services page → Service detail → CTA",
+      "Areas page → Suburb landing",
+      "Emergency page → Call Now → tel: link fires"
+    ],
+    "accessibility":     "axe-core in Playwright + manual WCAG 2.1 AA check",
+    "lighthouse_gate":   "≥ 90 all categories in CI",
+    "coverage_threshold": "≥ 80% unit, E2E covers all P0 flows"
+  },
+
+  "security": {
+    "csp": "strict-dynamic; report-uri /api/csp-report",
+    "cors": "same-origin only for API routes",
+    "rate_limiting": "Cloudflare at edge (100 req/min per IP for /api/)",
+    "input_validation": "Zod on all form inputs server-side",
+    "no_pii_in_logs": true,
+    "turnstile": "on all public POST endpoints",
+    "https_only": true,
+    "hsts": "max-age=31536000; includeSubDomains; preload",
+    "owasp_mitigations": ["A01 Broken Access Control — no auth surface", "A03 Injection — Zod input validation", "A05 Security Misconfiguration — CSP + HSTS", "A07 Auth Failures — no auth surface", "A09 Logging — Axiom + Sentry"]
+  },
+
+  "performance": {
+    "lcp_target_ms": 2000,
+    "inp_target_ms": 100,
+    "cls_target": 0.05,
+    "lighthouse_min": 90,
+    "image_strategy": "next/image with Sanity CDN (auto WebP/AVIF)",
+    "font_strategy": "next/font subset + display: swap",
+    "bundle_strategy": "dynamic imports for AIChatDrawer, Maps, CalendlyEmbed",
+    "cdn": "Vercel Edge Network (Sydney PoP for AU traffic)",
+    "prefetch": "next/link prefetch on nav hover"
+  },
+
+  "support_stack": [
+    { "role": "uptime_monitor",    "tool": "betterstack-uptime" },
+    { "role": "error_tracking",    "tool": "sentry" },
+    { "role": "security_scanning", "tool": "snyk" },
+    { "role": "seo_monitoring",    "tool": "google-search-console" },
+    { "role": "backup",            "tool": "sanity-export-cron" }
+  ],
+
+  "outbound_events": [
+    { "type": "quote.submitted",       "source": "POST /api/quote → Resend" },
+    { "type": "contact.submitted",     "source": "POST /api/contact → Resend" },
+    { "type": "lead.captured",         "source": "POST /api/leads → Resend" },
+    { "type": "maintenance.signup",    "source": "POST /api/maintenance-signup → Resend" }
+  ],
+
+  "quality_gates": [
+    "Zero TypeScript errors",
+    "Zero ESLint warnings",
+    "Lighthouse ≥ 90 all categories",
+    "All E2E critical paths green",
+    "WCAG 2.1 AA pass",
+    "No console.log in production",
+    "All env vars validated at startup",
+    "CSP header present on all routes",
+    "No broken internal links",
+    "XML sitemap valid",
+    "All JSON-LD validates via schema.org validator"
+  ]
+}

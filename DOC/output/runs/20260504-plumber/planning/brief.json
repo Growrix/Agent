@@ -1,0 +1,83 @@
+{
+  "brief_version": "1.0",
+  "generated_at": "2026-05-04T18:21:00+10:00",
+  "brand_name": "AusPlumb Pro",
+  "brand_voice": "trustworthy",
+  "target_locale": "en-AU",
+  "target_regions": ["New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia"],
+  "industry_pack": "local-services",
+  "vertical": "plumbing",
+  "project_archetype": "marketing_site",
+  "visual_archetype": "local-business-trust",
+  "tier_band": "basic",
+  "preset_used": "tier-basic-marketing-site",
+  "cms_activated": true,
+  "cms_reason": "Content volume exceeds 3 editable pages (services × 8, areas × 20+, blog, reviews)",
+  "features": [
+    "marketing_pages",
+    "forms",
+    "reviews",
+    "analytics",
+    "seo",
+    "ai_chat",
+    "booking",
+    "gallery",
+    "blog"
+  ],
+  "floating_contact_dock": {
+    "enabled": true,
+    "position": "bottom-right",
+    "items": [
+      { "type": "call",      "label": "Call Now",       "icon": "phone",     "href": "tel:+611300PLUMBER" },
+      { "type": "whatsapp",  "label": "WhatsApp",       "icon": "whatsapp",  "href": "https://wa.me/61XXXXXXXXXX" },
+      { "type": "ai_chat",   "label": "Ask a Plumber",  "icon": "chat-bubble" }
+    ]
+  },
+  "interactive_features": [
+    "postcode_coverage_checker",
+    "quote_estimator",
+    "before_after_gallery_slider",
+    "animated_stats_counters",
+    "interactive_service_area_map",
+    "emergency_availability_badge",
+    "video_testimonials_carousel",
+    "plumbing_urgency_triage_tool",
+    "water_efficiency_calculator",
+    "maintenance_plan_signup"
+  ],
+  "ai_chat": {
+    "persona_name": "Max",
+    "persona_tagline": "Your virtual plumbing assistant",
+    "model": "gpt-4o-mini",
+    "streaming": true,
+    "capabilities": [
+      "answer_service_questions",
+      "check_coverage_by_suburb",
+      "provide_pricing_guidance",
+      "triage_emergency_vs_non_emergency",
+      "collect_lead_name_phone_service_postcode",
+      "escalate_to_human_on_request"
+    ],
+    "lead_capture": true,
+    "escalation_trigger": ["speak to someone", "call me", "human", "urgent", "emergency"]
+  },
+  "compliance": {
+    "country": "Australia",
+    "requirements": [
+      "ABN_display",
+      "state_license_number_display",
+      "GST_disclosure_on_pricing",
+      "Australian_Consumer_Law_guarantee_statement",
+      "Privacy_Act_1988_compliant_form_handling",
+      "SPAM_Act_2003_compliant_email_opt_in"
+    ]
+  },
+  "constraints": {
+    "deployment_platform": "vercel",
+    "no_auth": true,
+    "no_payments_phase_1": true,
+    "no_database_phase_1": true,
+    "image_source": "free-stock + client-supplied real photos"
+  },
+  "brief_status": "LOCKED"
+}
