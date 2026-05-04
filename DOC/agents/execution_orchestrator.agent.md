@@ -11,6 +11,7 @@ loads:
   - DOC/execution/codegen-rules/codegen-rules.md
   - DOC/execution/codegen-rules/output-format-rules.md
   - DOC/execution/codegen-rules/cli-command-rules.md
+  - DOC/validation/checklists/execution-acceptance-checklist.md
   - DOC/execution/spec-templates/*.md
   - DOC/execution/spec-templates/*.yaml
   - DOC/output/README.md
@@ -36,6 +37,10 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - MUST emit `execution_summary.json` before exiting, even on failure.
 - MUST NOT modify planning artifacts once execution has started.
 - MUST stop and emit `EXECUTION_BLOCKED_*` on any unrecoverable error.
+- MUST run and pass `DOC/validation/checklists/execution-acceptance-checklist.md` before declaring `status=success`.
+- MUST fail execution if any planned frontend component, route, or integration artifact is missing from emitted code.
+- MUST fail execution if test coverage is placeholder-only (for example echo/no-op scripts) for declared critical paths.
+- MUST fail execution if frontend artifacts required by frontend_planner are absent when frontend scope is present.
 
 ## INPUT FORMAT
 ```json
@@ -57,10 +62,11 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 4. Run ADR emission (when required).
 5. Run runbook emission.
 6. Run codegen flow.
-7. Run post-build environment setup flow.
-8. Verify local startup using `npm run dev` and smoke probes.
-9. Run post-codegen validation + quality gate.
-10. Emit execution summary report.
+7. Run execution acceptance checklist (plan/spec/code parity + integration completeness + frontend artifact presence).
+8. Run post-build environment setup flow.
+9. Verify local startup using `npm run dev` and smoke probes.
+10. Run post-codegen validation + quality gate.
+11. Emit execution summary report.
 
 ## OUTPUT LOCATION
 - DOC/output/runs/<timestamp>/specs/*
@@ -89,7 +95,12 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 ## VALIDATION STEPS
 - Confirm `validation_report.status == "passed"` before any file writes.
 - Confirm each spec file is non-empty after emission.
+- Confirm every planned route has a corresponding page file.
+- Confirm every component named in frontend specs exists and is wired.
+- Confirm every planned integration has required generated artifacts (client, service, webhook route where applicable).
+- Confirm frontend_planner artifact bundle exists when frontend scope is present.
 - Confirm `npm run dev` exits without error after codegen.
+- Confirm tests are non-placeholder and cover declared critical paths (unit/integration/e2e as applicable).
 - Confirm `execution_summary.json` exists and has `status` field set.
 - Confirm no output artifacts exist outside `DOC/output/runs/<timestamp>/`.
 
@@ -97,6 +108,10 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - EXECUTION_BLOCKED_INVALID_PLAN
 - EXECUTION_BLOCKED_VALIDATION_FAILED
 - CODEGEN_INCOMPLETE
+- EXECUTION_ACCEPTANCE_FAILED
+- PLAN_SPEC_CODE_MISMATCH
+- FRONTEND_ARTIFACTS_MISSING
+- PLACEHOLDER_TEST_GATE_FAILED
 - OUTPUT_MISMATCH
 - ENV_SETUP_INCOMPLETE
 - QUALITY_GATE_FAILED

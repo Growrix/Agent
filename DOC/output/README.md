@@ -13,6 +13,8 @@ This folder is the canonical destination for generated planning and specificatio
 - `reports/`
   - reviewer reports, security reports, performance audits
   - environment setup reports
+  - execution acceptance checklist evidence
+  - execution summary with plan/spec/code parity evidence
 - `codegen/`
   - generated code emission bundles or file manifests
 

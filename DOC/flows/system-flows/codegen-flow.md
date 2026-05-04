@@ -128,8 +128,13 @@ Before declaring codegen complete:
 [ ] Every route in plan.frontend.routes has a corresponding page file.
 [ ] Every webhook in plan.integrations has a corresponding route handler.
 [ ] Every env var in plan.env_vars is in src/env.ts schema.
+[ ] Execution acceptance checklist passes: DOC/validation/checklists/execution-acceptance-checklist.md
+[ ] No placeholder test scripts for declared critical paths.
+[ ] Frontend planner artifact bundle exists for frontend scope runs.
 ```
 Failure → BLOCK `CODEGEN_INCOMPLETE: <missing_artifact>`.
+
+Failure in execution acceptance checks → BLOCK `EXECUTION_ACCEPTANCE_FAILED: <reason>`.
 
 ## CODEGEN OUTPUT FORMAT
 All generated files MUST be emitted in this structure:

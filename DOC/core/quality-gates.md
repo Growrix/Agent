@@ -31,3 +31,12 @@ Define non-negotiable acceptance gates that must pass before an agent may mark w
 ## QG6 — COMPLETION CONTRACT
 - A task is complete only when all applicable gates pass and evidence is recorded in run reports.
 - Any skipped gate must be explicitly marked as `not-applicable` with rationale.
+
+## QG7 — PLAN/SPEC/CODE PARITY GATE
+- Execution MUST prove parity between planning artifacts, emitted specs, and generated code.
+- Any missing planned route, component, integration artifact, webhook, or env-validation entry is a blocking failure.
+- Frontend scope runs MUST include frontend planner artifacts and motion/content parity evidence.
+
+## QG8 — NON-PLACEHOLDER TEST GATE
+- Placeholder tests (for example echo/no-op scripts) are forbidden for declared critical paths.
+- Execution MUST include runnable test evidence for critical paths declared in planning artifacts.

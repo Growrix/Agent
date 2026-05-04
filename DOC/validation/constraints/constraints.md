@@ -106,7 +106,27 @@ Hard rules that prevent invalid plans and broken architectures. Each constraint 
 **Rule:** Execution behavior MUST respect user intent mode (run/verify-only vs fix mode) and report blockers before modifying code.
 **Failure:** `BLOCK C24: operation mode policy missing`.
 
+## C25 — PLAN/SPEC/CODE PARITY
+**Rule:** Every planned route/component/integration artifact MUST exist in generated code and align with emitted specs.
+**Failure:** `BLOCK C25: plan-spec-code mismatch for <artifact>`.
+
+## C26 — FRONTEND ARTIFACT COMPLETENESS
+**Rule:** If frontend scope is present, frontend planner artifact bundle MUST exist and be referenced by execution.
+**Failure:** `BLOCK C26: missing frontend artifact <path>`.
+
+## C27 — NO PLACEHOLDER TEST EXECUTION
+**Rule:** Declared critical paths MUST NOT rely on placeholder/no-op test scripts.
+**Failure:** `BLOCK C27: placeholder test gate violated`.
+
+## C28 — EXECUTION ACCEPTANCE CHECKLIST REQUIRED
+**Rule:** Execution MUST run and pass `DOC/validation/checklists/execution-acceptance-checklist.md` before success.
+**Failure:** `BLOCK C28: execution acceptance checklist missing or failed`.
+
+## C29 — EXECUTION SUMMARY EVIDENCE COMPLETENESS
+**Rule:** execution_summary.json MUST include explicit evidence for parity checks and acceptance checklist results.
+**Failure:** `BLOCK C29: execution summary evidence incomplete`.
+
 ## ENFORCEMENT
-- Constraints are evaluated in order C1..C24 by the reviewer agent.
+- Constraints are evaluated in order C1..C29 by the reviewer agent.
 - Any failure halts the pipeline.
 - Resolution requires updating the plan and re-running validation.

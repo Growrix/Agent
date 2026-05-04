@@ -29,7 +29,7 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] Security checklist completed.
 - [ ] Integration checklist completed.
 
-## SECTION C — CONSTRAINTS C1..C24
+## SECTION C — CONSTRAINTS C1..C29
 - [ ] C1
 - [ ] C2
 - [ ] C3
@@ -54,6 +54,11 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] C22
 - [ ] C23
 - [ ] C24
+- [ ] C25
+- [ ] C26
+- [ ] C27
+- [ ] C28
+- [ ] C29
 
 ## SECTION D — FRONTEND CONSTRAINTS F1..F12
 - [ ] F1
