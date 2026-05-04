@@ -77,6 +77,8 @@ The **default** is the deterministic pick; the **alternatives** are fallbacks.
 | push_notifications | notifications | advanced | onesignal | knock |
 | document_signing | signing | advanced | documenso | dropbox-sign, docusign |
 | video | video | advanced | livekit | mux-video, daily |
+| realtime_events | realtime | standard | pusher | supabase-realtime, liveblocks |
+| collaboration_presence | realtime | advanced | liveblocks | pusher, supabase-realtime |
 | internal_automation | automation | automation | n8n | make |
 | consumer_automation | automation | automation | zapier | pipedream-connect |
 | embedded_integrations | automation | automation | paragon | nango, pipedream-connect |

@@ -31,6 +31,10 @@ Integration YAMLs declare `required_skills[]` naming the skills they need. The c
 | per-tenant-tokens-pattern | zapier integration, custom automation |
 | cache-invalidation-on-write-pattern | upstash, sanity, meilisearch |
 | soft-delete-on-user-deleted-pattern | clerk |
+| optimistic-ui-pattern | pusher, supabase-realtime, liveblocks |
+| websocket-reconnect-pattern | pusher, supabase-realtime, liveblocks |
+| presence-tracking-pattern | liveblocks, collaborative views |
+| subscription-fanout-pattern | pusher, supabase-realtime, notification streams |
 | glob-based-inventory-pattern | system_architect audit section A |
 | cross-reference-validation-pattern | system_architect audit section B |
 | frontmatter-schema-validation-pattern | system_architect audit section C |

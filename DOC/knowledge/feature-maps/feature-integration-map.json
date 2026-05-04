@@ -115,6 +115,24 @@
       "implies": ["notifications_table", "email_templates"],
       "rule_file": "knowledge/integration-rules/resend.yaml"
     },
+    "realtime_updates": {
+      "primary": "pusher",
+      "secondary": ["database", "upstash"],
+      "implies": ["tenant_scoped_channels", "reconnect_state_machine", "event_deduplication"],
+      "rule_file": "knowledge/integration-rules/realtime/pusher.yaml"
+    },
+    "collaborative_presence": {
+      "primary": "liveblocks",
+      "secondary": ["clerk", "database"],
+      "implies": ["room_auth_endpoint", "presence_roster", "tenant_scoped_room_ids"],
+      "rule_file": "knowledge/integration-rules/realtime/liveblocks.yaml"
+    },
+    "collaborative_editing": {
+      "primary": "liveblocks",
+      "secondary": ["database", "upstash"],
+      "implies": ["optimistic_patch_reducer", "versioned_mutations", "snapshot_reconciliation"],
+      "rule_file": "knowledge/integration-rules/realtime/liveblocks.yaml"
+    },
     "ai_chat": {
       "primary": "openai",
       "secondary": ["database", "upstash", "inngest"],

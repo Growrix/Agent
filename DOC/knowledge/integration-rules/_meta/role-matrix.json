@@ -52,6 +52,8 @@
     { "role": "push_notifications",  "category": "notifications", "tier": "advanced",   "default": "onesignal",          "alternatives": ["knock"],                                 "yaml": "notifications/onesignal.yaml" },
     { "role": "document_signing",    "category": "signing",       "tier": "advanced",   "default": "documenso",          "alternatives": ["dropbox-sign","docusign"],              "yaml": "signing/documenso.yaml" },
     { "role": "video",               "category": "video",         "tier": "advanced",   "default": "livekit",            "alternatives": ["mux-video","daily"],                    "yaml": "video/livekit.yaml" },
+    { "role": "realtime_events",     "category": "realtime",      "tier": "standard",   "default": "pusher",             "alternatives": ["supabase-realtime","liveblocks"],       "yaml": "realtime/pusher.yaml" },
+    { "role": "collaboration_presence", "category": "realtime",   "tier": "advanced",   "default": "liveblocks",         "alternatives": ["pusher","supabase-realtime"],           "yaml": "realtime/liveblocks.yaml" },
     { "role": "internal_automation", "category": "automation",    "tier": "automation", "default": "n8n",                "alternatives": ["make"],                                  "yaml": "automation/n8n.yaml" },
     { "role": "consumer_automation", "category": "automation",    "tier": "automation", "default": "zapier",             "alternatives": ["pipedream-connect"],                     "yaml": "automation/zapier.yaml" },
     { "role": "embedded_integrations", "category": "automation",  "tier": "automation", "default": "paragon",            "alternatives": ["nango","pipedream-connect"],            "yaml": "automation/paragon.yaml" }

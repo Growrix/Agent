@@ -5,6 +5,7 @@ loads:
   - DOC/core/system-rules.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/knowledge/integration-rules/**/*.yaml
+  - DOC/knowledge/realtime-rules/realtime-rules.md
   - DOC/knowledge/feature-maps/feature-integration-map.json
   - DOC/knowledge/integration-presets/*.yaml
   - DOC/knowledge/automation-rules/automation-rules.md

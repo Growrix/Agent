@@ -65,6 +65,20 @@ Agents MUST use these exact event type strings. New event types require a PR to 
 | `notification.sent` | Notification dispatched | userId, channel, templateId, sentAt |
 | `notification.failed` | Notification delivery failed | userId, channel, templateId, failedAt, reason |
 
+## Realtime & collaboration
+
+| Event type | Trigger | Payload fields |
+|---|---|---|
+| `dashboard.metric.updated` | Real-time metric value changes | tenantId, metricKey, value, changedAt |
+| `notification.created` | In-app notification record created | tenantId, userId, notificationId, createdAt |
+| `entity.status.changed` | Domain entity transitions status | tenantId, entityType, entityId, fromStatus, toStatus, changedAt |
+| `row.inserted` | New DB row emitted through realtime layer | tenantId, table, rowId, insertedAt |
+| `row.updated` | Existing DB row emitted through realtime layer | tenantId, table, rowId, changedFields[], updatedAt |
+| `row.deleted` | DB row deletion emitted through realtime layer | tenantId, table, rowId, deletedAt |
+| `room.joined` | User joins collaborative room | tenantId, roomId, userId, joinedAt |
+| `room.left` | User leaves collaborative room | tenantId, roomId, userId, leftAt |
+| `comment.created` | Collaborative comment created | tenantId, roomId, commentId, authorUserId, createdAt |
+
 ---
 
 ## Envelope schema (all events)
