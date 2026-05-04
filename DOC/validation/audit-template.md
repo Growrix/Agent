@@ -270,13 +270,13 @@ Combined with B.8.
 **Evidence:** `<plan-key> → produced_by=<sub-planner>`.
 **Failure:** BLOCKER per orphaned plan key.
 
-### D.5 Frontend route inventory coverage contract
+### D.5 Frontend planning output root contract
 **Command:**
-1. `Read DOC/agents/frontend_planner.agent.md`, `DOC/agents/page_planner.agent.md`, `DOC/agents/reviewer.agent.md`, `DOC/validation/constraints/frontend-constraints.md`, `DOC/execution/spec-rules/master-ui-architecture-spec.md`, and `DOC/execution/spec-rules/per-page-spec.md`.
-2. Confirm the contract chain explicitly states that frontend route inventory (`ai-context` + Route Map) must reconcile to emitted page specs.
-**Pass if:** every artifact above contains explicit route-coverage language and missing page specs are a blocking failure.
-**Evidence:** `<artifact> → route_coverage_contract=<true|false>`.
-**Failure:** BLOCKER if any contract link is missing.
+1. `Read` the frontend planning chain artifacts that declare output locations: `core/system-rules.md`, `output/README.md`, `agents/master_planner.agent.md`, `agents/frontend_planner.agent.md`, frontend sub-planner agents, frontend spec rules, frontend rules, and `validation/checklists/execution-acceptance-checklist.md`.
+2. Confirm they reference `DOC/output/runs/<timestamp>/planning/frontend` (or `<output_root>` explicitly bound to that root) and do not direct generated frontend planning artifacts to any legacy bare frontend folder or any workspace root outside `DOC/output/runs/<timestamp>/`.
+**Pass if:** all audited files enforce the canonical run-scoped frontend planning root and none retain a legacy bare frontend output destination.
+**Evidence:** `<artifact> → output_root_contract=<pass|fail>`.
+**Failure:** BLOCKER if any contract source points frontend planning output outside `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ---
 

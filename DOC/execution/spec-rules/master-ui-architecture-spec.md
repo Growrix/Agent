@@ -1,6 +1,6 @@
 # Spec Template — Master UI Architecture
 
-Emitted by `ux_director` to `docs/frontend/master-ui-architecture.md`.
+Emitted by `ux_director` to `<output_root>/master-ui-architecture.md`, where `<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 This is the top-level frontend spec. It is the only artifact that captures cross-page logic (journeys, navigation models, conversion infrastructure). All page specs reference this file.
 
@@ -119,15 +119,16 @@ List of organisms shared across pages: header, footer, chat widget, cookie banne
 - Image (next/image)
 
 ### 18. Route Map
-A flat list of every route the site exposes, in canonical order. This route map is the canonical source that `page_planner` must reconcile against `docs/frontend/ai-context.yaml` and later `docs/frontend/pages/*.md`.
+A flat list of every route the site exposes, in canonical order.
 
 ### 19. File Output Inventory
-The list of files this frontend planning round will produce, with paths under `docs/frontend/`. It MUST include one page spec artifact per route declared in the Route Map (dynamic routes may use one parameterized page spec per route pattern).
+The list of files this frontend planning round will produce, with paths under `<output_root>/`.
 
 ### 20. AI Consumption Guidance
 A short block explaining:
-- Which file is the AI first-stop (`docs/frontend/ai-context.yaml`).
-- Which file is the human first-stop (`docs/frontend/README.md`).
+- Which file is the AI first-stop (`<output_root>/ai-context.yaml`).
+- Which file is the human first-stop (`<output_root>/README.md`).
+- `<output_root>` MUST stay inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 - Read order for incremental implementation.
 
 ## Forbidden in this file

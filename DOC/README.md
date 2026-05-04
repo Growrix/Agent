@@ -229,6 +229,7 @@ Recommended per-run structure:
 - `DOC/output/runs/<timestamp>/planning/plan.json`
 - `DOC/output/runs/<timestamp>/planning/decisions.json`
 - `DOC/output/runs/<timestamp>/planning/validation_report.json`
+- `DOC/output/runs/<timestamp>/planning/frontend/*`
 - `DOC/output/runs/<timestamp>/specs/*`
 - `DOC/output/runs/<timestamp>/reports/*`
 - `DOC/output/runs/<timestamp>/codegen/*`

@@ -1,6 +1,6 @@
 # Spec Template — Motion System
 
-Emitted by `motion_planner` to `docs/frontend/motion-system.md`.
+Emitted by `motion_planner` to `<output_root>/motion-system.md`, where `<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ## File frontmatter
 

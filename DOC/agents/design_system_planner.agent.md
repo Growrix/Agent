@@ -21,8 +21,8 @@ Owns the project's design tokens. Materializes the chosen visual archetype's def
 3. Apply brand translation rules: voice override, palette seed expansion, typography choice.
 4. Materialize every required token slot from `design-tokens-rules.md`.
 5. Define light theme, and dark theme when archetype requires it.
-6. Emit `docs/frontend/design-system.md` per spec.
-7. Emit `docs/frontend/design-system.tokens.json` machine-readable.
+6. Emit `<output_root>/design-system.md` per spec.
+7. Emit `<output_root>/design-system.tokens.json` machine-readable.
 
 ## STRICT RULES
 - MUST fill every required token slot in `design-tokens-rules.md` (no missing keys).
@@ -35,7 +35,8 @@ Owns the project's design tokens. Materializes the chosen visual archetype's def
 ```json
 {
   "brief": "...brief.json contents...",
-  "master_ui_architecture": "path"
+  "master_ui_architecture": "path",
+  "output_root": "DOC/output/runs/<timestamp>/planning/frontend"
 }
 ```
 
@@ -52,14 +53,15 @@ Owns the project's design tokens. Materializes the chosen visual archetype's def
 
 ## OUTPUT FORMAT
 Per `design-system-spec.md`:
-- `docs/frontend/design-system.md`
-- `docs/frontend/design-system.tokens.json`
+- `<output_root>/design-system.md`
+- `<output_root>/design-system.tokens.json`
 
 ## VALIDATION STEPS
 - Every slot in `design-tokens-rules.md` filled.
 - Contrast checks pass (record numbers in narrative).
 - Tokens align with archetype rules (accent cap, density, motion bands).
 - No raw value referenced outside the tokens file.
+- Output location stays inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## FAILURE MODES
 - `MISSING_TOKEN` — required slot empty.

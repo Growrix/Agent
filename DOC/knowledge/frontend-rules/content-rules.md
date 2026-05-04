@@ -4,7 +4,9 @@ The content layer is the source of truth for every visible word in the UI. Compo
 
 ## Content library
 
-The content_planner emits `docs/frontend/content-library.md` and a machine-readable `docs/frontend/content.<locale>.json` per locale.
+The content_planner emits `<output_root>/content-library.md` and a machine-readable `<output_root>/content.<locale>.json` per locale.
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 Minimum depth requirements for implementation-ready output:
 - The locale JSON MUST include route-scoped key groups for every public route in scope.

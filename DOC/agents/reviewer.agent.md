@@ -272,7 +272,7 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 
 ## VALIDATION STEPS
 - Confirm input `plan` has all required top-level keys before evaluating constraints.
-- Confirm frontend route inventory from `docs/frontend/ai-context.yaml` and `master-ui-architecture.md` fully resolves to page specs before passing F7.
+- Confirm frontend route inventory from `DOC/output/runs/<timestamp>/planning/frontend/ai-context.yaml` and `master-ui-architecture.md` fully resolves to page specs before passing F7.
 - Confirm each constraint block has a `status` and `reason` before emitting.
 - Confirm `validation_report.json` is emitted even when overall status is `failed`.
 - Confirm no constraint is skipped: each C1..C24 plus F, SC, PC, DC, AC, TC, I series must appear in output.

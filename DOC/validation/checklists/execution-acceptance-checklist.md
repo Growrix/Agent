@@ -14,15 +14,15 @@ Hard acceptance gate between codegen and final success status. If any check fail
 
 ## FRONTEND QUALITY PARITY
 - [ ] Frontend planner artifact bundle exists when frontend scope is present:
-  - docs/frontend/README.md
-  - docs/frontend/master-ui-architecture.md
-  - docs/frontend/design-system.md
-  - docs/frontend/design-system.tokens.json
-  - docs/frontend/component-system.md
-  - docs/frontend/motion-system.md
-  - docs/frontend/content-library.md
-  - docs/frontend/interaction-matrix.md
-  - docs/frontend/pages/*.md
+  - DOC/output/runs/<timestamp>/planning/frontend/README.md
+  - DOC/output/runs/<timestamp>/planning/frontend/master-ui-architecture.md
+  - DOC/output/runs/<timestamp>/planning/frontend/design-system.md
+  - DOC/output/runs/<timestamp>/planning/frontend/design-system.tokens.json
+  - DOC/output/runs/<timestamp>/planning/frontend/component-system.md
+  - DOC/output/runs/<timestamp>/planning/frontend/motion-system.md
+  - DOC/output/runs/<timestamp>/planning/frontend/content-library.md
+  - DOC/output/runs/<timestamp>/planning/frontend/interaction-matrix.md
+  - DOC/output/runs/<timestamp>/planning/frontend/pages/*.md
 - [ ] No hardcoded page-level placeholder copy where content keys are required.
 - [ ] Motion declarations exist for key interactive surfaces and include reduced-motion fallback.
 - [ ] Form specs map to implemented zod schemas and submission handlers.

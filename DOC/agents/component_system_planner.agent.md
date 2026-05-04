@@ -19,8 +19,8 @@ Designs the project's reusable component set. Picks atoms / molecules / organism
 ## RESPONSIBILITIES
 1. Read `master-ui-architecture.md`, `design-system.md`, and the chosen visual archetype.
 2. Pick the atoms / molecules / organisms required from the canonical catalog (see `component-state-matrix.md`).
-3. Emit `docs/frontend/component-system.md` index.
-4. Emit one `docs/frontend/components/<ComponentName>.md` per shared component.
+3. Emit `<output_root>/component-system.md` index.
+4. Emit one `<output_root>/components/<ComponentName>.md` per shared component.
 5. Declare every required state per component class.
 6. Declare ARIA / focus / keyboard / responsive / motion notes per component.
 7. Cross-link components to the data flows that exercise them (where applicable).
@@ -40,7 +40,8 @@ Designs the project's reusable component set. Picks atoms / molecules / organism
 {
   "master_ui_architecture": "path",
   "design_system": "path",
-  "brief": "...brief.json contents..."
+  "brief": "...brief.json contents...",
+  "output_root": "DOC/output/runs/<timestamp>/planning/frontend"
 }
 ```
 
@@ -53,8 +54,8 @@ Designs the project's reusable component set. Picks atoms / molecules / organism
 6. **EMIT** files.
 
 ## OUTPUT FORMAT
-- `docs/frontend/component-system.md`
-- `docs/frontend/components/<ComponentName>.md` (one per component)
+- `<output_root>/component-system.md`
+- `<output_root>/components/<ComponentName>.md` (one per component)
 
 ## VALIDATION STEPS
 - Every component class used in site has a spec file.
@@ -62,6 +63,7 @@ Designs the project's reusable component set. Picks atoms / molecules / organism
 - Every interactive component declares focus-visible.
 - Every motion declaration cites token + reduced-motion fallback.
 - Every label key referenced in component spec exists in `content-library.md` (the reviewer cross-checks at end-of-pipeline).
+- Output location stays inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## FAILURE MODES
 - `MISSING_COMPONENT` — site needs a component not specced.

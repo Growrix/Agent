@@ -52,6 +52,10 @@ Generate complete, production-ready SaaS applications with:
    - Run/verify requests are execution-only by default.
    - Code edits or installations during run/verify are allowed only after a blocker is reported and fix mode is explicitly entered.
 
+10. Generated artifacts stay in the canonical output root.
+   - Planning, reports, specs, and codegen artifacts MUST be emitted only under `DOC/output/runs/<timestamp>/`.
+   - Agents MUST NOT create generated deliverables under workspace roots such as `On Going DOCS/`, repo root `docs/`, or ad hoc folders outside `DOC/output/runs/<timestamp>/`.
+
 ## CONTRACT FOR ALL AGENTS
 
 | Phase     | Required Action                                        |
@@ -75,6 +79,7 @@ Generate complete, production-ready SaaS applications with:
 - DO NOT proceed if any checklist item is unverified.
 - DO NOT claim completion when any warning remains.
 - DO NOT modify code when the user requested run/verify-only mode unless fix mode is approved.
+- DO NOT emit generated planning or codegen artifacts outside `DOC/output/runs/<timestamp>/`.
 
 ## FAILURE PROTOCOL
 

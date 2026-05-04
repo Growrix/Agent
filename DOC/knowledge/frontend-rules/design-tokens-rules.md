@@ -236,10 +236,12 @@ Style: outline-first (per archetype) with allowed filled exceptions.
 
 ## Token output file
 
-The design_system_planner emits a single JSON file at `docs/frontend/design-system.tokens.json` and a Markdown narrative at `docs/frontend/design-system.md`. The JSON file is consumed by codegen to produce:
+The design_system_planner emits a single JSON file at `<output_root>/design-system.tokens.json` and a Markdown narrative at `<output_root>/design-system.md`. The JSON file is consumed by codegen to produce:
 - `tailwind.config.ts` (for Tailwind projects)
 - `src/styles/tokens.css` (for raw CSS-variable projects)
 - typed token references (TS) for runtime use
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ## Forbidden in component code
 

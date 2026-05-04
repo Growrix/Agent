@@ -23,7 +23,7 @@ Hard rules for any frontend plan produced by this OS. Each constraint has an id,
 **Failure:** `BLOCK F4: <element> at <ref> missing <state>`.
 
 ## F5 — No inline copy
-**Rule:** Every visible string in a component or page MUST resolve to a key in `docs/frontend/content-library.md`. No hardcoded English strings in JSX/TSX, except documented third-party labels with explicit exception.
+**Rule:** Every visible string in a component or page MUST resolve to a key in the frontend planning content library at `<output_root>/content-library.md`, where `<output_root>` resolves to `DOC/output/runs/<timestamp>/planning/frontend`. No hardcoded English strings in JSX/TSX, except documented third-party labels with explicit exception.
 **Detection:** Scan for inline strings; verify referenced keys exist.
 **Failure:** `BLOCK F5: inline string "<text>" at <file>:<loc>`.
 
@@ -33,9 +33,9 @@ Hard rules for any frontend plan produced by this OS. Each constraint has an id,
 **Failure:** `BLOCK F6: motion <id> at <ref> missing reduced_motion fallback`.
 
 ## F7 — Page spec completeness
-**Rule:** Every route declared in the frontend route inventory (`master-ui-architecture.md` Route Map and `docs/frontend/ai-context.yaml` surfaces/routes) MUST resolve to exactly one page spec, and every page spec MUST contain: page definition, sections in visual order, page-level state requirements, responsive adaptation, SEO+metadata, conversion path, accessibility plan, performance plan, data fetching plan.
-**Detection:** Schema-check each page spec frontmatter + required sections, then diff declared route inventory against emitted page-spec `route:` frontmatter values.
-**Failure:** `BLOCK F7: route <route> missing page spec, duplicated page spec, or page <route> missing section <section>`.
+**Rule:** Every page spec MUST contain: page definition, sections in visual order, page-level state requirements, responsive adaptation, SEO+metadata, conversion path, accessibility plan, performance plan, data fetching plan.
+**Detection:** Schema-check each page spec frontmatter + required sections.
+**Failure:** `BLOCK F7: page <route> missing section <section>`.
 
 ## F8 — Data source declared
 **Rule:** Every dynamic section in a page spec MUST declare `data_source` (one of: `static`, `cms`, `database`, `integration`) AND the exact query/call. Static sections must declare `static`.

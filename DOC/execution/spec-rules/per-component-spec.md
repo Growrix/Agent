@@ -3,7 +3,9 @@
 Pointer file. The full template lives in `component-system-spec.md` under "Per-component required sections". This file exists so that `spec_writer` and `component_system_planner` can reference a single canonical location for the per-component shape.
 
 ## Output location
-`docs/frontend/components/<ComponentName>.md` — one file per shared component.
+`<output_root>/components/<ComponentName>.md` — one file per shared component.
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ## Required structure
 See `component-system-spec.md` → "Per-component required sections" for the full field list:

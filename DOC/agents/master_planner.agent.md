@@ -65,6 +65,7 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 - MUST NOT invent features, integrations, or env vars.
 - MUST NOT modify the plan after LOCK.
 - MUST NOT set `lock_status=LOCKED` unless reviewer output conforms to `execution/spec-templates/validation-report.template.json`.
+- MUST route all generated planning artifacts under `DOC/output/runs/<timestamp>/planning/`; frontend planning artifacts specifically live under `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## INPUT FORMAT
 ```json
@@ -90,7 +91,7 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 4. **EXTRACT FEATURES** — produce a feature list from `feature-integration-map.json`. Unknown features → `MISSING_KNOWLEDGE` BLOCK.
 5. **MAP INTEGRATIONS** — delegate to `integration_planner`.
 6. **SELECT TEMPLATE** — score every template; pick the smallest fully-covering one. Tie-break by deterministic alphabetical order. No match → BLOCK `NO_MATCHING_TEMPLATE`.
-7. **DESIGN FRONTEND** — delegate to `frontend_planner`.
+7. **DESIGN FRONTEND** — delegate to `frontend_planner` with `output_root=DOC/output/runs/<timestamp>/planning/frontend`.
 8. **DESIGN BACKEND** — delegate to `backend_planner`.
 9. **DESIGN DEVOPS** — delegate to `devops_planner` → `devops.json` (environments, secrets, CI/CD, IaC, monitoring, alerts, backups, DR, rollback, on-call, cost). Per `execution/spec-rules/devops-system-spec.md`.
 10. **DESIGN TESTING** — delegate to `qa_planner` → `testing.json` (frameworks, pyramid, coverage thresholds, per-route test cases, webhook tests, E2E critical paths, CI gates, smoke tests). Per `execution/spec-rules/qa-system-spec.md`.
@@ -102,7 +103,7 @@ Owns the end-to-end planning pipeline. Converts a free-text SaaS request into a 
 16. **PRE-BUILD CHECKLIST** — run `validation/checklists/pre-build-checklist.md`. BLOCK on failure.
 17. **REVIEWER** — invoke `reviewer.agent.md`. BLOCK on any failed constraint.
 18. **VALIDATION SCHEMA CHECK** — ensure `validation_report.json` includes the full reviewer schema (C/F/AC/SC/PC/DC/TC/I blocks and required checklist blocks). Missing blocks → BLOCK `VALIDATION_SCHEMA_MISMATCH`.
-19. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`. LOCK the plan.
+19. **EMIT** — produce `plan.json`, `decisions.json`, `validation_report.json`, and any planner-owned artifacts under `DOC/output/runs/<timestamp>/planning/`. LOCK the plan.
 
 ## OUTPUT FORMAT
 Three artifacts, in machine-readable form:

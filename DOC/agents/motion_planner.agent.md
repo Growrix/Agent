@@ -22,7 +22,7 @@ Designs the project's complete motion catalog: macro effects (section reveal, pa
 5. Catalog streaming visuals (only if applicable: AI surfaces, realtime, uploads).
 6. Declare per-component motion ("which components animate and which catalog entry they use").
 7. Provide a consolidated reduced-motion fallback table.
-8. Emit `docs/frontend/motion-system.md` per the spec.
+8. Emit `<output_root>/motion-system.md` per the spec.
 
 ## STRICT RULES
 - MUST use motion tokens from `design-system.tokens.json` — no raw `ms`.
@@ -37,7 +37,8 @@ Designs the project's complete motion catalog: macro effects (section reveal, pa
 {
   "master_ui_architecture": "path",
   "design_system_tokens":   "path",
-  "component_system":       "path"
+  "component_system":       "path",
+  "output_root":            "DOC/output/runs/<timestamp>/planning/frontend"
 }
 ```
 
@@ -50,7 +51,7 @@ Designs the project's complete motion catalog: macro effects (section reveal, pa
 6. **PER-COMPONENT** — table mapping component → which catalog entries it uses.
 7. **REDUCED MOTION TABLE** — consolidated fallback per effect.
 8. **PERFORMANCE GUARDRAILS** — restate transform/opacity-only animation rule.
-9. **EMIT** `docs/frontend/motion-system.md`.
+9. **EMIT** `<output_root>/motion-system.md`.
 
 ## OUTPUT FORMAT
 A single Markdown file per `motion-system-spec.md`.
@@ -61,6 +62,7 @@ A single Markdown file per `motion-system-spec.md`.
 - Every effect has a reduced-motion fallback.
 - Every micro motion cites a purpose.
 - Forbidden patterns absent.
+- Output location stays inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## FAILURE MODES
 - `RAW_DURATION` — raw `ms` literal in motion spec.

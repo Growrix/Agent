@@ -1,8 +1,8 @@
 # Spec Template — Per-Page
 
-Emitted by `page_planner`. One file per route, written to `docs/frontend/pages/<route-slug>.md`.
+Emitted by `page_planner`. One file per route, written to `<output_root>/pages/<route-slug>.md`.
 
-The route source of truth is `master-ui-architecture.md` Route Map reconciled against `docs/frontend/ai-context.yaml`. Missing or duplicate page specs are a blocking planning failure.
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 The per-page spec is the artifact codegen reads to produce the page. It MUST be complete enough that no decision is left to codegen.
 
@@ -154,7 +154,6 @@ Anything the page_planner could not resolve from the brief and rules — flagged
 ## Reviewer checks per page spec
 
 - ≥7 sections (or `min_sections_exempt: true` with reason).
-- Route inventory coverage matches `master-ui-architecture.md` Route Map and `docs/frontend/ai-context.yaml`.
 - Every section has every required field.
 - Every content key resolves to `content-library.md`.
 - Every component referenced exists in `component-system.md`.

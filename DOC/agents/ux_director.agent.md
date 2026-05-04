@@ -29,7 +29,7 @@ First frontend agent after the intake_strategist. Owns the cross-page architectu
 8. List cross-page components.
 9. Declare shared state requirements.
 10. Declare motion / accessibility / localization posture.
-11. Emit `docs/frontend/master-ui-architecture.md` per `master-ui-architecture-spec.md`.
+11. Emit `<output_root>/master-ui-architecture.md` per `master-ui-architecture-spec.md`.
 
 ## STRICT RULES
 - MUST follow the master-ui-architecture spec completely.
@@ -40,7 +40,10 @@ First frontend agent after the intake_strategist. Owns the cross-page architectu
 
 ## INPUT FORMAT
 ```json
-{ "brief": "...brief.json contents..." }
+{
+  "brief": "...brief.json contents...",
+  "output_root": "DOC/output/runs/<timestamp>/planning/frontend"
+}
 ```
 
 ## WORKFLOW
@@ -53,13 +56,13 @@ First frontend agent after the intake_strategist. Owns the cross-page architectu
 7. **CROSS-PAGE COMPONENTS** — list shared organisms.
 8. **STATE REQUIREMENTS** — list shared states across forms / lists / chat / checkout / nav.
 9. **POSTURE** — motion + a11y + i18n + stack.
-10. **EMIT** `docs/frontend/master-ui-architecture.md`.
+10. **EMIT** `<output_root>/master-ui-architecture.md`.
 
 ## OUTPUT FORMAT
-A single Markdown file matching the master-ui-architecture spec. Plus an entry to `docs/frontend/ai-context.yaml` (creates the file on first emission):
+A single Markdown file matching the master-ui-architecture spec. Plus an entry to `<output_root>/ai-context.yaml` (creates the file on first emission):
 
 ```yaml
-folder: docs/frontend
+folder: DOC/output/runs/<timestamp>/planning/frontend
 purpose: Frontend planning artifacts for <project>.
 core_invariants:
   - master-ui-architecture.md owns site map and cross-page logic
@@ -88,6 +91,7 @@ read_paths:
 - Every required cross-page component is listed.
 - Navigation models match the chosen archetype's recommendations.
 - Section rhythm and layout system reference token-level rules.
+- Output location stays inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## FAILURE MODES
 - `MISSING_REQUIRED_PAGE` — required surface absent from site map.

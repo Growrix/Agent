@@ -674,35 +674,59 @@ else {
   Add-Check -Section "D" -Id "D.4" -Name "plan.json key producer mapping" -Status "fail" -Severity "blocker" -Evidence "Read:DOC/agents/_index.md output artifact map -> missing plan key rows" -Details ($missingPlanMap -join ", ")
 }
 
-$routeCoverageContracts = @(
-  @{ Path = "DOC/agents/frontend_planner.agent.md"; Patterns = @("docs/frontend/ai-context.yaml", "master-ui-architecture.md", "docs/frontend/README.md", "docs/frontend/pages/*.md") },
-  @{ Path = "DOC/agents/page_planner.agent.md"; Patterns = @("frontend_ai_context", "exactly one page spec", "MISSING_PAGE_SPEC") },
-  @{ Path = "DOC/agents/reviewer.agent.md"; Patterns = @("frontend route inventory", "page specs", "F7") },
-  @{ Path = "DOC/validation/constraints/frontend-constraints.md"; Patterns = @("master-ui-architecture.md", "docs/frontend/ai-context.yaml", "missing page spec") },
-  @{ Path = "DOC/execution/spec-rules/master-ui-architecture-spec.md"; Patterns = @("Route Map", "docs/frontend/ai-context.yaml", "one page spec artifact per route") },
-  @{ Path = "DOC/execution/spec-rules/per-page-spec.md"; Patterns = @("route source of truth", "Missing or duplicate page specs", "Route Map") }
+$frontendOutputRootContracts = @(
+  @{ Path = "DOC/core/system-rules.md"; Required = @("DOC/output/runs/<timestamp>/"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/output/README.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/master_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/frontend_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/ux_director.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/design_system_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/component_system_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/content_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/motion_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/interaction_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/agents/page_planner.agent.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/master-ui-architecture-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/design-system-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/component-system-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/content-library-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/motion-system-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/per-component-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/execution/spec-rules/per-page-spec.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/knowledge/frontend-rules/content-rules.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/knowledge/frontend-rules/design-tokens-rules.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/knowledge/frontend-rules/motion-rules.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/knowledge/frontend-rules/page-archetype-rules.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/validation/constraints/frontend-constraints.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend", "<output_root>"); Forbidden = @("docs/frontend") },
+  @{ Path = "DOC/validation/checklists/execution-acceptance-checklist.md"; Required = @("DOC/output/runs/<timestamp>/planning/frontend"); Forbidden = @("docs/frontend") }
 )
 
-$routeCoverageIssues = @()
-foreach ($entry in $routeCoverageContracts) {
+$frontendOutputRootIssues = @()
+foreach ($entry in $frontendOutputRootContracts) {
   $fullPath = Join-Path $RepoRoot ($entry.Path -replace '/','\\')
   if (-not (Test-Path $fullPath)) {
-    $routeCoverageIssues += "$($entry.Path)::missing_file"
+    $frontendOutputRootIssues += "$($entry.Path)::missing_file"
     continue
   }
 
-  foreach ($pattern in $entry.Patterns) {
+  foreach ($pattern in $entry.Required) {
     if (-not (Select-String -Path $fullPath -Pattern $pattern -SimpleMatch -Quiet)) {
-      $routeCoverageIssues += "$($entry.Path)::missing_pattern=$pattern"
+      $frontendOutputRootIssues += "$($entry.Path)::missing_required=$pattern"
+    }
+  }
+
+  foreach ($pattern in $entry.Forbidden) {
+    if (Select-String -Path $fullPath -Pattern $pattern -SimpleMatch -Quiet) {
+      $frontendOutputRootIssues += "$($entry.Path)::forbidden_pattern=$pattern"
     }
   }
 }
 
-if ($routeCoverageIssues.Count -eq 0) {
-  Add-Check -Section "D" -Id "D.5" -Name "Frontend route inventory coverage contract" -Status "pass" -Severity "n/a" -Evidence "Read:frontend planner + page planner + reviewer + frontend constraints + spec rules -> route coverage contract present"
+if ($frontendOutputRootIssues.Count -eq 0) {
+  Add-Check -Section "D" -Id "D.5" -Name "Frontend planning output root contract" -Status "pass" -Severity "n/a" -Evidence "Read:frontend planning chain output locations -> canonical DOC/output run root enforced"
 }
 else {
-  Add-Check -Section "D" -Id "D.5" -Name "Frontend route inventory coverage contract" -Status "fail" -Severity "blocker" -Evidence "Read:frontend planner + page planner + reviewer + frontend constraints + spec rules -> route coverage contract gaps" -Details ($routeCoverageIssues -join "; ")
+  Add-Check -Section "D" -Id "D.5" -Name "Frontend planning output root contract" -Status "fail" -Severity "blocker" -Evidence "Read:frontend planning chain output locations -> contract gaps found" -Details ($frontendOutputRootIssues -join "; ")
 }
 
 # SECTION E
@@ -1011,13 +1035,13 @@ $qg = Join-Path $RepoRoot "DOC/core/quality-gates.md"
 $acc = Join-Path $RepoRoot "DOC/validation/checklists/execution-acceptance-checklist.md"
 
 $policyIssues = @()
-
-function Require-Pattern {
+$recordMissingPattern = {
   param(
     [string]$FilePath,
     [string]$Label,
     [string]$Pattern
   )
+
   if (-not (Select-String -Path $FilePath -Pattern $Pattern -SimpleMatch -Quiet)) {
     $script:policyIssues += "$Label missing pattern: $Pattern"
   }
@@ -1033,20 +1057,20 @@ if ((-not (Test-Path $orch)) -or (-not (Test-Path $qg)) -or (-not (Test-Path $ac
 else {
   $enumTokens = @("production_candidate","baseline_prototype","blocked")
 
-  Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern "delivery_class"
-  foreach ($t in $enumTokens) { Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern $t }
-  Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern "delivery_class=blocked"
-  Require-Pattern -FilePath $orch -Label "execution_orchestrator" -Pattern "status=failed"
+  & $recordMissingPattern -FilePath $orch -Label "execution_orchestrator" -Pattern "delivery_class"
+  foreach ($t in $enumTokens) { & $recordMissingPattern -FilePath $orch -Label "execution_orchestrator" -Pattern $t }
+  & $recordMissingPattern -FilePath $orch -Label "execution_orchestrator" -Pattern "delivery_class=blocked"
+  & $recordMissingPattern -FilePath $orch -Label "execution_orchestrator" -Pattern "status=failed"
 
-  Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern "delivery_class"
-  foreach ($t in $enumTokens) { Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern $t }
-  Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern "delivery_class=blocked"
-  Require-Pattern -FilePath $qg -Label "quality-gates" -Pattern "status=failed"
+  & $recordMissingPattern -FilePath $qg -Label "quality-gates" -Pattern "delivery_class"
+  foreach ($t in $enumTokens) { & $recordMissingPattern -FilePath $qg -Label "quality-gates" -Pattern $t }
+  & $recordMissingPattern -FilePath $qg -Label "quality-gates" -Pattern "delivery_class=blocked"
+  & $recordMissingPattern -FilePath $qg -Label "quality-gates" -Pattern "status=failed"
 
-  Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern "delivery_class"
-  foreach ($t in $enumTokens) { Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern $t }
-  Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern 'delivery_class is `blocked`'
-  Require-Pattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern 'status must be `failed`'
+  & $recordMissingPattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern "delivery_class"
+  foreach ($t in $enumTokens) { & $recordMissingPattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern $t }
+  & $recordMissingPattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern 'delivery_class is `blocked`'
+  & $recordMissingPattern -FilePath $acc -Label "execution-acceptance-checklist" -Pattern 'status must be `failed`'
 
   if ($policyIssues.Count -eq 0) {
     $orchLoc = Find-FirstMatchLocation -FilePath $orch -Pattern "delivery_class"

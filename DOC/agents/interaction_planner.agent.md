@@ -22,7 +22,7 @@ Owns interaction behavior across page sections so UI behavior is deterministic b
 3. Ensure mobile parity for every interaction (no hover-only actions).
 4. Ensure every interaction maps to required component states.
 5. Declare accessibility and keyboard behavior per interaction.
-6. Emit `docs/frontend/interaction-matrix.md` and per-page interaction blocks.
+6. Emit `<output_root>/interaction-matrix.md` and per-page interaction blocks.
 
 ## STRICT RULES
 - MUST include tap-equivalent behavior for any desktop hover interaction.
@@ -37,7 +37,8 @@ Owns interaction behavior across page sections so UI behavior is deterministic b
   "master_ui_architecture": "path",
   "component_specs": ["path", "..."],
   "motion_system": "path",
-  "page_routes": ["/", "/services", "..."]
+  "page_routes": ["/", "/services", "..."],
+  "output_root": "DOC/output/runs/<timestamp>/planning/frontend"
 }
 ```
 
@@ -50,8 +51,8 @@ Owns interaction behavior across page sections so UI behavior is deterministic b
 6. **EMIT** interaction matrix artifacts.
 
 ## OUTPUT FORMAT
-- `docs/frontend/interaction-matrix.md`
-- Per-page block to embed in `docs/frontend/pages/<route-slug>.md`.
+- `<output_root>/interaction-matrix.md`
+- Per-page block to embed in `<output_root>/pages/<route-slug>.md`.
 
 Minimum block shape:
 ```yaml
@@ -75,6 +76,7 @@ interactions:
 - Every section has at least one declared interaction path or explicit `interaction: none`.
 - Every interaction includes trigger, states, keyboard notes, and motion fallback.
 - No hover-only interaction remains without touch equivalent.
+- Output location stays inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## FAILURE MODES
 - `MISSING_INTERACTION_BLOCK`

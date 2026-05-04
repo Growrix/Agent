@@ -145,7 +145,9 @@ If none of those applies → the motion is decorative and forbidden by constrain
 
 ## Output
 
-The motion_planner emits `docs/frontend/motion-system.md` listing:
+The motion_planner emits `<output_root>/motion-system.md` listing:
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 - Adopted duration band per archetype.
 - Adopted easing curves.
 - Per-component motion declarations citing layer + token + purpose + reduced-motion fallback.

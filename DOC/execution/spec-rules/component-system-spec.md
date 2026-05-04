@@ -1,8 +1,10 @@
 # Spec Template — Component System
 
 Emitted by `component_system_planner`:
-- `docs/frontend/component-system.md` — index narrative.
-- `docs/frontend/components/<ComponentName>.md` — one per shared component.
+- `<output_root>/component-system.md` — index narrative.
+- `<output_root>/components/<ComponentName>.md` — one per shared component.
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ## Index file frontmatter (component-system.md)
 

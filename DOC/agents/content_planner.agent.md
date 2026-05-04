@@ -17,14 +17,14 @@ Owns every visible word. Authors a content library where every page, component, 
 
 ## RESPONSIBILITIES
 1. Read `brief.json`, `master-ui-architecture.md`, page specs (when available), and component specs.
-2. Author a complete `docs/frontend/content-library.md` covering:
+2. Author a complete `<output_root>/content-library.md` covering:
    - Per-page surfaces.
    - Per-component shared copy.
    - Errors and validation messages.
    - SEO titles, descriptions, OG fields.
    - Schema.org snippets where industry pack mandates.
    - Trust copy slots when archetype mandates.
-3. Emit `docs/frontend/content.<locale>.json` for each declared locale.
+3. Emit `<output_root>/content.<locale>.json` for each declared locale.
 4. Self-audit against forbidden words list.
 5. Honor length budgets (constraint F5 + content-rules.md).
 
@@ -41,7 +41,8 @@ Owns every visible word. Authors a content library where every page, component, 
   "brief":                    "...brief.json contents...",
   "master_ui_architecture":   "path",
   "page_specs":               ["path", "..."],
-  "component_specs":          ["path", "..."]
+  "component_specs":          ["path", "..."],
+  "output_root":              "DOC/output/runs/<timestamp>/planning/frontend"
 }
 ```
 
@@ -59,8 +60,8 @@ Owns every visible word. Authors a content library where every page, component, 
 11. **EMIT** `content-library.md` and `content.<locale>.json` files.
 
 ## OUTPUT FORMAT
-- `docs/frontend/content-library.md` (narrative + key index)
-- `docs/frontend/content.<locale>.json` (one per locale; required for default locale at minimum)
+- `<output_root>/content-library.md` (narrative + key index)
+- `<output_root>/content.<locale>.json` (one per locale; required for default locale at minimum)
 
 ## VALIDATION STEPS
 - Every key referenced by page/component specs is authored.
@@ -68,6 +69,7 @@ Owns every visible word. Authors a content library where every page, component, 
 - Length budgets honored.
 - Locale JSON file(s) present and complete.
 - SEO keys per page within budgets.
+- Output location stays inside `DOC/output/runs/<timestamp>/planning/frontend/`.
 
 ## FAILURE MODES
 - `MISSING_KEY` — referenced key not authored.

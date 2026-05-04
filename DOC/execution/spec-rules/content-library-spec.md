@@ -1,8 +1,10 @@
 # Spec Template — Content Library
 
 Emitted by `content_planner`:
-- `docs/frontend/content-library.md` — human narrative + key index.
-- `docs/frontend/content.<locale>.json` — machine-readable per locale.
+- `<output_root>/content-library.md` — human narrative + key index.
+- `<output_root>/content.<locale>.json` — machine-readable per locale.
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ## File frontmatter (content-library.md)
 

@@ -10,7 +10,7 @@ Every page spec MUST declare:
 2. Sections in **visual order**, each with:
    - section name
    - purpose (1 line)
-   - content keys consumed (from `docs/frontend/content-library.md`)
+   - content keys consumed (from `<output_root>/content-library.md`)
    - components used (from component system)
    - data source for the section
    - interactions (per `interaction-planner` output)
@@ -224,4 +224,6 @@ Every page spec MUST declare:
 
 ## Output
 
-The page_planner emits one Markdown file per route under `docs/frontend/pages/<route-slug>.md` using the per-page spec template at `execution/spec-rules/per-page-spec.md`.
+The page_planner emits one Markdown file per route under `<output_root>/pages/<route-slug>.md` using the per-page spec template at `execution/spec-rules/per-page-spec.md`.
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.

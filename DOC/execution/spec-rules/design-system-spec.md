@@ -1,8 +1,10 @@
 # Spec Template — Design System
 
 Emitted by `design_system_planner` to:
-- `docs/frontend/design-system.md` (human narrative)
-- `docs/frontend/design-system.tokens.json` (machine-readable, consumed by codegen)
+- `<output_root>/design-system.md` (human narrative)
+- `<output_root>/design-system.tokens.json` (machine-readable, consumed by codegen)
+
+`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 ## File frontmatter (design-system.md)
 

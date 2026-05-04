@@ -56,7 +56,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
    - `content_planner`
    - `interaction_planner`
    - `page_planner`
-3. Emit a complete docs-first frontend artifact set under `docs/frontend/`.
+3. Emit a complete docs-first frontend artifact set under the run-scoped output root `DOC/output/runs/<timestamp>/planning/frontend/`.
 4. Emit machine-readable frontend summary for `plan.json` aggregation.
 5. Enforce frontend constraints F1..F12 before returning `status=passed`.
 6. Ensure every selected UX pattern declares states, accessibility behavior, and performance boundaries.
@@ -71,7 +71,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 - MUST map feature-driven UX patterns into page specs when the brief includes matching capabilities (for example: data tables, notifications, onboarding, collaboration, AI interactions).
 - MUST NOT emit summary-only page specs; every public page spec must include section-level composition and state detail.
 - MUST NOT emit summary-only content libraries; content output must be key-based and implementation-ready.
-- MUST reconcile `docs/frontend/ai-context.yaml`, `master-ui-architecture.md` Route Map, `docs/frontend/README.md`, and `docs/frontend/pages/*.md` before returning `status=passed`.
+- MUST NOT emit frontend planning artifacts outside `DOC/output/runs/<timestamp>/planning/frontend/`.
 - MUST block with `FRONTEND_SPEC_INCOMPLETE` when page specs or content artifacts are too shallow for codegen.
 
 ## INPUT FORMAT
@@ -80,7 +80,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
   "brief": { "...": "from intake_strategist" },
   "constraints": {
     "frontend_scope": "full|marketing_only|app_only",
-    "output_root": "docs/frontend"
+      "output_root": "DOC/output/runs/<timestamp>/planning/frontend"
   }
 }
 ```
@@ -88,47 +88,46 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 ## WORKFLOW
 1. **LOAD** brief, frontend rules, constraints, and spec templates.
 2. **UX DIRECTOR STAGE** — run `ux_director` to emit:
-   - `docs/frontend/master-ui-architecture.md`
-   - `docs/frontend/ai-context.yaml`
+   - `<output_root>/master-ui-architecture.md`
+   - `<output_root>/ai-context.yaml`
 3. **DESIGN SYSTEM STAGE** — run `design_system_planner` to emit:
-   - `docs/frontend/design-system.md`
-   - `docs/frontend/design-system.tokens.json`
+   - `<output_root>/design-system.md`
+   - `<output_root>/design-system.tokens.json`
 4. **COMPONENT SYSTEM STAGE** — run `component_system_planner` to emit:
-   - `docs/frontend/component-system.md`
-   - `docs/frontend/components/*.md`
+   - `<output_root>/component-system.md`
+   - `<output_root>/components/*.md`
 5. **MOTION STAGE** — run `motion_planner` to emit:
-   - `docs/frontend/motion-system.md`
+   - `<output_root>/motion-system.md`
 6. **CONTENT STAGE** — run `content_planner` to emit:
-   - `docs/frontend/content-library.md`
-   - `docs/frontend/content.<locale>.json`
+   - `<output_root>/content-library.md`
+   - `<output_root>/content.<locale>.json`
 7. **UX PATTERN STAGE** — resolve and apply loaded UX patterns and SaaS UX rules to component/page planning.
 8. **INTERACTION STAGE** — run `interaction_planner` to emit:
-   - `docs/frontend/interaction-matrix.md`
+   - `<output_root>/interaction-matrix.md`
 9. **PAGE STAGE** — run `page_planner` to emit:
-   - `docs/frontend/pages/*.md`
-10. **ROUTE COVERAGE STAGE** — verify declared route inventory matches emitted page specs and the human index route inventory.
-11. **HUMAN INDEX STAGE** — emit:
-   - `docs/frontend/README.md` (human-first navigation)
-12. **FRONTEND VALIDATION** — evaluate F1..F12 and output pass/fail matrix.
-13. **SUMMARY EMIT** — emit `frontend.json` summary block for `plan.json` aggregation.
+   - `<output_root>/pages/*.md`
+10. **HUMAN INDEX STAGE** — emit:
+   - `<output_root>/README.md` (human-first navigation)
+11. **FRONTEND VALIDATION** — evaluate F1..F12 and output pass/fail matrix.
+12. **SUMMARY EMIT** — emit `frontend.json` summary block for `plan.json` aggregation.
 
 ## OUTPUT FORMAT
 ```yaml
 status: passed|failed
 artifacts:
-  root: docs/frontend
+   root: DOC/output/runs/<timestamp>/planning/frontend
   required:
-    - docs/frontend/ai-context.yaml
-    - docs/frontend/README.md
-    - docs/frontend/master-ui-architecture.md
-    - docs/frontend/design-system.md
-    - docs/frontend/design-system.tokens.json
-    - docs/frontend/component-system.md
-    - docs/frontend/motion-system.md
-    - docs/frontend/content-library.md
-    - docs/frontend/interaction-matrix.md
-    - docs/frontend/pages/*.md
-    - docs/frontend/components/*.md
+      - DOC/output/runs/<timestamp>/planning/frontend/ai-context.yaml
+      - DOC/output/runs/<timestamp>/planning/frontend/README.md
+      - DOC/output/runs/<timestamp>/planning/frontend/master-ui-architecture.md
+      - DOC/output/runs/<timestamp>/planning/frontend/design-system.md
+      - DOC/output/runs/<timestamp>/planning/frontend/design-system.tokens.json
+      - DOC/output/runs/<timestamp>/planning/frontend/component-system.md
+      - DOC/output/runs/<timestamp>/planning/frontend/motion-system.md
+      - DOC/output/runs/<timestamp>/planning/frontend/content-library.md
+      - DOC/output/runs/<timestamp>/planning/frontend/interaction-matrix.md
+      - DOC/output/runs/<timestamp>/planning/frontend/pages/*.md
+      - DOC/output/runs/<timestamp>/planning/frontend/components/*.md
 frontend_constraints:
   - { id: F1, status: passed|failed, evidence: "..." }
   - { id: F2, status: passed|failed, evidence: "..." }
@@ -149,10 +148,8 @@ frontend_constraints:
 - Frontend constraints F1..F12 are all passed.
 - No unresolved TODO/placeholder remains in frontend specs.
 - Mobile parity and reduced-motion coverage are explicitly declared.
-- Every route declared in `docs/frontend/ai-context.yaml` and `master-ui-architecture.md` has exactly one corresponding page spec in `docs/frontend/pages/*.md`.
-- `docs/frontend/README.md` route inventory matches the emitted page spec set.
-- `docs/frontend/pages/*.md` contain section-level composition (purpose, components, states, responsive, motion, conversion path), not single-line summaries.
-- `docs/frontend/content-library.md` and locale JSON are keyed and route/component scoped, not bullet summaries.
+- `<output_root>/pages/*.md` contain section-level composition (purpose, components, states, responsive, motion, conversion path), not single-line summaries.
+- `<output_root>/content-library.md` and locale JSON are keyed and route/component scoped, not bullet summaries.
 
 ## FAILURE MODES
 - `FRONTEND_SPEC_INCOMPLETE`
