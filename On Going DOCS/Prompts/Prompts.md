@@ -104,3 +104,14 @@ What I want now:
 The goals is to give AI more space to focus on each type of focus building. 
 
 ### read the existing agent files and update them accordingly to reflect this separation of concerns and specialization. Make sure to update the agent names, responsibilities, and workflows in the .github/agents directory to align with this new structure.
+
+
+
+lets plan to build frontend for a solar installation service company website. never Build with hard coded UI.  Use a headless CMS and a component-based framework for dynamic content.  It should be scalable and SEO friendly. Additionally, integrate a blog section for industry insights and customer testimonials to build credibility.  Ensure a responsive design for all devices. The website should also feature a clear call-to-action for quote requests and contact information.  Also include a portfolio showcasing past projects with detailed case studies.  Lastly, implement user registration and login functionality for personalized experiences and content delivery.
+
+Plan each pages e2e with all the necessary details and contexts. Make sure to follow the frontend protocol strictly and ensure that all code is generated inside the web directory of the Next.js project. Do not generate any backend, CMS, or deployment code, and only consume the APIs and contracts defined in the planning documents. The goal is to create a high-quality, modern, and engaging frontend that provides an exceptional user experience while adhering to the defined architecture and design principles.
+
+- Make it image heavy , with good animations, modern design, and engaging user experience. The frontend developer agent should pay attention to details such as animations, transitions, and overall aesthetics to create a website that stands out and provides an exceptional experience for the users.
+- add whatsap, call and AI assistant chat support icons and the chat assistant BOT modal also. 
+- Add a instant Quote calculator with good UI and UX.
+- the rest you plan as per your agent protocol and the planning documents. Make sure to cover all the necessary aspects of the frontend development process, including architecture, design, implementation, and testing, while adhering to the defined protocols and standards. The goal is to create a frontend that not only meets the functional requirements but also provides a visually stunning and engaging user experience that stands out in the industry.
