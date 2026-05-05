@@ -6,6 +6,8 @@ Emitted by `page_planner`. One file per route, written to `<output_root>/pages/<
 
 The per-page spec is the artifact codegen reads to produce the page. It MUST be complete enough that no decision is left to codegen.
 
+For trust-critical marketing routes and any page covered by a visual reference lock, the per-page spec must also carry an explicit visual composition contract so implementation can be reviewed by screenshot parity instead of prose interpretation alone.
+
 ## File frontmatter
 
 ```yaml
@@ -66,6 +68,14 @@ Per section, render this block:
 - **Accessibility:**
   - <ARIA / focus / heading-level note>
 ```
+
+For trust-critical marketing pages (`/`, `/services`, `/reviews`, `/quote`, and any page declared reference-locked), every primary section must also state:
+- **Visual contract:**
+  - desktop composition: <panel split / card rail / overlap / shell structure>
+  - tablet composition: <stacking and reorder rules>
+  - mobile composition: <text-first/media-first, CTA order, dock behavior>
+  - media framing: <ratio, crop, subject placement>
+  - trust surface: <badge row / aggregate / license slot / phone slot>
 
 ### 3. Page-Level State Requirements
 - Loading skeleton (where & what).
@@ -151,6 +161,13 @@ For each section with a non-static data source:
 ### 12. Open Questions
 Anything the page_planner could not resolve from the brief and rules — flagged for the human.
 
+### 13. Asset Brief (required for media-bearing pages)
+- Required photo slots.
+- Subject guidance per slot.
+- Allowed fallback sources.
+- Banned fallback sources.
+- Alt-text intent.
+
 ## Reviewer checks per page spec
 
 - ≥7 sections (or `min_sections_exempt: true` with reason).
@@ -163,3 +180,5 @@ Anything the page_planner could not resolve from the brief and rules — flagged
 - Performance budgets present and not violated by the composition.
 - Conversion path present.
 - No raw color/spacing/ms values anywhere.
+- Trust-critical pages include visual contracts strong enough for desktop and mobile screenshot review.
+- Media-bearing pages include an asset brief.

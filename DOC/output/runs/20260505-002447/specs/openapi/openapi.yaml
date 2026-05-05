@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Plumbing Service Website API
+  version: 1.0.0
+  description: Public runtime API for lead capture, health checks, and Sanity revalidation.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/health:
+    get:
+      summary: Runtime readiness check
+      responses:
+        '200':
+          description: Healthy runtime
+  /api/leads:
+    post:
+      summary: Submit a quote or contact lead
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, phone]
+              properties:
+                name:
+                  type: string
+                phone:
+                  type: string
+                service:
+                  type: string
+                postcode:
+                  type: string
+                message:
+                  type: string
+                source:
+                  type: string
+                  enum: [quote, contact, unknown]
+                turnstileToken:
+                  type: string
+      responses:
+        '200':
+          description: Lead accepted
+        '400':
+          description: Validation error
+        '403':
+          description: Spam guard failure
+        '502':
+          description: Delivery failure
+  /api/webhooks/sanity:
+    post:
+      summary: Revalidate changed CMS content
+      parameters:
+        - in: header
+          name: x-sanity-signature
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Payload accepted and revalidated
+        '400':
+          description: Invalid signature or malformed payload

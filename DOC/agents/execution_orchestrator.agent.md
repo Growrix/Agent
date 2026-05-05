@@ -41,6 +41,10 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - MUST fail execution if any planned frontend component, route, or integration artifact is missing from emitted code.
 - MUST fail execution if test coverage is placeholder-only (for example echo/no-op scripts) for declared critical paths.
 - MUST fail execution if frontend artifacts required by frontend_planner are absent when frontend scope is present.
+- MUST fail execution if generated frontend code is derived from summary-only plan data while the richer frontend bundle contains more specific design or interaction instructions.
+- MUST fail execution if placeholder business facts remain active in production-classified public output.
+- MUST fail execution if CMS-backed public pages render from mock arrays in a production-classified output.
+- MUST fail execution if required visual QA evidence is missing or fails.
 - MUST set `status=failed` (not partial-success) when any execution acceptance checklist item fails.
 - MUST emit `delivery_class` as one of: `production_candidate`, `baseline_prototype`, `blocked`.
 - MUST set `delivery_class=blocked` whenever `quality_gate=failed` or any blocker failure code is present.
@@ -68,10 +72,11 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 6. Run codegen flow.
 7. Run execution acceptance checklist (plan/spec/code parity + integration completeness + frontend artifact presence + frontend depth + semantic parity + content-key parity).
 8. If any checklist line item fails, stop normal progression and classify delivery as `blocked`.
-8. Run post-build environment setup flow.
-9. Verify local startup using `npm run dev` and smoke probes.
-10. Run post-codegen validation + quality gate.
-11. Emit execution summary report.
+9. Run screenshot-based visual QA for required desktop and mobile targets.
+10. Run post-build environment setup flow.
+11. Verify local startup using `npm run dev` and smoke probes.
+12. Run post-codegen validation + quality gate.
+13. Emit execution summary report.
 
 ## OUTPUT LOCATION
 - DOC/output/runs/<timestamp>/specs/*
@@ -105,8 +110,11 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - Confirm every component named in frontend specs exists and is wired.
 - Confirm every planned integration has required generated artifacts (client, service, webhook route where applicable).
 - Confirm frontend_planner artifact bundle exists when frontend scope is present.
+- Confirm the generated frontend was derived from the full frontend planning bundle, not just `plan.json` summaries.
 - Confirm `npm run dev` exits without error after codegen.
 - Confirm tests are non-placeholder and cover declared critical paths (unit/integration/e2e as applicable).
+- Confirm screenshot-based visual QA passes for required routes and viewports.
+- Confirm placeholder business facts and blocked stock-media URLs are not active in production-classified public output.
 - Confirm `execution_summary.json` exists and has `status` field set.
 - Confirm no output artifacts exist outside `DOC/output/runs/<timestamp>/`.
 - Confirm `delivery_class` is emitted and consistent with gate outcomes.
@@ -121,6 +129,7 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - PLAN_SPEC_CODE_MISMATCH
 - FRONTEND_ARTIFACTS_MISSING
 - PLACEHOLDER_TEST_GATE_FAILED
+- VISUAL_QA_FAILED
 - OUTPUT_MISMATCH
 - ENV_SETUP_INCOMPLETE
 - QUALITY_GATE_FAILED

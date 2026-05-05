@@ -4,6 +4,8 @@ Emitted by `ux_director` to `<output_root>/master-ui-architecture.md`, where `<o
 
 This is the top-level frontend spec. It is the only artifact that captures cross-page logic (journeys, navigation models, conversion infrastructure). All page specs reference this file.
 
+When a run declares a visual reference lock, premium-quality target, or trust-led marketing archetype, this file must also anchor the shared visual contract for header, footer, and the mobile hero/navigation system.
+
 ## File frontmatter
 
 ```yaml
@@ -69,12 +71,19 @@ Two columns: route + name. Mark required vs optional. Group by section if useful
 ### 9. Frontend Visual Strategy
 Pulled from the visual archetype: hero composition pattern, surface treatment, imagery direction, repeating motifs (if any).
 
-### 10. Layout System
+### 10. Shared Visual Contract
+- Header composition: utility strip, nav placement, CTA hierarchy, background treatment.
+- Footer composition: column structure, trust density, legal grouping, contact density.
+- Mobile hero/navigation composition: stacked order, media placement, drawer or dock behavior.
+- Reference-locked surfaces: explicit notes for any screenshot-driven hero or section that codegen must preserve.
+- Required trust data slots: business name, phone, license, service area, review aggregate/proof counts.
+
+### 11. Layout System
 - Desktop / tablet / mobile column counts and gutters (from `responsive-rules.md`).
 - Max content widths per shell (marketing / reading / dense / app).
 - Section rhythm.
 
-### 11. Page Inventory
+### 12. Page Inventory
 For every page in the site map, one mini-block:
 ```
 ### Home
@@ -83,34 +92,34 @@ For every page in the site map, one mini-block:
 - Secondary CTA: …
 ```
 
-### 12. Cross-Page Components
+### 13. Cross-Page Components
 List of organisms shared across pages: header, footer, chat widget, cookie banner, sticky dock, etc.
 
-### 13. Shared State Requirements
+### 14. Shared State Requirements
 - Forms: default / focus / validation-error / submitting / success / server-error
 - Listings: loading / loaded / empty / filtered-empty / error
 - Chat: collapsed / greeting / typing / active / handoff / offline
 - Checkout (if applicable): editable cart / coupon-applied / processing / success / failure
 - Navigation: default / hover / active / open / sticky / mobile-expanded
 
-### 14. Motion Posture
+### 15. Motion Posture
 - Default duration band (from archetype)
 - Default easing
 - Macro motion defaults
 - Micro motion defaults
 - Reduced-motion stance
 
-### 15. Accessibility Posture
+### 16. Accessibility Posture
 - Target standard (WCAG 2.1 AA / AAA where required)
 - Skip-link, landmarks, focus rings declared as standard
 
-### 16. Localization Posture
+### 17. Localization Posture
 - Default locale
 - i18n required: yes/no
 - RTL: yes/no
 - Locale switcher location
 
-### 17. Implementation Stack (Frontend Only)
+### 18. Implementation Stack (Frontend Only)
 - Framework (e.g., Next.js App Router)
 - Styling (Tailwind + shadcn/ui)
 - State (RSC + Zustand for client state)
@@ -118,13 +127,13 @@ List of organisms shared across pages: header, footer, chat widget, cookie banne
 - Motion (Framer Motion / CSS transitions)
 - Image (next/image)
 
-### 18. Route Map
+### 19. Route Map
 A flat list of every route the site exposes, in canonical order.
 
-### 19. File Output Inventory
+### 20. File Output Inventory
 The list of files this frontend planning round will produce, with paths under `<output_root>/`.
 
-### 20. AI Consumption Guidance
+### 21. AI Consumption Guidance
 A short block explaining:
 - Which file is the AI first-stop (`<output_root>/ai-context.yaml`).
 - Which file is the human first-stop (`<output_root>/README.md`).

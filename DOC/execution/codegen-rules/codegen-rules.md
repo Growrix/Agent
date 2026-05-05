@@ -3,10 +3,21 @@
 ## SCOPE
 Apply to every file emitted by an executing agent.
 
-## CG1 — PLAN-DRIVEN ONLY
-- Codegen consumes `plan.json` only.
-- No new decisions are made during codegen.
-- If the plan is missing a detail, BLOCK with `EXECUTION_DRIFT`.
+## CG1 — LOCKED BUNDLE-DRIVEN ONLY
+- Codegen consumes the locked run bundle, not `plan.json` in isolation.
+- Minimum required inputs: `plan.json`, `decisions.json`, `validation_report.json`, and every run-scoped artifact referenced by `plan.json` for the active scope.
+- For frontend scope, codegen MUST read the full frontend bundle before generating routes or components:
+	- `planning/frontend/README.md`
+	- `planning/frontend/master-ui-architecture.md`
+	- `planning/frontend/design-system.md`
+	- `planning/frontend/design-system.tokens.json`
+	- `planning/frontend/component-system.md`
+	- `planning/frontend/motion-system.md`
+	- `planning/frontend/content-library.md`
+	- `planning/frontend/interaction-matrix.md`
+	- `planning/frontend/pages/*.md`
+- If a referenced artifact is missing, unread, or too shallow to resolve a build decision, BLOCK with `EXECUTION_DRIFT`.
+- No new product decisions are made during codegen.
 
 ## CG2 — FULL FILE CONTENT
 - Every emitted file MUST contain complete, runnable content.
@@ -101,6 +112,11 @@ For each generated file:
 - Confirm no placeholders.
 If any check fails, regenerate the file.
 
+For each generated route or shared UI surface:
+- Confirm the relevant per-page spec, component spec, and design token guidance were read first.
+- Confirm visual composition matches the locked frontend bundle rather than a generic fallback scaffold.
+- Confirm trust-critical surfaces preserve required proof, trust, and conversion blocks from the planning artifacts.
+
 ## CG21 — ZERO-WARNING QUALITY ENFORCEMENT
 - Generated scripts and configs MUST support lint/typecheck/test with zero warnings.
 - Lint configuration MUST fail on warnings.
@@ -130,3 +146,23 @@ If any check fails, regenerate the file.
 - Codegen execution summary MUST include `delivery_class`.
 - `delivery_class=production_candidate` is allowed only when all execution acceptance gates pass.
 - Any blocker gate failure MUST force `delivery_class=blocked` and overall execution `status=failed`.
+
+## CG28 — FRONTEND BLOCKER ENFORCEMENT
+- If generated frontend config or content marks placeholder business identity or trust facts as active (for example `placeholderBusinessFacts: true`), execution MUST NOT classify the run as `production_candidate`.
+- If a page planned as `cms` or `mixed` resolves through hardcoded arrays or `mock-data` for its primary public rendering path, execution MUST fail semantic parity with `PLAN_SPEC_CODE_MISMATCH` unless the run is explicitly classified as a mock-only baseline prototype.
+- For local-business trust and similar real-media archetypes, generated public media MUST NOT ship with `images.unsplash.com` URLs in production-classified output.
+- Missing `execution_summary.json` or `environment_setup_report.json` is a blocker failure.
+
+## CG29 — VISUAL QA GATE
+- Frontend scope runs MUST emit screenshot-based visual QA for the key desktop and mobile routes.
+- Minimum visual QA targets:
+	- home page
+	- primary conversion route
+	- primary proof/reviews route
+- Visual QA MUST validate:
+	- screenshot parity against the locked visual contract
+	- no collapsed or hidden primary content
+	- no unreadable foreground/background combinations
+	- no overflow at required mobile and desktop widths
+- Visual QA evidence MUST be written under `DOC/output/runs/<timestamp>/reports/visual-qa/`.
+- If visual QA fails, execution MUST fail with `VISUAL_QA_FAILED`.

@@ -135,6 +135,14 @@ visual_regression:
   themes: [light, dark]
   viewports: [mobile, tablet, desktop]
   reduced_motion_snapshot: true
+  compare_mode: strict_layout_and_visibility
+  required_reports:
+    - reports/visual-qa/summary.json
+    - reports/visual-qa/<route>/<viewport>.png
+  assertions:
+    - no_hidden_primary_content
+    - no_horizontal_overflow
+    - no_critical_contrast_failures_on_primary_surfaces
 ```
 
 ### 12. Accessibility Tests
@@ -189,3 +197,4 @@ A flat JSON mirroring the YAML above. Codegen scaffolds:
 - Every E2E critical path has a single test.
 - Coverage thresholds set on services + repositories folders.
 - Smoke + a11y plans present.
+- Visual QA plan includes screenshot routes, viewports, and output report locations.

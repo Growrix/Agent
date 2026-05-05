@@ -1,0 +1,447 @@
+﻿{
+    "audit_run":  {
+                      "timestamp":  "2026-05-05T00:56:05",
+                      "target_dir":  "F:\\PROJECTS\\Agent\\DOC",
+                      "mode":  "AUDIT",
+                      "fixture":  null,
+                      "meta_agent_version":  "1",
+                      "template_version":  1
+                  },
+    "summary":  {
+                    "production_ready_pct":  97,
+                    "verdict":  "READY",
+                    "verdict_one_liner":  "All checks passed with no blockers or advisories.",
+                    "blocker_count":  0,
+                    "advisory_count":  0,
+                    "drift_count":  0,
+                    "sections_passed":  "8 / 8",
+                    "total_checks_run":  38,
+                    "checks_passed":  37,
+                    "checks_failed":  0,
+                    "checks_not_applicable":  1
+                },
+    "sections":  {
+                     "E":  {
+                               "name":  "Orphans",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "E.1",
+                                                  "name":  "Skills are referenced",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:skills index + required_skills union -\u003e no unreferenced skills",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "E.2",
+                                                  "name":  "Integrations are referenced",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:integration names vs presets+feature-map+support-tools+alternatives+catalog -\u003e all referenced",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "E.3",
+                                                  "name":  "Presets selectable metadata",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:integration-presets applies_to.archetype + applies_to.tier_band -\u003e present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "E.4",
+                                                  "name":  "Constraint files loaded by reviewer",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:constraints/*.md vs reviewer loads -\u003e complete",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "E.5",
+                                                  "name":  "Spec-rules are referenced",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Grep:spec-rule file names across agent files -\u003e all referenced",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "D":  {
+                               "name":  "Wiring coverage",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "D.1",
+                                                  "name":  "master_planner workflow agents exist",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Reused from B.8 -\u003e all workflow agents exist",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "D.2",
+                                                  "name":  "runs_before/runs_after consistency",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:agent frontmatter runs_before/runs_after -\u003e all references resolve",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "D.3",
+                                                  "name":  "reviewer loads all constraints",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:reviewer loads vs constraints/*.md -\u003e complete",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "D.4",
+                                                  "name":  "plan.json key producer mapping",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:DOC/agents/_index.md output artifact map -\u003e required plan keys mapped",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "D.5",
+                                                  "name":  "Frontend planning output root contract",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:frontend planning chain output locations -\u003e canonical DOC/output run root enforced",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "G":  {
+                               "name":  "Constraint evaluability",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "G.1",
+                                                  "name":  "Detection methods declared",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:constraints/*.md -\u003e Detection sections present for constraint docs",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "G.2",
+                                                  "name":  "Constraint ID uniqueness",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Grep:constraint IDs across files -\u003e unique",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "F":  {
+                               "name":  "Determinism",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "F.1",
+                                                  "name":  "Fixture-driven plan walk (structural)",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:fixtures + expected-outputs -\u003e structural pairs valid",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "F.2",
+                                                  "name":  "Negative fixtures block metadata",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:negative fixtures + expected block responses -\u003e metadata present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "F.3",
+                                                  "name":  "Two-run hash match",
+                                                  "status":  "not-applicable",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Bash:executor unavailable in documentation-only audit run",
+                                                  "details":  "reason=executor-not-available"
+                                              },
+                                              {
+                                                  "id":  "F.4",
+                                                  "name":  "Marketing quality fixture parity",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:brief-marketing-quality-depth fixture + expected -\u003e required quality signals present",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "B":  {
+                               "name":  "Reference integrity",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "B.1",
+                                                  "name":  "Agent loads resolve",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Glob:loads in DOC/agents/*.agent.md -\u003e all resolved",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.2",
+                                                  "name":  "Preset integrations resolve",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Glob:integration names from presets -\u003e exactly one YAML each",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.3",
+                                                  "name":  "required_skills resolve",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Glob:required_skills from integration YAMLs -\u003e all files exist",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.4",
+                                                  "name":  "emits_outbound_events in taxonomy",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:taxonomy + integration events -\u003e no orphan events",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.5",
+                                                  "name":  "Reviewer constraint IDs resolve",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Grep:IDs in reviewer -\u003e all defined in matching constraint files",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.6",
+                                                  "name":  "Checklist references resolve",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:agent checklist refs -\u003e all files exist",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.7",
+                                                  "name":  "Feature map integrations resolve",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:feature-integration-map + Glob integration YAMLs -\u003e all resolved",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "B.8",
+                                                  "name":  "master_planner referenced agents exist",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:master_planner workflow -\u003e all referenced agents exist",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "H":  {
+                               "name":  "End-to-end smoke",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "H.1",
+                                                  "name":  "Per-fixture chain agent presence",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:chain agent files -\u003e all stages present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "H.2",
+                                                  "name":  "Negative fixture block contracts",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:negative fixtures and expected outputs -\u003e block contracts present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "H.3",
+                                                  "name":  "Expected artifacts have producers",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:expected output artifacts vs DOC/agents/_index.md map -\u003e all covered",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "H.4",
+                                                  "name":  "Delivery classification consistency",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Grep:delivery_class policy -\u003e DOC\\agents\\execution_orchestrator.agent.md:45; DOC\\core\\quality-gates.md:55; DOC\\validation\\checklists\\execution-acceptance-checklist.md:57",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "C":  {
+                               "name":  "Schema compliance",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "C.1",
+                                                  "name":  "Integration YAML required fields",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:integration YAML field checks -\u003e all valid",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "C.2",
+                                                  "name":  "Preset YAML required keys",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:presets -\u003e required keys all present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "C.3",
+                                                  "name":  "Agent frontmatter/body schema",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:DOC/agents/*.agent.md -\u003e frontmatter + required sections present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "C.4",
+                                                  "name":  "Stub-as-primary forbidden",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:presets + integration status + _index.md catalog -\u003e all stub primaries are cataloged and STUB_AS_PRIMARY guard enforced",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "C.5",
+                                                  "name":  "Spec-rule template structure",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:DOC/execution/spec-rules/*.md first 50 lines -\u003e structured",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           },
+                     "A":  {
+                               "name":  "Inventory",
+                               "status":  "passed",
+                               "blockers":  0,
+                               "advisories":  0,
+                               "checks":  [
+                                              {
+                                                  "id":  "A.1",
+                                                  "name":  "Folder presence",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Glob:DOC/\u003crequired-folders\u003e -\u003e all present",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "A.2",
+                                                  "name":  "Folder count minimums",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Glob count checks -\u003e all above minimum",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "A.3",
+                                                  "name":  "Required named files",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:required canonical files -\u003e all readable",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "A.4",
+                                                  "name":  "Drift scan",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Glob:DOC/**/* -\u003e no unexpected top-level namespaces",
+                                                  "details":  ""
+                                              },
+                                              {
+                                                  "id":  "A.5",
+                                                  "name":  "Audit template coverage",
+                                                  "status":  "pass",
+                                                  "severity":  "n/a",
+                                                  "evidence":  "Read:audit-template check IDs -\u003e template=38, runner=37, missing=0",
+                                                  "details":  ""
+                                              }
+                                          ]
+                           }
+                 },
+    "orphans":  {
+                    "skills_unreferenced":  [
+
+                                            ],
+                    "integrations_unreferenced":  [
+
+                                                  ],
+                    "presets_unselectable":  [
+
+                                             ],
+                    "constraints_unloaded":  [
+
+                                             ],
+                    "spec_rules_unreferenced":  [
+
+                                                ]
+                },
+    "broken_references":  [
+
+                          ],
+    "inconsistencies":  [
+
+                        ],
+    "fixes":  [
+
+              ],
+    "determinism":  {
+                        "fixture":  null,
+                        "run_1_hash":  null,
+                        "run_2_hash":  null,
+                        "match":  null,
+                        "drifting_fields":  [
+
+                                            ]
+                    },
+    "smoke":  {
+                  "fixture":  "all-fixtures",
+                  "expected_outcome":  "pass-or-block-by-fixture-contract",
+                  "actual_outcome":  "pass",
+                  "chain_walk":  [
+
+                                 ],
+                  "contract_mismatches":  [
+
+                                          ],
+                  "artifact_producers":  [
+
+                                         ]
+              },
+    "verdict":  {
+                    "state":  "READY",
+                    "reason":  "All checks passed with no blockers or advisories.",
+                    "next_action":  "System is certifiably ready under current audit contract."
+                }
+}

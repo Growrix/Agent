@@ -12,6 +12,8 @@ Convert a LOCKED, validated plan into a complete, runnable SaaS codebase. Codege
 ## INPUT
 - `plan.json`
 - `decisions.json`
+- `validation_report.json`
+- All run-scoped planning artifacts referenced by `plan.json`
 - All knowledge artifacts (integration rules, frontend/backend/domain rules).
 
 ## OUTPUT
@@ -86,6 +88,14 @@ For each entity in plan.backend:
 ```
 
 ### STAGE 5 — FRONTEND LAYER
+Before generating any frontend file:
+```
+1. Read the full frontend planning bundle referenced by plan.frontend.artifacts.
+2. Read per-page specs for every route being generated.
+3. Read component-system, design-system, motion-system, content-library, and interaction-matrix artifacts.
+4. If the route depends on a visual reference lock, load the route-specific visual contract before emitting JSX or CSS.
+```
+
 For each route in plan.frontend.routes:
 ```
 1. Create page file: src/app/<route>/page.tsx
@@ -131,10 +141,14 @@ Before declaring codegen complete:
 [ ] Execution acceptance checklist passes: DOC/validation/checklists/execution-acceptance-checklist.md
 [ ] No placeholder test scripts for declared critical paths.
 [ ] Frontend planner artifact bundle exists for frontend scope runs.
+[ ] Screenshot-based visual QA passes for required mobile and desktop targets.
+[ ] No blocked frontend placeholder flags remain in generated public output.
 ```
 Failure → BLOCK `CODEGEN_INCOMPLETE: <missing_artifact>`.
 
 Failure in execution acceptance checks → BLOCK `EXECUTION_ACCEPTANCE_FAILED: <reason>`.
+
+Failure in screenshot parity or visual rendering checks → BLOCK `VISUAL_QA_FAILED: <reason>`.
 
 ## CODEGEN OUTPUT FORMAT
 All generated files MUST be emitted in this structure:

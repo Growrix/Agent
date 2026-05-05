@@ -29,18 +29,30 @@ Hard acceptance gate between codegen and final success status. If any check fail
 - [ ] No user-facing inline copy in JSX/TSX where content-library keys are required (documented third-party exceptions only).
 - [ ] Content library is implementation-ready (keyed entries by section/component), not summary bullets.
 - [ ] Per-page specs include section-level composition detail, conversion paths, and state declarations.
+- [ ] When execution reads frontend scope, generated code proves it consumed the full frontend artifact bundle rather than only route names and summary metadata.
 
 ## FRONTEND DEPTH GATE
 - [ ] Every non-exempt public page implements a full section architecture (header, hero, value, proof, conversion, supporting content, footer).
 - [ ] Trust-led pages include real trust signals (compliance data slots, proof blocks, and clear contact pathways).
 - [ ] Media-heavy sections use real media binding contracts (CMS/data source) instead of visual placeholder shells.
 - [ ] Service, review, and proof pages include meaningful narrative and decision-support content (not just card lists).
+- [ ] Shared header and footer match the planned trust posture, utility detail density, and CTA hierarchy.
 
 ## SEMANTIC PARITY GATE
 - [ ] If plan/spec says a surface is interactive (filters, carousel, map, checker, estimator), implementation provides the interaction contract.
 - [ ] If plan/spec says a page is CMS-backed, implementation uses data modules/queries and not static hardcoded arrays.
 - [ ] If plan/spec calls for proof mechanisms (reviews aggregate, case outcomes), implementation includes data-backed proof rendering.
 - [ ] If plan/spec declares local-business trust posture, implementation includes trust-copy blocks in hero/utility/footer surfaces.
+- [ ] Public frontend config does not ship active placeholder business facts or mock-only trust placeholders in production-classified output.
+- [ ] Public real-media surfaces do not ship `images.unsplash.com` URLs in production-classified output.
+
+## VISUAL QA GATE
+- [ ] Screenshot parity passes for desktop and mobile home page.
+- [ ] Screenshot parity passes for desktop and mobile primary conversion route.
+- [ ] Screenshot parity passes for desktop and mobile primary proof route.
+- [ ] Visual QA confirms no hidden/empty main content regions on key routes.
+- [ ] Visual QA confirms no critical contrast or overflow regressions on key routes.
+- [ ] Visual QA evidence is emitted under `reports/visual-qa/`.
 
 ## TESTING + RUNTIME
 - [ ] Test scripts are real (no placeholder echo/no-op scripts).
@@ -66,3 +78,4 @@ Hard acceptance gate between codegen and final success status. If any check fail
 - FRONTEND_ARTIFACTS_MISSING
 - PLACEHOLDER_TEST_GATE_FAILED
 - RUNTIME_SMOKE_FAILED
+- VISUAL_QA_FAILED

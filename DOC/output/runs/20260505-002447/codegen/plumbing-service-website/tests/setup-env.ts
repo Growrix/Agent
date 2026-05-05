@@ -1,0 +1,16 @@
+process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ??= "demo-project";
+process.env.NEXT_PUBLIC_SANITY_DATASET ??= "production";
+process.env.SANITY_API_READ_TOKEN ??= "demo-read-token";
+process.env.SANITY_WEBHOOK_SECRET ??= "demo-webhook-secret";
+process.env.RESEND_API_KEY ??= "resend_test_key";
+process.env.RESEND_FROM_EMAIL ??= "plumbing@example.com";
+process.env.NEXT_PUBLIC_POSTHOG_KEY ??= "phc_demo_key";
+process.env.NEXT_PUBLIC_POSTHOG_HOST ??= "https://app.posthog.com";
+process.env.NEXT_PUBLIC_SENTRY_DSN ??= "https://demo@example.ingest.sentry.io/123456";
+process.env.SENTRY_AUTH_TOKEN ??= "sentry-demo-token";
+process.env.SENTRY_ORG ??= "demo-org";
+process.env.SENTRY_PROJECT ??= "plumbing-service-website";
+process.env.AXIOM_DATASET ??= "plumbing_demo";
+process.env.AXIOM_TOKEN ??= "axiom-demo-token";
+process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ??= "turnstile-demo-site-key";
+process.env.TURNSTILE_SECRET_KEY ??= "turnstile-demo-secret-key";

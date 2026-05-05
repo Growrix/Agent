@@ -57,15 +57,21 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
    - `interaction_planner`
    - `page_planner`
 3. Emit a complete docs-first frontend artifact set under the run-scoped output root `DOC/output/runs/<timestamp>/planning/frontend/`.
-4. Emit machine-readable frontend summary for `plan.json` aggregation.
-5. Enforce frontend constraints F1..F12 before returning `status=passed`.
-6. Ensure every selected UX pattern declares states, accessibility behavior, and performance boundaries.
+4. Emit a visual-reference artifact for trust-critical and reference-locked surfaces.
+5. Emit machine-readable frontend summary for `plan.json` aggregation.
+6. Enforce frontend constraints F1..F12 before returning `status=passed`.
+7. Ensure every selected UX pattern declares states, accessibility behavior, and performance boundaries.
 
 ## STRICT RULES
 - MUST follow all frontend rule files loaded above.
 - MUST produce mobile-first, app-like behavior for primary user flows.
 - MUST avoid hardcoded copy and hardcoded style values in frontend specs.
 - MUST plan content, sections, interaction, states, responsive behavior, and motion before build.
+- MUST emit explicit visual contracts for trust-critical routes and global surfaces when the brief includes a visual reference lock or premium-quality target.
+- MUST specify page-level visual comps for `home`, `services`, `reviews`, `quote`, and the shared `header` and `footer` surfaces when the run is a marketing site with a declared visual archetype.
+- MUST specify at least one mobile composition reference for the hero/navigation system.
+- MUST emit an asset brief covering real-photo direction, asset slots, and banned fallback media sources.
+- MUST identify required trust data slots (business name, phone, license, service area, proof counts) and mark production readiness blocked when they are unresolved.
 - MUST include visible Home navigation path on all primary surfaces.
 - MUST remain generic and reusable across industries and projects.
 - MUST map feature-driven UX patterns into page specs when the brief includes matching capabilities (for example: data tables, notifications, onboarding, collaboration, AI interactions).
@@ -90,6 +96,7 @@ Frontend orchestration lead. Delegates to specialized frontend sub-planners and 
 2. **UX DIRECTOR STAGE** — run `ux_director` to emit:
    - `<output_root>/master-ui-architecture.md`
    - `<output_root>/ai-context.yaml`
+   - `<output_root>/visual-reference-pack.md`
 3. **DESIGN SYSTEM STAGE** — run `design_system_planner` to emit:
    - `<output_root>/design-system.md`
    - `<output_root>/design-system.tokens.json`
@@ -119,6 +126,7 @@ artifacts:
   required:
       - DOC/output/runs/<timestamp>/planning/frontend/ai-context.yaml
       - DOC/output/runs/<timestamp>/planning/frontend/README.md
+      - DOC/output/runs/<timestamp>/planning/frontend/visual-reference-pack.md
       - DOC/output/runs/<timestamp>/planning/frontend/master-ui-architecture.md
       - DOC/output/runs/<timestamp>/planning/frontend/design-system.md
       - DOC/output/runs/<timestamp>/planning/frontend/design-system.tokens.json
@@ -148,6 +156,8 @@ frontend_constraints:
 - Frontend constraints F1..F12 are all passed.
 - No unresolved TODO/placeholder remains in frontend specs.
 - Mobile parity and reduced-motion coverage are explicitly declared.
+- Trust-critical routes include visual composition detail sufficient for screenshot-based implementation review.
+- Shared header/footer and mobile hero/navigation compositions are explicitly planned.
 - `<output_root>/pages/*.md` contain section-level composition (purpose, components, states, responsive, motion, conversion path), not single-line summaries.
 - `<output_root>/content-library.md` and locale JSON are keyed and route/component scoped, not bullet summaries.
 
