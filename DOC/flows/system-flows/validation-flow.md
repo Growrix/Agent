@@ -21,6 +21,8 @@ Verify all output artifacts are well-formed:
 [ ] plan.json contains all required top-level keys: features, integrations, routes, env_vars, db_schema, flows.
 [ ] decisions.json parses as valid JSON.
 [ ] All referenced file paths in the plan exist in the DOC/ tree.
+[ ] If plan.frontend is present, the required frontend planning bundle exists on disk (README, master UI architecture, design tokens, component system, motion system, interaction matrix, content library, per-page specs).
+[ ] If a visual reference lock is declared, `planning/frontend/visual-reference-pack.md` exists and is non-empty.
 ```
 Failure → BLOCK `SCHEMA_INVALID`.
 

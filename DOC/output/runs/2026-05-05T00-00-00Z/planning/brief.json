@@ -1,0 +1,230 @@
+{
+  "project": {
+    "name": "local-plumbing-marketing-site",
+    "display_name": "Local Plumbing Marketing Site",
+    "archetype": "marketing_site",
+    "industry": {
+      "class": "local_services",
+      "vertical": "plumbing",
+      "industry_pack": "knowledge/industries/local-services.md"
+    },
+    "deliverable_kind": "custom_build",
+    "tagline": "Same-day plumbing in your area"
+  },
+  "brand": {
+    "voice": "trustworthy",
+    "tone": ["clear", "friendly", "local"],
+    "visual_archetype": "knowledge/frontend-rules/visual-archetypes/local-business-trust.md",
+    "palette_seed": null,
+    "forbidden_words": [
+      "synergy",
+      "world-class",
+      "best-in-class",
+      "leverage",
+      "disruptive",
+      "innovative"
+    ]
+  },
+  "audience": {
+    "primary": {
+      "persona": "Homeowner in the service area",
+      "needs": [
+        "Reach a local plumber quickly",
+        "Confirm licensing and insurance",
+        "Understand availability and response time",
+        "Get clear next steps to book"
+      ],
+      "pains": [
+        "Unclear pricing and scope",
+        "No-shows and slow callbacks",
+        "Hard-to-find phone numbers",
+        "Uncertainty about service coverage"
+      ]
+    },
+    "secondary": {
+      "persona": "Property manager or small landlord",
+      "needs": [
+        "Reliable recurring service",
+        "Fast scheduling",
+        "Proof of professionalism for tenants"
+      ],
+      "pains": [
+        "Inconsistent vendors",
+        "Difficult coordination",
+        "Lack of documentation"
+      ]
+    }
+  },
+  "goals": [
+    {
+      "id": "g1",
+      "description": "Convert visitors to direct calls",
+      "kpi": "call_click_rate"
+    },
+    {
+      "id": "g2",
+      "description": "Collect qualified quote requests",
+      "kpi": "quote_request_submit_rate"
+    },
+    {
+      "id": "g3",
+      "description": "Drive SEO traffic to service and area pages",
+      "kpi": "organic_sessions_to_service_and_area_pages"
+    }
+  ],
+  "journeys": [
+    {
+      "id": "j1",
+      "name": "Emergency call path",
+      "steps": [
+        "Land on home page",
+        "See trust signals and availability",
+        "Tap sticky Call Now",
+        "Call connected"
+      ]
+    },
+    {
+      "id": "j2",
+      "name": "Quote request path",
+      "steps": [
+        "Land on home page",
+        "Browse a service detail",
+        "Open quote request form",
+        "Submit details",
+        "See confirmation"
+      ]
+    },
+    {
+      "id": "j3",
+      "name": "Service research path",
+      "steps": [
+        "Land on a service page",
+        "Review scope and pricing guidance",
+        "Check reviews",
+        "Contact"
+      ]
+    },
+    {
+      "id": "j4",
+      "name": "Area check path",
+      "steps": [
+        "Open Areas served",
+        "Select an area page",
+        "Confirm coverage",
+        "Call or request quote"
+      ]
+    },
+    {
+      "id": "j5",
+      "name": "Review proof path",
+      "steps": [
+        "Open Reviews",
+        "Scan testimonials and rating",
+        "Navigate to a service",
+        "Contact"
+      ]
+    }
+  ],
+  "site_map": [
+    { "path": "/", "name": "Home", "required": true, "data_source": "cms" },
+    { "path": "/services", "name": "Services", "required": true, "data_source": "cms" },
+    { "path": "/services/[slug]", "name": "Service detail", "required": true, "data_source": "cms" },
+    { "path": "/areas", "name": "Areas served", "required": true, "data_source": "cms" },
+    { "path": "/areas/[slug]", "name": "Area landing", "required": false, "data_source": "cms" },
+    { "path": "/reviews", "name": "Reviews", "required": true, "data_source": "cms" },
+    { "path": "/about", "name": "About", "required": true, "data_source": "cms" },
+    { "path": "/contact", "name": "Contact", "required": true, "data_source": "cms" },
+    { "path": "/quote", "name": "Quote", "required": false, "data_source": "static" },
+    { "path": "/faq", "name": "FAQ", "required": false, "data_source": "cms" },
+    { "path": "/blog", "name": "Blog", "required": false, "data_source": "cms" },
+    { "path": "/privacy", "name": "Privacy", "required": true, "data_source": "static" },
+    { "path": "/terms", "name": "Terms", "required": true, "data_source": "static" },
+    { "path": "/404", "name": "Not found", "required": true, "data_source": "static" }
+  ],
+  "features": ["marketing_pages", "analytics"],
+  "integrations": {
+    "marketing_pages": "sanity",
+    "analytics": "posthog"
+  },
+  "trust_signals": [
+    "phone_and_hours_visible",
+    "licensed_and_insured_badges",
+    "years_in_business",
+    "service_area_coverage",
+    "review_aggregate"
+  ],
+  "conversion_mechanics": [
+    "click_to_call",
+    "sticky_mobile_call_to_action",
+    "quote_request_form",
+    "areas_served_confirmation"
+  ],
+  "locale": {
+    "default": "en-US",
+    "i18n_required": false,
+    "regions": ["United States"]
+  },
+  "compliance_notes": [
+    "If targeting EU visitors, run analytics in a cookieless mode and provide an opt-out mechanism.",
+    "Display license number and service address where required by the local regulator."
+  ],
+  "tier_band": "basic",
+  "constraints": {
+    "deployment_platform": "vercel",
+    "database": "none",
+    "no_auth": true,
+    "no_payments": true
+  },
+  "assumptions": [
+    {
+      "rule": "R1",
+      "field": "project.archetype",
+      "value": "marketing_site",
+      "reason": "Local-services keyword match for plumbing"
+    },
+    {
+      "rule": "R2",
+      "field": "project.industry",
+      "value": "local-services (plumbing)",
+      "reason": "Industry pack keyword match"
+    },
+    {
+      "rule": "R3",
+      "field": "brand.visual_archetype",
+      "value": "local-business-trust",
+      "reason": "Default archetype for local_services marketing sites"
+    },
+    {
+      "rule": "R6",
+      "field": "site_map",
+      "value": "local-services default sitemap",
+      "reason": "Local-services pack provides deterministic sitemap"
+    },
+    {
+      "rule": "R7",
+      "field": "features",
+      "value": "No standalone forms/seo/reviews features",
+      "reason": "Feature map contains marketing_pages and analytics; quote/reviews/seo are implemented within those surfaces"
+    },
+    {
+      "rule": "R11",
+      "field": "locale.default",
+      "value": "en-US",
+      "reason": "Default locale"
+    },
+    {
+      "rule": "R13",
+      "field": "tier_band",
+      "value": "basic",
+      "reason": "Marketing site baseline"
+    },
+    {
+      "rule": "R8",
+      "field": "business_identity_data",
+      "value": "CMS-managed site settings",
+      "reason": "Avoid guessing phone/address/license; keep editable in CMS"
+    }
+  ],
+  "open_questions_for_human": [],
+  "lock_status": "LOCKED"
+}

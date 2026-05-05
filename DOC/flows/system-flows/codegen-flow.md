@@ -9,6 +9,24 @@ Convert a LOCKED, validated plan into a complete, runnable SaaS codebase. Codege
 - `decisions.json` exists.
 - Pre-build checklist passed.
 
+## EXECUTION PROFILES
+Codegen supports two deterministic execution profiles. The profile is selected from plan scope (no human choice during execution).
+
+### Profile A — FRONTEND-FIRST
+Use when the run is marketing-heavy and backend complexity is low (for example `plan.backend.database == "none"`).
+
+Objective: generate the frontend + real E2E/visual QA gates early so layout regressions are caught immediately and iteration can happen before integrations/back-end wiring.
+
+Order (high level):
+1) Scaffold
+2) Frontend layer
+3) Configuration files
+4) Validation gate (tsc/eslint/vitest/playwright + visual QA evidence)
+5) Integrations/back-end only as required by the plan
+
+### Profile B — FULL-STACK
+Default for SaaS runs with a real backend/database.
+
 ## INPUT
 - `plan.json`
 - `decisions.json`

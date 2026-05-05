@@ -29,19 +29,19 @@
       "primary": "sanity",
       "secondary": [],
       "implies": ["cms_studio", "slug_routes", "seo_schema"],
-      "rule_file": "knowledge/integration-rules/sanity.yaml"
+      "rule_file": "knowledge/integration-rules/cms/sanity.yaml"
     },
     "marketing_pages": {
       "primary": "sanity",
       "secondary": [],
       "implies": ["cms_studio", "page_blocks_schema"],
-      "rule_file": "knowledge/integration-rules/sanity.yaml"
+      "rule_file": "knowledge/integration-rules/cms/sanity.yaml"
     },
     "documentation": {
       "primary": "sanity",
       "secondary": [],
       "implies": ["cms_studio", "slug_routes", "nested_navigation"],
-      "rule_file": "knowledge/integration-rules/sanity.yaml"
+      "rule_file": "knowledge/integration-rules/cms/sanity.yaml"
     },
     "emails": {
       "primary": "resend",
@@ -59,13 +59,13 @@
       "primary": "posthog",
       "secondary": [],
       "implies": ["typed_event_helper", "identify_on_signin", "reset_on_signout"],
-      "rule_file": "knowledge/integration-rules/posthog.yaml"
+      "rule_file": "knowledge/integration-rules/analytics/posthog.yaml"
     },
     "feature_flags": {
       "primary": "posthog",
       "secondary": [],
       "implies": ["server_side_evaluation_helper"],
-      "rule_file": "knowledge/integration-rules/posthog.yaml"
+      "rule_file": "knowledge/integration-rules/analytics/posthog.yaml"
     },
     "dashboard": {
       "primary": "database",

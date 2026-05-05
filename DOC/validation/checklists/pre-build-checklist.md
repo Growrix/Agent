@@ -23,7 +23,8 @@ Run this checklist BEFORE codegen begins. Every item MUST be `[x]` or codegen MU
 - [ ] Every page declares data source, query, cache strategy, metadata, states.
 - [ ] Every CMS-backed content type declares schema and slug.
 - [ ] Every protected route declares auth requirement.
-- [ ] `loading.tsx`, `error.tsx`, `not-found.tsx` declared per F13.
+- [ ] `loading.tsx`, `error.tsx`, `not-found.tsx` are planned for each route segment boundary where applicable.
+- [ ] If the brief includes a visual reference lock, `planning/frontend/visual-reference-pack.md` exists and enumerates the locked surfaces.
 
 ## BACKEND COMPLETENESS
 - [ ] Every route handler is declared with input schema, auth, service call.

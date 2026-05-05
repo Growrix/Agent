@@ -30,6 +30,7 @@ First frontend agent after the intake_strategist. Owns the cross-page architectu
 9. Declare shared state requirements.
 10. Declare motion / accessibility / localization posture.
 11. Emit `<output_root>/master-ui-architecture.md` per `master-ui-architecture-spec.md`.
+12. Emit `<output_root>/visual-reference-pack.md` enumerating reference-locked surfaces and required composition traits when the brief includes a visual reference lock.
 
 ## STRICT RULES
 - MUST follow the master-ui-architecture spec completely.
@@ -57,9 +58,13 @@ First frontend agent after the intake_strategist. Owns the cross-page architectu
 8. **STATE REQUIREMENTS** — list shared states across forms / lists / chat / checkout / nav.
 9. **POSTURE** — motion + a11y + i18n + stack.
 10. **EMIT** `<output_root>/master-ui-architecture.md`.
+11. **EMIT** `<output_root>/visual-reference-pack.md`.
 
 ## OUTPUT FORMAT
-A single Markdown file matching the master-ui-architecture spec. Plus an entry to `<output_root>/ai-context.yaml` (creates the file on first emission):
+A single Markdown file matching the master-ui-architecture spec, plus a visual reference pack, plus an entry to `<output_root>/ai-context.yaml` (creates the file on first emission):
+
+- `<output_root>/master-ui-architecture.md`
+- `<output_root>/visual-reference-pack.md`
 
 ```yaml
 folder: DOC/output/runs/<timestamp>/planning/frontend

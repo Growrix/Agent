@@ -72,7 +72,7 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 6. Run codegen flow.
 7. Run execution acceptance checklist (plan/spec/code parity + integration completeness + frontend artifact presence + frontend depth + semantic parity + content-key parity).
 8. If any checklist line item fails, stop normal progression and classify delivery as `blocked`.
-9. Run screenshot-based visual QA for required desktop and mobile targets.
+9. Run screenshot-based visual QA for required desktop and mobile targets (Playwright) and persist evidence under `reports/visual-qa/`.
 10. Run post-build environment setup flow.
 11. Verify local startup using `npm run dev` and smoke probes.
 12. Run post-codegen validation + quality gate.
@@ -113,7 +113,8 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - Confirm the generated frontend was derived from the full frontend planning bundle, not just `plan.json` summaries.
 - Confirm `npm run dev` exits without error after codegen.
 - Confirm tests are non-placeholder and cover declared critical paths (unit/integration/e2e as applicable).
-- Confirm screenshot-based visual QA passes for required routes and viewports.
+- Confirm screenshot-based visual QA passes for required routes and viewports by running `npm run test:e2e`.
+- Confirm visual QA evidence exists at `DOC/output/runs/<timestamp>/reports/visual-qa/summary.json` and `DOC/output/runs/<timestamp>/reports/visual-qa/<route>/<viewport>.png`.
 - Confirm placeholder business facts and blocked stock-media URLs are not active in production-classified public output.
 - Confirm `execution_summary.json` exists and has `status` field set.
 - Confirm no output artifacts exist outside `DOC/output/runs/<timestamp>/`.
