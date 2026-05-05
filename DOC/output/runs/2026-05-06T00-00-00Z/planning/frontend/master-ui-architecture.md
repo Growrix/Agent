@@ -82,7 +82,26 @@ Visual archetype: local-business-trust.
 - Desktop: layered media and copy panels.
 - Mobile: single-column card stacks with sticky action anchors.
 
-## Page Inventory
+## Visual Differentiation Map
+
+Every public marketing route must have a measurably distinct hero composition. This map is binding for the developer and is checked by F15.
+
+| Route | Hero layout split | Media framing | Typographic scale relationship |
+|---|---|---|---|
+| `/` (Home) | 55/45 copy-left / media-right with foreground image layered over background | Full-bleed background panel; foreground photo cropped at mid-torso, overflowing bottom edge | XL display headline (5xl) + body sub at 2xl; CTA buttons stack vertically below sub |
+| `/services` | Full-width cinematic banner; copy centered in lower-third overlay | Wide landscape: solar panels on rooftop, sky fill; warm gradient overlay at bottom 40% | Large headline centered (4xl) with short descriptor below; trust-chip row anchored to bottom edge |
+| `/portfolio` | Masonry-preview intro: 3-column media grid bleeding to edges, with overlay title card top-left | First 3 project images as bleed-grid; no single hero photo — the grid IS the hero | Compact headline + subtext inside a frosted-glass card overlaid top-left |
+| `/about` | Split panel: left = staff/team editorial portrait (60% width); right = mission statement with year-founded badge, vertically centered | Portrait-style team photo; soft-focus depth; subject faces in upper-third | Headline (3xl) right-aligned inside right panel; mission statement text wraps tightly |
+| `/testimonials` | Quote-forward layout: giant pull-quote marks (decorative, aria-hidden) behind centered headline; no photography in hero zone | No media; instead a star-rating aggregate tile floats right of headline | Extra-large italic headline (4xl italic) with aggregate-rating tile beside it |
+| `/blog` | Editorial masthead: left-side large featured-post image card; right-side 2 stacked smaller post cards | Featured image fills left column (2/5 width) with category chip + title overlay | Right column: compact card titles (xl) + dates; masthead label in sm caps above the grid |
+| `/contact` | Two-column utility panel: left = contact channels (call, WhatsApp, email, form link); right = map or address block | No hero photography; brand-accent background surface with icon-driven channel list | Page title (3xl) above channel list; each channel as a large tappable row with icon + label |
+| `/quote` | Focused single-column funnel with step indicator at top; no sidebars | No photography in hero zone; calculator UI fills the content well | Step-indicator (sm caps) → form headline (3xl) → helper copy (base); conversion-focused minimal chrome |
+| `/auth/sign-in` | Centered card on brand-gradient or split brand-surface; no full-bleed photography | Brand pattern or gradient surface; no editorial imagery | Logo mark at top; headline (2xl) centered in card; form below |
+| `/auth/sign-up` | Same centered card pattern as sign-in but with social proof strip (logo bar) below the card | Same gradient surface; brief value proposition below form | Same scale as sign-in; value strip uses sm caps + partner logo row |
+
+**Developer note:** This map is a F15 hard gate. Two routes may not share the same values in all three columns simultaneously. If two routes share layout split, they must differ in media framing. If they share media framing, they must differ in typographic scale relationship.
+
+
 - Home: campaign hero, trust strips, instant estimate entry, featured projects.
 - Services: service taxonomy, install packages, financing and warranty context.
 - Service detail: scoped offering, process, inclusions, savings cues, conversion.

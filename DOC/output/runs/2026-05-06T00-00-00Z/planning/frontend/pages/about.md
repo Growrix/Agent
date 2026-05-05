@@ -21,60 +21,93 @@ content_keys_used: [about.hero.title, about.story.title, about.team.title, about
 
 ## 2. Sections in Visual Order
 ### A. Header
-- Components: HeaderShell
+- Purpose: site-wide wayfinding; Home path always visible
+- Content keys: nav.*
 - Data source: static
 - States: success
-- Interactions: navigation
-- Motion: motion.page.enter.fade-slide hierarchy; reduced_motion static
-- Accessibility: nav landmark
+- Interactions: navigation, call/WhatsApp shortcut
+- Responsive: full nav desktop; compact + mobile dock mobile
+- Motion: motion.page.enter.fade-slide (variant: `headerEnter`) purpose hierarchy; reduced_motion static
+- Accessibility: nav landmark, focus-visible links
 
 ### B. About Hero
-- Components: HeroMediaStack
+- Purpose: user immediately understands the company's identity and human team — emotional trust before facts
+- Content keys: about.hero.title, about.hero.mission, about.hero.years_badge, about.hero.founded_label
 - Data source: cms.about.hero()
-- States: loading, success
-- Interactions: jump links
-- Motion: motion.section.reveal.stagger hierarchy; reduced_motion static
-- Accessibility: h1 contract
+- States: loading (skeleton), success
+- Interactions: scroll-to-story anchor link
+- Responsive:
+  - desktop: split panel — left 60% team editorial portrait with soft-focus depth; right 40% mission statement + year-founded badge, vertically centered
+  - tablet: portrait spans full width as background; mission statement overlaid in bottom-left frosted panel
+  - mobile: portrait stacked above mission text; year badge anchored to image bottom-right corner
+- Motion: motion.section.reveal.stagger (variant: `aboutHeroReveal`) purpose hierarchy; reduced_motion static render
+- Accessibility: h1 in right panel; portrait img alt describes team context (not decorative)
+- Visual contract:
+  - desktop composition: 60/40 horizontal split; left = portrait photo (faces in upper-third, soft-focus background); right = mission copy with 3xl headline right-aligned; year-founded badge as a trust chip
+  - tablet composition: full-bleed portrait with frosted-glass overlay panel in bottom-left quadrant
+  - mobile composition: portrait image first (16:9 crop), mission text below, CTA below text
+  - media framing: portrait-orientation editorial photo; warm-toned, professional not sterile
+  - trust surface: year-founded badge, license number chip, top-right of right panel
+- visual-differentiation-note: Hero is portrait-dominant + narrative-split — distinctly different from Home (campaign photo + conversion), Services (cinematic landscape banner), and Portfolio (bleed-grid). No other route uses a portrait-orientation team photo as hero anchor.
 
 ### C. Story and Mission
-- Components: CmsCardGrid
+- Purpose: user reads a genuine founding story and understands the why behind the business
+- Content keys: about.story.headline, about.story.body, about.story.founder_name, about.story.founding_year, about.mission.statement
 - Data source: cms.about.story()
-- States: loading, empty, success
-- Interactions: read-more disclosure
-- Motion: motion.card.hover-lift clarity; reduced_motion border emphasis
-- Accessibility: heading order and text contrast
+- States: loading (skeleton), empty (fallback static text), success
+- Interactions: read-more disclosure for longer body
+- Responsive:
+  - desktop: two-column — pull-quote left, narrative paragraphs right
+  - mobile: single column, pull-quote styled as a blockquote
+- Motion: motion.section.reveal.stagger (variant: `storyReveal`) purpose hierarchy; reduced_motion immediate paint
+- Accessibility: heading level h2, pull-quote as `<blockquote>`, text contrast WCAG AA
 
 ### D. Certifications and Trust
-- Components: StatusBadge, CmsCardGrid
+- Purpose: user sees third-party validated credentials — removes doubt about legitimacy
+- Content keys: about.certifications.title, about.certifications.items.*, about.certifications.footnote
 - Data source: cms.about.certifications()
-- States: loading, empty, success
-- Interactions: open credential details
-- Motion: motion.section.reveal.stagger hierarchy; reduced_motion static
-- Accessibility: badges include text labels
+- States: loading (badge skeleton row), empty (fallback summary text), success
+- Interactions: tap badge to open credential detail sheet
+- Responsive:
+  - desktop: horizontal badge rail, 4–6 items in a row
+  - mobile: 2-column badge grid
+- Motion: motion.section.reveal.stagger (variant: `badgeReveal`) purpose hierarchy; reduced_motion static
+- Accessibility: each badge includes text label (not color/icon-only); credential detail sheet is keyboard-accessible
 
-### E. Team and Process
-- Components: CmsCardGrid, CaseStudyTimeline
+### E. Team and Installation Process
+- Purpose: user sees real people and understands how the install journey works — humanises and de-risks
+- Content keys: about.team.title, about.team.items.*, about.process.title, about.process.steps.*
 - Data source: cms.about.team(), cms.about.process()
-- States: loading, empty, success
-- Interactions: open profile cards
-- Motion: motion.card.hover-lift clarity; reduced_motion static
-- Accessibility: profile images with alt context
+- States: loading (card skeleton), empty, success
+- Interactions: open team member profile card (name, role, years experience, headshot); process step expansion
+- Responsive:
+  - desktop: team cards in 3-column grid; process timeline horizontal below
+  - tablet: team 2-column; process vertical
+  - mobile: team single-column; process vertical stepper
+- Motion: motion.card.hover-lift (variant: `teamCardHover`) purpose clarity; reduced_motion border emphasis only; process steps use motion.section.reveal.stagger
+- Accessibility: profile images have alt with name + role; timeline uses `<ol>` semantics
 
-### F. Testimonials Bridge
-- Components: TestimonialRail, CtaBand
+### F. Testimonials Bridge + CTA
+- Purpose: reinforce credibility with customer voices and close the page with a conversion action
+- Content keys: about.testimonials.label, about.final_cta.title, about.final_cta.sub, cta.get_quote, cta.book_call
 - Data source: cms.testimonials.featured()
 - States: loading, empty, success
-- Interactions: quote and contact actions
-- Motion: motion.button.press feedback; reduced_motion color-only
-- Accessibility: action focus visible
+- Interactions: quote calculator open; schedule call action
+- Responsive:
+  - desktop: testimonial rail + CTA side-by-side
+  - mobile: stacked — testimonials above, CTA block below
+- Motion: motion.button.press (variant: `ctaPress`) purpose feedback; reduced_motion color shift only
+- Accessibility: CTA buttons have focus-visible rings; testimonials in list context
 
 ### G. Footer
-- Components: FooterTrust
+- Purpose: site-wide exit links, legal, support contacts, social
+- Content keys: footer.*
 - Data source: cms.site.footer()
 - States: success
-- Interactions: support links
-- Motion: motion.section.reveal.stagger hierarchy; reduced_motion static
-- Accessibility: contentinfo landmark
+- Interactions: support channel links, nav links
+- Responsive: multi-column desktop, stacked mobile
+- Motion: motion.section.reveal.stagger (variant: `footerReveal`) purpose hierarchy; reduced_motion static
+- Accessibility: `<footer>` with `contentinfo` landmark
 
 ## 3. Page-Level State Requirements
 - missing certification data fallback to trust summary text.
