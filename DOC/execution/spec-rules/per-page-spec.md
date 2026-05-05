@@ -5,7 +5,18 @@ Emitted by `page_planner`. One file per route, written to `<output_root>/pages/<
 `<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
 
 The per-page spec is the artifact codegen reads to produce the page. It MUST be complete enough that no decision is left to codegen.
+## Authoring philosophy — outcomes over templates
 
+**Section names describe UX outcomes, not React component names.**
+- Write: `"3. Solar impact metrics strip"` not `"3. FeatureSection"`.
+- Write: `"2. Full-bleed hero with left-anchored headline and right-side panel image"` not `"2. HeroSection"`.
+- The developer resolves what component to build. The spec resolves what the user sees and experiences.
+
+**Visual contracts are binding.**
+For every public page, the hero and primary section MUST carry an explicit visual composition contract. The developer MUST implement the declared layout split, media framing, and motion signature — these are not suggestions.
+
+**Every route's hero must be visually distinct.**
+The page planner MUST ensure no two routes share the same hero composition (same layout split + same media framing + same typographic scale relationship simultaneously). Write a `visual-differentiation-note` per spec confirming this.
 For trust-critical marketing routes and any page covered by a visual reference lock, the per-page spec must also carry an explicit visual composition contract so implementation can be reviewed by screenshot parity instead of prose interpretation alone.
 
 ## File frontmatter

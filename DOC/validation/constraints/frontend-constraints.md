@@ -62,13 +62,31 @@ Hard rules for any frontend plan produced by this OS. Each constraint has an id,
 **Detection:** Walk component specs for hover-only behaviors without tap parity.
 **Failure:** `BLOCK F12: hover-only behavior at <ref> without mobile parity`.
 
+## F13 — No shared route wrapper
+**Rule:** MUST NOT implement multiple distinct-purpose routes (e.g., Home, Services, About, Blog, Contact) using a single shared wrapper component that accepts content via props. Each route's primary content sections MUST be implemented as unique, purpose-built composition. Shared organisms (Header, Footer, nav, mobile dock) are exempt.
+**Detection:** Scan `web/src/app/**/page.tsx` for repeated wrapper component imports; if the same non-layout component appears as the root render of >2 distinct routes, fail.
+**Failure:** `BLOCK F13: shared route wrapper <ComponentName> used across routes <list>`.
+
+## F14 — Motion must be implemented
+**Rule:** If `framer-motion` (or any declared animation library) is listed in `web/package.json`, it MUST be imported and actively used in at least: one hero section, one card/item hover interaction, and one modal or drawer transition. Installing motion tooling and leaving it unused is equivalent to planning a feature and not delivering it.
+**Detection:** Search `web/src/` for `from "framer-motion"` (or the declared library); confirm usages exist in ≥3 distinct component files covering the three required use-case classes.
+**Failure:** `BLOCK F14: motion library declared but not implemented in required surface classes`.
+
+## F15 — Visual differentiation across routes
+**Rule:** Every public marketing route MUST have a measurably distinct visual composition for its hero section and its primary content section. "Distinct" means: different layout split (e.g., 50/50 vs full-bleed vs text-left/media-right vs stacked), different media framing treatment, or different typographic scale hierarchy — at least two of these three must differ from any other route's hero.
+**Detection:** Read all page specs; compare hero `Visual contract → desktop composition` declarations across routes; flag any two routes with identical descriptions.
+**Failure:** `BLOCK F15: routes <A> and <B> have identical hero composition — differentiate layout split, media framing, or type hierarchy`.
+
 ## Enforcement order
-The `reviewer` evaluates F1..F12 in order. Multiple failures may be reported in a single pass; the pipeline halts on any failure.
+The `reviewer` evaluates F1..F15 in order. Multiple failures may be reported in a single pass; the pipeline halts on any failure.
 
 ## Severity mapping
 - F1, F5, F11: critical — almost always cause hardcoding or visual drift.
 - F2, F3, F4, F7, F8, F10: critical — incomplete plan = improvising codegen.
 - F6, F9, F12: critical — accessibility or quality risk.
+- F13: critical — single wrapper collapse = all pages look identical.
+- F14: critical — declared motion library unused = broken motion contract.
+- F15: critical — identical route compositions = generic, unprofessional output.
 
 All F-constraints are critical. There are no warnings; the gate is binary.
 
@@ -91,7 +109,10 @@ The reviewer adds a `frontend` block to `validation_report.json`:
       { "id": "F9", "status": "passed|failed", "evidence": "..." },
       { "id": "F10","status": "passed|failed", "evidence": "..." },
       { "id": "F11","status": "passed|failed", "evidence": "..." },
-      { "id": "F12","status": "passed|failed", "evidence": "..." }
+      { "id": "F12","status": "passed|failed", "evidence": "..." },
+      { "id": "F13","status": "passed|failed", "evidence": "..." },
+      { "id": "F14","status": "passed|failed", "evidence": "..." },
+      { "id": "F15","status": "passed|failed", "evidence": "..." }
     ]
   }
 }

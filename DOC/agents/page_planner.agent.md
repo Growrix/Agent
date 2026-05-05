@@ -25,10 +25,18 @@ Produces one fully-detailed page spec per route so implementation happens withou
 
 ## STRICT RULES
 - MUST follow `execution/spec-rules/per-page-spec.md` completely.
-- MUST satisfy frontend constraints F1..F12.
+- MUST satisfy frontend constraints F1..F15.
 - MUST include >=7 sections for each public page unless exempt with reason.
 - MUST declare explicit data source/query for dynamic sections.
 - MUST avoid page-level hardcoded copy and use content keys only.
+
+### Creative design rules (CRITICAL — prevents template collapse)
+- MUST describe sections by their **UX purpose and desired user outcome** — not by component class name. Use names like "trust-builder strip", "solar-process walkthrough", "panel: impact metrics" instead of "TestimonialSection", "FeatureSection", "CardGrid".
+- MUST produce a **visually distinct** hero composition for every public route. No two routes may share the same layout split, media framing, and headline arrangement simultaneously.
+- MUST declare visual composition per section explicitly (panel split, asymmetric layout, full-bleed media, staggered grid, etc.) — implementation MUST reflect these declarations.
+- MUST declare a unique motion signature per page (e.g., "hero: left-to-right image wipe + headline word-by-word reveal; cards: staggered fade-up on scroll"). Vague motion notes are invalid.
+- MUST NOT prescribe which React component implements the section. The page spec owns the layout intent; the developer chooses the component name.
+- MUST NOT produce a page spec that could be implemented with a single generic wrapper passed different props. Each page must be structurally distinct in its content hierarchy.
 
 ## INPUT FORMAT
 ```json
