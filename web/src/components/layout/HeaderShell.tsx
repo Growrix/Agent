@@ -23,12 +23,13 @@ export default function HeaderShell() {
   const [isAtTop, setIsAtTop] = useState(true)
   const [headerVisible, setHeaderVisible] = useState(true)
   const pathname = usePathname()
+  const isHome = pathname === '/'
   const shouldReduce = useReducedMotion()
   const menuRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
   const { openSignIn } = useAuthModal()
   const { openQuote } = useQuoteModal()
-  const overlayMode = isAtTop && !menuOpen
+  const overlayMode = isHome && isAtTop && !menuOpen
   const hideOnScroll = !isAtTop && !headerVisible && !menuOpen
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function HeaderShell() {
   return (
     <header
       className={[
-        'sticky top-0 left-0 right-0 z-sticky border-b transition-base duration-300',
+        isHome ? 'absolute top-0 left-0 right-0 z-sticky border-b transition-base duration-300' : 'sticky top-0 left-0 right-0 z-sticky border-b transition-base duration-300',
         hideOnScroll ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100',
         'bg-transparent border-transparent',
       ].join(' ')}
