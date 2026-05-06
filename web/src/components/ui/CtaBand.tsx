@@ -95,7 +95,7 @@ export default function CtaBand({
                   'btn text-base',
                   variant === 'neutral'
                     ? 'btn-outline'
-                    : 'btn-ghost border border-text-inverse/30 text-text-inverse hover:bg-text-inverse/10',
+                    : 'bg-white/14 border border-white/45 text-white hover:bg-white/24 focus-visible:ring-white',
                 )}
               >
                 {secondaryLabel}
