@@ -1,9 +1,0 @@
-﻿integration: better-stack-oncall
-category: ops
-role: on_call
-boundary: support
-tier_applicability:
-  basic: false
-  standard: false
-  advanced: false
-status: stub

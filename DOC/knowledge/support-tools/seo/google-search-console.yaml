@@ -1,9 +1,0 @@
-﻿integration: google-search-console
-category: seo
-role: seo_monitoring
-boundary: support
-tier_applicability:
-  basic: false
-  standard: false
-  advanced: false
-status: stub

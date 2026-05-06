@@ -1,9 +1,0 @@
-﻿integration: snyk
-category: security-ongoing
-role: dependency_scanning
-boundary: support
-tier_applicability:
-  basic: false
-  standard: false
-  advanced: false
-status: stub
