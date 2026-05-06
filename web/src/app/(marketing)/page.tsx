@@ -41,6 +41,15 @@ const SERVICES = [
     imageAlt: 'Battery storage unit installation',
     chips: ['Powerwall', 'Enphase'],
   },
+  {
+    id: 'monitoring',
+    title: 'Monitoring & Maintenance',
+    subtitle: 'Keep your system performing at its best.',
+    href: '/services/monitoring-maintenance',
+    image: 'https://images.unsplash.com/photo-1497436072909-f5e4be66e4c0?w=600&q=80',
+    imageAlt: 'Technician checking solar monitoring data',
+    chips: ['Performance alerts', 'Rapid response'],
+  },
 ]
 
 const TESTIMONIALS: Testimonial[] = [
@@ -66,12 +75,28 @@ const TESTIMONIALS: Testimonial[] = [
 
 export default function HomePage() {
   const [assistantOpen, setAssistantOpen] = useState(false)
-  const [monthlyBillDraft, setMonthlyBillDraft] = useState(300)
-  const [roofTypeDraft, setRoofTypeDraft] = useState('tile')
+  const [fullName, setFullName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [postcode, setPostcode] = useState('')
+  const [details, setDetails] = useState('')
   const heroRef = useRef<HTMLDivElement>(null)
   const isHeroInView = useInView(heroRef, { once: true })
   const shouldReduce = useReducedMotion()
   const { openQuote } = useQuoteModal()
+
+  const handleQuoteRequestSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const subject = encodeURIComponent(t('home.hero_form.mail_subject'))
+    const body = encodeURIComponent(
+      [
+        `${t('home.hero_form.name_label')}: ${fullName || '-'}`,
+        `${t('home.hero_form.phone_label')}: ${phone || '-'}`,
+        `${t('home.hero_form.postcode_label')}: ${postcode || '-'}`,
+        `${t('home.hero_form.details_label')}: ${details || '-'}`,
+      ].join('\n'),
+    )
+    window.location.href = `mailto:${t('contact.channels.email_value')}?subject=${subject}&body=${body}`
+  }
 
   const stagger = {
     hidden: {},
@@ -166,47 +191,73 @@ export default function HomePage() {
           >
             <p className="eyebrow mb-2">{t('home.hero_form.title')}</p>
             <p className="text-sm text-text-muted mb-5">{t('home.hero_form.subtitle')}</p>
-            <div className="grid grid-cols-1 gap-4">
+            <form className="grid grid-cols-1 gap-4" onSubmit={handleQuoteRequestSubmit}>
               <div>
-                <label htmlFor="hero-monthly-bill" className="block text-sm font-semibold text-text-default mb-2">
-                  {t('home.hero_form.bill_label')}
+                <label htmlFor="hero-full-name" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.name_label')}
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted font-medium">$</span>
-                  <input
-                    id="hero-monthly-bill"
-                    type="number"
-                    min={50}
-                    max={2000}
-                    step={50}
-                    value={monthlyBillDraft}
-                    onChange={(event) => setMonthlyBillDraft(Number(event.target.value))}
-                    className="input-solar pl-7"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="hero-roof-type" className="block text-sm font-semibold text-text-default mb-2">
-                  {t('home.hero_form.roof_label')}
-                </label>
-                <select
-                  id="hero-roof-type"
-                  value={roofTypeDraft}
-                  onChange={(event) => setRoofTypeDraft(event.target.value)}
+                <input
+                  id="hero-full-name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  value={fullName}
+                  onChange={(event) => setFullName(event.target.value)}
                   className="input-solar"
-                >
-                  <option value="tile">{t('quote.calculator.roof_options.tile')}</option>
-                  <option value="metal">{t('quote.calculator.roof_options.metal')}</option>
-                  <option value="flat">{t('quote.calculator.roof_options.flat')}</option>
-                  <option value="other">{t('quote.calculator.roof_options.other')}</option>
-                </select>
+                  placeholder={t('home.hero_form.name_placeholder')}
+                />
               </div>
 
-              <button type="button" onClick={openQuote} className="btn btn-primary w-full justify-center">
-                {t('home.hero_form.open_calculator')}
+              <div>
+                <label htmlFor="hero-phone" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.phone_label')}
+                </label>
+                <input
+                  id="hero-phone"
+                  type="tel"
+                  autoComplete="tel"
+                  required
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                  className="input-solar"
+                  placeholder={t('home.hero_form.phone_placeholder')}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="hero-postcode" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.postcode_label')}
+                </label>
+                <input
+                  id="hero-postcode"
+                  type="text"
+                  autoComplete="postal-code"
+                  required
+                  value={postcode}
+                  onChange={(event) => setPostcode(event.target.value)}
+                  className="input-solar"
+                  placeholder={t('home.hero_form.postcode_placeholder')}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="hero-details" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.details_label')}
+                </label>
+                <textarea
+                  id="hero-details"
+                  rows={3}
+                  value={details}
+                  onChange={(event) => setDetails(event.target.value)}
+                  className="input-solar"
+                  placeholder={t('home.hero_form.details_placeholder')}
+                />
+              </div>
+
+              <button type="submit" className="btn btn-primary w-full justify-center">
+                {t('home.hero_form.submit')}
               </button>
-            </div>
+            </form>
           </motion.aside>
         </div>
       </section>
@@ -233,7 +284,7 @@ export default function HomePage() {
       <section className="py-section-xl bg-surface-base" aria-label={t('home.services_title')}>
         <div className="container-solar">
           <div className="text-center mb-12">
-            <p className="eyebrow mb-3">{t('cta.learn_more')}</p>
+            <p className="eyebrow mb-3">{t('services.hero.eyebrow')}</p>
             <h2 className="text-display-section font-display font-bold text-text-strong mb-4">
               {t('home.services_title')}
             </h2>
@@ -241,12 +292,7 @@ export default function HomePage() {
               {t('home.services_subtitle')}
             </p>
           </div>
-          <CmsCardGrid items={SERVICES} columns={3} sectionLabel={t('home.services_title')} />
-          <div className="text-center mt-10">
-            <Link href="/services" className="btn btn-outline">
-              {t('cta.see_all')} services
-            </Link>
-          </div>
+          <CmsCardGrid items={SERVICES} columns={4} sectionLabel={t('home.services_title')} />
         </div>
       </section>
 
@@ -291,9 +337,35 @@ export default function HomePage() {
 
       {/* ── TESTIMONIALS SLICE ── */}
       <section className="py-section-xl bg-surface-base" aria-label={t('home.testimonials_title')}>
-        <div className="container-solar max-w-3xl">
-          <p className="eyebrow mb-3 text-center">{t('home.testimonials_title')}</p>
-          <TestimonialRail testimonials={TESTIMONIALS} />
+        <div className="container-solar">
+          <div className="rounded-[32px] border border-border-subtle bg-surface-canvas p-6 md:p-8 lg:p-10 shadow-soft">
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div>
+                <p className="eyebrow mb-3">{t('home.testimonials_title')}</p>
+                <h2 className="text-display-section font-display font-bold text-text-strong mb-4">
+                  {t('home.testimonials_heading')}
+                </h2>
+                <p className="text-body-fluid text-text-muted mb-6 max-w-xl">
+                  {t('home.testimonials_subtitle')}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="rounded-2xl border border-border-subtle bg-surface-base px-4 py-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-muted mb-1">{t('home.testimonials_metric_rating_label')}</p>
+                    <p className="font-display text-2xl font-bold text-text-strong">{t('testimonials.hero.aggregate_rating')}</p>
+                  </div>
+                  <div className="rounded-2xl border border-border-subtle bg-surface-base px-4 py-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-muted mb-1">{t('home.testimonials_metric_reviews_label')}</p>
+                    <p className="font-display text-2xl font-bold text-text-strong">{t('testimonials.hero.aggregate_count')}</p>
+                  </div>
+                  <div className="rounded-2xl border border-border-subtle bg-surface-base px-4 py-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-muted mb-1">{t('home.testimonials_metric_source_label')}</p>
+                    <p className="text-sm font-semibold text-text-strong">{t('testimonials.hero.aggregate_source')}</p>
+                  </div>
+                </div>
+              </div>
+              <TestimonialRail testimonials={TESTIMONIALS} />
+            </div>
+          </div>
         </div>
       </section>
 

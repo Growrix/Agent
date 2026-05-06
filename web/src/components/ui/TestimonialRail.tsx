@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import Image from 'next/image'
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import type { Testimonial } from '@/lib/api-client'
@@ -29,22 +28,46 @@ export default function TestimonialRail({ testimonials, className }: Testimonial
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: shouldReduce ? 0 : -30 }}
           transition={{ duration: shouldReduce ? 0 : 0.28, ease: [0, 0, 0.2, 1] }}
-          className="card p-8 md:p-12"
+          className="overflow-hidden rounded-[28px] border border-border-subtle bg-surface-base shadow-soft"
           role="article"
           aria-label={`Review by ${testimonials[activeIdx].name}`}
         >
-          <StarRating rating={testimonials[activeIdx].rating} />
-          <blockquote className="mt-5 mb-6">
-            <p className="text-title-fluid font-display text-text-strong leading-snug italic">
-              &ldquo;{testimonials[activeIdx].review}&rdquo;
-            </p>
-          </blockquote>
-          <div className="flex items-center gap-4">
-            <div>
-              <p className="font-semibold text-text-strong">{testimonials[activeIdx].name}</p>
-              <p className="text-sm text-text-muted">
-                {testimonials[activeIdx].location} &middot; {testimonials[activeIdx].projectType}
-              </p>
+          <div className="grid gap-0 md:grid-cols-[160px_1fr]">
+            <div className="flex flex-col justify-between gap-6 bg-brand-primary px-6 py-7 text-text-inverse">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/60">Verified review</p>
+                <StarRating rating={testimonials[activeIdx].rating} inverse />
+              </div>
+              <div className="space-y-3 text-sm text-white/80">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">Project</p>
+                  <p className="font-medium text-white">{testimonials[activeIdx].projectType}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">Date</p>
+                  <p className="font-medium text-white">{testimonials[activeIdx].date}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-7 md:p-9">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-accent/15 text-brand-accent">
+                <QuoteIcon />
+              </div>
+              <blockquote className="mb-8">
+                <p className="text-title-fluid font-display text-text-strong leading-snug italic">
+                  &ldquo;{testimonials[activeIdx].review}&rdquo;
+                </p>
+              </blockquote>
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-text-strong">{testimonials[activeIdx].name}</p>
+                  <p className="text-sm text-text-muted">{testimonials[activeIdx].location}</p>
+                </div>
+                <span className="inline-flex items-center rounded-pill border border-border-subtle bg-surface-canvas px-3 py-1 text-xs font-semibold text-text-muted">
+                  {testimonials[activeIdx].projectType}
+                </span>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -61,8 +84,8 @@ export default function TestimonialRail({ testimonials, className }: Testimonial
                 aria-label={`Review ${i + 1}`}
                 onClick={() => setActiveIdx(i)}
                 className={cn(
-                  'w-2 h-2 rounded-pill transition-base',
-                  i === activeIdx ? 'bg-brand-primary w-6' : 'bg-border-strong',
+                  'h-2 rounded-pill transition-base',
+                  i === activeIdx ? 'w-8 bg-brand-primary' : 'w-2 bg-border-strong',
                 )}
               />
             ))}
@@ -72,7 +95,7 @@ export default function TestimonialRail({ testimonials, className }: Testimonial
               type="button"
               onClick={prev}
               aria-label="Previous testimonial"
-              className="p-2 rounded-full border border-border-subtle hover:bg-surface-raised transition-fast"
+              className="p-2.5 rounded-full border border-border-subtle bg-surface-base hover:bg-surface-raised transition-fast"
             >
               <ChevronLeftIcon />
             </button>
@@ -80,7 +103,7 @@ export default function TestimonialRail({ testimonials, className }: Testimonial
               type="button"
               onClick={next}
               aria-label="Next testimonial"
-              className="p-2 rounded-full border border-border-subtle hover:bg-surface-raised transition-fast"
+              className="p-2.5 rounded-full border border-border-subtle bg-surface-base hover:bg-surface-raised transition-fast"
             >
               <ChevronRightIcon />
             </button>
@@ -91,14 +114,14 @@ export default function TestimonialRail({ testimonials, className }: Testimonial
   )
 }
 
-function StarRating({ rating }: { rating: number }) {
+function StarRating({ rating, inverse = false }: { rating: number; inverse?: boolean }) {
   return (
-    <div className="flex gap-0.5" aria-label={`${rating} out of 5 stars`} role="img">
+    <div className="mt-3 flex gap-0.5" aria-label={`${rating} out of 5 stars`} role="img">
       {[1, 2, 3, 4, 5].map((star) => (
         <svg
           key={star}
           viewBox="0 0 20 20"
-          className={cn('w-5 h-5', star <= rating ? 'text-brand-accent' : 'text-border-strong')}
+          className={cn('w-5 h-5', star <= rating ? (inverse ? 'text-brand-accent' : 'text-brand-accent') : inverse ? 'text-white/25' : 'text-border-strong')}
           fill="currentColor"
           aria-hidden="true"
         >
@@ -106,6 +129,14 @@ function StarRating({ rating }: { rating: number }) {
         </svg>
       ))}
     </div>
+  )
+}
+
+function QuoteIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden="true">
+      <path d="M10.5 7A4.5 4.5 0 0 0 6 11.5V17h5.5v-5H9.2A2.8 2.8 0 0 1 12 9.2V7h-1.5zm7 0A4.5 4.5 0 0 0 13 11.5V17h5.5v-5h-2.3A2.8 2.8 0 0 1 19 9.2V7h-1.5z" />
+    </svg>
   )
 }
 
