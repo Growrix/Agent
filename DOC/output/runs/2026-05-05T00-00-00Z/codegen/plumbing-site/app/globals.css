@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-background: #F9F8F6;
+  --color-surface: #FFFFFF;
+  --color-primary: #0F766E;
+  --color-primary-hover: #0B5F59;
+  --color-primary-foreground: #FFFFFF;
+  --color-accent: #F59E0B;
+  --color-accent-hover: #D97706;
+  --color-text: #0F172A;
+  --color-text-muted: #475569;
+  --color-border: #D7DEE6;
+  --color-inset: #F2F4F6;
+  --color-focus-ring: #0F766E;
+  --color-destructive: #DC2626;
+
+  /* Radius */
+  --radius-button: 12px;
+  --radius-card: 12px;
+  --radius-input: 12px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-2: 0 4px 12px -1px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-3: 0 10px 32px -4px rgb(0 0 0 / 0.12), 0 4px 8px -2px rgb(0 0 0 / 0.06);
+  --shadow-focus: 0 0 0 3px rgb(15 118 110 / 0.30);
+
+  /* Motion */
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 200ms;
+  --motion-duration-slow: 260ms;
+  --motion-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Section rhythm */
+  --space-section-y-mobile: 40px;
+  --space-section-y-tablet: 56px;
+  --space-section-y-desktop: 80px;
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  border-radius: var(--radius-button);
+  font-weight: 600;
+  transition: left 0.1s;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
