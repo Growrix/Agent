@@ -26,9 +26,10 @@ type SignUpValues = z.infer<typeof signUpSchema>
 
 interface AuthFormCardProps {
   mode: Mode
+  onSwitchMode?: () => void
 }
 
-export default function AuthFormCard({ mode }: AuthFormCardProps) {
+export default function AuthFormCard({ mode, onSwitchMode }: AuthFormCardProps) {
   const shouldReduce = useReducedMotion()
   const isSignIn = mode === 'sign-in'
 
@@ -129,7 +130,7 @@ export default function AuthFormCard({ mode }: AuthFormCardProps) {
           />
           {!isSignIn && (
             <p id="password-hint" className="text-xs text-text-muted">
-              {t('auth.sign_up.password_hint')}
+              {t('auth.sign_up_form.password_hint')}
             </p>
           )}
           {errors.password && (
@@ -151,13 +152,23 @@ export default function AuthFormCard({ mode }: AuthFormCardProps) {
       </form>
 
       <p className="text-sm text-text-muted text-center mt-6">
-        {isSignIn ? t('auth.sign_in.no_account') : t('auth.sign_up.have_account')}{' '}
-        <Link
-          href={isSignIn ? '/sign-up' : '/sign-in'}
-          className="text-brand-primary hover:underline font-medium"
-        >
-          {isSignIn ? t('auth.sign_in.register_link') : t('auth.sign_up.sign_in_link')}
-        </Link>
+        {isSignIn ? t('auth.sign_in_form.no_account') : t('auth.sign_up_form.have_account')}{' '}
+        {onSwitchMode ? (
+          <button
+            type="button"
+            onClick={onSwitchMode}
+            className="text-brand-primary hover:underline font-medium bg-transparent border-0 p-0 cursor-pointer"
+          >
+            {isSignIn ? t('auth.sign_in_form.register_link') : t('auth.sign_up_form.sign_in_link')}
+          </button>
+        ) : (
+          <Link
+            href={isSignIn ? '/sign-up' : '/sign-in'}
+            className="text-brand-primary hover:underline font-medium"
+          >
+            {isSignIn ? t('auth.sign_in_form.register_link') : t('auth.sign_up_form.sign_in_link')}
+          </Link>
+        )}
       </p>
     </div>
   )

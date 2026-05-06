@@ -23,6 +23,7 @@ export default function PageMotionWrapper({
           duration: shouldReduce ? 0 : 0.22,
           ease: [0, 0, 0.2, 1],
         }}
+        className="pb-mobile-nav lg:pb-0"
       >
         {children}
       </motion.main>

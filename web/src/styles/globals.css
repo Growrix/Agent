@@ -210,6 +210,14 @@
   .sr-focus {
     @apply sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2;
   }
+  /* Spacer so content doesn't sit under the mobile bottom nav */
+  .pb-mobile-nav {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+  /* Used on the mobile bottom nav itself */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

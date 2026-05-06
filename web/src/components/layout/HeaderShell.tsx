@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { t } from '@/lib/content'
+import ThemeSwitcher from '@/components/ui/ThemeSwitcher'
+import { useAuthModal } from '@/components/providers/AuthModalProvider'
 
 const NAV_LINKS = [
   { href: '/', key: 'nav.home' },
@@ -21,6 +23,7 @@ export default function HeaderShell() {
   const pathname = usePathname()
   const shouldReduce = useReducedMotion()
   const menuRef = useRef<HTMLDivElement>(null)
+  const { openSignIn } = useAuthModal()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -100,13 +103,15 @@ export default function HeaderShell() {
         </ul>
 
         {/* Desktop CTA actions */}
-        <div className="hidden lg:flex items-center gap-3">
-          <Link
-            href="/sign-in"
+        <div className="hidden lg:flex items-center gap-2">
+          <ThemeSwitcher />
+          <button
+            type="button"
+            onClick={openSignIn}
             className="btn btn-ghost text-sm"
           >
             {t('nav.sign_in')}
-          </Link>
+          </button>
           <Link
             href="/quote"
             className="btn btn-primary text-sm"
@@ -115,17 +120,20 @@ export default function HeaderShell() {
           </Link>
         </div>
 
-        {/* Mobile menu toggle */}
-        <button
-          type="button"
-          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          onClick={() => setMenuOpen((v) => !v)}
-          className="lg:hidden p-2 rounded-md text-text-default hover:bg-surface-raised transition-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-        >
-          <MenuIcon open={menuOpen} />
-        </button>
+        {/* Mobile: theme + menu toggle */}
+        <div className="lg:hidden flex items-center gap-1">
+          <ThemeSwitcher />
+          <button
+            type="button"
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMenuOpen((v) => !v)}
+            className="p-2 rounded-md text-text-default hover:bg-surface-raised transition-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          >
+            <MenuIcon open={menuOpen} />
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
@@ -163,9 +171,13 @@ export default function HeaderShell() {
                 )
               })}
               <div className="mt-3 pt-3 border-t border-border-subtle flex flex-col gap-2">
-                <Link href="/sign-in" className="btn btn-ghost text-sm justify-center">
+                <button
+                  type="button"
+                  onClick={() => { setMenuOpen(false); openSignIn() }}
+                  className="btn btn-ghost text-sm justify-center"
+                >
                   {t('nav.sign_in')}
-                </Link>
+                </button>
                 <Link href="/quote" className="btn btn-primary text-sm justify-center">
                   {t('cta.get_quote')}
                 </Link>

@@ -83,9 +83,22 @@ export default function FooterTrust() {
 
         {/* Bottom bar */}
         <div className="border-t border-text-inverse/10 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="text-xs text-text-muted">
-            {t('footer.copyright').replace('{year}', String(year))}
-          </p>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs text-text-muted">
+              {t('footer.copyright').replace('{year}', String(year))}
+            </p>
+            <p className="text-xs text-text-muted">
+              Built and maintained by{' '}
+              <a
+                href="https://www.growrixos.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-primary hover:underline"
+              >
+                Growrix OS
+              </a>
+            </p>
+          </div>
           <ul className="flex gap-4" role="list">
             {LEGAL_LINKS.map(({ href, key }) => (
               <li key={href}>
