@@ -143,7 +143,7 @@ export default function HomePage() {
           aria-hidden="true"
         />
 
-        <div className="container-solar relative z-10 grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-8 items-center py-24 lg:py-12" style={{ minHeight: '100svh' }}>
+        <div className="container-solar relative z-10 grid grid-cols-1 lg:grid-cols-[60fr_40fr] gap-8 lg:gap-6 items-center pt-28 pb-14 lg:pt-36 lg:pb-16" style={{ minHeight: '100svh' }}>
           <motion.div
             ref={heroRef}
             variants={stagger}
@@ -197,12 +197,12 @@ export default function HomePage() {
             initial={{ opacity: 0, y: shouldReduce ? 0 : 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: shouldReduce ? 0 : 0.2, duration: shouldReduce ? 0 : 0.4, ease: [0, 0, 0.2, 1] }}
-            className="card p-6 lg:p-7 bg-surface-base/90 backdrop-blur-sm"
+            className="card w-full max-w-[30rem] lg:ml-auto p-5 lg:p-6 bg-surface-base/90 backdrop-blur-sm"
             aria-label={t('home.hero_form.title')}
           >
             <p className="eyebrow mb-2">{t('home.hero_form.title')}</p>
-            <p className="text-sm text-text-muted mb-5">{t('home.hero_form.subtitle')}</p>
-            <form className="grid grid-cols-1 gap-4" onSubmit={handleQuoteRequestSubmit}>
+            <p className="text-sm text-text-muted mb-4">{t('home.hero_form.subtitle')}</p>
+            <form className="grid grid-cols-1 gap-3" onSubmit={handleQuoteRequestSubmit}>
               <div>
                 <label htmlFor="hero-full-name" className="block text-sm font-semibold text-text-default mb-2">
                   {t('home.hero_form.name_label')}
@@ -291,7 +291,7 @@ export default function HomePage() {
                 </label>
                 <textarea
                   id="hero-details"
-                  rows={3}
+                  rows={2}
                   value={details}
                   onChange={(event) => setDetails(event.target.value)}
                   className="input-solar"
