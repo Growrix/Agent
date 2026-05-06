@@ -123,7 +123,7 @@ const MOCK_SERVICES: Service[] = [
       'Panel cleaning service',
       'Rapid response SLA',
     ],
-    image: 'https://images.unsplash.com/photo-1581092921461-7031e6bfed24?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80',
   },
 ]
 
@@ -174,7 +174,7 @@ const MOCK_PROJECTS: PortfolioProject[] = [
     type: 'commercial',
     systemSizeKw: 200,
     location: 'Tuggerah, NSW',
-    image: 'https://images.unsplash.com/photo-1581092921461-7031e6bfed24?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80',
     highlights: ['Largest installation to date', '60% energy offset', 'Stage-2 battery pending'],
     completedAt: '2025-01',
   },

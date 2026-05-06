@@ -57,7 +57,7 @@ export default function HeroMediaStack({
         ref={ref}
         aria-label={title}
         className={cn('relative overflow-hidden', className)}
-        style={{ minHeight: '70vh' }}
+        style={{ minHeight: '80svh' }}
       >
         <Image
           src={imageSrc}
@@ -72,17 +72,17 @@ export default function HeroMediaStack({
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to top, var(--color-surface-overlay) 0%, rgba(15,23,42,0.55) 40%, rgba(15,23,42,0.1) 70%, transparent 100%)',
+              'linear-gradient(to top, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.72) 45%, rgba(2,6,23,0.35) 70%, rgba(2,6,23,0.06) 100%)',
           }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 flex flex-col justify-end">
-          <div className="container-solar pb-16 lg:pb-20">
+          <div className="container-solar pb-20 lg:pb-24">
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
-              className="max-w-2xl"
+              className="max-w-3xl"
             >
               {eyebrow && (
                 <motion.p variants={itemVariants} className="eyebrow text-brand-accent mb-3">
@@ -96,7 +96,10 @@ export default function HeroMediaStack({
                 {title}
               </motion.h1>
               {subtitle && (
-                <motion.p variants={itemVariants} className="text-body-fluid text-text-inverse/80 mb-8">
+                <motion.p
+                  variants={itemVariants}
+                  className="text-body-fluid text-text-inverse/90 mb-8 max-w-2xl leading-relaxed whitespace-normal break-words"
+                >
                   {subtitle}
                 </motion.p>
               )}
@@ -117,7 +120,10 @@ export default function HeroMediaStack({
               {trustChips && trustChips.length > 0 && (
                 <motion.div variants={itemVariants} className="flex flex-wrap gap-2 mt-8">
                   {trustChips.map((chip) => (
-                    <span key={chip} className="trust-chip bg-text-inverse/10 border-text-inverse/20 text-text-inverse">
+                    <span
+                      key={chip}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-pill bg-black/60 border border-white/25 text-white text-xs font-medium"
+                    >
                       {chip}
                     </span>
                   ))}

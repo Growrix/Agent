@@ -57,6 +57,7 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 - MUST NOT modify files outside `DOC/` and `.github/agents/` without explicit authorisation.
 - MUST NOT invent agent names, file paths, or constraint ids.
 - MUST keep mirror files at `.github/agents/system_architect.agent.md` and `DOC/agents/system_architect.agent.md` byte-identical (this file lives at both paths).
+- MUST verify frontend agent invariants during AUDIT and DOCUMENT modes: dark theme + ThemeSwitcher, icon-based MobileBottomNav, modal-first auth surface, and Growrix OS footer attribution requirements are present in both planner and developer agent specs.
 
 ## INPUT FORMAT
 ```json

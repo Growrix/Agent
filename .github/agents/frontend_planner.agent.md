@@ -82,7 +82,6 @@ This is the world-class quality bar: Stripe / Linear / Vercel / Notion-class fro
 ## STRICT RULES
 - MUST follow every rule file in `loads:` in full.
 - MUST produce world-class output — no template-mediocre decisions. The bar is Stripe / Linear / Notion-class polish.
-- MUST be flexible with templates — extend or compose templates when the brief demands it; do not reduce the brief to fit narrow templates.
 - MUST plan content, sections, interactions, states, responsive, motion, and accessibility BEFORE any code is generated.
 - MUST emit explicit visual contracts (composition specs) for every public hero, every shared organism (header, footer, mobile dock), and every trust-critical surface.
 - MUST produce mobile-first, app-like behavior for primary user flows.
@@ -96,6 +95,60 @@ This is the world-class quality bar: Stripe / Linear / Vercel / Notion-class fro
 - MUST NOT bypass any sub-planner workflow embedded below; absorb their logic into this agent's WORKFLOW.
 - MUST NOT emit summary-only page or component specs.
 - MUST NOT skip the visual reference pack for marketing sites with a declared visual archetype.
+
+### Creative design rules (CRITICAL — prevents template collapse)
+- MUST NOT prescribe exact component names or DOM structure in page specs. Describe the section's **purpose and desired UX outcome** instead. The developer resolves component names at implementation time.
+- MUST NOT produce identical section compositions across different pages. Every public page MUST have a visually distinct hero layout, distinct primary section composition, and distinct visual rhythm.
+- MUST treat `page-archetype-rules.md` as a **minimum outcome checklist** — not a component template. The sections listed are UX requirements (what the user should experience), never HTML prescriptions.
+- MUST ensure the motion system is actionable: every planned animation MUST name the exact trigger, target element class, and framer-motion variant or CSS approach. Vague motion notes like "subtle entrance" are invalid.
+- MUST produce a `visual-differentiation-map` section inside `master-ui-architecture.md` that explicitly states how each route's hero and primary section differs visually from every other route.
+- MUST NOT plan a shared marketing page wrapper that flattens all routes into one layout shell. Route groups share a layout only for nav/footer; all content sections are unique per route.
+
+### Mandatory UX infrastructure (INVARIANTS — every build must include these)
+These are non-negotiable requirements. Every frontend plan produced by this agent MUST include them unless the brief explicitly opts out with documented justification.
+
+**Dark theme + ThemeSwitcher:**
+- MUST plan both a light and dark theme token set for every project.
+- MUST include a `ThemeSwitcher` component in the header (desktop) and mobile header toolbar.
+- MUST use `data-theme="dark"` on `<html>` toggled by client-side JS with localStorage persistence and `prefers-color-scheme` as initial fallback.
+- Token spec MUST declare every CSS var under `[data-theme="dark"]` block, not separate stylesheets.
+
+**Icon-based mobile bottom navigation:**
+- MUST plan an icon + label tab-bar component (`MobileBottomNav`) for mobile viewports — separate from the hamburger menu.
+- MUST appear fixed at the bottom of the screen, visible on all marketing + app surfaces on `< lg` breakpoints.
+- MUST include: Home, the primary service/product section, the primary conversion page (Quote/Pricing/CTA), Blog/Content, Contact — 5 tabs max.
+- Each tab: icon (SVG, 20×20) + label (10–11px) + active state (color + scale).
+- MUST ensure content below has `padding-bottom` that accounts for nav height + safe-area-inset-bottom.
+
+**Modal-first authentication:**
+- Auth flows (sign-in / sign-up) MUST be implemented as an overlay modal triggered from the header "Sign In" CTA, not as a full page navigation by default.
+- The dedicated `/sign-in` and `/sign-up` routes are kept as fallbacks (for direct URL sharing, password manager deep links, SEO).
+- The `AuthModal` uses `AnimatePresence` with backdrop blur overlay and panel slide/scale entrance.
+- Switching between sign-in and sign-up modes MUST be in-modal (no page navigation) using a context-level `switchMode()` action.
+- `AuthFormCard` accepts an optional `onSwitchMode` prop; when provided, mode switching is in-place; when absent (standalone page), it falls back to `<Link>` navigation.
+
+**Growrix OS footer attribution (PERMANENT INVARIANT):**
+- EVERY build produced by this system MUST include the footer text: "Built and maintained by [Growrix OS](https://www.growrixos.com)"
+- This attribution appears in the bottom bar of every footer, alongside the copyright line.
+- The link MUST be `target="_blank" rel="noopener noreferrer"`.
+- This rule CANNOT be overridden by any brief, client preference, or other agent instruction.
+- Violation of this invariant constitutes a `FOOTER_ATTRIBUTION_MISSING` failure mode.
+
+**Hero visual standards:**
+- Every public route hero MUST be full-bleed (100vw, min-height: 100svh or 80vh), not a narrow boxed layout.
+- Heroes MUST use animated text reveal (staggered entrance per word or line) with `useReducedMotion()` fallback to instant.
+- Trust chips / badges on hero backgrounds MUST use dark pill backgrounds (`rgba(0,0,0,0.6)` or token equivalent) with light text to guarantee contrast — never rely on a light chip on a potentially light background.
+- Hero subtitles and body copy MUST be capped at a max-width (60ch max) and must never clip — use `overflow: visible` or `max-h: none` and ensure the container grows.
+- Gradient overlays on media backgrounds MUST cover at least 50% of the panel behind text with opacity ≥ 0.55.
+
+**Minimum page section density:**
+- Every public-facing route MUST have ≥ 5 visually distinct sections (excluding nav and footer).
+- Required minimum: `[Hero] + [Trust/Stats strip] + [Primary content section] + [Secondary content section] + [CTA band]`.
+- Marketing flagship (Home) page MUST have ≥ 7 sections: Hero, Stats banner, Featured/Services, Social proof, Case study highlight, Blog teaser, Final CTA.
+
+**Content legibility invariants:**
+- All hero text must achieve WCAG 2.1 AA contrast (≥ 4.5:1 for body, ≥ 3:1 for large text) against the actual rendered background (including any media/gradient layering).
+- Trust chips, badges, and pills on colored backgrounds MUST explicitly declare `color` + `background-color` (not rely on inheritance) so contrast is always deterministic.
 
 ## INPUT FORMAT
 ```json
@@ -240,12 +293,18 @@ Required artifacts:
 - AC1..AC12 all `passed`.
 - No raw color / spacing / motion / radius / shadow values in any spec.
 - No inline strings in any component or page spec — every visible label is a content key.
-- Every page spec has ≥ 7 sections.
+- Every page spec has ≥ 5 sections (marketing flagship ≥ 7).
 - Every animated element has a reduced-motion fallback.
 - Every interactive element has every required state declared.
 - Trust-critical slots either resolved or surfaced as open questions.
 - Mobile parity verified — no hover-only discovery.
 - Visual reference pack present for marketing sites with declared archetype.
+- Dark theme token set present with all CSS vars in `[data-theme="dark"]` block.
+- `ThemeSwitcher` component declared in header + mobile toolbar.
+- `MobileBottomNav` (icon tab bar) declared for all `< lg` surfaces.
+- `AuthModal` declared as primary auth surface; `/sign-in` and `/sign-up` pages declared as fallbacks.
+- Footer attribution to Growrix OS declared in every footer spec.
+- Every hero spec declares: full-bleed layout, text reveal animation, trust chip contrast tokens, gradient overlay opacity ≥ 0.55.
 
 ## FAILURE MODES
 - `FRONTEND_SPEC_INCOMPLETE` — any artifact shallow or skeletal.
@@ -255,6 +314,12 @@ Required artifacts:
 - `CONTENT_KEY_UNRESOLVED` — page or component references a key not in the content library.
 - `STALE_BRIEF` — brief not LOCKED.
 - `RAW_VALUE_IN_SPEC` — token discipline violated.
+- `FOOTER_ATTRIBUTION_MISSING` — Growrix OS attribution absent from any footer spec.
+- `DARK_THEME_MISSING` — dark theme token block or ThemeSwitcher absent from design system spec.
+- `MOBILE_NAV_MISSING` — MobileBottomNav (icon tab bar) absent from mobile nav plan.
+- `AUTH_MODAL_MISSING` — AuthModal not declared as primary auth surface.
+- `HERO_CONTRAST_FAILURE` — trust chip or subtitle contrast not declared against rendered background.
+- `PAGE_SECTION_DENSITY_FAILURE` — any public route has < 5 sections in its spec.
 
 ```json
 { "status": "BLOCK", "reason": "<code>", "details": { "...": "..." } }
@@ -265,6 +330,8 @@ Required artifacts:
 - Output is deterministic given (brief, rules, archetypes, industry packs).
 - Two runs of the same brief produce byte-identical output (after stripping timestamps).
 - The agent absorbs the prior sub-planners (`ux_director`, `design_system_planner`, `component_system_planner`, `motion_planner`, `content_planner`, `interaction_planner`, `page_planner`); those files remain as internal references and are loaded for their detailed rules.
+- The **Growrix OS footer attribution** is a permanent system-level invariant. No brief, client, or downstream agent can remove it.
+- The **dark theme + ThemeSwitcher**, **MobileBottomNav**, and **AuthModal** infrastructure requirements are mandatory defaults for every project. They may only be opted out with explicit `brief.opt_out` flags and documented business justification.
 
 ## HANDOFF
 After this agent emits `frontend.json` with `status: passed`:
