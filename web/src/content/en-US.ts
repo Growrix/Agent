@@ -173,6 +173,15 @@ const content = {
     list: {
       title: 'All reviews',
     },
+    highlights: {
+      title: 'What customers value most',
+      speed_title: 'Fast project turnaround',
+      speed_body: 'From site check to commissioning with clear milestones and proactive updates.',
+      quality_title: 'Clean, high-quality installs',
+      quality_body: 'Neat cabling, premium components, and compliance-first workmanship.',
+      support_title: 'Support that stays responsive',
+      support_body: 'Dedicated local support for maintenance, monitoring, and warranty needs.',
+    },
     cta: {
       title: 'Join our satisfied customers',
       subtitle: 'Get your instant quote and see what solar savings look like for your property.',
@@ -193,17 +202,30 @@ const content = {
       projects: 'Project stories',
       savings: 'Savings & finance',
     },
+    pillars: {
+      title: 'Explore by focus area',
+      guides: 'Buyer guides and practical checklists',
+      projects: 'Installation stories and outcomes',
+      savings: 'Tariffs, rebates, and ROI breakdowns',
+    },
     read_time: 'min read',
     share: 'Share',
     back_to_blog: 'Back to blog',
     related_title: 'Related articles',
     cta_title: 'Ready to switch to solar?',
+    cta_subtitle: 'Get your instant estimate in under 3 minutes.',
   },
   contact: {
     hero: {
       eyebrow: 'Get in touch',
       title: 'We\'re ready to help',
       subtitle: 'Choose the channel that works best for you.',
+    },
+    response_promise: {
+      title: 'What happens after you contact us',
+      step_1: 'A specialist responds and validates your goals',
+      step_2: 'We map your property constraints and options',
+      step_3: 'You receive clear next steps with no pressure',
     },
     channels: {
       phone: {

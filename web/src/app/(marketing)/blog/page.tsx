@@ -110,9 +110,25 @@ export default async function BlogPage() {
         </div>
       </section>
 
+      {/* ── CONTENT PILLARS ── */}
+      <section className="py-section-lg bg-surface-base border-t border-border-subtle" aria-label={t('blog.pillars.title')}>
+        <div className="container-solar">
+          <h2 className="text-display-section font-display font-bold text-text-strong mb-8 text-center">
+            {t('blog.pillars.title')}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[t('blog.pillars.guides'), t('blog.pillars.projects'), t('blog.pillars.savings')].map((pillar) => (
+              <article key={pillar} className="card p-6 text-center">
+                <p className="text-sm text-text-default font-medium leading-relaxed">{pillar}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CtaBand
         title={t('blog.cta_title')}
-        subtitle="Get your instant estimate in under 3 minutes."
+        subtitle={t('blog.cta_subtitle')}
         primaryLabel={t('cta.get_quote')}
         primaryHref="/quote"
         variant="brand"

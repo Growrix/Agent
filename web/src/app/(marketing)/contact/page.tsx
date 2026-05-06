@@ -157,6 +157,23 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* ── RESPONSE PROMISE ── */}
+      <section className="py-section-lg bg-surface-canvas" aria-label={t('contact.response_promise.title')}>
+        <div className="container-solar">
+          <h2 className="text-display-section font-display font-bold text-text-strong mb-8 text-center">
+            {t('contact.response_promise.title')}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[t('contact.response_promise.step_1'), t('contact.response_promise.step_2'), t('contact.response_promise.step_3')].map((step, index) => (
+              <article key={step} className="card p-6">
+                <p className="eyebrow mb-2">0{index + 1}</p>
+                <p className="text-sm text-text-default leading-relaxed">{step}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <SupportFabCluster onOpenAssistant={() => setAssistantOpen(true)} />
       <ChatAssistantModal open={assistantOpen} onClose={() => setAssistantOpen(false)} />
     </>

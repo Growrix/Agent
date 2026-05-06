@@ -65,6 +65,27 @@ export default async function TestimonialsPage() {
         </div>
       </section>
 
+      {/* ── REVIEW HIGHLIGHTS ── */}
+      <section className="py-section-lg bg-surface-canvas" aria-label={t('testimonials.highlights.title')}>
+        <div className="container-solar">
+          <h2 className="text-display-section font-display font-bold text-text-strong mb-8 text-center">
+            {t('testimonials.highlights.title')}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { title: t('testimonials.highlights.speed_title'), body: t('testimonials.highlights.speed_body') },
+              { title: t('testimonials.highlights.quality_title'), body: t('testimonials.highlights.quality_body') },
+              { title: t('testimonials.highlights.support_title'), body: t('testimonials.highlights.support_body') },
+            ].map((item) => (
+              <article key={item.title} className="card p-6">
+                <h3 className="font-display font-bold text-text-strong mb-2">{item.title}</h3>
+                <p className="text-sm text-text-muted leading-relaxed">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FULL GRID ── */}
       <section className="py-section-xl bg-surface-canvas" aria-label={t('testimonials.list.title')}>
         <div className="container-solar">
