@@ -45,6 +45,9 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - MUST fail execution if placeholder business facts remain active in production-classified public output.
 - MUST fail execution if CMS-backed public pages render from mock arrays in a production-classified output.
 - MUST fail execution if required visual QA evidence is missing or fails.
+- MUST fail execution if implemented header behavior differs from the planner-defined state machine for required routes.
+- MUST fail execution if footer readability/alignment fails in either light or dark theme screenshots.
+- MUST fail execution if any required public media asset is broken and no fallback behavior is present.
 - MUST set `status=failed` (not partial-success) when any execution acceptance checklist item fails.
 - MUST emit `delivery_class` as one of: `production_candidate`, `baseline_prototype`, `blocked`.
 - MUST set `delivery_class=blocked` whenever `quality_gate=failed` or any blocker failure code is present.
@@ -115,7 +118,11 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - Confirm tests are non-placeholder and cover declared critical paths (unit/integration/e2e as applicable).
 - Confirm screenshot-based visual QA passes for required routes and viewports by running `npm run test:e2e`.
 - Confirm visual QA evidence exists at `DOC/output/runs/<timestamp>/reports/visual-qa/summary.json` and `DOC/output/runs/<timestamp>/reports/visual-qa/<route>/<viewport>.png`.
+- Confirm visual QA includes both light and dark theme captures for required routes.
+- Confirm header state transitions in QA evidence: top default, scroll-down hidden/collapsed behavior, and scroll-up restored behavior (when required by plan).
+- Confirm footer link/icon contrast and alignment pass in both themes.
 - Confirm placeholder business facts and blocked stock-media URLs are not active in production-classified public output.
+- Confirm conversion-critical media slots have no broken assets; fallback rendering evidence exists when remote source fails.
 - Confirm `execution_summary.json` exists and has `status` field set.
 - Confirm no output artifacts exist outside `DOC/output/runs/<timestamp>/`.
 - Confirm `delivery_class` is emitted and consistent with gate outcomes.

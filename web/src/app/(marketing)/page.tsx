@@ -46,7 +46,7 @@ const SERVICES = [
     title: 'Monitoring & Maintenance',
     subtitle: 'Keep your system performing at its best.',
     href: '/services/monitoring-maintenance',
-    image: 'https://images.unsplash.com/photo-1497436072909-f5e4be66e4c0?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80',
     imageAlt: 'Technician checking solar monitoring data',
     chips: ['Performance alerts', 'Rapid response'],
   },

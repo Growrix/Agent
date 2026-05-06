@@ -123,7 +123,7 @@ const MOCK_SERVICES: Service[] = [
       'Panel cleaning service',
       'Rapid response SLA',
     ],
-    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80',
   },
 ]
 

@@ -28,17 +28,10 @@ export default function HeaderShell() {
   const lastScrollY = useRef(0)
   const { openSignIn } = useAuthModal()
   const { openQuote } = useQuoteModal()
-  const isHome = pathname === '/'
-  const overlayMode = isHome && isAtTop && !menuOpen
-  const hideOnScroll = isHome && !isAtTop && !headerVisible && !menuOpen
+  const overlayMode = isAtTop && !menuOpen
+  const hideOnScroll = !isAtTop && !headerVisible && !menuOpen
 
   useEffect(() => {
-    if (!isHome) {
-      setIsAtTop(false)
-      setHeaderVisible(true)
-      return
-    }
-
     const onScroll = () => {
       const currentScrollY = window.scrollY
       const scrollDelta = Math.abs(currentScrollY - lastScrollY.current)
@@ -60,7 +53,7 @@ export default function HeaderShell() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [isHome])
+  }, [pathname])
 
   // Close menu on route change
   useEffect(() => {
@@ -104,31 +97,33 @@ export default function HeaderShell() {
         overlayMode ? 'border-white/20 bg-transparent' : 'border-border-subtle bg-transparent',
       ].join(' ')}>
         <div className="container-solar h-9 flex items-center justify-between text-xs">
-          <a
-            href={`tel:${t('contact.channels.phone_value')}`}
-            className={['inline-flex items-center gap-1.5 transition-fast', overlayMode ? 'text-white/88 hover:text-white' : 'text-text-muted hover:text-text-strong'].join(' ')}
-          >
-            <PhoneIcon className="w-3.5 h-3.5" />
-            <span>{t('contact.channels.phone_value')}</span>
-          </a>
-          <div className="hidden md:flex items-center gap-2">
-            {SOCIAL_LINKS.map(({ href, label, icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className={[
-                  'inline-flex h-7 w-7 items-center justify-center rounded-full border transition-fast',
-                  overlayMode
-                    ? 'border-white/20 text-white/85 hover:border-white/35 hover:text-white hover:bg-white/10'
-                    : 'border-border-subtle text-text-muted hover:text-text-strong hover:bg-surface-raised',
-                ].join(' ')}
-              >
-                {icon}
-              </a>
-            ))}
+          <div className="inline-flex items-center gap-2.5">
+            <a
+              href={`tel:${t('contact.channels.phone_raw')}`}
+              className={['inline-flex items-center gap-1.5 transition-fast', overlayMode ? 'text-white/88 hover:text-white' : 'text-text-muted hover:text-text-strong'].join(' ')}
+            >
+              <PhoneIcon className="w-3.5 h-3.5" />
+              <span>{t('contact.channels.phone_value')}</span>
+            </a>
+            <div className="hidden md:flex items-center gap-2">
+              {SOCIAL_LINKS.map(({ href, label, icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={[
+                    'inline-flex h-7 w-7 items-center justify-center rounded-full border transition-fast',
+                    overlayMode
+                      ? 'border-white/20 text-white/85 hover:border-white/35 hover:text-white hover:bg-white/10'
+                      : 'border-border-subtle text-text-muted hover:text-text-strong hover:bg-surface-raised',
+                  ].join(' ')}
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
           </div>
           <p className={['inline-flex items-center gap-1.5', overlayMode ? 'text-white/88' : 'text-text-muted'].join(' ')}>
             <ClockIcon className="w-3.5 h-3.5" />
@@ -279,17 +274,17 @@ export default function HeaderShell() {
 
 const SOCIAL_LINKS = [
   {
-    href: 'https://www.instagram.com/',
+    href: t('footer.social_instagram_url'),
     label: t('footer.social_instagram'),
     icon: <InstagramIcon className="w-3.5 h-3.5" />,
   },
   {
-    href: 'https://www.facebook.com/',
+    href: t('footer.social_facebook_url'),
     label: t('footer.social_facebook'),
     icon: <FacebookIcon className="w-3.5 h-3.5" />,
   },
   {
-    href: 'https://www.linkedin.com/',
+    href: t('footer.social_linkedin_url'),
     label: t('footer.social_linkedin'),
     icon: <LinkedInIcon className="w-3.5 h-3.5" />,
   },

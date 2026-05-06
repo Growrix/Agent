@@ -192,6 +192,11 @@ const content = {
     list: {
       title: 'All reviews',
     },
+    rail: {
+      verified: 'Verified review',
+      project: 'Project',
+      date: 'Date',
+    },
     highlights: {
       title: 'What customers value most',
       speed_title: 'Fast project turnaround',
@@ -269,6 +274,7 @@ const content = {
       },
       phone_label: 'Call us',
       phone_value: '+61 2 9999 0000',
+      phone_raw: '+61299990000',
       phone_hours: 'Mon – Fri, 7 am – 6 pm',
       whatsapp_label: 'WhatsApp',
       whatsapp_value: 'Message on WhatsApp',
@@ -442,8 +448,11 @@ const content = {
     legal_privacy: 'Privacy Policy',
     legal_terms: 'Terms of Service',
     social_instagram: 'Instagram',
+    social_instagram_url: 'https://www.instagram.com/',
     social_facebook: 'Facebook',
+    social_facebook_url: 'https://www.facebook.com/',
     social_linkedin: 'LinkedIn',
+    social_linkedin_url: 'https://www.linkedin.com/',
   },
   header: {
     topbar: {

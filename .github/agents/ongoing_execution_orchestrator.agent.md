@@ -28,6 +28,7 @@ A generic, reusable execution agent for active projects. This agent converts app
 - Reuse existing architecture, components, and tokens.
 - Avoid hardcoded values when configuration or content systems exist.
 - Treat failed validation as blocking until fixed.
+- Treat visual regressions (contrast, broken media, alignment drift) as blocking failures for UI work.
 
 ## REQUIRED EXECUTION FLOW
 1. Gather context: requirements, architecture notes, affected files.
@@ -57,6 +58,9 @@ If any required gate fails, the agent must:
 - Preserve mobile usability and safe-area behavior.
 - Ensure focus-visible states and keyboard access.
 - Prefer content keys/localization sources over inline strings.
+- Validate header/topbar/footer behavior against planned state transitions before completion.
+- Check light/dark theme parity for readability on navigation, CTA, and footer surfaces.
+- Verify public media integrity (no broken hero/card imagery; fallback present when remote media fails).
 
 ## GIT POLICY
 - Allowed: local `git add` and `git commit`.

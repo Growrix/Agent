@@ -55,3 +55,14 @@ Define non-negotiable acceptance gates that must pass before an agent may mark w
 - Every execution summary MUST emit `delivery_class` as one of `production_candidate|baseline_prototype|blocked`.
 - Any blocker failure forces `delivery_class=blocked` and `status=failed`.
 - `production_candidate` is forbidden unless all applicable quality gates pass.
+
+## QG12 — VISUAL INTEGRITY + THEME PARITY GATE
+- Required user-facing routes MUST pass screenshot-based verification in both light and dark themes for desktop and mobile breakpoints.
+- Header behavior MUST match planned state transitions (`at top`, `scroll down`, `scroll up`) with no contradictory default state.
+- Footer readability and alignment MUST pass in both themes with all interactive elements visibly legible.
+- Any contrast regression on key CTAs/navigation elements is a blocking failure.
+
+## QG13 — MEDIA RELIABILITY GATE
+- Public media used on conversion-critical surfaces (hero, service cards, testimonial/media proof, featured blocks) MUST resolve successfully or render a defined fallback.
+- Broken remote images without fallback are blocking failures.
+- Media URL validity checks and fallback evidence MUST be included in execution reports.

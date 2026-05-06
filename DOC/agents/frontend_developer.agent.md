@@ -58,6 +58,7 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 - MUST consume only contracts (route URLs, response shapes) declared in the planning bundle and OpenAPI spec.
 - MUST use design tokens for every styling decision. NO raw `#hex`, `rgb()`, `hsl()`, raw `px` / `rem` / `ms` literals in components. Tailwind classes that map to declared tokens are allowed.
 - MUST use content keys for every visible string. NO inline English strings in JSX/TSX.
+- MUST not hardcode user-facing contact channels, social URLs, or business contact values inside components; these must resolve from content/config keys.
 - MUST honor `prefers-reduced-motion: reduce` for every animation.
 - MUST add visible focus rings (using `--color-focus-ring` + `--shadow-focus`) on every interactive element.
 - MUST add `loading.tsx`, `error.tsx`, and `not-found.tsx` per route group as declared by the page specs.
@@ -65,6 +66,7 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 - MUST include skip-link as the first focusable element on every page.
 - MUST scaffold tests but NOT fill in test bodies (leave TODO comments referencing the qa plan).
 - MUST self-audit before declaring `passed`; emit the audit file with evidence.
+- MUST validate remote media reliability for rendered image URLs used by public pages; broken image URLs on key surfaces are blocking failures.
 - MUST NOT add `"use client"` to any component that doesn't have a declared client-component reason in the page spec.
 
 ### Mandatory UX infrastructure (INVARIANTS — every build must implement)
@@ -107,6 +109,12 @@ These requirements mirror the planner's mandatory UX infrastructure and are enfo
 - Trust chips / badge pills on media/hero backgrounds MUST use explicit `bg-[rgba(0,0,0,0.6)]` or an equivalent dark token class + `text-white` (or `text-text-inverse`) — never rely on surface-raised which may be near-white.
 - Subtitle and body text in hero panels MUST have explicit `max-w-[60ch]` (or token equivalent) and `whitespace-normal overflow-visible` — never `truncate` or `line-clamp` without revealing the full text on expand.
 - Gradient overlays behind text panels MUST use `from-black/70` or equivalent (opacity ≥ 0.55) to guarantee legibility.
+
+**Header/topbar/footer implementation requirements:**
+- MUST implement the planner-declared header state machine (`at top`, `scroll down`, `scroll up`) for all declared public route groups.
+- If planner requires transparent-at-top behavior, implementation MUST default to transparent before first scroll event and transition to themed surface on scroll-up state.
+- Topbar icon/action order MUST follow planner contract exactly; do not reorder social/contact/hour blocks ad hoc.
+- Footer MUST preserve cross-theme readability (light + dark) with token-derived surfaces and explicit hover/focus states for all links/icons.
 
 ### Anti-template rules (CRITICAL — these prevent output collapse)
 - MUST NOT create a single shared wrapper component (e.g. `MarketingPage`, `PageShell`, `ContentWrapper`) that multiple distinct-purpose routes render as their primary content. Routes share only the nav/footer layout; all content sections are unique per route. Violation triggers constraint **F13**.
@@ -212,6 +220,8 @@ For each `pages/<route-slug>.md`:
    - F13: no single shared wrapper component renders as primary content of >2 distinct-purpose routes.
    - F14: if motion library in `package.json`, confirm imports and usage in hero, card hover, modal transition.
    - F15: hero composition is visually distinct across all public routes (compare visual contract declarations).
+  - F16: header state machine behavior matches planner contract in all required route groups.
+  - F17: no broken public media assets on hero/cards/trust sections (remote URL health + rendered fallback behavior).
    - AC2: every interactive element has a `:focus-visible` style.
    - AC9: skip-link is first focusable.
    - INV1: `ThemeProvider.tsx` and `ThemeSwitcher.tsx` exist and are wired.
@@ -219,6 +229,7 @@ For each `pages/<route-slug>.md`:
    - INV3: `AuthModalProvider.tsx` and `AuthModal.tsx` exist; header Sign In calls `openSignIn()`.
    - INV4: Footer contains "Built and maintained by Growrix OS" with link to `https://www.growrixos.com`.
    - INV5: Every hero has a full-bleed layout, staggered text reveal, dark trust chip backgrounds, and gradient overlay ≥ 0.55 opacity.
+  - INV6: Header and footer interactive elements maintain readable contrast in both light and dark theme snapshots.
 3. Emit `web/.audit/frontend-self-audit.md` with pass/fail per check + evidence (file:line).
 4. If any check fails → return `BLOCK FRONTEND_BUILD_INCOMPLETE` with the failed checks.
 

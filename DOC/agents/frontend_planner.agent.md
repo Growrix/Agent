@@ -151,6 +151,17 @@ These are non-negotiable requirements. Every frontend plan produced by this agen
 - All hero text must achieve WCAG 2.1 AA contrast (≥ 4.5:1 for body, ≥ 3:1 for large text) against the actual rendered background (including any media/gradient layering).
 - Trust chips, badges, and pills on colored backgrounds MUST explicitly declare `color` + `background-color` (not rely on inheritance) so contrast is always deterministic.
 
+**Header/topbar/footer behavior invariants:**
+- Planner MUST define a deterministic header state machine for every public route group: `initial at top`, `scroll down`, and `scroll up` states.
+- Planner MUST explicitly specify whether header is transparent at top and what contrast strategy keeps nav items readable over real hero/media backgrounds.
+- Planner MUST define topbar slot order and icon requirements (contact actions, social actions, hours/status) so implementers do not improvise layout order.
+- Planner MUST specify footer information architecture with alignment and density constraints; avoid over-segmentation patterns unless the brief explicitly requires cardized footers.
+- Planner MUST include light and dark theme contrast acceptance criteria for header and footer interactive elements.
+
+**Media integrity invariants:**
+- Planner MUST provide an asset reliability rule for all planned media slots: valid source requirements, fallback behavior, and placeholder policy for broken remote assets.
+- Planner MUST forbid single-point media failure on key conversion surfaces (hero, service cards, featured proof blocks) by requiring at least one fallback strategy.
+
 ## INPUT FORMAT
 ```json
 {

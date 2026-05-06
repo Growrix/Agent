@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
+import { t } from '@/lib/content'
 import { cn } from '@/lib/utils'
 
 interface CardItem {
@@ -106,7 +107,7 @@ function CardItem({
         )}
         {item.href && (
           <span className="inline-flex items-center gap-1 text-sm font-semibold text-brand-primary mt-3 group-hover:gap-2 transition-fast">
-            Learn more <ArrowIcon />
+            {t('cta.learn_more')} <ArrowIcon />
           </span>
         )}
       </div>

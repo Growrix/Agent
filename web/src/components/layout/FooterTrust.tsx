@@ -18,9 +18,9 @@ const LEGAL_LINKS = [
 ]
 
 const SOCIAL_LINKS = [
-  { href: 'https://www.instagram.com/', key: 'footer.social_instagram', icon: <InstagramIcon className="w-4 h-4" /> },
-  { href: 'https://www.facebook.com/', key: 'footer.social_facebook', icon: <FacebookIcon className="w-4 h-4" /> },
-  { href: 'https://www.linkedin.com/', key: 'footer.social_linkedin', icon: <LinkedInIcon className="w-4 h-4" /> },
+  { href: t('footer.social_instagram_url'), key: 'footer.social_instagram', icon: <InstagramIcon className="w-4 h-4" /> },
+  { href: t('footer.social_facebook_url'), key: 'footer.social_facebook', icon: <FacebookIcon className="w-4 h-4" /> },
+  { href: t('footer.social_linkedin_url'), key: 'footer.social_linkedin', icon: <LinkedInIcon className="w-4 h-4" /> },
 ]
 
 export default function FooterTrust() {
@@ -30,56 +30,55 @@ export default function FooterTrust() {
   return (
     <footer
       aria-label="Site footer"
-      className="bg-text-strong text-text-inverse"
+      className="border-t border-border-subtle bg-surface-canvas text-text-default"
     >
       <div className="container-solar py-section-lg">
-        <div className="mb-10 h-1 w-full rounded-full bg-brand-primary/80" />
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_0.8fr_0.9fr] mb-section-md">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.75fr_0.9fr] mb-section-md">
+          <div className="space-y-5">
             <div className="flex items-center gap-2">
               <SolarIcon className="w-6 h-6 text-brand-primary" />
-              <span className="font-display font-bold text-lg text-text-inverse">
+              <span className="font-display font-bold text-lg text-text-strong">
                 {t('footer.company_name')}
               </span>
             </div>
-            <p className="text-sm text-text-muted leading-relaxed max-w-md">
+            <p className="text-sm text-text-muted leading-relaxed">
               {t('footer.license_number')}
             </p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">{t('footer.contact_title')}</p>
-                <div className="space-y-3 text-sm text-text-muted">
-                  <a href={`tel:${t('contact.channels.phone_value')}`} className="flex items-center gap-3 transition-fast hover:text-text-inverse">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary"><PhoneIcon className="w-4 h-4" /></span>
+                <div className="space-y-2.5 text-sm">
+                  <a href={`tel:${t('contact.channels.phone_raw')}`} className="flex items-center gap-2.5 text-text-default transition-fast hover:text-text-strong">
+                    <PhoneIcon className="w-4 h-4 text-brand-primary" />
                     <span>{t('contact.channels.phone_value')}</span>
                   </a>
-                  <a href={`mailto:${t('contact.channels.email_value')}`} className="flex items-center gap-3 transition-fast hover:text-text-inverse">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-accent/15 text-brand-accent"><MailIcon className="w-4 h-4" /></span>
+                  <a href={`mailto:${t('contact.channels.email_value')}`} className="flex items-center gap-2.5 text-text-default transition-fast hover:text-text-strong">
+                    <MailIcon className="w-4 h-4 text-brand-accent" />
                     <span>{t('contact.channels.email_value')}</span>
                   </a>
-                  <a href={`https://wa.me/${t('contact.channels.whatsapp_raw')}`} className="flex items-center gap-3 transition-fast hover:text-text-inverse">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white"><WhatsAppIcon className="w-4 h-4" /></span>
+                  <a href={`https://wa.me/${t('contact.channels.whatsapp_raw')}`} className="flex items-center gap-2.5 text-text-default transition-fast hover:text-text-strong">
+                    <WhatsAppIcon className="w-4 h-4 text-brand-primary" />
                     <span>{t('contact.channels.whatsapp_label')}</span>
                   </a>
                 </div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">{t('footer.location_title')}</p>
-                <div className="space-y-3 text-sm text-text-muted">
-                  <div className="flex items-start gap-3">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white"><PinIcon className="w-4 h-4" /></span>
+                <div className="space-y-2.5 text-sm text-text-default">
+                  <p className="flex items-start gap-2.5">
+                    <PinIcon className="w-4 h-4 mt-0.5 text-text-muted" />
                     <span>{t('footer.address')}</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white"><ClockIcon className="w-4 h-4" /></span>
+                  </p>
+                  <p className="flex items-start gap-2.5">
+                    <ClockIcon className="w-4 h-4 mt-0.5 text-text-muted" />
                     <span>{t('footer.hours')}</span>
-                  </div>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <nav aria-label="Footer navigation" className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <nav aria-label="Footer navigation">
             <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-4">
               {t('footer.navigation_title')}
             </p>
@@ -88,7 +87,7 @@ export default function FooterTrust() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-text-muted hover:text-text-inverse transition-fast"
+                    className="text-sm text-text-muted hover:text-text-strong transition-fast"
                   >
                     {t(key)}
                   </Link>
@@ -97,7 +96,7 @@ export default function FooterTrust() {
             </ul>
           </nav>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-4">
               {t('footer.get_started_title')}
             </p>
@@ -110,7 +109,7 @@ export default function FooterTrust() {
             </button>
             <Link
               href="/contact"
-              className="btn bg-transparent border border-white/25 text-sm w-full justify-center text-white hover:bg-white/10"
+              className="btn btn-outline text-sm w-full justify-center"
             >
               {t('nav.contact')}
             </Link>
@@ -124,7 +123,7 @@ export default function FooterTrust() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t(key)}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-fast hover:bg-white/10"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border-subtle bg-surface-base text-text-muted transition-fast hover:text-text-strong hover:bg-surface-raised"
                   >
                     {icon}
                   </a>
@@ -135,7 +134,7 @@ export default function FooterTrust() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-text-inverse/10 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="border-t border-border-subtle pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-xs text-text-muted">
               {t('footer.copyright').replace('{year}', String(year))}
@@ -157,7 +156,7 @@ export default function FooterTrust() {
               <li key={href}>
                 <Link
                   href={href}
-                  className="text-xs text-text-muted hover:text-text-inverse transition-fast"
+                  className="text-xs text-text-muted hover:text-text-strong transition-fast"
                 >
                   {t(key)}
                 </Link>

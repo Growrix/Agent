@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { t } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import type { Testimonial } from '@/lib/api-client'
 
@@ -35,16 +36,16 @@ export default function TestimonialRail({ testimonials, className }: Testimonial
           <div className="grid gap-0 md:grid-cols-[160px_1fr]">
             <div className="flex flex-col justify-between gap-6 bg-brand-primary px-6 py-7 text-text-inverse">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/60">Verified review</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/60">{t('testimonials.rail.verified')}</p>
                 <StarRating rating={testimonials[activeIdx].rating} inverse />
               </div>
               <div className="space-y-3 text-sm text-white/80">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">Project</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">{t('testimonials.rail.project')}</p>
                   <p className="font-medium text-white">{testimonials[activeIdx].projectType}</p>
                 </div>
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">Date</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50">{t('testimonials.rail.date')}</p>
                   <p className="font-medium text-white">{testimonials[activeIdx].date}</p>
                 </div>
               </div>
