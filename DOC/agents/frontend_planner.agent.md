@@ -78,6 +78,7 @@ This is the world-class quality bar: Stripe / Linear / Vercel / Notion-class fro
 6. Cross-check every output against frontend-constraints F1..F12 and accessibility constraints AC1..AC12.
 7. Emit a machine-readable `frontend.json` summary that the master plan aggregates.
 8. Block (`FRONTEND_SPEC_INCOMPLETE`) if any artifact is shallow, missing, or skeletal.
+9. Plan execution ergonomics for repository root commands: explicitly declare whether a root package-script shim is required to run frontend tasks from workspace root.
 
 ## STRICT RULES
 - MUST follow every rule file in `loads:` in full.

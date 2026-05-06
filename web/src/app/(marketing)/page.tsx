@@ -162,6 +162,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── STATS STRIP ── */}
+      <section className="bg-text-strong text-text-inverse py-8" aria-label={t('home.testimonials_title')}>
+        <div className="container-solar grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="rounded-lg bg-white/5 border border-white/10 p-5">
+            <p className="font-display text-3xl font-bold text-text-inverse mb-1">{t('home.stats.installs_value')}</p>
+            <p className="text-sm text-text-inverse/80">{t('home.stats.installs_label')}</p>
+          </div>
+          <div className="rounded-lg bg-white/5 border border-white/10 p-5">
+            <p className="font-display text-3xl font-bold text-text-inverse mb-1">{t('home.stats.warranty_value')}</p>
+            <p className="text-sm text-text-inverse/80">{t('home.stats.warranty_label')}</p>
+          </div>
+          <div className="rounded-lg bg-white/5 border border-white/10 p-5">
+            <p className="font-display text-3xl font-bold text-text-inverse mb-1">{t('home.stats.rating_value')}</p>
+            <p className="text-sm text-text-inverse/80">{t('home.stats.rating_label')}</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── SERVICES OVERVIEW ── */}
       <section className="py-section-xl bg-surface-base" aria-label={t('home.services_title')}>
         <div className="container-solar">
@@ -227,6 +245,44 @@ export default function HomePage() {
         <div className="container-solar max-w-3xl">
           <p className="eyebrow mb-3 text-center">{t('home.testimonials_title')}</p>
           <TestimonialRail testimonials={TESTIMONIALS} />
+        </div>
+      </section>
+
+      {/* ── FEATURED CASE STUDY HIGHLIGHT ── */}
+      <section className="py-section-xl bg-surface-canvas" aria-label={t('home.featured_case.title')}>
+        <div className="container-solar">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <div className="relative rounded-xl overflow-hidden min-h-[300px]">
+              <Image
+                src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=1100&q=85"
+                alt="Residential rooftop solar case study"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" aria-hidden="true" />
+              <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-pill bg-black/60 border border-white/20 px-3 py-1 text-xs font-medium text-white">
+                  {t('home.featured_case.metric_1')}
+                </span>
+                <span className="inline-flex items-center rounded-pill bg-black/60 border border-white/20 px-3 py-1 text-xs font-medium text-white">
+                  {t('home.featured_case.metric_2')}
+                </span>
+              </div>
+            </div>
+            <div className="card p-8 flex flex-col justify-center">
+              <p className="eyebrow mb-3">{t('home.featured_case.eyebrow')}</p>
+              <h2 className="text-display-section font-display font-bold text-text-strong mb-4">
+                {t('home.featured_case.title')}
+              </h2>
+              <p className="text-body-fluid text-text-muted mb-6 leading-relaxed">
+                {t('home.featured_case.body')}
+              </p>
+              <Link href="/portfolio/newcastle-residence" className="btn btn-outline w-fit">
+                {t('home.featured_case.cta')}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

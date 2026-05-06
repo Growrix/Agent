@@ -76,6 +76,19 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── MISSION CALLOUT ── */}
+      <section className="py-section-lg bg-text-strong text-text-inverse" aria-label={t('about.mission.title')}>
+        <div className="container-solar max-w-4xl">
+          <p className="eyebrow mb-3 text-brand-accent">{t('about.mission.title')}</p>
+          <h2 className="text-display-section font-display font-bold text-text-inverse mb-4">
+            {t('about.mission.title')}
+          </h2>
+          <p className="text-body-fluid text-text-inverse/85 leading-relaxed max-w-[60ch]">
+            {t('about.mission.body')}
+          </p>
+        </div>
+      </section>
+
       {/* ── VALUES ── */}
       <section className="py-section-xl bg-surface-canvas" aria-label={t('about.values.title')}>
         <div className="container-solar">
@@ -129,7 +142,12 @@ export default function AboutPage() {
         <div className="container-solar text-center">
           <p className="eyebrow mb-4">{t('about.certifications.title')}</p>
           <div className="flex flex-wrap justify-center gap-4">
-            {['CEC Accredited', 'NSW Licensed', 'SolarEdge Partner', 'Enphase Certified'].map((cert) => (
+            {[
+              t('about.certifications.cec'),
+              t('about.certifications.nsw'),
+              t('about.certifications.edge'),
+              t('about.certifications.enphase'),
+            ].map((cert) => (
               <span key={cert} className="trust-chip text-sm">{cert}</span>
             ))}
           </div>

@@ -68,9 +68,34 @@ export default async function ServicesPage() {
         <div className="container-solar max-w-2xl">
           <p className="eyebrow mb-3">{t('services.process_title')}</p>
           <h2 className="text-display-section font-display font-bold text-text-strong mb-12">
-            A proven process, start to finish
+            {t('services.process_title')}
           </h2>
           <CaseStudyTimeline steps={PROCESS_STEPS} />
+        </div>
+      </section>
+
+      {/* ── FINANCING + WARRANTY CALLOUT ── */}
+      <section className="py-section-xl bg-surface-base" aria-label={t('services.financing_title')}>
+        <div className="container-solar">
+          <div className="rounded-2xl border border-border-subtle bg-surface-canvas p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <p className="eyebrow mb-3">{t('services.financing_title')}</p>
+              <h2 className="text-display-section font-display font-bold text-text-strong mb-4">
+                {t('services.financing_banner.title')}
+              </h2>
+              <p className="text-body-fluid text-text-muted leading-relaxed max-w-2xl">
+                {t('services.financing_banner.body')}
+              </p>
+            </div>
+            <ul className="card p-6 flex flex-col gap-3" role="list" aria-label={t('services.warranty_title')}>
+              {[t('services.financing_banner.point_1'), t('services.financing_banner.point_2'), t('services.financing_banner.point_3')].map((point) => (
+                <li key={point} className="flex items-start gap-2 text-sm text-text-default">
+                  <span className="mt-1 inline-flex h-2.5 w-2.5 rounded-pill bg-brand-primary" aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
