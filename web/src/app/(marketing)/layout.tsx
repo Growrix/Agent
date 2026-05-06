@@ -5,6 +5,8 @@ import MobileBottomNav from '@/components/layout/MobileBottomNav'
 import PageMotionWrapper from '@/components/layout/PageMotionWrapper'
 import AuthModal from '@/components/ui/AuthModal'
 import { AuthModalProvider } from '@/components/providers/AuthModalProvider'
+import QuoteCalculatorModal from '@/components/ui/QuoteCalculatorModal'
+import { QuoteModalProvider } from '@/components/providers/QuoteModalProvider'
 
 export default function MarketingLayout({
   children,
@@ -13,12 +15,15 @@ export default function MarketingLayout({
 }) {
   return (
     <AuthModalProvider>
-      <HeaderShell />
-      <PageMotionWrapper>{children}</PageMotionWrapper>
-      <MobileSupportDock />
-      <FooterTrust />
-      <MobileBottomNav />
-      <AuthModal />
+      <QuoteModalProvider>
+        <HeaderShell />
+        <PageMotionWrapper>{children}</PageMotionWrapper>
+        <MobileSupportDock />
+        <FooterTrust />
+        <MobileBottomNav />
+        <AuthModal />
+        <QuoteCalculatorModal />
+      </QuoteModalProvider>
     </AuthModalProvider>
   )
 }

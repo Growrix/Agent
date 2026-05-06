@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { t } from '@/lib/content'
 import { cn } from '@/lib/utils'
+import { useQuoteModal } from '@/components/providers/QuoteModalProvider'
 
 interface HeroMediaStackProps {
   variant: 'services' | 'portfolio' | 'quote'
@@ -35,6 +36,7 @@ export default function HeroMediaStack({
   const ref = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-5%' })
   const shouldReduce = useReducedMotion()
+  const { openQuote } = useQuoteModal()
 
   const containerVariants = {
     hidden: {},
@@ -91,14 +93,14 @@ export default function HeroMediaStack({
               )}
               <motion.h1
                 variants={itemVariants}
-                className="text-display-section font-display font-bold text-text-inverse mb-4 leading-tight"
+                className="text-display-section font-display font-bold text-white mb-4 leading-tight"
               >
                 {title}
               </motion.h1>
               {subtitle && (
                 <motion.p
                   variants={itemVariants}
-                  className="text-body-fluid text-text-inverse/90 mb-8 max-w-2xl leading-relaxed whitespace-normal break-words"
+                  className="text-body-fluid text-white/90 mb-8 max-w-2xl leading-relaxed whitespace-normal break-words"
                 >
                   {subtitle}
                 </motion.p>
@@ -106,14 +108,26 @@ export default function HeroMediaStack({
               {(primaryCta || secondaryCta) && (
                 <motion.div variants={itemVariants} className="flex flex-wrap gap-3">
                   {primaryCta && (
-                    <Link href={primaryCta.href} className="btn btn-accent">
-                      {primaryCta.label}
-                    </Link>
+                    primaryCta.href === '/quote' ? (
+                      <button type="button" onClick={openQuote} className="btn btn-accent">
+                        {primaryCta.label}
+                      </button>
+                    ) : (
+                      <Link href={primaryCta.href} className="btn btn-accent">
+                        {primaryCta.label}
+                      </Link>
+                    )
                   )}
                   {secondaryCta && (
-                    <Link href={secondaryCta.href} className="btn btn-inverse">
-                      {secondaryCta.label}
-                    </Link>
+                    secondaryCta.href === '/quote' ? (
+                      <button type="button" onClick={openQuote} className="btn btn-inverse">
+                        {secondaryCta.label}
+                      </button>
+                    ) : (
+                      <Link href={secondaryCta.href} className="btn btn-inverse">
+                        {secondaryCta.label}
+                      </Link>
+                    )
                   )}
                 </motion.div>
               )}

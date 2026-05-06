@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { t } from '@/lib/content'
+import { useQuoteModal } from '@/components/providers/QuoteModalProvider'
 
 const FOOTER_NAV = [
   { href: '/services', key: 'footer.nav_services' },
@@ -16,6 +19,7 @@ const LEGAL_LINKS = [
 
 export default function FooterTrust() {
   const year = new Date().getFullYear()
+  const { openQuote } = useQuoteModal()
 
   return (
     <footer
@@ -66,15 +70,16 @@ export default function FooterTrust() {
             <p className="text-xs font-semibold uppercase tracking-widest text-text-muted mb-4">
               Get started
             </p>
-            <Link
-              href="/quote"
+            <button
+              type="button"
+              onClick={openQuote}
               className="btn btn-accent text-sm mb-3 w-full justify-center"
             >
               {t('cta.get_quote')}
-            </Link>
+            </button>
             <Link
               href="/contact"
-              className="btn btn-ghost border border-text-inverse/20 text-sm w-full justify-center text-text-inverse hover:bg-text-inverse/10"
+              className="btn bg-transparent border border-white/25 text-sm w-full justify-center text-white hover:bg-white/10"
             >
               {t('nav.contact')}
             </Link>

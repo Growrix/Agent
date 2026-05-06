@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { t } from '@/lib/content'
 import ThemeSwitcher from '@/components/ui/ThemeSwitcher'
 import { useAuthModal } from '@/components/providers/AuthModalProvider'
+import { useQuoteModal } from '@/components/providers/QuoteModalProvider'
 
 const NAV_LINKS = [
   { href: '/', key: 'nav.home' },
@@ -24,6 +25,8 @@ export default function HeaderShell() {
   const shouldReduce = useReducedMotion()
   const menuRef = useRef<HTMLDivElement>(null)
   const { openSignIn } = useAuthModal()
+  const { openQuote } = useQuoteModal()
+  const overlayMode = pathname === '/' && !scrolled && !menuOpen
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -60,11 +63,30 @@ export default function HeaderShell() {
   return (
     <header
       className={[
-        'sticky top-0 left-0 right-0 z-sticky bg-surface-base border-b transition-base',
-        scrolled ? 'border-border-subtle shadow-sm' : 'border-transparent',
+        'sticky top-0 left-0 right-0 z-sticky border-b transition-base',
+        overlayMode
+          ? 'bg-transparent border-transparent'
+          : 'bg-surface-base/95 backdrop-blur-md border-border-subtle shadow-sm',
       ].join(' ')}
       style={{ zIndex: 'var(--z-sticky)' }}
     >
+      <div className={[
+        'hidden md:block border-b',
+        overlayMode ? 'border-white/15 bg-black/25' : 'border-border-subtle bg-surface-raised/75',
+      ].join(' ')}>
+        <div className="container-solar h-9 flex items-center justify-between text-xs">
+          <p className={overlayMode ? 'text-white/85' : 'text-text-muted'}>
+            {t('header.topbar.phone_prefix')} {t('contact.channels.phone_value')}
+          </p>
+          <p className={overlayMode ? 'text-white/80' : 'text-text-muted'}>
+            {t('header.topbar.service_note')}
+          </p>
+          <p className={overlayMode ? 'text-white/85' : 'text-text-muted'}>
+            {t('header.topbar.hours_prefix')} {t('footer.hours')}
+          </p>
+        </div>
+      </div>
+
       <nav
         aria-label="Main navigation"
         className="container-solar flex items-center justify-between h-16"
@@ -73,9 +95,12 @@ export default function HeaderShell() {
         <Link
           href="/"
           aria-label={t('footer.company_name')}
-          className="flex items-center gap-2 font-display font-bold text-lg text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-sm"
+          className={[
+            'flex items-center gap-2 font-display font-bold text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-sm',
+            overlayMode ? 'text-white' : 'text-brand-primary',
+          ].join(' ')}
         >
-          <SolarIcon className="w-7 h-7 text-brand-primary" aria-hidden />
+          <SolarIcon className={overlayMode ? 'w-7 h-7 text-brand-accent' : 'w-7 h-7 text-brand-primary'} aria-hidden />
           <span>{t('footer.company_name')}</span>
         </Link>
 
@@ -91,8 +116,12 @@ export default function HeaderShell() {
                   className={[
                     'px-3 py-1.5 rounded-md text-sm font-medium transition-fast',
                     active
-                      ? 'text-brand-primary bg-surface-raised'
-                      : 'text-text-default hover:text-text-strong hover:bg-surface-raised',
+                      ? overlayMode
+                        ? 'text-brand-accent bg-black/35'
+                        : 'text-brand-primary bg-surface-raised'
+                      : overlayMode
+                        ? 'text-white/90 hover:text-white hover:bg-black/25'
+                        : 'text-text-default hover:text-text-strong hover:bg-surface-raised',
                   ].join(' ')}
                 >
                   {t(key)}
@@ -108,16 +137,17 @@ export default function HeaderShell() {
           <button
             type="button"
             onClick={openSignIn}
-            className="btn btn-ghost text-sm"
+            className={overlayMode ? 'btn text-sm bg-transparent text-white border border-white/25 hover:bg-white/10' : 'btn btn-ghost text-sm'}
           >
             {t('nav.sign_in')}
           </button>
-          <Link
-            href="/quote"
-            className="btn btn-primary text-sm"
+          <button
+            type="button"
+            onClick={openQuote}
+            className={overlayMode ? 'btn btn-accent text-sm' : 'btn btn-primary text-sm'}
           >
             {t('cta.get_quote')}
-          </Link>
+          </button>
         </div>
 
         {/* Mobile: theme + menu toggle */}
@@ -178,9 +208,13 @@ export default function HeaderShell() {
                 >
                   {t('nav.sign_in')}
                 </button>
-                <Link href="/quote" className="btn btn-primary text-sm justify-center">
+                <button
+                  type="button"
+                  onClick={() => { setMenuOpen(false); openQuote() }}
+                  className="btn btn-primary text-sm justify-center"
+                >
                   {t('cta.get_quote')}
-                </Link>
+                </button>
               </div>
             </div>
           </motion.div>

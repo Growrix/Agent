@@ -10,6 +10,7 @@ import TestimonialRail from '@/components/ui/TestimonialRail'
 import CtaBand from '@/components/ui/CtaBand'
 import ChatAssistantModal from '@/components/ui/ChatAssistantModal'
 import SupportFabCluster from '@/components/ui/SupportFabCluster'
+import { useQuoteModal } from '@/components/providers/QuoteModalProvider'
 import type { Testimonial } from '@/lib/api-client'
 
 const SERVICES = [
@@ -65,9 +66,12 @@ const TESTIMONIALS: Testimonial[] = [
 
 export default function HomePage() {
   const [assistantOpen, setAssistantOpen] = useState(false)
+  const [monthlyBillDraft, setMonthlyBillDraft] = useState(300)
+  const [roofTypeDraft, setRoofTypeDraft] = useState('tile')
   const heroRef = useRef<HTMLDivElement>(null)
   const isHeroInView = useInView(heroRef, { once: true })
   const shouldReduce = useReducedMotion()
+  const { openQuote } = useQuoteModal()
 
   const stagger = {
     hidden: {},
@@ -80,102 +84,147 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ── HERO: 55/45 copy-left / media-right, image overflows bottom ── */}
+      {/* ── HERO: full-bleed cinematic split with dark overlay + conversion panel ── */}
       <section
-        className="relative overflow-hidden bg-surface-canvas"
-        style={{ minHeight: '88vh' }}
+        className="relative overflow-hidden"
+        style={{ minHeight: '100svh' }}
         aria-label={t('home.hero.title')}
       >
-        <div className="container-solar relative z-10 grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-8 items-center py-20 lg:py-0" style={{ minHeight: '88vh' }}>
-          {/* Copy panel */}
+        <Image
+          src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1800&q=85"
+          alt="Solar panels installed on a sunny residential rooftop"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(105deg, rgba(2,6,23,0.86) 0%, rgba(2,6,23,0.72) 42%, rgba(2,6,23,0.42) 66%, rgba(2,6,23,0.22) 100%)',
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="container-solar relative z-10 grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-8 items-center py-24 lg:py-12" style={{ minHeight: '100svh' }}>
           <motion.div
             ref={heroRef}
             variants={stagger}
             initial="hidden"
             animate={isHeroInView ? 'visible' : 'hidden'}
-            className="flex flex-col gap-6 max-w-xl"
+            className="max-w-2xl"
           >
-            <motion.p variants={fadeUp} className="eyebrow">
+            <motion.p variants={fadeUp} className="eyebrow mb-3 text-brand-accent">
               {t('home.hero.eyebrow')}
             </motion.p>
             <motion.h1
               variants={fadeUp}
-              className="text-display-hero font-display font-bold text-text-strong leading-[1.04]"
+              className="text-display-hero font-display font-bold text-white leading-[1.03] mb-5"
             >
               {t('home.hero.title')}
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-body-fluid text-text-muted max-w-lg">
+            <motion.p
+              variants={fadeUp}
+              className="text-body-fluid text-white/90 mb-7 max-w-[60ch] whitespace-normal overflow-visible leading-relaxed"
+            >
               {t('home.hero.subtitle')}
             </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
+
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-7">
               <motion.div whileHover={shouldReduce ? {} : { scale: 1.01 }} whileTap={shouldReduce ? {} : { scale: 0.97 }}>
-                <Link href="/quote" className="btn btn-primary text-base">
+                <button type="button" onClick={openQuote} className="btn btn-accent text-base">
                   {t('home.hero.primary_cta')}
-                </Link>
+                </button>
               </motion.div>
               <motion.div whileHover={shouldReduce ? {} : { scale: 1.01 }} whileTap={shouldReduce ? {} : { scale: 0.97 }}>
-                <Link href="/portfolio" className="btn btn-outline text-base">
+                <Link href="/portfolio" className="btn btn-inverse text-base">
                   {t('home.hero.secondary_cta')}
                 </Link>
               </motion.div>
             </motion.div>
-            {/* Trust chips */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-2 pt-2">
-              <span className="trust-chip">
+
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-pill bg-black/60 border border-white/20 text-white text-xs font-medium">
                 <ShieldIcon /> {t('home.trust.license')}
               </span>
-              <span className="trust-chip">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-pill bg-black/60 border border-white/20 text-white text-xs font-medium">
                 <StarIcon /> {t('home.trust.warranty')}
               </span>
-              <span className="trust-chip">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-pill bg-black/60 border border-white/20 text-white text-xs font-medium">
                 <CheckIcon /> {t('home.trust.installations')}
               </span>
             </motion.div>
           </motion.div>
 
-          {/* Media panel — overflows bottom on desktop */}
-          <motion.div
-            initial={{ opacity: 0, x: shouldReduce ? 0 : 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: shouldReduce ? 0 : 0.18, duration: shouldReduce ? 0 : 0.45, ease: [0, 0, 0.2, 1] }}
-            className="relative hidden lg:block"
-            style={{ height: '110%', position: 'absolute', right: 0, top: '-5%', width: '48%' }}
+          <motion.aside
+            initial={{ opacity: 0, y: shouldReduce ? 0 : 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: shouldReduce ? 0 : 0.2, duration: shouldReduce ? 0 : 0.4, ease: [0, 0, 0.2, 1] }}
+            className="card p-6 lg:p-7 bg-surface-base/90 backdrop-blur-sm"
+            aria-label={t('home.hero_form.title')}
           >
-            <div className="absolute inset-0 rounded-l-3xl overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1000&q=85"
-                alt="Solar panels installed on a sunny residential rooftop"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 0vw, 50vw"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(to right, var(--color-surface-canvas) 0%, transparent 15%)',
-                }}
-                aria-hidden="true"
-              />
+            <p className="eyebrow mb-2">{t('home.hero_form.title')}</p>
+            <p className="text-sm text-text-muted mb-5">{t('home.hero_form.subtitle')}</p>
+            <div className="grid grid-cols-1 gap-4">
+              <div>
+                <label htmlFor="hero-monthly-bill" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.bill_label')}
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted font-medium">$</span>
+                  <input
+                    id="hero-monthly-bill"
+                    type="number"
+                    min={50}
+                    max={2000}
+                    step={50}
+                    value={monthlyBillDraft}
+                    onChange={(event) => setMonthlyBillDraft(Number(event.target.value))}
+                    className="input-solar pl-7"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="hero-roof-type" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.roof_label')}
+                </label>
+                <select
+                  id="hero-roof-type"
+                  value={roofTypeDraft}
+                  onChange={(event) => setRoofTypeDraft(event.target.value)}
+                  className="input-solar"
+                >
+                  <option value="tile">{t('quote.calculator.roof_options.tile')}</option>
+                  <option value="metal">{t('quote.calculator.roof_options.metal')}</option>
+                  <option value="flat">{t('quote.calculator.roof_options.flat')}</option>
+                  <option value="other">{t('quote.calculator.roof_options.other')}</option>
+                </select>
+              </div>
+
+              <button type="button" onClick={openQuote} className="btn btn-primary w-full justify-center">
+                {t('home.hero_form.open_calculator')}
+              </button>
             </div>
-          </motion.div>
+          </motion.aside>
         </div>
       </section>
 
       {/* ── STATS STRIP ── */}
-      <section className="bg-text-strong text-text-inverse py-8" aria-label={t('home.testimonials_title')}>
+      <section className="text-white py-8" style={{ backgroundColor: 'rgba(2,6,23,0.96)' }} aria-label={t('home.testimonials_title')}>
         <div className="container-solar grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="rounded-lg bg-white/5 border border-white/10 p-5">
-            <p className="font-display text-3xl font-bold text-text-inverse mb-1">{t('home.stats.installs_value')}</p>
-            <p className="text-sm text-text-inverse/80">{t('home.stats.installs_label')}</p>
+            <p className="font-display text-3xl font-bold text-white mb-1">{t('home.stats.installs_value')}</p>
+            <p className="text-sm text-white/80">{t('home.stats.installs_label')}</p>
           </div>
           <div className="rounded-lg bg-white/5 border border-white/10 p-5">
-            <p className="font-display text-3xl font-bold text-text-inverse mb-1">{t('home.stats.warranty_value')}</p>
-            <p className="text-sm text-text-inverse/80">{t('home.stats.warranty_label')}</p>
+            <p className="font-display text-3xl font-bold text-white mb-1">{t('home.stats.warranty_value')}</p>
+            <p className="text-sm text-white/80">{t('home.stats.warranty_label')}</p>
           </div>
           <div className="rounded-lg bg-white/5 border border-white/10 p-5">
-            <p className="font-display text-3xl font-bold text-text-inverse mb-1">{t('home.stats.rating_value')}</p>
-            <p className="text-sm text-text-inverse/80">{t('home.stats.rating_label')}</p>
+            <p className="font-display text-3xl font-bold text-white mb-1">{t('home.stats.rating_value')}</p>
+            <p className="text-sm text-white/80">{t('home.stats.rating_label')}</p>
           </div>
         </div>
       </section>

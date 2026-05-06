@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { t } from '@/lib/content'
 import { cn } from '@/lib/utils'
+import { useQuoteModal } from '@/components/providers/QuoteModalProvider'
 
 interface CtaBandProps {
   title: string
@@ -27,6 +28,7 @@ export default function CtaBand({
   className,
 }: CtaBandProps) {
   const shouldReduce = useReducedMotion()
+  const { openQuote } = useQuoteModal()
 
   const bgStyle =
     variant === 'brand'
@@ -57,16 +59,30 @@ export default function CtaBand({
             whileHover={shouldReduce ? {} : { scale: 1.01 }}
             whileTap={shouldReduce ? {} : { scale: 0.97 }}
           >
-            <Link
-              href={primaryHref}
-              className={cn(
-                'btn',
-                variant === 'brand' ? 'btn-accent' : 'btn-primary',
-                'text-base',
-              )}
-            >
-              {primaryLabel}
-            </Link>
+            {primaryHref === '/quote' ? (
+              <button
+                type="button"
+                onClick={openQuote}
+                className={cn(
+                  'btn',
+                  variant === 'brand' ? 'btn-accent' : 'btn-primary',
+                  'text-base',
+                )}
+              >
+                {primaryLabel}
+              </button>
+            ) : (
+              <Link
+                href={primaryHref}
+                className={cn(
+                  'btn',
+                  variant === 'brand' ? 'btn-accent' : 'btn-primary',
+                  'text-base',
+                )}
+              >
+                {primaryLabel}
+              </Link>
+            )}
           </motion.div>
           {secondaryLabel && secondaryHref && (
             <motion.div

@@ -45,6 +45,13 @@ const content = {
       primary_cta: 'Start Instant Quote',
       secondary_cta: 'View Projects',
     },
+    hero_form: {
+      title: 'No-obligation quote request',
+      subtitle: 'Share your usage details and launch the full calculator instantly.',
+      bill_label: 'Average monthly bill',
+      roof_label: 'Roof type',
+      open_calculator: 'Open quote calculator',
+    },
     trust: {
       license: 'Licensed & insured installer',
       warranty: '25-year system warranty',
@@ -292,6 +299,10 @@ const content = {
     step2: 'Request proposal',
     step3: 'All done',
     calculator_label: 'Solar savings calculator',
+    modal: {
+      title: 'Instant solar savings calculator',
+      subtitle: 'Estimate system size, annual savings, and payback before requesting your proposal.',
+    },
     calculator: {
       title: 'Step 1: Your usage & property',
       bill_label: 'Average monthly electricity bill',
@@ -416,6 +427,13 @@ const content = {
     social_instagram: 'Instagram',
     social_facebook: 'Facebook',
     social_linkedin: 'LinkedIn',
+  },
+  header: {
+    topbar: {
+      phone_prefix: 'Call',
+      hours_prefix: 'Hours',
+      service_note: 'No-obligation solar consultations',
+    },
   },
   legal: {
     privacy: {

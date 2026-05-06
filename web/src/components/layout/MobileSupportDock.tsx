@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { t } from '@/lib/content'
+import { useQuoteModal } from '@/components/providers/QuoteModalProvider'
 
 export default function MobileSupportDock() {
   const [expanded, setExpanded] = useState(false)
   const shouldReduce = useReducedMotion()
+  const { openQuote } = useQuoteModal()
 
   const dockVariants = {
     hidden: { opacity: 0, height: 0 },
@@ -69,9 +70,9 @@ export default function MobileSupportDock() {
         >
           <ChevronIcon up={expanded} />
         </button>
-        <Link href="/quote" className="btn btn-primary text-sm flex-1 justify-center">
+        <button type="button" onClick={openQuote} className="btn btn-primary text-sm flex-1 justify-center">
           {t('cta.get_quote')}
-        </Link>
+        </button>
         <a
           href="tel:+61299990000"
           className="btn btn-outline text-sm px-4"
