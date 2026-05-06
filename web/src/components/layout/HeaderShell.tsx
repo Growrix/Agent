@@ -86,15 +86,13 @@ export default function HeaderShell() {
       className={[
         'sticky top-0 left-0 right-0 z-sticky border-b transition-base duration-300',
         hideOnScroll ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100',
-        overlayMode
-          ? 'bg-transparent border-transparent'
-          : 'bg-surface-base/95 backdrop-blur-md border-border-subtle shadow-sm',
+        'bg-transparent border-transparent',
       ].join(' ')}
       style={{ zIndex: 'var(--z-sticky)' }}
     >
       <div className={[
         'hidden md:block border-b',
-        overlayMode ? 'border-white/20 bg-transparent' : 'border-border-subtle bg-transparent',
+        overlayMode ? 'border-white/20 bg-transparent' : 'border-border-subtle/60 bg-transparent',
       ].join(' ')}>
         <div className="container-solar h-9 flex items-center justify-between text-xs">
           <div className="inline-flex items-center gap-2.5">

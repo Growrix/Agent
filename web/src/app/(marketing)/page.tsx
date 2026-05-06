@@ -74,15 +74,24 @@ const TESTIMONIALS: Testimonial[] = [
 ]
 
 export default function HomePage() {
+  type ServiceChoice = 'residential' | 'commercial' | 'battery' | 'monitoring'
   const [assistantOpen, setAssistantOpen] = useState(false)
   const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [service, setService] = useState<ServiceChoice>('residential')
   const [postcode, setPostcode] = useState('')
   const [details, setDetails] = useState('')
   const heroRef = useRef<HTMLDivElement>(null)
   const isHeroInView = useInView(heroRef, { once: true })
   const shouldReduce = useReducedMotion()
   const { openQuote } = useQuoteModal()
+  const serviceLabelMap = {
+    residential: t('home.hero_form.service_options.residential'),
+    commercial: t('home.hero_form.service_options.commercial'),
+    battery: t('home.hero_form.service_options.battery'),
+    monitoring: t('home.hero_form.service_options.monitoring'),
+  } as const
 
   const handleQuoteRequestSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -90,7 +99,9 @@ export default function HomePage() {
     const body = encodeURIComponent(
       [
         `${t('home.hero_form.name_label')}: ${fullName || '-'}`,
+        `${t('home.hero_form.email_label')}: ${email || '-'}`,
         `${t('home.hero_form.phone_label')}: ${phone || '-'}`,
+        `${t('home.hero_form.service_label')}: ${serviceLabelMap[service]}`,
         `${t('home.hero_form.postcode_label')}: ${postcode || '-'}`,
         `${t('home.hero_form.details_label')}: ${details || '-'}`,
       ].join('\n'),
@@ -209,6 +220,22 @@ export default function HomePage() {
               </div>
 
               <div>
+                <label htmlFor="hero-email" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.email_label')}
+                </label>
+                <input
+                  id="hero-email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="input-solar"
+                  placeholder={t('home.hero_form.email_placeholder')}
+                />
+              </div>
+
+              <div>
                 <label htmlFor="hero-phone" className="block text-sm font-semibold text-text-default mb-2">
                   {t('home.hero_form.phone_label')}
                 </label>
@@ -222,6 +249,24 @@ export default function HomePage() {
                   className="input-solar"
                   placeholder={t('home.hero_form.phone_placeholder')}
                 />
+              </div>
+
+              <div>
+                <label htmlFor="hero-service" className="block text-sm font-semibold text-text-default mb-2">
+                  {t('home.hero_form.service_label')}
+                </label>
+                <select
+                  id="hero-service"
+                  required
+                  value={service}
+                  onChange={(event) => setService(event.target.value as ServiceChoice)}
+                  className="input-solar"
+                >
+                  <option value="residential">{t('home.hero_form.service_options.residential')}</option>
+                  <option value="commercial">{t('home.hero_form.service_options.commercial')}</option>
+                  <option value="battery">{t('home.hero_form.service_options.battery')}</option>
+                  <option value="monitoring">{t('home.hero_form.service_options.monitoring')}</option>
+                </select>
               </div>
 
               <div>
