@@ -125,6 +125,37 @@ footer { text-align: center; padding: 28px; border-top: 1px solid var(--border);
   cursor: pointer;
 }
 .detail-close:hover { border-color: rgba(249,115,22,0.4); color: #fff; }
+.detail-actions { display: flex; gap: 8px; align-items: center; }
+.detail-copy {
+  background: rgba(249,115,22,0.14);
+  color: var(--accent2);
+  border: 1px solid rgba(249,115,22,0.35);
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.detail-copy:hover { background: rgba(249,115,22,0.2); }
+.copy-feedback {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 400;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  color: #fff;
+  font-size: 12px;
+  border-radius: 9px;
+  padding: 8px 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.copy-feedback.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 .detail-content { padding: 18px; display: grid; gap: 14px; }
 .detail-block {
   background: var(--bg2);
@@ -188,11 +219,15 @@ footer { text-align: center; padding: 28px; border-top: 1px solid var(--border);
         <h3 id="detail-title">Template PRD & MVP</h3>
         <div class="detail-subtitle" id="detail-subtitle"></div>
       </div>
-      <button class="detail-close" id="detail-close" type="button">Close</button>
+      <div class="detail-actions">
+        <button class="detail-copy" id="detail-copy" type="button">Copy</button>
+        <button class="detail-close" id="detail-close" type="button">Close</button>
+      </div>
     </div>
     <div class="detail-content" id="detail-content"></div>
   </div>
 </div>
+<div class="copy-feedback" id="copy-feedback" aria-live="polite">Copied</div>
 
 <footer>Mohammad's Web Dev Agency · Industry Templates Build List 2025–2026 · 22 Categories · ThemeForest/Envato style</footer>
 
@@ -972,6 +1007,8 @@ const modalEl = document.getElementById('detail-modal');
 const modalContentEl = document.getElementById('detail-content');
 const modalTitleEl = document.getElementById('detail-title');
 const modalSubtitleEl = document.getElementById('detail-subtitle');
+const copyFeedbackEl = document.getElementById('copy-feedback');
+let currentTemplateName = '';
 
 function renderList(items) {
   return `<ul class="detail-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
@@ -984,6 +1021,8 @@ function renderKpis(items) {
 function openDetailModal(templateName, categoryTitle) {
   const details = HOME_SERVICES_PRD_MVP[templateName];
   if (!details) return;
+
+  currentTemplateName = templateName;
 
   modalTitleEl.textContent = `${templateName} — PRD + MVP`;
   modalSubtitleEl.textContent = `${categoryTitle} · Research-backed product brief`;
@@ -1033,6 +1072,67 @@ function closeDetailModal() {
   document.body.style.overflow = '';
 }
 
+function buildCopyPayload(templateName) {
+  const details = HOME_SERVICES_PRD_MVP[templateName];
+  if (!details) return '';
+
+  const lines = [];
+  lines.push(`${templateName} - PRD + MVP`);
+  lines.push('');
+  lines.push('Product Summary:');
+  lines.push(details.summary);
+  lines.push('');
+  lines.push('Research & Analysis Insights:');
+  details.research.forEach(item => lines.push(`- ${item}`));
+  lines.push('');
+  lines.push('Primary Personas:');
+  details.personas.forEach(item => lines.push(`- ${item}`));
+  lines.push('');
+  lines.push('PRD Goals:');
+  details.goals.forEach(item => lines.push(`- ${item}`));
+  lines.push('');
+  lines.push('PRD Feature Requirements:');
+  details.features.forEach(item => lines.push(`- ${item}`));
+  lines.push('');
+  lines.push('Success Metrics (KPIs):');
+  details.kpis.forEach(item => lines.push(`- ${item.label}: ${item.value}`));
+  lines.push('');
+  lines.push('MVP Scope (V1):');
+  details.mvpScope.forEach(item => lines.push(`- ${item}`));
+  lines.push('');
+  lines.push('MVP Non-Goals:');
+  details.mvpNonGoals.forEach(item => lines.push(`- ${item}`));
+
+  return lines.join('\n');
+}
+
+function showCopyFeedback(message) {
+  copyFeedbackEl.textContent = message;
+  copyFeedbackEl.classList.add('show');
+  setTimeout(() => {
+    copyFeedbackEl.classList.remove('show');
+  }, 1400);
+}
+
+async function copyCurrentTemplate() {
+  if (!currentTemplateName) return;
+  const payload = buildCopyPayload(currentTemplateName);
+  if (!payload) return;
+
+  try {
+    await navigator.clipboard.writeText(payload);
+    showCopyFeedback('Copied PRD + MVP');
+  } catch (error) {
+    const textArea = document.createElement('textarea');
+    textArea.value = payload;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    showCopyFeedback('Copied PRD + MVP');
+  }
+}
+
 document.getElementById('main').addEventListener('click', e => {
   const card = e.target.closest('.tpl-card');
   if (!card) return;
@@ -1046,6 +1146,7 @@ document.getElementById('main').addEventListener('click', e => {
 });
 
 document.getElementById('detail-close').addEventListener('click', closeDetailModal);
+document.getElementById('detail-copy').addEventListener('click', copyCurrentTemplate);
 document.getElementById('detail-backdrop').addEventListener('click', closeDetailModal);
 
 window.addEventListener('keydown', e => {
