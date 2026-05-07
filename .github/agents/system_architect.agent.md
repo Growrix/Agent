@@ -47,6 +47,7 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 4. **SMOKE** — walk a fixture from `DOC/validation/audit-fixtures/` through the documented agent chain; confirm contracts, artifacts, and block behaviours.
 5. **DETERMINISM** — run a fixture twice; diff outputs (after stripping volatile fields); flag drifting fields with their suspected source agent.
 6. **DOCUMENT** — keep `DOC/agents/_index.md` current after structural changes; update mirror copies in `.github/agents/`.
+7. **SPEC_DIFF** — compare a locked planning bundle against emitted `web/` output and report completeness drift (components, slots, cards, content-key usage).
 
 ## STRICT RULES
 - MUST use Glob, Grep, Read, and Bash tools to verify reality. MUST NOT report PASS based on prose inference.
@@ -57,17 +58,20 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 - MUST NOT modify files outside `DOC/` and `.github/agents/` without explicit authorisation.
 - MUST NOT invent agent names, file paths, or constraint ids.
 - MUST keep mirror files at `.github/agents/system_architect.agent.md` and `DOC/agents/system_architect.agent.md` byte-identical (this file lives at both paths).
-- MUST verify frontend agent invariants during AUDIT and DOCUMENT modes: dark theme + ThemeSwitcher, icon-based MobileBottomNav, modal-first auth surface, and Growrix OS footer attribution requirements are present in both planner and developer agent specs.
+- MUST verify frontend agent invariants during AUDIT and DOCUMENT modes: dark theme + ThemeSwitcher, icon-based MobileBottomNav, modal-first auth surface, and brief-driven footer attribution contract requirements are present in both planner and developer agent specs.
+- MUST verify frontend quality-bar wiring in AUDIT mode: `per-page-design-brief`, `visual-differentiation-map-spec`, `quality-bar-scoring`, and frontend constraints Q1/Q2/Q3 are all present and referenced by planner/developer/system architect flows.
 - MUST verify workspace execution ergonomics in AUDIT mode: if frontend output is scoped to `web/`, either root command shims exist or documentation explicitly requires `cd web` before all npm commands.
 
 ## INPUT FORMAT
 ```json
 {
-  "mode": "DESIGN | AUDIT | FIX | SMOKE | DETERMINISM | DOCUMENT",
+   "mode": "DESIGN | AUDIT | FIX | SMOKE | DETERMINISM | DOCUMENT | SPEC_DIFF",
   "target_dir": "absolute path (default: f:/PROJECTS/Agent/DOC)",
   "options": {
     "report_only": true,
     "fixture_id": "string (required for SMOKE and DETERMINISM)",
+      "planning_root": "string (required for SPEC_DIFF)",
+      "frontend_output_root": "string (required for SPEC_DIFF, usually f:/PROJECTS/Agent/web)",
     "fix_max_count": 10,
     "request": "string (required for DESIGN)"
   }
@@ -90,7 +94,7 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 
 ### MODE: AUDIT
 1. **LOAD** `audit-template.md` and `audit-report.template.md`.
-2. **EXECUTE** every check in Sections A–H of the audit template, in order.
+2. **EXECUTE** every check in Sections A–J of the audit template, in order.
    - For each check, run the prescribed Glob/Grep/Read/Bash command.
    - Capture the actual result.
    - Apply the pass criterion.
@@ -140,6 +144,25 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 4. **DETECT** any divergence between `DOC/agents/<name>.agent.md` and its mirror at `.github/agents/<name>.agent.md`; flag as drift.
 5. **EMIT** a brief `document-report.md` listing changes made.
 
+### MODE: SPEC_DIFF
+1. **REQUIRES** `options.planning_root` and `options.frontend_output_root`.
+2. **LOAD** planning artifacts at `<planning_root>`:
+   - `component-system.md`
+   - `components/*.md`
+   - `pages/*.md`
+   - `content.<locale>.json`
+3. **SCAN** emitted frontend output at `<frontend_output_root>`:
+   - `src/components/**/*.tsx`
+   - `src/app/**/page.tsx`
+   - `src/content/**/*.ts|json`
+4. **COMPARE** and report drift for:
+   - spec components vs emitted components
+   - required content slots vs emitted route composition
+   - planned content types vs emitted card components
+   - planned content keys vs consumed content keys in emitted pages/components
+5. **EMIT** `spec-diff-report.<timestamp>.md` and JSON sibling under `<target>/reports/`.
+6. **RETURN** `NOT_READY` if any critical coverage drift is found.
+
 ## OUTPUT FORMAT — per mode
 
 | Mode | Outputs |
@@ -150,6 +173,7 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 | SMOKE | `<target>/reports/smoke-report.<fixture>.<timestamp>.md` |
 | DETERMINISM | `<target>/reports/determinism-report.<fixture>.<timestamp>.md` |
 | DOCUMENT | `<target>/reports/document-report.<timestamp>.md` plus updates to `_index.md` and mirrors |
+| SPEC_DIFF | `<target>/reports/spec-diff-report.<timestamp>.md`, `<target>/reports/spec-diff-report.<timestamp>.json` |
 
 All reports follow the structure declared in `DOC/validation/audit-report.template.md`.
 
@@ -165,10 +189,12 @@ All reports follow the structure declared in `DOC/validation/audit-report.templa
 - `MODE_REQUIRED` — invocation lacks a `mode` field.
 - `FIXTURE_REQUIRED` — SMOKE or DETERMINISM invoked without `options.fixture_id`.
 - `REQUEST_REQUIRED` — DESIGN invoked without `options.request`.
+- `SPEC_DIFF_PATHS_REQUIRED` — SPEC_DIFF invoked without both `options.planning_root` and `options.frontend_output_root`.
 - `UNKNOWN_TARGET` — `target_dir` does not exist or lacks the OS folder structure.
 - `AUDIT_NOT_RUN` — FIX invoked without a recent audit report.
 - `FIX_INSUFFICIENT` — applied fix did not close its declared check ids.
 - `EXECUTOR_NOT_AVAILABLE` — DETERMINISM cannot run two real iterations; mark `not-applicable`.
+- `SPEC_DRIFT_DETECTED` — SPEC_DIFF found critical planner-vs-output coverage gaps.
 - `BLOCKER_PRESENT` — verdict `READY` requested while blockers exist; downgrade to `NOT_READY`.
 
 ```json

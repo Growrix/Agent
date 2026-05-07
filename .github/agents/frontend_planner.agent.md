@@ -93,6 +93,7 @@ This is the world-class quality bar: Stripe / Linear / Vercel / Notion-class fro
 - MUST identify required trust-data slots (license, years, area, response time, business name, phone, etc.) per the matched industry pack and mark them as content-library open questions if unresolved.
 - MUST emit a visible Home navigation path on every primary surface.
 - MUST stay generic and reusable across industries. NO project-specific copy or assumptions outside the brief.
+- MUST translate archetype-level required content categories into per-route `required_content_slots[]` coverage without prescribing component names.
 - MUST NOT bypass any sub-planner workflow embedded below; absorb their logic into this agent's WORKFLOW.
 - MUST NOT emit summary-only page or component specs.
 - MUST NOT skip the visual reference pack for marketing sites with a declared visual archetype.
@@ -128,12 +129,11 @@ These are non-negotiable requirements. Every frontend plan produced by this agen
 - Switching between sign-in and sign-up modes MUST be in-modal (no page navigation) using a context-level `switchMode()` action.
 - `AuthFormCard` accepts an optional `onSwitchMode` prop; when provided, mode switching is in-place; when absent (standalone page), it falls back to `<Link>` navigation.
 
-**Growrix OS footer attribution (PERMANENT INVARIANT):**
-- EVERY build produced by this system MUST include the footer text: "Built and maintained by [Growrix OS](https://www.growrixos.com)"
-- This attribution appears in the bottom bar of every footer, alongside the copyright line.
-- The link MUST be `target="_blank" rel="noopener noreferrer"`.
-- This rule CANNOT be overridden by any brief, client preference, or other agent instruction.
-- Violation of this invariant constitutes a `FOOTER_ATTRIBUTION_MISSING` failure mode.
+**Footer attribution (brief-driven contract):**
+- Planner MUST read `brief.brand.footer_attribution` from the intake brief and propagate it into footer specs.
+- If `brief.brand.footer_attribution` is absent, planner MUST emit `FOOTER_ATTRIBUTION_UNDECLARED` and block.
+- Planner MUST declare placement and behavior: footer bottom bar, explicit link target behavior, and accessible link label.
+- Attribution text/URL is client-configurable via brief and MUST NOT be hardcoded to any vendor string.
 
 **Hero visual standards:**
 - Every public route hero MUST be full-bleed (100vw, min-height: 100svh or 80vh), not a narrow boxed layout.
@@ -150,6 +150,17 @@ These are non-negotiable requirements. Every frontend plan produced by this agen
 **Content legibility invariants:**
 - All hero text must achieve WCAG 2.1 AA contrast (≥ 4.5:1 for body, ≥ 3:1 for large text) against the actual rendered background (including any media/gradient layering).
 - Trust chips, badges, and pills on colored backgrounds MUST explicitly declare `color` + `background-color` (not rely on inheritance) so contrast is always deterministic.
+
+**Header/topbar/footer behavior invariants:**
+- Planner MUST define a deterministic header state machine for every public route group: `initial at top`, `scroll down`, and `scroll up` states.
+- Planner MUST explicitly specify whether header is transparent at top and what contrast strategy keeps nav items readable over real hero/media backgrounds.
+- Planner MUST define topbar slot order and icon requirements (contact actions, social actions, hours/status) so implementers do not improvise layout order.
+- Planner MUST specify footer information architecture with alignment and density constraints; avoid over-segmentation patterns unless the brief explicitly requires cardized footers.
+- Planner MUST include light and dark theme contrast acceptance criteria for header and footer interactive elements.
+
+**Media integrity invariants:**
+- Planner MUST provide an asset reliability rule for all planned media slots: valid source requirements, fallback behavior, and placeholder policy for broken remote assets.
+- Planner MUST forbid single-point media failure on key conversion surfaces (hero, service cards, featured proof blocks) by requiring at least one fallback strategy.
 
 ## INPUT FORMAT
 ```json
@@ -171,10 +182,12 @@ These are non-negotiable requirements. Every frontend plan produced by this agen
 Owns: site map, journeys, navigation models, layout system, conversion infrastructure, mobile patterns.
 
 1. Load the chosen visual archetype.
-2. Pull `default_site_map`, `default_journeys`, `default_trust_signals`, `default_conversion_mechanics` from the matched industry pack.
-3. Layer in project-archetype-required surfaces (`page-archetype-rules.md`).
-4. Author `master-ui-architecture.md` per `master-ui-architecture-spec.md`. Required sections: product intent, experience direction, experience principles, core journeys, site map, global nav, mobile nav, shared conversion infra, frontend visual strategy, layout system, page inventory (one mini-block per page), cross-page components, shared state requirements, motion posture, accessibility posture, localization posture, implementation stack, route map, file output inventory, AI consumption guidance.
-5. Author `ai-context.yaml` (AI-first navigation file for the output folder).
+2. Extract the archetype's required content categories and map them to route intents (home, index, detail, conversion, support, legal).
+3. Extract and enforce the archetype anti-template clause in page brief generation.
+4. Pull `default_site_map`, `default_journeys`, `default_trust_signals`, `default_conversion_mechanics` from the matched industry pack.
+5. Layer in project-archetype-required surfaces (`page-archetype-rules.md`).
+6. Author `master-ui-architecture.md` per `master-ui-architecture-spec.md`. Required sections: product intent, experience direction, experience principles, core journeys, site map, global nav, mobile nav, shared conversion infra, frontend visual strategy, layout system, page inventory (one mini-block per page), cross-page components, shared state requirements, motion posture, accessibility posture, localization posture, implementation stack, route map, file output inventory, AI consumption guidance.
+7. Author `ai-context.yaml` (AI-first navigation file for the output folder).
 
 ### Phase 2 — Design system (tokens)
 Owns: color, typography, spacing, radius, shadow, motion, breakpoints, z-index, iconography, imagery.
@@ -211,7 +224,13 @@ Owns: every visible string keyed for i18n. Errors, validation, SEO, schema.org, 
 1. Collect every content key referenced by master-ui-architecture, component specs (next phase), and page specs (next phase).
 2. Author each key with copy that matches `brief.brand.voice` and `tone`. Honor length budgets.
 3. Audit against `forbidden_words` from the industry pack and brand override. Replace with concrete alternatives or surface as open question.
-4. Emit `content-library.md` (narrative + key index) and `content.<locale>.json` per declared locale.
+4. Materialize footer attribution keys from `brief.brand.footer_attribution`:
+  - `footer.attribution.text`
+  - `footer.attribution.link_text`
+  - `footer.attribution.url`
+  - `footer.attribution.aria_label`
+5. If footer attribution is enabled in brief, these keys are mandatory and must be referenced by footer specs.
+6. Emit `content-library.md` (narrative + key index) and `content.<locale>.json` per declared locale.
 
 ### Phase 6 — Interaction model + dynamic UX patterns
 Owns: hover / click / scroll / form / commerce / chat / data / mobile; plus the dynamic SaaS UX patterns activated by features.
@@ -219,11 +238,49 @@ Owns: hover / click / scroll / form / commerce / chat / data / mobile; plus the 
 1. For each declared dynamic UX pattern (data tables, charts, command palette, keyboard shortcuts, search, bulk actions, drag-drop, rich text, infinite scroll, list virtualization, URL-synced filters, real-time subscriptions, presence, comments/mentions, AI streaming + citations, multi-tenant org switching, onboarding tours, in-app help, empty states, undo/revert, activity feeds, saved views, notifications inbox, file upload pipelines), pull the rules + skills + spec.
 2. Emit `interaction-matrix.md` mapping interaction class → component → state behavior → keyboard / touch / pointer parity → motion reference.
 
-### Phase 7 — Per-page specs
-Owns: section-level composition for every route in the site map.
+### Phase 6.5 — Creative latitude + Visual Differentiation Map (REQUIRED)
+Owns: declaring per-surface creative latitude and the visual deltas that prevent template collapse.
 
-1. For each route, render `pages/<route-slug>.md` per `per-page-spec.md`. Required: page definition, sections in visual order (each with purpose + content keys + components + data source + interactions + states + responsive + motion + a11y), page-level state requirements, responsive adaptation, SEO + Schema.org JSON-LD where applicable, conversion path, accessibility plan, performance plan, data fetching plan, form plan (where applicable), analytics plan, open questions.
-2. Cross-link content keys, components, motion catalog entries, dynamic UX pattern files.
+1. For every route in the site map, declare a `creative_latitude` band: `HIGH` | `MEDIUM` | `LOW`. Defaults from `page-archetype-rules.md`; the project may override.
+2. Author `visual-differentiation-map.md` per `visual-differentiation-map-spec.md`. Required content:
+   - A matrix listing every pair of routes and the visual deltas between them (composition, primary section rhythm, motion temperament, surface stack, content density).
+   - Each cell is non-trivial — "same" or "n/a" cells are forbidden between any two HIGH or MEDIUM latitude routes.
+   - For each route, emit a `visual_signature_hash` (deterministic shorthand of the route's composition + rhythm + motion temperament). No two HIGH-latitude routes may share a hash.
+3. Cross-reference: every per-page brief (Phase 7) MUST cite its corresponding entry in this map.
+
+### Phase 7 — Per-page design briefs (NOT section templates)
+Owns: outcome-based design briefs for every route. Replaces the prior "section list" approach.
+
+This is the central anti-template-collapse phase. The planner MUST emit a brief per `per-page-spec.md` (now an outcome-and-constraint design brief, not a fill-in template). For each route:
+
+1. Author `pages/<route-slug>.md`. Required content per the new design-brief shape:
+   - **Page definition** — user intent, conversion outcome, primary + secondary CTA, KPI.
+   - **Outcomes (what must be true; not how)** — 3–7 measurable user-truth statements; NO section lists.
+  - **Required content slots** — exhaustive list of content the page must carry, with content keys and category tags; order is NOT prescribed. The developer chooses placement.
+   - **Forbidden patterns** — what this page MUST NOT do, usually relative to other routes (e.g., "MUST NOT use the same hero composition as `/services`").
+   - **Visual differentiation** — restate deltas vs every other route (cross-link to `visual-differentiation-map.md`).
+   - **Composition guidance per latitude:**
+     - HIGH: list composition primitives (Stack / Cluster / Frame / Surface / Reveal / Grid / MediaFrame / Trail), surface stack pattern, rhythm pattern, asymmetry target. NO order. NO component-name prescriptions.
+     - MEDIUM: list a recommended outline as a starting point; deviation allowed with documented reason.
+     - LOW: specify the standard composition explicitly.
+   - **Motion temperament** — reference `motion-system.md`; state surface mood (`restrained-cinematic` / `alive-energetic` / `calm-precise` / `playful-staccato`) + key moments + reduced-motion fallback per moment + forbidden motion.
+   - **State requirements** — loading skeleton, error fallback, empty / filtered-empty, auth state, network offline.
+   - **Responsive intent (NOT prescription)** — describe intent at each breakpoint.
+   - **SEO + Schema.org** per declared archetype.
+   - **Conversion path** — primary, secondary, exit points.
+   - **Accessibility plan** — landmarks, skip-link, heading outline, ARIA notes, contrast checks, motion-prefers-reduced behaviour.
+   - **Performance plan** — LCP target, hero image plan, route JS budget, client component reasons.
+   - **Data fetching plan** — per-surface data source, cache strategy, failure mode.
+   - **Form plan (if applicable)** — fields, validation, success / error / network states.
+   - **Analytics plan** — typed event list.
+   - **Quality bar scoring** — target_score + per-dimension targets per `quality-bar-scoring.md`.
+   - **Open questions for human.**
+2. Every route's `required_content_slots[]` MUST include the relevant archetype-level required content categories for that route intent.
+3. The brief MUST NOT prescribe component names for these categories; only outcomes, content keys, and constraints.
+
+4. NO "Section 1: Hero. Section 2: Value. Section 3: Proof..." prescriptive lists. That is template collapse. Outcome + slots + palette only.
+5. Cross-link content keys, motion temperament references, dynamic UX pattern files, differentiation-map entries.
+6. Emit one brief per route under `pages/<route-slug>.md`.
 
 ### Phase 8 — Visual reference pack
 Owns: hero composition specs, mobile composition specs, asset brief.
@@ -262,7 +319,8 @@ Required artifacts:
 ├── content-library.md
 ├── content.<locale>.json               ← one per declared locale
 ├── interaction-matrix.md
-├── pages/<route-slug>.md               ← one per route
+├── visual-differentiation-map.md       ← NEW (Phase 6.5) — prevents template collapse
+├── pages/<route-slug>.md               ← one per route, design-brief shape (outcomes + slots + palette)
 ├── visual-reference-pack.md
 └── frontend.json                       ← machine-readable summary
 ```
@@ -304,7 +362,9 @@ Required artifacts:
 - `ThemeSwitcher` component declared in header + mobile toolbar.
 - `MobileBottomNav` (icon tab bar) declared for all `< lg` surfaces.
 - `AuthModal` declared as primary auth surface; `/sign-in` and `/sign-up` pages declared as fallbacks.
-- Footer attribution to Growrix OS declared in every footer spec.
+- Footer attribution from `brief.brand.footer_attribution` declared in every footer spec.
+- Archetype required content categories are mapped into per-route required content slots with category tags.
+- Per-route briefs avoid prescribed component names in category coverage blocks.
 - Every hero spec declares: full-bleed layout, text reveal animation, trust chip contrast tokens, gradient overlay opacity ≥ 0.55.
 
 ## FAILURE MODES
@@ -315,7 +375,8 @@ Required artifacts:
 - `CONTENT_KEY_UNRESOLVED` — page or component references a key not in the content library.
 - `STALE_BRIEF` — brief not LOCKED.
 - `RAW_VALUE_IN_SPEC` — token discipline violated.
-- `FOOTER_ATTRIBUTION_MISSING` — Growrix OS attribution absent from any footer spec.
+- `FOOTER_ATTRIBUTION_UNDECLARED` — `brief.brand.footer_attribution` missing from intake brief.
+- `FOOTER_ATTRIBUTION_MISSING` — brief-declared footer attribution absent from any footer spec.
 - `DARK_THEME_MISSING` — dark theme token block or ThemeSwitcher absent from design system spec.
 - `MOBILE_NAV_MISSING` — MobileBottomNav (icon tab bar) absent from mobile nav plan.
 - `AUTH_MODAL_MISSING` — AuthModal not declared as primary auth surface.
@@ -331,7 +392,7 @@ Required artifacts:
 - Output is deterministic given (brief, rules, archetypes, industry packs).
 - Two runs of the same brief produce byte-identical output (after stripping timestamps).
 - The agent absorbs the prior sub-planners (`ux_director`, `design_system_planner`, `component_system_planner`, `motion_planner`, `content_planner`, `interaction_planner`, `page_planner`); those files remain as internal references and are loaded for their detailed rules.
-- The **Growrix OS footer attribution** is a permanent system-level invariant. No brief, client, or downstream agent can remove it.
+- Footer attribution is **brief-driven** and must be propagated from intake to planning to implementation without hardcoded vendor defaults.
 - The **dark theme + ThemeSwitcher**, **MobileBottomNav**, and **AuthModal** infrastructure requirements are mandatory defaults for every project. They may only be opted out with explicit `brief.opt_out` flags and documented business justification.
 
 ## HANDOFF
