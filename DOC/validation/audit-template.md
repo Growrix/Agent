@@ -18,6 +18,7 @@ The template is **runnable**, not narrative. Every check has an exact command, a
    - Failure in **B** (reference integrity), **D** (wiring coverage), or **G** (constraint evaluability) → BLOCKER.
    - Failure in **A** (inventory), **C** (schema compliance), or **E** (orphans) → ADVISORY unless it cascades into a B/D/G failure.
    - Failure in **F** (determinism) or **H** (smoke) → BLOCKER if it breaks determinism guarantees.
+   - Failure in **I** (frontend quality bar + creative latitude) or **J** (developer completeness contract) → BLOCKER.
 5. **Evidence cite format:** `<tool>:<command-or-glob> → <result-summary>`. Examples:
    - `Glob:DOC/knowledge/integration-rules/**/*.yaml → 87 files`
    - `Grep:"agent: integration_planner" in DOC/agents/*.agent.md → 1 match at integration_planner.agent.md:2`
@@ -397,12 +398,90 @@ For each fixture, confirm every artifact in `expected-outputs/<fixture>.expected
 
 ---
 
+## SECTION I — Frontend quality bar + creative latitude
+
+### I.1 Q1 visual differentiation map evaluability
+**Command:**
+1. `Read DOC/execution/spec-rules/visual-differentiation-map-spec.md`.
+2. `Read DOC/validation/constraints/frontend-constraints.md` and locate Q1.
+3. `Read DOC/agents/frontend_planner.agent.md` and confirm workflow emits `visual-differentiation-map.md` before per-page briefs.
+**Pass if:** all three agree on artifact shape + enforcement.
+**Evidence:** `<path>#<line> → q1_contract=<pass|fail>`.
+**Failure:** BLOCKER (`I.1 Q1 contract missing or inconsistent`).
+
+### I.2 Q2 quality bar scoring evaluability
+**Command:**
+1. `Read DOC/knowledge/frontend-rules/quality-bar-scoring.md`.
+2. `Read DOC/execution/spec-rules/per-page-spec.md` and confirm `quality_bar` targets are required.
+3. `Read DOC/validation/constraints/frontend-constraints.md` and locate Q2.
+4. `Read DOC/agents/frontend_planner.agent.md` and `DOC/agents/frontend_developer.agent.md` for quality scoring workflow references.
+**Pass if:** scorer rubric, per-page targets, constraint gate, and planner/developer workflow wiring all exist.
+**Evidence:** `<path>#<line> → q2_contract=<pass|fail>`.
+**Failure:** BLOCKER (`I.2 Q2 wiring incomplete`).
+
+### I.3 Q3 creative latitude utilisation evaluability
+**Command:**
+1. `Read DOC/execution/spec-rules/per-page-spec.md` and confirm `creative_latitude` requirements.
+2. `Read DOC/validation/constraints/frontend-constraints.md` and locate Q3.
+3. `Read DOC/agents/frontend_planner.agent.md` and confirm HIGH/MEDIUM/LOW latitude workflow.
+4. `Read DOC/agents/frontend_developer.agent.md` and confirm implementation guidance differs by latitude.
+**Pass if:** creative latitude is declared, enforced, and implemented across spec + constraints + agent workflows.
+**Evidence:** `<path>#<line> → q3_contract=<pass|fail>`.
+**Failure:** BLOCKER (`I.3 creative latitude gate missing`).
+
+---
+
+## SECTION J — Frontend developer completeness contract
+
+### J.1 CC constraints are defined
+**Command:**
+1. `Read DOC/validation/constraints/frontend-constraints.md`.
+2. Verify `CC1..CC6` are present with rule + detection + failure blocks.
+**Pass if:** all six constraints exist and are evaluable.
+**Evidence:** `<path>#<line> → cc_constraints_present=<pass|fail>`.
+**Failure:** BLOCKER (`J.1 developer completeness constraints missing`).
+
+### J.2 Developer self-audit enforces CC1..CC6
+**Command:**
+1. `Read DOC/agents/frontend_developer.agent.md`.
+2. Verify Phase 10 includes CC1..CC6 checks with blocking behavior.
+3. Verify failure modes include explicit completeness block codes.
+**Pass if:** self-audit contract includes full CC coverage and blocking semantics.
+**Evidence:** `<path>#<line> → cc_audit_wired=<pass|fail>`.
+**Failure:** BLOCKER (`J.2 developer self-audit completeness wiring missing`).
+
+### J.3 Folder taxonomy contract enforced
+**Command:**
+1. `Read DOC/agents/frontend_developer.agent.md`.
+2. Verify mandatory `web/src/components/` taxonomy includes `primitives`, `ui`, `cards`, `sections`, `shell`, `providers`.
+**Pass if:** all required folders are declared as mandatory.
+**Evidence:** `<path>#<line> → folder_taxonomy=<pass|fail>`.
+**Failure:** BLOCKER (`J.3 component taxonomy contract missing`).
+
+### J.4 Planner-to-developer content-slot handoff integrity
+**Command:**
+1. `Read DOC/agents/frontend_planner.agent.md`.
+2. Verify required content slots include category tags and archetype category mapping.
+3. `Read DOC/agents/frontend_developer.agent.md` and verify CC2 consumes those slots.
+**Pass if:** planner outputs category-tagged slots and developer enforces implementation coverage.
+**Evidence:** `<planner-path>#<line>, <developer-path>#<line> → slot_handoff=<pass|fail>`.
+**Failure:** BLOCKER (`J.4 required content slot handoff incomplete`).
+
+### J.5 Footer attribution contract integrity
+**Command:**
+1. `Read DOC/agents/intake_strategist.agent.md` and verify default `brand.footer_attribution` contract.
+2. `Read DOC/agents/frontend_planner.agent.md` and verify footer attribution content keys are emitted.
+3. `Read DOC/agents/frontend_developer.agent.md` and verify CC6 enforces output fidelity.
+**Pass if:** intake default + planner propagation + developer enforcement all exist.
+**Evidence:** `<path>#<line> → footer_chain=<pass|fail>`.
+**Failure:** BLOCKER (`J.5 footer attribution chain incomplete`).
+
 ## How to use this template
 
 `system_architect.agent.md` consumes this template in `AUDIT` mode. Any other AI auditing the system or a derivative agentic project MUST:
 
 1. Read this file first.
-2. For each section A–H, run every check.
+2. For each section A–J, run every check.
 3. Produce evidence for every PASS and every FAIL.
 4. Emit the result via `audit-report.template.md`.
 5. Refuse to declare `READY` if any BLOCKER fired.

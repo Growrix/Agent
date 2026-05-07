@@ -87,6 +87,75 @@ The `reviewer` evaluates F1..F15 in order. Multiple failures may be reported in 
 - F13: critical — single wrapper collapse = all pages look identical.
 - F14: critical — declared motion library unused = broken motion contract.
 - F15: critical — identical route compositions = generic, unprofessional output.
+- CC1..CC6: critical — planned scope not fully implemented = incomplete frontend delivery.
+
+## Q-constraints — Quality bar (added in template-collapse fix)
+
+These constraints address the central failure mode that produced uniform, mediocre frontends despite the F-constraint set. They operationalise quality enforcement at the audit layer where it belongs, instead of relying on aspirational language in templates.
+
+### Q1 — Visual differentiation enforced across routes
+**Rule:** Every project MUST emit `visual-differentiation-map.md` per `visual-differentiation-map-spec.md`. No two HIGH-latitude routes may share a `visual_signature_hash`. Every pair of HIGH/MEDIUM-latitude routes MUST have a non-empty `different_dimensions` list. Pairs sharing `motion_temperament` MUST cite distinct `motion_choreography_signature`.
+**Detection:** Read `<output_root>/visual-differentiation-map.md`. Walk per-route signatures and pair-wise deltas. Compute hash uniqueness. Verify `different_dimensions` non-empty for HIGH/MEDIUM pairs. Verify same-temperament pairs cite distinct choreography signatures.
+**Failure:** `BLOCK Q1: <reason>` — examples: `duplicate signature hash for routes [/, /work]`; `pair [/, /services] has no different_dimensions`; `pair [/, /pricing] same temperament without distinct choreography signature`.
+
+### Q2 — Per-page quality bar score met
+**Rule:** Every per-page brief MUST declare a `quality_bar.target_score` and per-dimension targets per `quality-bar-scoring.md`. The auditor scores 0–3 per dimension with cited evidence. Sum MUST meet target. The developer's self-audit MUST also score and cite evidence.
+**Detection:** Read each `pages/<route-slug>.md` brief; read declared targets. Read emitted code (where available); score per dimension; cite evidence (file path or spec section). Compute sum. Compare to target.
+**Failure:** `BLOCK Q2: route <route> scored <sum>/<target> on dimensions [<failed>]` — cite evidence per failed dimension.
+
+### Q3 — Creative latitude utilisation
+**Rule:** HIGH-latitude surfaces MUST show evidence of custom composition and choreography (i.e., the planner authored unique composition palette and choreography for this surface; the developer implemented it without falling back to defaults). LOW-latitude surfaces MUST follow the standard composition declared in the brief.
+**Detection:** For each HIGH-latitude route, verify the brief's `composition_palette` is unique to this route (cross-check against other HIGH-latitude routes' palettes). Verify the motion choreography is declared concretely (not "subtle entrance"). Sample emitted code; verify composition matches the brief's declared latitude band.
+**Failure:** `BLOCK Q3: HIGH-latitude route <route> shows defaults instead of custom composition` — cite the offending palette / choreography reference.
+
+### Q-constraint enforcement order
+- Q1 evaluated first (cheapest; catches most template-collapse failures upfront).
+- Q2 evaluated per page after Q1 passes for the project.
+- Q3 evaluated per HIGH-latitude route last.
+
+All Q-constraints are critical. There are no warnings; the gate is binary.
+
+## CC-constraints — Developer completeness contract
+
+These constraints ensure the developer implements the full planned scope, not just a compilable subset.
+
+### CC1 — Component coverage
+**Rule:** Every component declared in `component-system.md` and every `components/<ComponentName>.md` spec MUST produce a concrete `.tsx` implementation under `web/src/components/**`.
+**Detection:** Parse component names from planning artifacts and cross-check emitted component filenames.
+**Failure:** `BLOCK CC1: missing component implementations [<names>]`.
+
+### CC2 — Required content-slot coverage
+**Rule:** For each route brief, every `required_content_slots[]` entry MUST be represented in the emitted route composition (direct section or imported section component).
+**Detection:** Read `pages/<route>.md` slot declarations and verify corresponding usage in `web/src/app/**/page.tsx` + route-specific section imports.
+**Failure:** `BLOCK CC2: route <route> missing required content slots [<slot categories>]`.
+
+### CC3 — Section density threshold by latitude
+**Rule:** Route composition depth MUST satisfy:
+- HIGH-latitude home: `>= 8` sections
+- HIGH-latitude non-home marketing: `>= 6` sections
+- MEDIUM-latitude: `>= 5` sections
+- LOW-latitude: `>= 3` sections unless `min_sections_exempt: true`
+**Detection:** Count top-level section surfaces in route composition and compare against route latitude + role.
+**Failure:** `BLOCK CC3: route <route> has <n> sections, required <min>`.
+
+### CC4 — Extraction discipline
+**Rule:** Oversized inline page composition is forbidden. Any route section over ~30 JSX LOC MUST be extracted into `web/src/components/sections/`. Route page files exceeding 200 LOC without valid rationale indicate under-extracted composition.
+**Detection:** Static LOC scan of route files + section blocks.
+**Failure:** `BLOCK CC4: extraction discipline violated in <file>`.
+
+### CC5 — Card variety by content type
+**Rule:** Each distinct project content type carried in the plan (services, projects, testimonials, articles, materials, financing options, team, areas, etc.) MUST have a dedicated card component in `web/src/components/cards/`.
+**Detection:** Derive content types from planning briefs/content keys; verify corresponding card component coverage.
+**Failure:** `BLOCK CC5: missing card components for content types [<types>]`.
+
+### CC6 — Footer attribution completeness
+**Rule:** When `brief.brand.footer_attribution.enabled` is true, emitted footer MUST render the declared attribution contract (`text`, `link_text`, `url`, behavior). Placeholder URLs (e.g., `example.com`) are invalid.
+**Detection:** Inspect planner footer spec + content keys, then inspect emitted footer implementation.
+**Failure:** `BLOCK CC6: footer attribution missing or mismatched in <file>`.
+
+CC-constraints are critical. There are no warnings; the gate is binary.
+
+---
 
 All F-constraints are critical. There are no warnings; the gate is binary.
 
@@ -112,7 +181,16 @@ The reviewer adds a `frontend` block to `validation_report.json`:
       { "id": "F12","status": "passed|failed", "evidence": "..." },
       { "id": "F13","status": "passed|failed", "evidence": "..." },
       { "id": "F14","status": "passed|failed", "evidence": "..." },
-      { "id": "F15","status": "passed|failed", "evidence": "..." }
+      { "id": "F15","status": "passed|failed", "evidence": "..." },
+      { "id": "Q1", "status": "passed|failed", "evidence": "..." },
+      { "id": "Q2", "status": "passed|failed", "evidence": "..." },
+      { "id": "Q3", "status": "passed|failed", "evidence": "..." },
+      { "id": "CC1", "status": "passed|failed", "evidence": "..." },
+      { "id": "CC2", "status": "passed|failed", "evidence": "..." },
+      { "id": "CC3", "status": "passed|failed", "evidence": "..." },
+      { "id": "CC4", "status": "passed|failed", "evidence": "..." },
+      { "id": "CC5", "status": "passed|failed", "evidence": "..." },
+      { "id": "CC6", "status": "passed|failed", "evidence": "..." }
     ]
   }
 }

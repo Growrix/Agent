@@ -1,0 +1,373 @@
+---
+# AI Context Navigation — Roofing MVP Frontend Planning Bundle
+# Purpose: Machine-readable index for AI agents consuming this planning bundle
+# Status: PLANNED (2026-05-07)
+
+metadata:
+  project: "Roofing MVP Platform"
+  archetype: "marketing_site (local_services/roofing)"
+  visual_archetype: "local-business-trust"
+  quality_target: "world_class"
+  lock_status: "LOCKED"
+  version: "1.0.0"
+  timestamp: "2026-05-07"
+  root: "DOC/output/runs/roofing-mvp-2026-05-07/planning/frontend"
+
+# Human-facing entry points
+human_entry_points:
+  - file: "README.md"
+    purpose: "Human-first index; start here for context"
+    audience: ["developers", "designers", "pm", "qa"]
+
+  - file: "master-ui-architecture.md"
+    purpose: "Complete UX architecture; site map, journeys, navigation, layout system"
+    audience: ["developers", "designers", "pm"]
+    read_order: 1
+
+  - file: "design-system.md"
+    purpose: "Design system narrative; color, typography, spacing, motion tokens"
+    audience: ["developers", "designers"]
+    read_order: 2
+
+# Core planning artifacts (by lifecycle phase)
+planning_phases:
+  phase_1_ux_architecture:
+    - file: "brief.json"
+      role: "Source of truth; project scope, brand, features, constraints"
+      dependencies: []
+      output: "site_map, journeys, features, integrations"
+
+    - file: "master-ui-architecture.md"
+      role: "UX strategy; product intent, journeys, site map, global nav, conversion infra"
+      dependencies: ["brief.json"]
+      output: "route_map, component_index, shared_conversion_flows"
+
+  phase_2_design_system:
+    - file: "design-system.md"
+      role: "Design narrative; tokens, values, accessibility guidelines"
+      dependencies: ["master-ui-architecture.md"]
+      output: "design_language, color_scale, typography_scale, spacing_scale"
+
+    - file: "design-system.tokens.json"
+      role: "Machine-readable tokens for Tailwind config import"
+      dependencies: ["design-system.md"]
+      format: "json"
+      import_to: "tailwind.config.js theme.extend"
+
+  phase_3_component_system:
+    - file: "component-system.md"
+      role: "All shared components with state matrices, variants, accessibility, motion"
+      dependencies: ["design-system.md"]
+      output: "component_specs, state_matrix, aria_requirements"
+
+  phase_4_motion_system:
+    - file: "motion-system.md"
+      role: "Animation catalog; macro/micro animations, durations, easing, reduced-motion fallback"
+      dependencies: ["design-system.md"]
+      output: "duration_band, animation_library, prefers_reduced_motion_table"
+
+  phase_5_content_library:
+    - file: "content-library.md"
+      role: "All visible strings keyed; no hardcoded copy"
+      dependencies: ["master-ui-architecture.md"]
+      output: "content_keys, copy_text, tone_guidelines"
+
+    - file: "content.en-US.json"
+      role: "Machine-readable content export; import to app for i18n"
+      dependencies: ["content-library.md"]
+      format: "json"
+      import_to: "@/lib/content.en-US.json"
+
+  phase_6_interaction_model:
+    - file: "interaction-matrix.md"
+      role: "All interactions (hover, click, form, keyboard, scroll); mobile parity"
+      dependencies: ["component-system.md"]
+      output: "interaction_specs, keyboard_nav_matrix, accessibility_parity"
+
+  phase_6_5_visual_differentiation:
+    - file: "visual-differentiation-map.md"
+      role: "Per-route unique signatures; prevents template collapse"
+      dependencies: ["master-ui-architecture.md"]
+      output: "per_route_signatures, composition_matrix, verification_checklist"
+
+  phase_7_page_briefs:
+    - file: "pages-briefs.md"
+      role: "Per-page outcome-based design briefs (not DOM templates)"
+      dependencies: ["master-ui-architecture.md", "visual-differentiation-map.md"]
+      output: "page_outcomes, required_content_slots, forbidden_patterns"
+
+  phase_8_visual_reference:
+    - file: "visual-reference-pack.md"
+      role: "Hero compositions, mobile adaptations, photography requirements"
+      dependencies: ["design-system.md"]
+      output: "composition_specs, mobile_patterns, asset_brief, aspect_ratios"
+
+# Artifact dependency graph
+artifact_dependencies:
+  "brief.json": []
+  "master-ui-architecture.md": ["brief.json"]
+  "design-system.md": ["master-ui-architecture.md"]
+  "design-system.tokens.json": ["design-system.md"]
+  "component-system.md": ["design-system.md"]
+  "motion-system.md": ["design-system.md"]
+  "content-library.md": ["master-ui-architecture.md"]
+  "content.en-US.json": ["content-library.md"]
+  "interaction-matrix.md": ["component-system.md"]
+  "visual-differentiation-map.md": ["master-ui-architecture.md"]
+  "pages-briefs.md": ["master-ui-architecture.md", "visual-differentiation-map.md"]
+  "visual-reference-pack.md": ["design-system.md"]
+  "frontend.json": ["all_artifacts"]
+
+# Consumption patterns (by downstream agent/role)
+consumption_patterns:
+  frontend_developer:
+    workflow: "sequential"
+    entry_point: "master-ui-architecture.md"
+    sequence:
+      - "master-ui-architecture.md"  # Understand UX
+      - "design-system.md"            # Learn design language
+      - "design-system.tokens.json"   # Import tokens to Tailwind
+      - "component-system.md"         # Build components per spec
+      - "motion-system.md"            # Implement animations
+      - "content.en-US.json"          # Import content keys
+      - "pages-briefs.md"             # Implement routes
+      - "interaction-matrix.md"       # Test interactions
+      - "visual-reference-pack.md"    # Verify image specs
+    validation: "frontend.json (quality_gates, constraints)"
+
+  designer:
+    workflow: "parallel"
+    entry_point: "design-system.md"
+    files:
+      - "design-system.md"            # Color, typography, spacing
+      - "design-system.tokens.json"   # Token values
+      - "component-system.md"         # Component visuals + states
+      - "visual-differentiation-map.md" # Per-route visual signatures
+      - "pages-briefs.md"             # Per-page outcomes (creative latitude)
+      - "visual-reference-pack.md"    # Photography + composition specs
+
+  qa_tester:
+    workflow: "cross_artifact"
+    entry_point: "frontend.json"
+    test_artifacts:
+      - "component-system.md"         # Component state matrix
+      - "interaction-matrix.md"       # Interaction test matrix
+      - "motion-system.md"            # Motion + prefers-reduced-motion verification
+      - "design-system.md"            # Contrast + accessibility
+      - "pages-briefs.md"             # Page-level outcomes verification
+    validation: "frontend.json (F1–F12, AC1–AC12, quality_gates)"
+
+  content_planner:
+    workflow: "sequential"
+    entry_point: "content-library.md"
+    sequence:
+      - "content-library.md"          # Content strategy
+      - "content.en-US.json"          # Finalize copy
+
+  motion_planner:
+    workflow: "sequential"
+    entry_point: "motion-system.md"
+    dependencies:
+      - "design-system.md"            # Duration band, easing
+
+  page_planner:
+    workflow: "sequential"
+    entry_point: "pages-briefs.md"
+    dependencies:
+      - "master-ui-architecture.md"
+      - "visual-differentiation-map.md"
+
+# Key sections by search query
+search_index:
+  "color_palette":
+    - "design-system.md#color-system"
+    - "design-system.tokens.json"
+
+  "typography":
+    - "design-system.md#typography-scale"
+
+  "spacing":
+    - "design-system.md#spacing-scale"
+    - "design-system.tokens.json"
+
+  "motion_durations":
+    - "motion-system.md#duration-band"
+
+  "button_states":
+    - "component-system.md#button"
+    - "interaction-matrix.md#button-hover"
+
+  "form_validation":
+    - "component-system.md#form"
+    - "interaction-matrix.md#form-field-flow"
+
+  "hero_composition":
+    - "visual-reference-pack.md#hero-compositions"
+    - "pages-briefs.md#pages-home"
+
+  "mobile_nav":
+    - "component-system.md#mobile-bottom-nav"
+    - "master-ui-architecture.md#global-navigation"
+
+  "dark_theme":
+    - "design-system.md#dark-theme"
+    - "component-system.md#theme-switcher"
+
+  "accessibility":
+    - "interaction-matrix.md#accessibility-parity"
+    - "design-system.md#accessibility-guidelines"
+    - "component-system.md" # Every component has ARIA section
+
+  "reduced-motion":
+    - "motion-system.md#reduced-motion-fallback"
+    - "design-system.md#motion-principles"
+
+  "content_keys":
+    - "content-library.md"
+    - "content.en-US.json"
+
+  "site_map":
+    - "master-ui-architecture.md#site-map"
+    - "master-ui-architecture.md#route-map"
+
+  "component_inventory":
+    - "component-system.md"
+    - "master-ui-architecture.md#component-inventory"
+
+  "conversion_path":
+    - "pages-briefs.md#conversion-path"
+    - "master-ui-architecture.md#conversion-infrastructure"
+
+  "brand_voice":
+    - "brief.json#brand"
+    - "content-library.md#content-strategy"
+
+# Quality validation checklist
+quality_gates:
+  F1_archetype_classification: "PASSED"
+  F2_visual_archetype_assignment: "PASSED"
+  F3_page_inventory_completeness: "PASSED"
+  F4_component_system_coverage: "PASSED"
+  F5_design_token_discipline: "PASSED"
+  F6_content_library_completeness: "PASSED"
+  F7_motion_system_specification: "PASSED"
+  F8_accessibility_constraints: "PASSED"
+  F9_mobile_parity: "PASSED"
+  F10_dark_theme_infrastructure: "PASSED"
+  F11_trust_signal_placement: "PASSED"
+  F12_conversion_infrastructure: "PASSED"
+  AC1_color_contrast: "PASSED"
+  AC2_semantic_html: "PASSED"
+  AC3_focus_keyboard_nav: "PASSED"
+  AC4_form_accessibility: "PASSED"
+  AC5_motion_reduced_motion: "PASSED"
+  AC6_aria_roles: "PASSED"
+  AC7_touch_targets: "PASSED"
+  AC8_image_alts: "PASSED"
+  AC9_mobile_a11y_parity: "PASSED"
+  AC10_i18n_readiness: "PASSED"
+  AC11_skip_links: "PASSED"
+  AC12_error_prevention: "PASSED"
+
+# Integration targets (downstream tools)
+integrations:
+  tailwind_config:
+    import: "design-system.tokens.json"
+    destination: "tailwind.config.js"
+    merge_strategy: "theme.extend"
+
+  next_app:
+    import: "content.en-US.json"
+    destination: "@/lib/content.en-US.json"
+    usage: "i18n content keys"
+
+  figma_tokens:
+    export_from: "design-system.tokens.json"
+    plugins: ["Figma Tokens by Tokens Studio"]
+
+  sanity_cms:
+    schema_reference: "master-ui-architecture.md#content-model"
+    content_keys_from: "content-library.md"
+
+  storybook:
+    components_from: "component-system.md"
+    stories_generate: "per-component variants + states"
+
+  cypress_e2e:
+    test_matrix_from: "interaction-matrix.md"
+    component_states_from: "component-system.md"
+
+  axe_accessibility:
+    validation_target: "WCAG 2.1 AA"
+    reference: "interaction-matrix.md + design-system.md"
+
+# Open questions (require human input)
+open_questions_count: 12
+open_questions_link: "frontend.json#open_questions"
+blocking_questions:
+  - "Business name, license number, service areas (for footer + hero)"
+  - "Team member names and professional photos"
+  - "Project before/after image collection (min 10 pairs)"
+  - "Color palette approval (default navy #0F3A66 + amber #F59E0B)"
+
+# Performance targets
+performance_targets:
+  lcp_target: "≤ 2.5s"
+  accessibility_score: "100% (WCAG 2.1 AA)"
+  uptime: "99.5%"
+  js_budget_home: "≤ 150KB"
+
+# Deployment checklist
+deployment_checklist_count: 32
+deployment_checklist_link: "frontend.json#deployment_checklist"
+
+# Success criteria
+success_criteria:
+  primary_kpi: "Inspection form completion ≥ 15%"
+  secondary_kpi: "Storm campaign conversion ≥ 20%"
+  lead_response_time: "≤ 10 minutes"
+
+---
+
+## Quick Reference (AI Agents)
+
+### Phase Entry Points
+- **Phase 1 (UX Architecture):** Start with `brief.json` → `master-ui-architecture.md`
+- **Phase 2 (Design System):** `design-system.md` → `design-system.tokens.json`
+- **Phase 3 (Components):** `component-system.md` (read all states + ARIA)
+- **Phase 4 (Motion):** `motion-system.md` (duration band + reduced-motion fallback)
+- **Phase 5 (Content):** `content-library.md` → `content.en-US.json`
+- **Phase 6 (Interaction):** `interaction-matrix.md`
+- **Phase 7 (Pages):** `pages-briefs.md` (per-route briefs)
+- **Phase 8 (Reference):** `visual-reference-pack.md`
+
+### Validation & Handoff
+- **All constraints:** `frontend.json#quality_gates` (36 items, all PASSED)
+- **Open questions:** `frontend.json#open_questions` (12 items, stakeholder input needed)
+- **Deployment checklist:** `frontend.json#deployment_checklist` (32 items to finalize)
+
+### Critical References
+- **Design tokens:** `design-system.tokens.json` (import to Tailwind)
+- **Content keys:** `content.en-US.json` (import to app, use in JSX)
+- **Component states:** `component-system.md` (test matrix for QA)
+- **Interactions:** `interaction-matrix.md` (keyboard nav, mobile parity, a11y)
+- **Motion:** `motion-system.md` (prefers-reduced-motion fallback MANDATORY)
+- **Page outcomes:** `pages-briefs.md` (verify implementation against KPIs)
+
+### AI Consumer Commands
+```
+1. Read brief.json to understand project scope
+2. Consume master-ui-architecture.md to understand UX strategy
+3. Cross-reference design-system.md for all token values
+4. Verify component specs in component-system.md match implementation
+5. Validate interaction matrix compliance (interaction-matrix.md)
+6. Check motion compliance (motion-system.md + prefers-reduced-motion)
+7. Confirm content keying (content.en-US.json keys in JSX, not inline strings)
+8. Run quality gate validation (frontend.json#quality_gates all PASSED)
+9. Flag any open questions for stakeholder resolution (frontend.json#open_questions)
+10. Execute deployment checklist items before launch (frontend.json#deployment_checklist)
+```
+
+---
+
+**Generated:** 2026-05-07 | **Status:** PLANNED | **Lock:** LOCKED

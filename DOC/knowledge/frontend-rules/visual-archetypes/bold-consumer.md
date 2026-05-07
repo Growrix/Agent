@@ -6,78 +6,121 @@ best_for: [ecommerce, dtc_brands, fashion, beauty, lifestyle, food_and_beverage,
 
 # Bold Consumer
 
-## Voice
+## Mood references
+
+- **Allbirds / Aesop / Glossier / Faherty Brand / Klean Kanteen** — full-bleed photography, confident typography, brand-led colour, restrained layout.
+- **A24 store / Daily Paper / Outdoor Voices** — editorial commerce; product stories.
+- **Apple product launches / Polaroid Originals** — cinematic product photography, bold display type.
+
+Bar: visitor's first impression is *the product*, not the navigation.
+
+## Voice & tone
+
 - Confident, brand-led, image-driven.
 - Product photography is the hero; copy is short, punchy, branded.
 - Strong opinions about lifestyle and fit.
 
-## Density
-- Spacious hero with full-bleed imagery.
-- Medium product grid.
-- Dense PDP (product detail) with rich gallery, variants, specs, reviews.
+## Latitude windows
 
-## Color Direction
-- Brand-defined palette dominates; layout is largely neutral so product shines.
-- Often a single distinctive brand color paired with broad neutral / cream / off-white.
+| Dimension | Latitude | Notes |
+|---|---|---|
+| Hero composition | **HIGH** | Full-bleed image, layered editorial, lookbook-style — varies per drop / season. |
+| Brand hue | **HIGH** | Brand-defined; one signature hue + broad neutral. |
+| Accent (CTA) hue | **MEDIUM** | Contrasting; single. |
+| Typography | **HIGH** | Distinctive serif OR bold display sans — brand-defining. |
+| Section rhythm | **MEDIUM** | 64–96px desktop / 40–64px mobile; full-bleed surfaces break the rhythm. |
+| Surface stack | **HIGH** | Full-bleed, borderless, image-dominant. |
+| Motion temperament | **HIGH** within `restrained-cinematic` | 240–320ms; subtle parallax allowed in hero only. |
+| Imagery direction | **HIGH** | Editorial product, lifestyle, model shots. No stock. |
+| Content density | **MEDIUM** | Spacious hero. PDP rich (gallery + variants + reviews + materials). |
 
-### Default token roles
-- background:  brand-tinted neutral or cream
-- surface:     pure white
-- primary:     brand signature hue
-- accent:      contrasting CTA hue
-- destructive/success/warning/info: standard semantic palette
+## Starting-point tokens
 
-## Typography
-- Display family: distinctive serif OR bold display sans, brand-defining.
-- Body family: readable humanist sans.
-- Display scale: 80 / 72 / 64 / 56 (full-bleed hero often).
-- Heading scale: 40 / 32 / 28 / 24 / 20.
-- Body scale: 18 / 16.
+### Color
+- background: brand-tinted neutral or cream
+- surface: pure white
+- primary: brand signature hue
+- accent: contrasting CTA hue
+- semantic palette standard
 
-## Spacing
-- Hero often full-viewport.
-- Product grid: 4-col desktop / 2-col mobile.
-- Section rhythm: 64–96px desktop / 40–64px mobile.
+### Typography
+- display: distinctive serif OR bold display sans (brand-defining)
+- body: readable humanist sans
+- display scale: 80 / 72 / 64 / 56 (full-bleed hero)
+- heading scale: 40 / 32 / 28 / 24 / 20
+- body scale: 18 / 16
 
-## Surface system
-- Full-bleed image surfaces in hero and feature stories.
-- Cards mostly borderless with image dominance.
-- Inset for size guides, shipping detail, materials.
+### Spacing
+- hero often full-viewport
+- product grid: 4-col desktop / 2-col mobile
+- section rhythm: 64–96px desktop / 40–64px mobile
 
-## Radius
-- 8–12 across the board; sharp-leaning to feel curated.
+### Radius
+- 8–12; sharp-leaning to feel curated
 
-## Motion personality
-- Confident, slow, cinematic.
-- Macro 240–320ms (slower for premium feel).
-- Micro 140–200ms.
-- Subtle parallax allowed in hero.
-- Image hover: zoom-in 1.04 with crossfade to alt photo.
+## Required quality dimensions
+
+- **hero_composition** — 3 (product is the hero)
+- **narrative_density** — 2
+- **trust_signal_placement** — 2 (reviews + free-shipping banner)
+- **motion_temperament** — 3 (cinematic restraint)
+- **micro_detail_quality** — 3 (gallery + zoom + variant feedback)
+- **content_punch** — 3 (every line earns)
+
+Target for `world_class`: ≥ 16/18.
+
+## Forbidden patterns
+
+- Stock photography.
+- Cluttered hero (multiple competing CTAs).
+- Over-animation that fights the photography.
+- Modal pop-ups blocking first view.
+- Auto-play video with sound.
+- Generic "free shipping over $X" banner with no design care.
+- Filter sidebar that takes >50% of mobile viewport.
 
 ## Imagery direction
-- Editorial product photography, lifestyle, model shots.
-- Studio + lifestyle mix.
+
+- Editorial product photography.
+- Lifestyle + studio mix.
+- Model shots when fit/sizing matters.
 - Aspect ratios: 4:5 PDP, 1:1 grid, 3:4 lifestyle, 16:9 storytelling.
+- Avoid heavy filters or generic stock.
 
-## Hero composition
-- Full-bleed image with overlaid headline and CTA.
-- "Shop the look" or "shop now" primary; secondary "learn the story".
+## Required trust real estate
 
-## CTA hierarchy
-- Primary: shop-style ("Shop Now", "Add to Cart").
-- Secondary: brand story / lookbook.
-- Tertiary: size guide / shipping / contact.
+- Top-of-page banner: free-shipping / returns where applicable.
+- Hero: brand statement + featured product.
+- PDP: review aggregate + size guide + materials + shipping ETA.
+- Mid-page: press / awards strip if available.
+- Footer: secure-checkout badges, return policy summary.
 
 ## Iconography
-- Minimal; mostly text + icons for cart/wishlist/account/search.
+
+- Minimal; mostly text + small icons (cart / wishlist / account / search).
 - Outline 1.5px stroke.
 
-## Trust real estate
-- Reviews near hero and PDP.
-- Free-shipping / returns banner top-of-page.
-- Press / awards strip mid-page.
+## Anti-template clause
 
-## Forbidden in this archetype
-- Stock photos.
-- Cluttered hero.
-- Over-animation that fights the photography.
+This file declares content CATEGORIES and OUTCOMES required for this archetype. It MUST NOT name specific components, prescribe layouts, or list visual elements that constrain the planner's composition latitude. Categories are universal across this archetype; component names and compositions are project-specific, authored by the frontend planner per the brief and the visual-differentiation map. If a future edit introduces named components in this file, it is template drift and must be reverted.
+
+## Required content categories (outcome-level, component-agnostic)
+
+- `brand_impact_statement`: deliver an immediate brand-led value impression.
+- `hero_product_focus`: present flagship product or collection with strong visual priority.
+- `collection_or_catalog_signal`: help users discover what to browse next.
+- `product_evidence_surface`: expose materials, craftsmanship, or usage evidence.
+- `social_proof_surface`: include review, press, or community validation.
+- `purchase_confidence`: clarify shipping, returns, and sizing/fit confidence signals.
+- `storytelling_extension`: include lifestyle/editorial narrative that supports purchase intent.
+- `conversion_pathway`: ensure clear buy/shop path with repeated CTA opportunity.
+- `post_purchase_trust`: provide guarantees and support-path clarity.
+- `footer_commerce_identity`: include legal, policy, support, and attribution contract.
+
+## How to deviate intentionally
+
+- Beauty / skincare subset may push toward soft pastel palettes (within brief override).
+- Food / beverage subset may go richer / more textural.
+- Premium luxury subset may push display scale even larger.
+
+Deviation recorded in `design-system.md` overrides with reason.

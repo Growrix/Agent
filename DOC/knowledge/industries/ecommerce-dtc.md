@@ -96,6 +96,16 @@ shop, store, ecommerce, dtc, brand, fashion, beauty, skincare, food, beverage, h
 - Collection pages indexable.
 - Image-first sitemap.
 
+## Quality references
+
+Describe what world-class output feels like for this industry and enforce these characteristics in planning and audit scoring.
+
+- Product-first storytelling: imagery and PDP structure make fit/material/benefit clear without hunting.
+- Purchase confidence: shipping, returns, ETA, and pricing transparency visible before checkout commitment.
+- Conversion cadence: add-to-cart and checkout paths are fast, clear, and resilient on mobile.
+- Brand consistency: visual tone, typography, and micro-interactions remain coherent across campaign and catalog surfaces.
+- Merchandising quality: collections/filter/sort help users narrow quickly without reload confusion.
+
 ## Notes for the strategist
 - If the client says "online store" with no other detail, this pack locks the brief.
 - Image quality is non-negotiable in `bold-consumer` archetype; strategist surfaces a `media_requirements` open question to the human.

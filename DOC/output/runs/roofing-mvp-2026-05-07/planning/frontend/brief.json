@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "timestamp": "2026-05-07T00:00:00Z",
+    "lock_status": "LOCKED",
+    "version": "1.0.0"
+  },
+  "project": {
+    "name": "Roofing Company Platform",
+    "slug": "roofing-mvp",
+    "archetype": "marketing_site",
+    "industry": {
+      "class": "local_services",
+      "vertical": "roofing"
+    }
+  },
+  "brand": {
+    "business_name": "Roofing Company",
+    "voice": "trustworthy",
+    "tone": "clear, friendly, urgency-aware, locally-rooted",
+    "footer_attribution": {
+      "text": "Licensed and Insured Roofing Contractor",
+      "url": "https://example.com",
+      "placement": "footer",
+      "target_blank": true
+    }
+  },
+  "visual_archetype": "local-business-trust",
+  "target_audience": [
+    {
+      "persona": "Storm-damage homeowner",
+      "intent": "urgent inspection and insurance guidance",
+      "decision_driver": "speed, trust, proof"
+    },
+    {
+      "persona": "Planned reroof customer",
+      "intent": "material and warranty comparison",
+      "decision_driver": "warranty clarity, financing options"
+    },
+    {
+      "persona": "Commercial property manager",
+      "intent": "multi-site maintenance capability",
+      "decision_driver": "response time, local coverage"
+    }
+  ],
+  "conversion": {
+    "primary_cta": "Inspection request / Emergency contact",
+    "secondary_cta": "Material comparison / Financing info",
+    "kpi_primary": "Inspection form completion rate",
+    "kpi_secondary": "Storm campaign conversion rate",
+    "guardrail_response_time_minutes": 10
+  },
+  "site_map": {
+    "marketing_pages": [
+      {
+        "route": "/",
+        "title": "Home",
+        "description": "Hero with storm urgency path and inspection CTA",
+        "content_intent": "lead capture, trust signals, urgency"
+      },
+      {
+        "route": "/services",
+        "title": "Roofing Services",
+        "description": "Service overview and navigation",
+        "content_intent": "service education, material intro"
+      },
+      {
+        "route": "/services/[slug]",
+        "title": "Service Detail",
+        "description": "Dynamic service detail pages (inspection, replacement, repair, maintenance)",
+        "content_intent": "deep service education, CTA"
+      },
+      {
+        "route": "/storm-damage",
+        "title": "Storm Damage Emergency",
+        "description": "Dedicated emergency landing path with fast contact options",
+        "content_intent": "urgency, insurance guidance, emergency CTA"
+      },
+      {
+        "route": "/materials",
+        "title": "Roofing Materials",
+        "description": "Material comparison module (asphalt, metal, tile)",
+        "content_intent": "education, comparison, use-case guidance"
+      },
+      {
+        "route": "/projects",
+        "title": "Project Gallery",
+        "description": "Before/after project gallery with filters and warranty outcomes",
+        "content_intent": "proof, trust signal, visual documentation"
+      },
+      {
+        "route": "/financing",
+        "title": "Financing & Warranty",
+        "description": "Financing options and warranty trust strip",
+        "content_intent": "confidence building, payment options"
+      },
+      {
+        "route": "/contact",
+        "title": "Contact",
+        "description": "Contact form and contact info",
+        "content_intent": "lead capture fallback"
+      },
+      {
+        "route": "/faq",
+        "title": "FAQ",
+        "description": "Frequently asked questions",
+        "content_intent": "education, objection handling"
+      },
+      {
+        "route": "/about",
+        "title": "About",
+        "description": "About / team",
+        "content_intent": "trust, credibility"
+      },
+      {
+        "route": "/privacy",
+        "title": "Privacy Policy",
+        "description": "Privacy Policy",
+        "content_intent": "legal"
+      },
+      {
+        "route": "/terms",
+        "title": "Terms & Conditions",
+        "description": "Terms & Conditions",
+        "content_intent": "legal"
+      },
+      {
+        "route": "/404",
+        "title": "Not Found",
+        "description": "404 page",
+        "content_intent": "navigation recovery"
+      }
+    ]
+  },
+  "features": [
+    "marketing_pages",
+    "inspection_request_form",
+    "emergency_contact",
+    "material_comparison",
+    "project_gallery",
+    "financing_explainer",
+    "insurance_claim_support_explainer",
+    "warranty_trust_strip",
+    "reviews_aggregate_display",
+    "project_filters",
+    "certification_badges",
+    "response_time_promise",
+    "local_seo",
+    "area_coverage_display",
+    "before_after_documentation"
+  ],
+  "integrations": [
+    {
+      "name": "CMS",
+      "type": "sanity",
+      "purpose": "Services, materials, areas, projects, team, testimonials"
+    },
+    {
+      "name": "Forms backend",
+      "type": "route_handler",
+      "purpose": "Inspection request, emergency contact, quote"
+    },
+    {
+      "name": "Email",
+      "type": "resend",
+      "purpose": "Form confirmation, lead notification"
+    },
+    {
+      "name": "Analytics",
+      "type": "posthog",
+      "purpose": "Conversion tracking, user behavior"
+    }
+  ],
+  "trust_signals": [
+    {
+      "type": "license_number",
+      "placement": "header_utility, footer",
+      "required": true
+    },
+    {
+      "type": "insurance",
+      "placement": "hero, footer",
+      "required": true
+    },
+    {
+      "type": "years_in_business",
+      "placement": "hero",
+      "required": true
+    },
+    {
+      "type": "areas_served",
+      "placement": "hero, footer, nav",
+      "required": true
+    },
+    {
+      "type": "review_aggregate",
+      "placement": "below_hero",
+      "required": true
+    },
+    {
+      "type": "response_time_promise",
+      "placement": "hero, service_detail, footer",
+      "required": true
+    },
+    {
+      "type": "certifications",
+      "placement": "hero, service_detail",
+      "required": true
+    },
+    {
+      "type": "warranty_partners",
+      "placement": "financing_page",
+      "required": true
+    },
+    {
+      "type": "recent_local_projects",
+      "placement": "projects_gallery",
+      "required": true
+    }
+  ],
+  "content_requirements": {
+    "locales": ["en-US"],
+    "tone": "trustworthy, clear, friendly, urgency-aware",
+    "forbidden_words": [
+      "synergy",
+      "world-class",
+      "best-in-class",
+      "leverage",
+      "disruptive",
+      "innovative",
+      "we are passionate"
+    ],
+    "required_keys": [
+      "hero_headline",
+      "hero_subheading",
+      "inspection_cta",
+      "emergency_contact_cta",
+      "storm_urgency_message",
+      "material_education",
+      "warranty_assurance",
+      "financing_confidence",
+      "insurance_support",
+      "response_time_promise"
+    ]
+  },
+  "constraints": {
+    "deployment_platform": "vercel",
+    "database": "postgres",
+    "no_auth": true,
+    "no_payments": true,
+    "frontend_stack": "next-js",
+    "mobile_first": true,
+    "dark_theme_required": true,
+    "wcag_target": "2.1_AA"
+  },
+  "assumptions": [
+    {
+      "id": "A1",
+      "assumption": "Project archetype detected as marketing_site (local services, no auth/payments required)",
+      "rule": "R1 — Project archetype detection in intake_strategist"
+    },
+    {
+      "id": "A2",
+      "assumption": "Industry class: local_services / vertical: roofing",
+      "rule": "R2 — Industry vertical detection"
+    },
+    {
+      "id": "A3",
+      "assumption": "Visual archetype: local-business-trust (per brand-translation-rules matrix)",
+      "rule": "R3 — Visual archetype default"
+    },
+    {
+      "id": "A4",
+      "assumption": "Brand voice: trustworthy; tone: clear, friendly, urgency-aware",
+      "rule": "Local services industry pack voice defaults"
+    },
+    {
+      "id": "A5",
+      "assumption": "Required trust signals per local-business-trust archetype: license, insurance, years, areas, reviews, response-time",
+      "rule": "Archetype trust-signal requirements"
+    },
+    {
+      "id": "A6",
+      "assumption": "Dark theme and ThemeSwitcher mandatory per frontend infrastructure invariants",
+      "rule": "Mandatory UX infrastructure"
+    },
+    {
+      "id": "A7",
+      "assumption": "MobileBottomNav (icon tab bar) required for mobile `< lg` breakpoints",
+      "rule": "Mandatory UX infrastructure"
+    },
+    {
+      "id": "A8",
+      "assumption": "AuthModal infrastructure declared even though auth is not enabled (for future expansion)",
+      "rule": "Mandatory UX infrastructure"
+    }
+  ],
+  "quality_target": "world_class",
+  "open_questions": [
+    "Specific business name, license number, and areas served?",
+    "Team member names and photos for About section?",
+    "Existing project/portfolio images and before/after documentation?",
+    "Preferred color palette seed (default: deep navy with amber accent per local-business-trust)?",
+    "Financing partner details (if any)?",
+    "Warranty partner logos and terms?",
+    "Google Business Profile and review source (Google, Yelp, etc.)?",
+    "Preferred contact methods priority (phone > form > email)?"
+  ]
+}

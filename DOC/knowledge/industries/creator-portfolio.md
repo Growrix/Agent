@@ -77,6 +77,16 @@ portfolio, personal site, designer, developer portfolio, photographer, videograp
 - Case study pages indexable with Schema.org/CreativeWork.
 - About page with Person schema for the creator.
 
+## Quality references
+
+Describe what world-class output feels like for this industry and enforce these characteristics in planning and audit scoring.
+
+- Work-led first impression: strongest project evidence appears immediately with minimal chrome.
+- Distinct case-study signatures: each project surface has unique composition, rhythm, and motion identity.
+- Narrative craft: context, role, process, and outcome are concise and concrete.
+- Credibility without ego: voice is confident, specific, and free of empty self-praise.
+- Contact readiness: collaboration path is easy to find and low-friction from any major surface.
+
 ## Notes for the strategist
 - If the client says "portfolio" or "personal site", this pack locks the brief.
 - Encourage the client to provide 3–6 strongest pieces, not their entire archive — strategist surfaces this as an open question.

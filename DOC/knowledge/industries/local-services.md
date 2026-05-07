@@ -104,6 +104,16 @@ Surface explicitly on hero and service detail:
 - "Same-day appointments available."
 - "<n>+ years serving <area>."
 
+## Quality references
+
+Describe what world-class output feels like for this industry and enforce these characteristics in planning and audit scoring.
+
+- Urgent-contact clarity: phone/booking path visible in first viewport on mobile and desktop.
+- Local proof density: named areas served, review aggregate, and license/insurance surfaced before mid-page.
+- Trust-first readability: plain language, large readable body copy, and zero jargon-heavy filler.
+- Conversion confidence: quote/booking friction minimized; recovery paths obvious on errors.
+- Authenticity signal: real team/worksite imagery and locality cues; no generic stock-led hero.
+
 ## Notes for the strategist
 - If user request is "build a <trade> website" with no other detail, this pack supplies enough to lock a brief.
 - The vertical-specific terminology (drains, panels, ducts, etc.) belongs in the content library and is filled by the content_planner using the vertical hint, not by this pack.

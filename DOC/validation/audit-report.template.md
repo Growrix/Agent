@@ -28,7 +28,7 @@ summary:
   blocker_count: <int>
   advisory_count: <int>
   drift_count: <int>
-  sections_passed: <int> / 8
+  sections_passed: <int> / 10
   total_checks_run: <int>
   checks_passed: <int>
   checks_failed: <int>
@@ -39,7 +39,7 @@ summary:
 
 ## Section results
 
-For each of A, B, C, D, E, F, G, H, render this block:
+For each of A, B, C, D, E, F, G, H, I, J, render this block:
 
 ```yaml
 section_<letter>:
@@ -210,7 +210,9 @@ Every audit run also emits the same content as `<target>/reports/audit-report.<t
     "E": { ... },
     "F": { ... },
     "G": { ... },
-    "H": { ... }
+    "H": { ... },
+    "I": { ... },
+    "J": { ... }
   },
   "orphans": { ... },
   "broken_references": [ ... ],

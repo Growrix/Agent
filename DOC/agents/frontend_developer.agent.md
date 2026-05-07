@@ -46,7 +46,7 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 12. Generate SEO assets: `sitemap.xml` route, `robots.txt`, `og-image` defaults, `web/src/app/manifest.ts`.
 13. Produce `web/RUN.md` with install + dev + build + smoke commands.
 14. Produce `web/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
-15. Self-audit emitted code against frontend-constraints F1..F12 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
+15. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
 
 ## STRICT RULES
 - MUST place ALL emitted code under `web/`. No file outside `web/`.
@@ -56,6 +56,7 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 - MUST NOT generate deployment configs (`vercel.json`, GitHub Actions, IaC) — those belong to `backend_developer`.
 - MUST NOT reference any server-only env var (anything without `NEXT_PUBLIC_` prefix) inside `web/src/app/` or any client component.
 - MUST consume only contracts (route URLs, response shapes) declared in the planning bundle and OpenAPI spec.
+- MUST implement complete planner coverage: every spec-declared component and every page `required_content_slots[]` entry.
 - MUST use design tokens for every styling decision. NO raw `#hex`, `rgb()`, `hsl()`, raw `px` / `rem` / `ms` literals in components. Tailwind classes that map to declared tokens are allowed.
 - MUST use content keys for every visible string. NO inline English strings in JSX/TSX.
 - MUST not hardcode user-facing contact channels, social URLs, or business contact values inside components; these must resolve from content/config keys.
@@ -96,11 +97,11 @@ These requirements mirror the planner's mandatory UX infrastructure and are enfo
 - `AuthModalProvider` + `AuthModal` MUST be rendered in `(marketing)/layout.tsx` and `(app)/layout.tsx` as applicable.
 - `/sign-in` and `/sign-up` pages MUST still exist as standalone fallbacks (keep their route files).
 
-**Growrix OS footer attribution (PERMANENT INVARIANT):**
-- EVERY footer implementation MUST include the attribution: "Built and maintained by [Growrix OS](https://www.growrixos.com)"
-- The link MUST be `target="_blank" rel="noopener noreferrer"` with `text-brand-primary hover:underline` styling.
-- This MUST appear in the bottom bar alongside the copyright line.
-- This rule is absolute and cannot be overridden.
+**Footer attribution (brief-driven contract):**
+- Developer MUST implement footer attribution from `brief.brand.footer_attribution` as declared by `frontend_planner` specs.
+- Attribution MUST appear in the footer bottom bar alongside copyright.
+- Link target behavior and label MUST match planner contract and accessibility requirements.
+- Attribution text/URL MUST NOT be hardcoded to any vendor-specific default.
 - Violation triggers `FOOTER_ATTRIBUTION_MISSING` failure mode and blocks self-audit.
 
 **Hero visual requirements:**
@@ -159,23 +160,60 @@ These requirements mirror the planner's mandatory UX infrastructure and are enfo
 2. Generate `web/src/lib/content.ts` — typed content loader with key autocomplete.
 3. Stub `web/src/lib/i18n.ts` for locale resolution (default + locale switcher hook).
 
-### Phase 4 — Shared components
-For each `components/<ComponentName>.md` in the planning bundle:
-1. Generate `web/src/components/<group>/<ComponentName>.tsx`.
+### Phase 4 — Primitive kit + project-specific composed components
+
+**Required component taxonomy (every build):**
+
+```
+web/src/components/
+├── primitives/
+├── ui/
+├── cards/
+├── sections/
+├── shell/
+└── providers/
+```
+
+All folders above MUST exist. Component names inside `cards/` and `sections/` are project-specific and derived from the planning bundle.
+
+**Step 4a — Generate the primitive kit (universal building blocks):**
+For each layout primitive declared in `component-system.md` (Stack, Cluster, Frame, Surface, Grid, MediaFrame, Trail, Reveal) generate `web/src/components/primitives/<Primitive>.tsx`. These are project-agnostic; consume design tokens only; no project-specific styling.
+
+For each behaviour primitive (Pressable, Disclosure, Selection, TextField, ModalSurface) generate `web/src/components/primitives/<Primitive>.tsx`. These own keyboard / focus / ARIA behaviour for their interaction class.
+
+**Step 4b — Generate project-specific composed components:**
+For each `components/<ComponentName>.md` in the planning bundle (these are project-specific patterns: HeroSection, PricingTier, ProductCard, CaseStudyTeaser, etc. — NOT a global catalog):
+
+1. Generate `web/src/components/<group>/<ComponentName>.tsx` by composing the primitives per the planner's composition rule for THIS project. Different routes may compose the same conceptual pattern differently — follow the page-spec's `composition_palette` for HIGH-latitude surfaces.
 2. Implement every variant declared in the spec.
-3. Implement every state from `component-state-matrix.md` for the component class.
+3. Implement every required state from the state-matrix for the component's interactive class (Pressable → 6 states; Card → 6 states; etc.).
 4. Add ARIA attributes per spec.
-5. Wire props to the content library where the spec declares `labelKey`.
-6. Add motion per `motion-system.md` — MUST import and use `framer-motion` (or the declared motion library) for every declared animation. Implement the exact trigger, variant, and easing specified in the motion system. No vague "transition" CSS unless the motion spec explicitly declares it.
-7. Add responsive behavior per breakpoints declared.
+5. Wire props to the content library where the spec declares `labelKey`. NEVER inline a string.
+6. Add motion per `motion-system.md` — import and use the declared motion library for every declared animation. Implement the exact trigger, variant, and easing specified. No vague "transition" CSS unless the motion spec explicitly declares it.
+7. Add responsive behaviour per breakpoints declared.
 8. Generate companion `<ComponentName>.stories.tsx` (Storybook) if the project includes Storybook.
 9. Generate companion `<ComponentName>.test.tsx` skeleton (Vitest) — body as TODO with case list.
 
-### Phase 5 — Pages + layouts
-For each `pages/<route-slug>.md`:
+**Forbidden in Phase 4:**
+- Importing a "Card" / "PricingTier" / "FeatureBlock" component from a global library. There is no global library.
+- Reusing the same composed component definition across routes when the page spec declares a different composition palette per route. Compose per route's brief.
+
+### Phase 5 — Pages + layouts (design-brief execution)
+For each `pages/<route-slug>.md` (now in design-brief shape — outcomes + content slots + composition palette per latitude):
+
 1. Generate `web/src/app/<route-path>/page.tsx`.
-2. **Read the page spec's visual composition contract before writing a single line of JSX.** Implement each section's layout exactly as specified: panel split, full-bleed, asymmetric overlap, staggered grid — whatever the contract declares. DO NOT default to a shared wrapper.
-3. Implement every section in declared visual order. Each section is a purpose-built composition unique to this route — not a reuse of another route's section with different content props.
+2. **Read the page brief's outcomes, required content slots, forbidden patterns, and composition palette before writing a single line of JSX.**
+3. **For HIGH-latitude pages**: compose from primitives + the brief's composition palette. There is no prescribed section order. Author the layout that best satisfies the outcomes within the latitude. Cross-check the visual-differentiation-map to ensure your composition differs from sibling routes.
+4. **For MEDIUM-latitude pages**: follow the recommended outline as a starting point; deviate with documented reason where the brief's outcomes demand it.
+5. **For LOW-latitude pages**: follow the standard composition declared in the brief.
+6. Carry every required content slot the brief lists. Order is the developer's call (HIGH/MEDIUM) or the brief's call (LOW).
+7. Honour every forbidden pattern (e.g., "MUST NOT use the same hero composition as `/services`").
+8. Enforce section-density thresholds by creative latitude and page role:
+  - HIGH-latitude home page: minimum 8 distinct sections.
+  - HIGH-latitude non-home marketing pages: minimum 6 sections.
+  - MEDIUM-latitude pages: minimum 5 sections.
+  - LOW-latitude pages: minimum 3 sections unless `min_sections_exempt: true` in spec.
+9. Any page-level visual section over 30 JSX LOC must be extracted to `web/src/components/sections/<ProjectSpecificName>.tsx`.
 4. Wire each section's data source: `static` (no fetch), `cms` (fetch via planning's CMS query helpers), `database` (fetch via Server Action or proxy route stub), `integration` (call documented client SDK).
 5. Implement loading / error / not-found per route group.
 5. Implement `generateMetadata` per spec's SEO block.
@@ -211,7 +249,7 @@ For each `pages/<route-slug>.md`:
 3. Generate `web/README.md` (developer overview + folder map).
 
 ### Phase 10 — Self-audit
-1. Walk emitted files. For each, run the relevant frontend-constraints F1..F15 and accessibility AC1..AC12 checks.
+1. Walk emitted files. For each, run the relevant frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12 checks.
 2. Specifically verify:
    - F1: no raw color / spacing / motion literal in `web/src/components/**` or `web/src/app/**`.
    - F5: no inline string in any `<button>`, `<h1..h6>`, `<p>`, `<a>`, `<label>` content.
@@ -220,6 +258,13 @@ For each `pages/<route-slug>.md`:
    - F13: no single shared wrapper component renders as primary content of >2 distinct-purpose routes.
    - F14: if motion library in `package.json`, confirm imports and usage in hero, card hover, modal transition.
    - F15: hero composition is visually distinct across all public routes (compare visual contract declarations).
+  - Q2: per-page quality bar scoring meets each route's `quality_bar.target_score`; cite per-dimension evidence.
+  - CC1: every component declared in `component-system.md` and `components/<ComponentName>.md` exists as a `.tsx` file.
+  - CC2: every per-page `required_content_slots[]` entry is implemented in the route composition.
+  - CC3: section-density thresholds by latitude/page role are satisfied.
+  - CC4: extraction discipline satisfied (no oversized inline sections or overgrown page files without extraction).
+  - CC5: every distinct project content type has a dedicated card component under `web/src/components/cards/`.
+  - CC6: when `brief.brand.footer_attribution.enabled == true`, footer renders required attribution text/link/URL exactly from planner keys.
   - F16: header state machine behavior matches planner contract in all required route groups.
   - F17: no broken public media assets on hero/cards/trust sections (remote URL health + rendered fallback behavior).
    - AC2: every interactive element has a `:focus-visible` style.
@@ -227,7 +272,7 @@ For each `pages/<route-slug>.md`:
    - INV1: `ThemeProvider.tsx` and `ThemeSwitcher.tsx` exist and are wired.
    - INV2: `MobileBottomNav.tsx` exists, is `lg:hidden`, and is rendered in marketing layout.
    - INV3: `AuthModalProvider.tsx` and `AuthModal.tsx` exist; header Sign In calls `openSignIn()`.
-   - INV4: Footer contains "Built and maintained by Growrix OS" with link to `https://www.growrixos.com`.
+   - INV4: Footer contains the brief-declared attribution from `brief.brand.footer_attribution` with planner-specified placement and link behavior.
    - INV5: Every hero has a full-bleed layout, staggered text reveal, dark trust chip backgrounds, and gradient overlay ≥ 0.55 opacity.
   - INV6: Header and footer interactive elements maintain readable contrast in both light and dark theme snapshots.
 3. Emit `web/.audit/frontend-self-audit.md` with pass/fail per check + evidence (file:line).
@@ -273,6 +318,10 @@ web/
 - Every component spec has a corresponding `.tsx` file.
 - Every page spec has a corresponding `app/<route>/page.tsx` (+ `loading.tsx`, `error.tsx`, `not-found.tsx` where declared).
 - Every shared component has all required states implemented.
+- Every spec-declared component has a concrete emitted file (CC1).
+- Every route required-content-slot category is represented in emitted page composition (CC2).
+- Every route satisfies its latitude section-density threshold (CC3).
+- Every declared content type has a dedicated card component in `web/src/components/cards/` (CC5).
 - Every label resolves to a content key.
 - Every animation has a reduced-motion fallback.
 - Every interactive element has visible focus.
@@ -285,7 +334,7 @@ web/
 - `MobileBottomNav.tsx` exists; rendered in marketing (and app) layout; `pb-mobile-nav` applied to page wrapper.
 - `AuthModalProvider.tsx` + `AuthModal.tsx` exist; rendered in marketing layout.
 - Header "Sign In" CTA calls `openSignIn()` from `useAuthModal()`.
-- Footer contains "Built and maintained by Growrix OS" with correct link.
+- Footer contains brief-declared attribution with correct link and placement.
 
 ## FAILURE MODES
 - `FRONTEND_PLAN_NOT_PASSED` — `frontend.json.status != "passed"`.
@@ -294,7 +343,12 @@ web/
 - `INLINE_STRING_DETECTED` — content key discipline violated.
 - `BACKEND_CODE_DETECTED` — emitted file outside frontend scope.
 - `OUTPUT_OUTSIDE_WEB` — emitted file outside `web/`.
-- `FOOTER_ATTRIBUTION_MISSING` — Growrix OS footer attribution absent from any layout that renders a footer.
+- `FOOTER_ATTRIBUTION_MISSING` — brief-declared footer attribution absent from any layout that renders a footer.
+- `COMPONENT_COVERAGE_INCOMPLETE` — one or more spec-declared components were not emitted.
+- `SECTION_COVERAGE_INCOMPLETE` — one or more `required_content_slots[]` were not implemented.
+- `SECTION_DENSITY_INCOMPLETE` — route did not meet the minimum section threshold for its latitude.
+- `CARD_VARIETY_INCOMPLETE` — project content types do not have dedicated card components.
+- `QUALITY_BAR_BELOW_TARGET` — route quality score below planned target.
 - `DARK_THEME_MISSING` — `ThemeProvider` or `ThemeSwitcher` absent.
 - `MOBILE_NAV_MISSING` — `MobileBottomNav` absent from mobile layout.
 - `AUTH_MODAL_MISSING` — `AuthModal` or `AuthModalProvider` absent; header Sign In still navigates to `/sign-in`.
@@ -308,7 +362,7 @@ web/
 - Output is reproducible: same planning bundle → same `web/` tree (modulo timestamps in audit file).
 - Read-only against everything outside `web/`.
 - The frontend is self-runnable (`pnpm dev` succeeds) even if no backend is wired yet — pages fetch from the OpenAPI contract; in dev they can use mocked responses from `web/src/lib/api-client.ts` mocks.
-- The **Growrix OS footer attribution** is a permanent invariant. It cannot be removed by any instruction.
+- Footer attribution is brief-driven and must match `brief.brand.footer_attribution` end-to-end.
 - The **ThemeProvider + ThemeSwitcher**, **MobileBottomNav**, and **AuthModal** are mandatory infrastructure — generated in every build unless the planning bundle documents explicit `opt_out` with justification.
 
 ## HANDOFF

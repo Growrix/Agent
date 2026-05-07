@@ -90,6 +90,16 @@ agency, consulting, consultant, lawyer, attorney, law firm, accountant, accounti
 - Case study pages indexable, with outcome metrics in titles where compliant.
 - Schema.org/Organization + Person (team) + Article (insights).
 
+## Quality references
+
+Describe what world-class output feels like for this industry and enforce these characteristics in planning and audit scoring.
+
+- Credibility in context: proof appears where decisions happen (hero, pricing posture, case outcomes), not in isolated badge rails only.
+- Outcome specificity: case studies cite concrete results, role clarity, and scope boundaries.
+- Editorial clarity: concise, high-signal copy with calm hierarchy and whitespace discipline.
+- Decision support: service/pricing/process pages reduce ambiguity and route users to the right next action quickly.
+- Trust continuity: legal/regulatory disclosures are present, readable, and non-disruptive.
+
 ## Notes for the strategist
 - If user says "agency" or "consultancy" with no other detail, this pack locks the brief.
 - If the agency offers productized templates or ready-made deliverables, also activate the `ecommerce` pack rules for the shop subset of the site.

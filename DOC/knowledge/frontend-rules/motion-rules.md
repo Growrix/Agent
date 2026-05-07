@@ -1,153 +1,228 @@
-# Motion Rules
+# Motion Rules — Temperament + Choreography (NOT a Catalog)
 
-Motion serves three masters: clarity, feedback, and hierarchy. Anything that does not serve one of those is decoration and is forbidden.
+Motion is a *creative dimension*, not a fixed catalog. The OS no longer prescribes "use these named effects from this list." It declares **temperaments** the AI must match and **choreography rules** for combining motion primitives within a temperament.
 
-## Layers
+This prevents motion uniformity (the prior catalog approach made every site's hover lift identical, every section reveal identical, every page transition identical).
 
-1. **Macro motion** — section reveal, page transition, modal/drawer/sheet, route change.
-2. **Micro motion** — hover, focus, active, selection, inline feedback, count-up, toast, accordion reveal, chip selection.
-3. **Streaming motion** — token streaming (AI), live updates (real-time), progress (uploads, jobs).
+Motion still serves three masters — **clarity, feedback, hierarchy**. Anything that does not serve one of those is decoration and is forbidden.
 
-## Duration policy
+---
 
-All durations come from motion tokens in `design-tokens-rules.md`. Raw `ms` literals are forbidden in component code.
+## The four temperaments
 
-| Layer / use            | Token                          | Default range |
-|------------------------|--------------------------------|---------------|
-| Hover / micro feedback | `--motion-duration-fast`       | 120–180ms     |
-| Default UI transition  | `--motion-duration-base`       | 180–220ms     |
-| Section reveal / lift  | `--motion-duration-slow`       | 220–280ms     |
-| Cinematic hero / page  | `--motion-duration-cinematic`  | 280–320ms     |
-| Reduced motion         | `--motion-duration-instant`    | 0ms           |
+A temperament defines the *feel* of a surface's motion. Per-surface temperament is declared in the page brief; the planner picks from these four (or composes a hybrid where the archetype permits).
 
-Archetype-specific bands override the defaults — see each visual-archetype file's "Motion personality" section.
+### `restrained-cinematic`
+- Slow, controlled, considered.
+- Macro motion duration: 240–320ms.
+- Micro motion: 140–200ms.
+- Easing: ease-out preferred; no spring on macro; subtle spring allowed on small interactive feedback (chip selection).
+- Voice analogy: a measured, confident speaker who pauses for effect.
+- Default for: `editorial-premium`, `bold-consumer`, `portfolio-craft`.
 
-## Easing policy
+### `alive-energetic`
+- Fast, springy, alive.
+- Macro motion duration: 160–220ms.
+- Micro motion: 100–160ms.
+- Easing: spring on chip selection, button press; ease-out on macro.
+- Voice analogy: an enthusiastic guide moving you through a story.
+- Default for: `startup-conversion`, hero of `bold-consumer` drops.
 
-| Easing token                | Use                                                    |
-|-----------------------------|--------------------------------------------------------|
-| `--motion-easing-standard`  | Default for most interactions; archetype-defined curve |
-| `--motion-easing-decel`     | Element entering, modal opening                        |
-| `--motion-easing-accel`     | Element leaving, modal closing                         |
-| `--motion-easing-spring`    | Chip selection, mobile sheet, AI suggestion lift only  |
+### `calm-precise`
+- Snappy, functional, no flair.
+- Macro motion duration: 160–220ms.
+- Micro motion: 100–160ms.
+- Easing: standard ease-out; no spring on macro.
+- Voice analogy: a competent professional doing their job.
+- Default for: `modern-saas`, `marketplace`, `dashboard-ops`.
 
-## Reduced-motion contract
+### `playful-staccato`
+- Snappy, bouncy, attention-grabbing per element.
+- Macro motion duration: 180–240ms.
+- Micro motion: 120–180ms; spring everywhere.
+- Easing: spring on most interactions.
+- Voice analogy: a cheerful guide that nudges you with each step.
+- Default for: rare; consumer subsets that explicitly want playfulness.
 
-- Every animated component MUST respect `prefers-reduced-motion: reduce`.
-- The reduced-motion fallback MUST preserve the final visual state (no layout shift, no missing element).
-- Replace duration with `--motion-duration-instant` and disable easing.
-- Cross-fades become instant swaps. Slide-ups become instant appears. Parallax disables.
+### `alive-precise` (hybrid; AI-product specific)
+- Streaming-text temperament: fast, micro-staggered, alive within a precise framing.
+- Token chunk: 100–140ms appear with slight slide-up.
+- Suggestion chip: spring lift 1.02.
+- Default for: `ai-product`.
 
-## Macro motion catalog (allowed effects)
+---
 
-### Section reveal on scroll
-- Effect: opacity 0→1 + translateY 8–16px → 0.
-- Duration: `--motion-duration-slow`.
-- Trigger: IntersectionObserver, threshold 0.15.
-- Stagger: 60–120ms between sibling cards (cap at 5 children stagger).
-- Reduced-motion fallback: instant fade-in via `<noscript>`/CSS only.
+## Choreography rules (how motion primitives combine within a temperament)
 
-### Page transition
-- Effect: route content cross-fade with optional translateY 4px.
-- Duration: `--motion-duration-base`.
-- Reduced-motion fallback: instant.
+Motion primitives are: `translate`, `opacity`, `scale`, `rotate`, `sequence`, `stagger`, `delay`. The planner composes choreography from primitives to match the chosen temperament. The OS does NOT name "section reveal effect" or "hover lift effect" — those names locked the AI into uniformity.
 
-### Modal / drawer / sheet open
-- Effect: backdrop fade + content scale 0.98→1 (modal) or translate (drawer/sheet).
-- Duration: `--motion-duration-base`, decel easing on enter, accel easing on exit.
-- Focus trap engages on open; ESC closes.
-- Reduced-motion fallback: instant open/close.
+### Choreography principles
 
-## Micro motion catalog (allowed effects)
+1. **Match the temperament.** Every motion declared on a surface must read as the surface's chosen temperament. Audit Q3 (motion temperament) scores this.
+2. **One purpose per motion.** Every motion declares one of: `clarity` (state change), `feedback` (user input acknowledged), `hierarchy` (attention direction). Decorative is forbidden.
+3. **Reduced-motion fallback for every animation.** Final visual state must be preserved without layout shift. Translation becomes instant; opacity becomes instant; scale becomes instant or subtle shadow swap.
+4. **Performance budget.** `transform` and `opacity` only. No `top` / `left` / `width` / `height` animation. 60fps on mid-range mobile. Use `will-change` sparingly and remove after.
+5. **Motion does not block interaction.** No animation > 320ms on a critical path. CTAs respond within one frame.
+6. **No cross-route motion uniformity.** If `home` and `services` use the same temperament, their hero choreography must still differ (different stagger pattern, different element entry order, different motion key moments). Audit Q1 (visual differentiation) scores this.
 
-### Hover lift
-- Effect: subtle scale 1.01–1.03 + shadow shift to `--shadow-2`.
-- Duration: `--motion-duration-fast`.
-- Disabled in reduced-motion (keep shadow change instant).
+### Choreography invariants per macro effect
 
-### Press feedback
-- Effect: scale 0.97–0.98.
-- Duration: `--motion-duration-fast`, decel easing.
+These are categories of motion (not catalog entries). The planner declares which categories each surface uses; the developer composes the actual motion within the temperament + choreography rules.
 
-### Focus ring
-- Effect: outline appears via `--color-focus-ring` + `--shadow-focus`.
-- Duration: `--motion-duration-fast`.
-- Visible on keyboard focus; muted on mouse focus per `:focus-visible`.
+| Category | Purpose | Temperament-driven duration |
+|---|---|---|
+| **Surface entry** (section becomes visible on scroll, page transitions, modal opens) | hierarchy | per temperament |
+| **Element press** (button, chip, link tap) | feedback | per temperament micro band |
+| **Element hover** (desktop) | hierarchy | per temperament micro band |
+| **Element focus** (keyboard) | feedback (with focus ring) | per temperament micro band |
+| **Inline state change** (validation, badge swap, count update) | clarity | per temperament micro band |
+| **Disclosure** (accordion, popover, tooltip, dropdown) | clarity | per temperament |
+| **Overlay** (drawer, sheet, modal, toast) | hierarchy + clarity | per temperament |
+| **Streaming** (AI tokens, realtime status, progress) | clarity + feedback | per temperament; streaming chunks 100–140ms |
 
-### Tab / segmented control switch
-- Effect: indicator slides under active tab.
-- Duration: `--motion-duration-fast`.
+### Example — `restrained-cinematic` choreography
 
-### Chip selection
-- Effect: scale 1.0 → 1.04 → 1.0 with spring easing.
-- Duration: `--motion-duration-fast` to `--motion-duration-base`.
+The planner authors something like:
 
-### Accordion reveal
-- Effect: height auto-resolved + content fade.
-- Duration: `--motion-duration-base`.
+```yaml
+home:
+  hero:
+    temperament: restrained-cinematic
+    surface_entry:
+      sequence:
+        - element: eyebrow
+          properties: opacity 0→1, translateY 8→0
+          duration: 240ms
+          easing: ease-out
+        - element: headline
+          properties: opacity 0→1, translateY 12→0
+          duration: 280ms
+          easing: ease-out
+          delay: 80ms (after eyebrow)
+        - element: subhead
+          properties: opacity 0→1, translateY 8→0
+          duration: 240ms
+          easing: ease-out
+          delay: 80ms (after headline)
+        - element: cta_primary
+          properties: opacity 0→1, scale 0.96→1
+          duration: 280ms
+          easing: ease-out
+          delay: 120ms (after subhead)
+      reduced_motion: instant fade per element, no stagger
+      purpose: hierarchy
+```
 
-### Toast entry/exit
-- Effect: translateY 16px + fade.
-- Duration: `--motion-duration-base`.
-- Auto-dismiss respects WCAG 2.2.1 (default 5–8s; pause on hover/focus).
+This is **specific** (named elements, named properties, named durations, named delays) but **not catalog-bound** — the same temperament could choreograph the `services` hero with different elements and a different stagger pattern, satisfying differentiation.
 
-### Count-up
-- Effect: number animates from 0 to target.
-- Duration: `--motion-duration-cinematic`.
-- Only on first reveal; not repeated; disabled in reduced-motion.
+### Example — `services` hero same temperament, different choreography
 
-### Inline validation appear
-- Effect: helper/error message fades + translateY 4px.
-- Duration: `--motion-duration-fast`.
+```yaml
+services:
+  hero:
+    temperament: restrained-cinematic
+    surface_entry:
+      sequence:
+        - element: media_panel
+          properties: opacity 0→1, scale 1.02→1
+          duration: 320ms
+          easing: ease-out
+        - element: text_column
+          properties: opacity 0→1, translateY 16→0
+          duration: 280ms
+          easing: ease-out
+          delay: 120ms (after media)
+      reduced_motion: instant
+      purpose: hierarchy
+```
 
-## Streaming motion catalog
+Same temperament, different choreography. This is the variance that prevents template collapse without losing motion quality.
+
+---
+
+## Streaming motion (AI product surfaces)
+
+Special category for `ai-product` archetype.
 
 ### AI token streaming
-- Effect: each token chunk appears with opacity 0→1 + 2–4px translateY → 0.
-- Duration: `--motion-duration-fast` per chunk.
-- Reduced-motion: chunks appear instantly per chunk.
+- Per-chunk: opacity 0→1 + 2–4px translateY → 0.
+- Duration per chunk: 100–140ms.
+- Reduced-motion: chunks appear instantly per chunk (no opacity/translate).
 - Streaming cursor: 1Hz blink.
 
 ### Realtime status badge change
-- Effect: pill background cross-fade.
-- Duration: `--motion-duration-base`.
+- Pill background cross-fade.
+- Duration: per temperament base.
 
 ### Upload progress
-- Effect: linear progress bar fill.
+- Linear progress bar fill.
 - No bouncing or indeterminate spinners when progress is known.
 
-## Forbidden patterns
+---
 
-- Decorative parallax beyond hero (no parallax in mid-page sections).
-- Continuous looping animations (e.g., bouncing icons, pulsing CTAs) outside specific status indicators.
+## Forbidden motion
+
+These are universal — no temperament can opt in.
+
+- Decorative parallax beyond the hero (no parallax in mid-page sections).
+- Continuous looping animations (bouncing icons, pulsing CTAs) outside specific status indicators.
 - Cursor-follow effects in non-portfolio archetypes.
 - Hijacked scroll (locking the user to scroll-driven scenes).
 - Page-loading splash screens.
 - Auto-playing video with sound on.
 - Scroll-jacking carousels.
 - Animations that delay first-meaningful-paint.
+- Naming a motion "subtle entrance" or "smooth transition" without specifying primitives, properties, and durations. Vague motion is forbidden.
 
-## Performance budgets
+---
 
-- Macro motion frames must run at 60fps on a mid-range mobile.
-- No layout-thrashing properties: animate `transform` and `opacity` only.
-- Use `will-change` only on elements that animate at least once per session, and remove after.
-- IntersectionObserver thresholds set to fire well before the element enters viewport.
+## Reduced-motion contract
 
-## Micro-animation purpose check
+Every motion declaration MUST include a `reduced_motion` line stating the fallback behaviour. The fallback MUST:
+- Preserve the final visual state.
+- Avoid layout shift.
+- Avoid cross-fade timing that depends on opacity transitions (unless duration is set to instant).
+- Be visually equivalent in information presented.
 
-Every micro-animation declared in a component spec MUST cite one of:
-- `purpose: clarity` — clarifies state change (focus, selection, expand).
-- `purpose: feedback` — confirms user input (press, validation, toast).
-- `purpose: hierarchy` — directs attention to the next step (CTA emphasis on hover).
+If a motion cannot satisfy reduced-motion, it cannot ship.
 
-If none of those applies → the motion is decorative and forbidden by constraint **F9**.
+---
 
-## Output
+## Performance budget
 
-The motion_planner emits `<output_root>/motion-system.md` listing:
+- 60fps on mid-range mobile.
+- `transform` and `opacity` properties only.
+- No layout-thrashing properties (`top`, `left`, `width`, `height`, `margin`).
+- `will-change` only on elements that animate at least once per session, removed after.
+- IntersectionObserver thresholds set to fire well before the element enters viewport (e.g., `rootMargin: '0px 0px -10% 0px'`).
 
-`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
-- Adopted duration band per archetype.
-- Adopted easing curves.
-- Per-component motion declarations citing layer + token + purpose + reduced-motion fallback.
+---
+
+## What `motion-system.md` (planner output) must contain
+
+1. **Adopted temperament(s)** per surface (route-by-route).
+2. **Per-surface choreography** for every motion key moment (surface entry, press, hover, focus, inline state change, disclosure, overlay, streaming where applicable). Each includes: element, properties, duration, easing, delay (where chained), reduced-motion fallback, purpose.
+3. **Forbidden motion list** specific to this project (e.g., "no parallax outside `/`").
+4. **Performance budget** explicit per page (e.g., "no animation > 240ms on `/checkout` critical path").
+
+---
+
+## What the developer implements
+
+1. Imports the declared motion library (Framer Motion or equivalent).
+2. Implements every choreography exactly per the planner's specification.
+3. Wraps in `useReducedMotion()` (or equivalent) and applies the declared fallback when reduced-motion is set.
+4. Runs the self-audit verifying:
+   - Every motion uses motion tokens (no raw `ms`).
+   - Every motion has a reduced-motion fallback.
+   - Every motion cites a purpose.
+   - No forbidden motion patterns appear.
+   - Surfaces with the same temperament across routes show different choreography (audit Q1 differentiation).
+
+---
+
+## Forbidden in this file
+
+- A named catalog of effects ("Section reveal effect", "Hover lift effect", "Card lift effect"). The catalog approach forces uniformity.
+- Per-component motion prescriptions that lock all projects to identical animations.
+- Generic "subtle animations encouraged" language without specificity.

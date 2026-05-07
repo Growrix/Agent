@@ -1,243 +1,352 @@
-# Page Archetype Rules
+# Page Archetype Rules — Outcomes (NOT Section Templates)
 
-Defines the required **user-experience outcomes** per page kind, and the section composition requirements every per-page spec must satisfy. The `page_planner` uses this as a minimum outcome checklist — not a template.
+Defines the **outcomes** every page archetype must satisfy and the **constraints** it must honour. The `frontend_planner` uses this as an outcome checklist — never as a fill-in template.
+
+---
 
 ## HOW TO READ THIS FILE
 
-**Section names are UX outcomes, not component names.**
-- `"Hero"` means: the user immediately understands what the business does and has a clear first action. It does NOT mean use a component called `HeroSection`.
-- `"Proof"` means: the user sees believable social or data evidence. It does NOT mean use a component called `TestimonialSection`.
-- The developer owns component naming and composition. The planner owns outcomes and visual contracts.
+For each page archetype below, the planner finds:
+- **User intent** — what the visitor wants to do.
+- **Required outcomes** — the truths that must hold by the time the visitor leaves.
+- **Required content slots** — what content must be on the page (NOT in what order).
+- **Forbidden patterns** — what the page MUST NOT do.
+- **Standard latitude** — default `creative_latitude` band for this archetype (the project may override).
+- **Quality dimensions to weight** — which scoring dimensions matter most for this archetype.
 
-**Composition must be differentiated.**
-Every public route MUST produce a visually distinct hero composition. The planner MUST explicitly describe the layout split, media framing, and typographic hierarchy in each page spec's visual contract — these must differ across routes.
+The planner translates these into a per-page design brief at `<output_root>/pages/<route-slug>.md`. The developer composes the page from primitives within this envelope.
 
-**Templates are starting floors, not ceilings.**
-These section lists are the minimum required experiences. The planner MUST enrich, reorder, or combine sections based on the brief and visual archetype. Reducing a brief to fit these lists is a planning failure.
+**There are NO section templates in this file.** A section list constrains composition; we want outcomes that constrain truth without constraining composition.
 
-## Page composition contract (every page)
+---
 
-Every page spec MUST declare:
+## Universal cross-archetype rules
 
-1. Page identity: `route`, `name`, `archetype`, `auth: public|protected`, `data_source` per section.
-2. Sections in **visual order**, each with:
-   - section name (expressive, outcome-describing — not a generic component class)
-   - purpose (1 line — what the user understands or does after this section)
-   - content keys consumed (from `<output_root>/content-library.md`)
-   - visual composition (layout split, asymmetry, full-bleed, staggered grid — must be unique per hero)
-   - interactions (per `interaction-planner` output)
-   - states (loading / empty / error / success / not-found as applicable)
-   - responsive adaptation (desktop / tablet / mobile)
-   - motion signature (trigger, target, effect, framer-motion variant name or CSS approach — no vague notes)
-3. SEO block: title, description, og:title, og:description, og:image, canonical, schema.org JSON-LD where applicable.
-4. Conversion path: primary path, secondary path, exit points.
-5. Accessibility notes specific to this page.
-6. Performance notes (LCP target, image weight budget).
+Every page MUST satisfy:
+- **Required content slots:** declared up-front, exhaustively (no surprise labels emerge during build).
+- **Differentiation:** the page's hero composition + primary section rhythm + motion temperament MUST differ from every other route on the same site, per `visual-differentiation-map.md`.
+- **Sections (count, not order):** ≥ 7 distinct content surfaces on every public page (or `min_sections_exempt: true` with reason: 404, legal, narrow utility).
+- **Auth-gated routes:** redirect-or-block pattern declared explicitly.
+- **States:** loading + empty + error + not-found + success per the situations the page can encounter.
+- **Conversion path:** primary + secondary + exit-point declared.
+- **Quality bar score:** ≥ project target on every dimension.
+- **Reduced motion fallback:** every animation has one.
 
-If any of the above is missing, the spec is invalid and the reviewer rejects it (constraint **F7**).
+These are non-negotiable. Archetype-specific rules layer on top.
 
-## Required outcomes per page archetype
+---
 
-> Section labels below describe the user experience outcome. Page planner MUST translate each into a concrete visual composition with unique layout, content, and motion per the project brief and visual archetype.
+## Home (any project archetype)
 
-### Home (any project archetype)
-1. **Navigation** — user can reach any primary surface; trust signal visible in nav (phone/CTA)
-2. **Hero** — user immediately grasps the core value proposition; clear primary CTA; hero composition must differ from all other routes (visual contract required)
-3. **Value proposition** — user understands 3–5 distinct capabilities or differentiators; NOT a generic bullet list
-4. **Social proof / trust** — user sees evidence (reviews, ratings, case studies, certifications, partner logos)
-5. **Process or story** — user understands how the service works or why this company is credible
-6. **Conversion nudge** — user has a low-friction next action (quote, booking, contact, demo)
-7. **Footer** — user can find contact, legal, sitemap, social links
-Recommended: urgency/offer ribbon, AI/chat surface, blog/insights teaser, FAQ, final CTA band.
+- **User intent:** understand what the offer is, decide whether it's relevant, take a next step.
+- **Required outcomes:**
+  - Visitor reaches a primary CTA in ≤ 3 scrolls on desktop, ≤ 2 viewports on mobile.
+  - Trust evidence appears above the fold for first-time visitors.
+  - The offer's value proposition is parseable in ≤ 5 seconds without scrolling on desktop.
+  - Mobile experience offers a sticky / persistent contact path for the chosen industry's primary conversion mechanic.
+- **Required content slots:**
+  - Offer headline + subhead + primary CTA.
+  - Trust evidence (one of: logos, metric, testimonial, review aggregate, badges).
+  - Value demonstration (one of: feature grid, capability rail, story block, product preview).
+  - Process or proof (one of: case study teaser, process steps, story).
+  - Conversion repetition (CTA appears ≥ 2× on the page).
+  - Footer (legal + nav + utility).
+- **Forbidden patterns:**
+  - Hero composition identical to `services` or `pricing` on the same site.
+  - Generic stock photography unless industry-pack-allowed.
+  - Hidden phone / contact path on local-services / professional-services projects.
+- **Standard latitude:** HIGH (this is a signature surface — every project's home should look distinct).
+- **Quality dimensions to weight:** hero_composition (3), narrative_density (3), trust_signal_placement (3), motion_temperament (3), micro_detail_quality (3), content_punch (3).
 
-### Service overview (marketing_site / professional_services)
-1. **Navigation** — (shared, as above)
-2. **Service hero** — intent-specific headline tied to the service category; distinct composition from Home hero
-3. **Service grid** — scannable set of service offerings with clear value per item; visual treatment must feel like a catalog, not a bulleted list
-4. **Differentiators** — what makes this company better; concrete, evidence-backed, not generic marketing copy
-5. **Process or engagement model** — how to engage, onboard, or get started
-6. **Social proof** — service-specific testimonials or case study teaser
-7. **Conversion** — primary CTA for this service category
-8. **Footer**
+---
 
-### Service detail (marketing_site)
-1. **Navigation**
-2. **Service-specific hero** — distinct layout from service overview; deeper dive into a single service
-3. **What's included** — deliverables or scope; visual treatment should feel substantive (not minimal)
-4. **How it works** — step-by-step or timeline; must feel like a journey, not a list
-5. **Pricing or quote-driven CTA** — price anchor or calculator or "get a quote" flow
-6. **Proof** — testimonial or case study specific to this service
-7. **FAQ / objection handling** — addresses the top 5 purchase hesitations
-8. **Final CTA**
-9. **Footer**
+## Services overview (marketing_site / professional_services / saas_app marketing)
 
-### Product overview (ecommerce)
-1. **Navigation** (with cart, search)
-2. **Collection hero** — campaign or category; full-bleed or editorial treatment
-3. **Filter + sort + browse** — interactive product grid with filter controls
-4. **Featured collection or trust badges**
-5. **Footer**
+- **User intent:** understand the full capability map and self-select the right engagement.
+- **Required outcomes:**
+  - Visitor can identify the right service for their situation in ≤ 30 seconds.
+  - Each service has a clear differentiator visible without clicking through.
+  - A path to the service detail surface is reachable from each service summary.
+- **Required content slots:**
+  - Capability map (every service represented).
+  - Per-service one-line value differentiator.
+  - Per-service "see more" affordance.
+  - Optional: comparison rail / decision aid.
+  - Conversion CTA.
+- **Forbidden patterns:**
+  - Identical service tiles (same composition for every service).
+  - Hidden pricing posture for services that have transparent pricing.
+- **Standard latitude:** MEDIUM.
+- **Quality dimensions to weight:** narrative_density (3), trust_signal_placement (2), micro_detail_quality (2), content_punch (3).
 
-### Product detail (ecommerce)
-1. **Navigation**
-2. **Media gallery** — primary product imagery; multiple angles, zoom, or video
-3. **Purchase block** — title, price, variants, add-to-cart CTA
-4. **Description and details** — tabs or accordion: description, materials, shipping, returns
-5. **Reviews** — authentic social proof with ratings
-6. **Recommendations** — related products
-7. **Footer**
+---
 
-### Cart / Checkout (ecommerce / marketplace)
-1. **Minimal navigation** (logo only during checkout)
-2. **Order summary**
-3. **Shipping address form**
-4. **Payment** (Stripe handoff)
-5. **Trust strip** (secure checkout, returns policy)
-6. **Minimal footer**
+## Service detail (marketing_site)
 
-### Pricing (saas_app / marketing_site)
-1. **Navigation**
-2. **Pricing hero** — clear positioning statement; billing toggle if applicable
-3. **Plan tiers** — visual comparison of plans; must feel like a decision surface, not a table dump
-4. **Feature comparison** — detailed breakdown; scannable
-5. **FAQ** — addresses billing, cancellation, limits
-6. **Final CTA**
-7. **Footer**
+- **User intent:** evaluate this specific service deeply enough to decide whether to engage.
+- **Required outcomes:**
+  - Visitor understands what is included, how it works, what it costs (range or starts-at), and how to start.
+  - Trust + proof for THIS service is present (not just generic).
+  - A path back to the services overview is visible.
+- **Required content slots:**
+  - Service hero (specific to this service).
+  - What's included.
+  - How it works / process.
+  - Pricing posture (range, starts-at, or "contact for quote").
+  - Proof (case study, testimonial, metric).
+  - FAQ / objection handling.
+  - Conversion CTA.
+- **Forbidden patterns:**
+  - Service hero composition identical to `home` hero.
+  - Generic process diagrams; process must be specific to the service.
+- **Standard latitude:** MEDIUM (composition follows recommended outline; visual signature differs per service).
+- **Quality dimensions to weight:** narrative_density (3), trust_signal_placement (3), content_punch (3).
 
-### About (any)
-1. **Navigation**
-2. **Mission or origin hero** — emotionally resonant; distinct composition from Home
-3. **Story / approach** — narrative content; not bullet points
-4. **Team** — human faces + names; trust-building
-5. **Values** — concrete, not generic ("Integrity", "Excellence" without examples is forbidden)
-6. **Social proof** — press mentions, awards, certifications
-7. **CTA**
-8. **Footer**
+---
 
-### Contact (any)
-1. **Navigation**
-2. **Contact hero** — clear "how to reach us" statement; must present multiple channels visually
-3. **Multi-channel contact block** — form + phone + email + WhatsApp/messaging as declared by brief; each channel must be visually distinct and actionable
-4. **Map or address block** (if local business)
-5. **Footer**
+## Product overview (ecommerce)
 
-### FAQ (any)
-1. **Navigation**
-2. **FAQ hero**
-3. **Categorized accordion** — questions grouped by theme; smooth open/close motion
-4. **Still-have-questions CTA**
-5. **Footer**
+- **User intent:** browse, filter, narrow.
+- **Required outcomes:**
+  - Visitor can filter by category / collection / attribute and see results without page reload.
+  - Hero or featured collection sets brand mood; not interchangeable with home hero.
+  - Sort + pagination / infinite scroll behaviour declared.
+- **Required content slots:**
+  - Hero / collection feature.
+  - Filter + sort surface.
+  - Product grid.
+  - Trust / quality strip (returns, shipping, materials).
+  - Footer.
+- **Forbidden patterns:**
+  - Filter changes triggering page reload.
+  - Hidden price on product tile (industry-pack-dependent).
+- **Standard latitude:** MEDIUM.
 
-### Blog index (content_site / saas_app / marketing_site)
-1. **Navigation**
-2. **Featured or latest hero** — editorial treatment; not a plain h1
-3. **Category filter strip** — interactive
-4. **Article grid** — card layout with preview image, title, excerpt, date, author
-5. **Newsletter CTA**
-6. **Footer**
+---
 
-### Blog detail
-1. **Navigation**
-2. **Article hero** — title, date, author, cover image; typographically rich
-3. **Article body** — long-form rich text with proper heading hierarchy, pullquotes, code blocks if applicable
-4. **Author bio**
-5. **Related articles**
-6. **Newsletter or final CTA**
-7. **Footer**
+## Product detail (ecommerce)
 
-### Sign-in / Sign-up (saas_app / dashboard_tool / ecommerce-with-account)
-1. **Minimal header** (logo only)
-2. **Auth surface** — form with social auth options; clean, centered; trust copy visible
-3. **Alternate path** (sign-up ↔ sign-in toggle)
-4. **Trust strip** (compliance, security)
-5. **Minimal footer**
+- **User intent:** evaluate this specific product and decide to buy.
+- **Required outcomes:**
+  - Variants (size / colour / option) selectable without scroll.
+  - Trust signals (reviews, returns, shipping ETA) visible above the fold on desktop.
+  - Add-to-cart action confirms with feedback that does not require page navigation.
+- **Required content slots:** gallery, title + price + variants + CTA, description tabs (description / materials / shipping / returns), reviews, recommendations, footer.
+- **Forbidden patterns:** stock-photo gallery, gallery without alt text.
+- **Standard latitude:** MEDIUM.
 
-### Onboarding (saas_app / dashboard_tool)
-Multi-step. Each step:
-- Step progress indicator (visual, not just text)
-- One-task-per-step content
-- Skip / next / back controls
+---
 
-### Dashboard (saas_app / dashboard_tool / marketplace)
-1. **App shell** — TopBar + SidebarNavigation
-2. **Summary header** — greeting + key metric tiles; animated count-up on load
-3. **Primary panel** — per surface: queue, list, detail, chart
-4. **Secondary panel** — recent activity / shortcuts
-5. **Empty / loading / error states** for every panel
+## Cart / Checkout (ecommerce / marketplace)
 
-### Listing (marketplace / ecommerce)
-1. **Navigation** (with search)
-2. **Category hero or filter strip**
-3. **Filter panel + listing grid** — interactive, responsive
-4. **Trust strip** (verification, reviews)
-5. **Footer**
+- **User intent:** complete purchase with confidence.
+- **Required outcomes:**
+  - No surprise charges; tax / shipping shown before payment step.
+  - Returns + refund policy linked from the page.
+  - Order summary editable from any step.
+- **Required content slots:** order summary, address form, payment (Stripe handoff), trust strip (secure checkout, returns), minimal footer.
+- **Forbidden patterns:** required account for guest checkout (industry-pack default), hidden total.
+- **Standard latitude:** LOW (use standard composition; conversion-critical).
 
-### Listing detail (marketplace)
-1. **Navigation**
-2. **Media gallery** — images, 360, or video
-3. **Purchase / contact block** — title, price, seller with verified badge, primary CTA
-4. **Description / specs** — detailed information
-5. **Reviews** — social proof
-6. **Related listings**
-7. **Footer**
+---
 
-### Case study (portfolio_site / professional_services)
-1. **Navigation**
-2. **Project hero** — image + title + role + year; editorial composition
-3. **Context** — client, scope, team; sets up the narrative
-4. **Problem** — clear problem statement; not marketing copy
-5. **Approach** — methodology, process, decisions made
-6. **Solution media** — gallery + annotation; show, don't just tell
-7. **Outcome** — measurable results or testimonial
-8. **Next-project navigator** — keeps the user in the portfolio
-9. **Footer**
+## Pricing (saas_app / marketing_site)
 
-### Landing page (landing_page)
-1. **Hero** — single CTA; maximum clarity, minimum noise
-2. **Logo bar / social proof** — above the fold or immediately below hero
-3. **Value** — 3 concrete benefits max; not generic features
-4. **Demo or mid-page proof** — screenshot, video, or testimonial
-5. **Mid-page CTA** — same primary action repeated
-6. **FAQ** — max 6 items; addresses top hesitations only
-7. **Final CTA** — same primary action, emotionally reinforced
-8. **Minimal footer**
+- **User intent:** compare options and pick the right plan.
+- **Required outcomes:**
+  - Plan tiers parseable in ≤ 5 seconds.
+  - Feature differentiation between tiers is unambiguous.
+  - Enterprise / custom path is visible.
+  - Monthly / annual toggle (if both offered) updates without reload.
+- **Required content slots:** positioning hero, tier cards, feature comparison, FAQ / billing FAQ, final CTA, footer.
+- **Forbidden patterns:** identical content across tiers, hidden pricing for declared self-serve tiers.
+- **Standard latitude:** MEDIUM.
 
-### 404
-1. **Minimal header**
-2. **"Page not found"** — clear headline + human sub-copy; no jargon
-3. **Quick links** — top 3–5 destinations
-4. **Search** (if applicable)
-5. **Footer**
+---
 
-### Privacy / Terms / Legal
-1. Minimal header
-2. Title + last-updated date
-3. Long-form content (CMS-backed if available)
-4. Contact line
-5. Footer
+## About (any)
 
-## Mandatory utility surfaces
+- **User intent:** evaluate whether the company / agency / individual is credible and a good fit.
+- **Required outcomes:**
+  - Visitor leaves with a sense of mission, voice, team, and operating principles.
+  - Trust signals (clients, regulator, certifications) visible.
+- **Required content slots:** mission / origin, story / approach, team, values, proof, conversion CTA.
+- **Forbidden patterns:** stock-photo team, generic "we are passionate" copy.
+- **Standard latitude:** HIGH (about pages are signature surfaces).
 
-Independent of archetype, every site MUST plan:
+---
 
-- Utility ribbon (optional but reserved slot for trust / promo)
-- Sticky mobile CTA (where archetype calls for it; e.g., `local-business-trust` mandates it)
-- Cookie consent banner (where compliance requires)
-- Accessibility skip link (every page)
+## Contact (any)
 
-## Section minimum count rule (constraint F2)
+- **User intent:** reach the team via the most appropriate channel.
+- **Required outcomes:**
+  - Multiple contact channels visible (form + at least one of: phone, email, WhatsApp, chat).
+  - For local / regulated industries: physical address + business hours.
+  - For B2B: book-a-call CTA.
+- **Required content slots:** clear "how to reach us" intro, multi-channel contact surface, optional map / address block, footer.
+- **Forbidden patterns:** form-only contact path for local-services / professional-services without alternate channel.
+- **Standard latitude:** LOW.
 
-Every public page MUST declare ≥7 sections (header, hero, value, proof, conversion, supporting, footer). Pages where this does not apply (404, legal, narrow utility pages) are exempt and explicitly marked `min_sections_exempt: true` with reason.
+---
 
-## Conversion path declaration
+## FAQ (any)
 
-Every page spec MUST declare:
-- `primary_path`: ordered surfaces from this page to the primary CTA conversion.
-- `secondary_path`: ordered alternative.
-- `exit_points`: legitimate next destinations even if not converting.
+- **User intent:** resolve the question that's blocking action.
+- **Required outcomes:**
+  - Questions categorised; visitor finds the relevant one in ≤ 15 seconds.
+  - Each answer offers a next action (book / chat / contact / read more).
+- **Required content slots:** hero, categorised accordion, "still have questions?" CTA, footer.
+- **Forbidden patterns:** dead-end answers (no next action), accordion that closes other items on open without user choice.
+- **Standard latitude:** LOW.
+
+---
+
+## Blog index (content_site / saas_app / marketing_site)
+
+- **User intent:** find an article worth reading.
+- **Required outcomes:**
+  - Latest / featured surfaces immediately.
+  - Categorisation or tag filtering visible.
+  - Article preview gives enough signal to decide whether to click.
+- **Required content slots:** hero (latest or featured), filter / category strip, article grid, newsletter or final CTA, footer.
+- **Forbidden patterns:** dateless articles, lorem-ipsum previews.
+- **Standard latitude:** MEDIUM.
+
+---
+
+## Blog detail
+
+- **User intent:** read this article comfortably.
+- **Required outcomes:**
+  - Article body has comfortable reading width and rhythm.
+  - Author + date + reading time visible.
+  - Related articles offer a continuation path.
+- **Required content slots:** article hero (title, date, author), body, author bio, related articles, newsletter or CTA, footer.
+- **Forbidden patterns:** body width > 800px, missing author byline.
+- **Standard latitude:** MEDIUM.
+
+---
+
+## Sign-in / Sign-up (saas_app / dashboard_tool / ecommerce-with-account)
+
+- **User intent:** authenticate quickly and predictably.
+- **Required outcomes:**
+  - Form completes within the first viewport on mobile.
+  - Alternate path (sign-up ↔ sign-in) visible.
+  - Trust strip (compliance, security) visible.
+- **Required content slots:** minimal header (logo only), auth form, alternate path, trust strip, minimal footer.
+- **Forbidden patterns:** distractive footer, marketing nav.
+- **Standard latitude:** LOW.
+
+---
+
+## Onboarding (saas_app / dashboard_tool)
+
+- **User intent:** get to first value quickly.
+- **Required outcomes:**
+  - Each step has one task; the user always knows what step they're on.
+  - Skip path available for non-blocking steps.
+  - Progress indicator persistent.
+- **Required content slots:** step indicator, one-task content per step, skip / next / back controls.
+- **Forbidden patterns:** marketing copy mid-onboarding, dead-ends without skip.
+- **Standard latitude:** HIGH (onboarding is a signature surface in modern SaaS).
+
+---
+
+## Dashboard (saas_app / dashboard_tool / marketplace)
+
+- **User intent:** see status; decide next action.
+- **Required outcomes:**
+  - Summary state visible without scrolling on desktop.
+  - Critical actions reachable in 1 click.
+  - Notifications + activity feed accessible.
+- **Required content slots:** app shell (top bar + side rail), summary header (greeting + key metrics), primary panel (per surface), secondary panel (recent activity / shortcuts), states (empty / loading / error per panel).
+- **Forbidden patterns:** dense data tables on mobile, hidden destructive actions.
+- **Standard latitude:** MEDIUM.
+
+---
+
+## Listing index (marketplace / ecommerce)
+
+- **User intent:** browse + narrow.
+- **Required outcomes:**
+  - Filter changes update results without reload.
+  - Trust badges per listing (verified, top-rated) visible.
+- **Required content slots:** hero or category strip, filter panel, listing section, trust strip, footer.
+- **Forbidden patterns:** unverified seller without disclosure, hidden listing fees.
+- **Standard latitude:** MEDIUM.
+
+---
+
+## Listing detail (marketplace)
+
+- **User intent:** evaluate this listing + transact.
+- **Required outcomes:**
+  - Verification + reviews + price visible above the fold.
+  - Contact / book / buy action obvious.
+- **Required content slots:** gallery, title + price + seller (verified badge), description / specs, reviews, related listings, footer.
+- **Forbidden patterns:** hidden seller info, missing review aggregate.
+- **Standard latitude:** MEDIUM.
+
+---
+
+## Case study (portfolio_site / professional_services)
+
+- **User intent:** evaluate craft, depth, outcome.
+- **Required outcomes:**
+  - Project quality is parseable in the hero (image + role + year).
+  - Outcome is concrete (metric or named result).
+  - Continuation path to next project is visible.
+- **Required content slots:** project hero, context, problem, approach, solution media, outcome, next-project navigator, footer.
+- **Forbidden patterns:** generic outcome ("client was happy"), missing role / year, stock visuals.
+- **Standard latitude:** HIGH (each case study should look different — work-led, not template-led).
+
+---
+
+## Landing page (landing_page archetype)
+
+- **User intent:** complete the campaign action without distraction.
+- **Required outcomes:**
+  - One offer; one CTA; CTA repeated ≥ 3× on the page.
+  - No competing nav / footer distractions.
+- **Required content slots:** hero with single CTA, social proof strip, value (3 bullets max), demo or mid-page proof, repeated CTA, FAQ (max 6), final CTA, minimal footer.
+- **Forbidden patterns:** secondary offer that competes with primary, marketing footer with nav.
+- **Standard latitude:** MEDIUM (composition is constrained but visual signature varies).
+
+---
+
+## 404
+
+- **User intent:** recover.
+- **Required outcomes:** offer ≥ 3 useful next destinations + (optional) search.
+- **Required content slots:** minimal header, "page not found" message, quick links, footer.
+- **Forbidden patterns:** dead-end ("404"), broken nav.
+- **Standard latitude:** LOW.
+- **Sections-exempt:** allowed (`min_sections_exempt: true`).
+
+---
+
+## Privacy / Terms / Legal
+
+- **User intent:** read the legal text.
+- **Required outcomes:** content present, last-updated date visible, contact path visible.
+- **Required content slots:** minimal header, title + last-updated, long-form body (CMS-backed), contact line, footer.
+- **Forbidden patterns:** generic templates without business-specific addendum.
+- **Standard latitude:** LOW.
+- **Sections-exempt:** allowed.
+
+---
+
+## Mandatory utility surfaces (independent of archetype)
+
+Every site MUST plan:
+- Utility ribbon (optional but reserved slot for trust / promo).
+- Sticky mobile CTA where the archetype demands it (e.g., `local-business-trust`).
+- Cookie consent banner (where compliance requires).
+- Skip-link as the first focusable element on every page.
+
+---
 
 ## Output
 
-The page_planner emits one Markdown file per route under `<output_root>/pages/<route-slug>.md` using the per-page spec template at `execution/spec-rules/per-page-spec.md`.
-
-`<output_root>` MUST resolve to `DOC/output/runs/<timestamp>/planning/frontend`.
+The frontend_planner consumes these outcomes and emits one design brief per route under `<output_root>/pages/<route-slug>.md` per `per-page-spec.md`. Each brief carries the archetype's outcomes, content slots, forbidden patterns, latitude, and quality dimensions — translated into project-specific values from the brief.

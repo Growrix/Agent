@@ -31,8 +31,9 @@ This agent fills the gaps clients never provide.
 6. Derive initial site map and feature list.
 7. Map features → integrations using `feature-integration-map.json`.
 8. Derive content tone, voice, and copy guardrails.
-9. Surface every assumption made into an `assumptions[]` list so the human can correct before downstream planning.
-10. Emit `brief.json` (machine) and `brief.md` (human).
+9. Derive and emit `brand.footer_attribution` contract (text, url, placement, target behavior) for downstream planner/developer use.
+10. Surface every assumption made into an `assumptions[]` list so the human can correct before downstream planning.
+11. Emit `brief.json` (machine) and `brief.md` (human).
 
 ## STRICT RULES
 - MUST NOT block on missing input. Fill gaps deterministically using defaults declared in the loaded knowledge files.
@@ -159,13 +160,24 @@ If unsure → default to `standard`. Add an assumption.
 
 `tier_band` MUST be emitted in `brief.json` and used by `integration_planner` to load the correct tier preset.
 
+### R14 — Footer attribution contract
+Derive `brand.footer_attribution` deterministically:
+- If client provides attribution text/url, use it verbatim after safety normalization.
+- Else default to:
+  - `enabled: true`
+  - `text: "Built & Maintained by"`
+  - `link_text: "Growrix OS"`
+  - `url: "https://www.growrixos.com"`
+- Always emit placement `footer_bottom_bar`, target behavior (`new_tab` true/false), and accessible label.
+- This field is required for frontend planning/development and may be intentionally disabled only with explicit human confirmation recorded in `assumptions`.
+
 ## WORKFLOW
 1. **LOAD** all referenced files.
 2. **PARSE** user_request + client_brief.
 3. **CLASSIFY** project archetype (R1).
 4. **CLASSIFY** industry (R2).
 5. **PICK** visual archetype (R3).
-6. **DERIVE** audience (R4), journeys (R5), site map (R6), features (R7), trust + conversion (R8), tone (R9), palette (R10), locale (R11), compliance (R12), tier band (R13).
+6. **DERIVE** audience (R4), journeys (R5), site map (R6), features (R7), trust + conversion (R8), tone (R9), palette (R10), locale (R11), compliance (R12), tier band (R13), footer attribution contract (R14).
 7. **MAP** features → integrations.
 8. **LIST** every assumption made, with the rule id that produced it.
 9. **EMIT** `brief.json` and `brief.md`.
@@ -186,7 +198,16 @@ If unsure → default to `standard`. Add an assumption.
     "tone":  ["string","string","string"],
     "visual_archetype": "knowledge/frontend-rules/visual-archetypes/<file>.md",
     "palette_seed":   "#RRGGBB|null",
-    "forbidden_words": ["string"]
+    "forbidden_words": ["string"],
+    "footer_attribution": {
+      "enabled": true,
+      "text": "string",
+      "link_text": "string",
+      "url": "string|null",
+      "placement": "footer_bottom_bar",
+      "new_tab": true,
+      "aria_label": "string"
+    }
   },
   "audience": {
     "primary":   { "persona": "string", "needs": ["string"], "pains": ["string"] },

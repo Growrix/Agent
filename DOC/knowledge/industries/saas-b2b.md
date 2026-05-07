@@ -100,6 +100,16 @@ saas, subscription, multi-tenant, dev tool, developer platform, api product, das
 - Per-customer-story pages indexable.
 - Schema.org/SoftwareApplication and Organization.
 
+## Quality references
+
+Describe what world-class output feels like for this industry and enforce these characteristics in planning and audit scoring.
+
+- Product clarity in seconds: value proposition and product category understood before first scroll completes.
+- Proof-backed claims: customer logos, metrics, and role-attributed testimonials close to CTA moments.
+- Trustable operations posture: security/privacy/compliance visibility is explicit and linked to concrete docs.
+- Frictionless trial path: sign-up/onboarding journey is obvious, short, and recoverable on failure.
+- Dense-but-readable UI: app surfaces prioritize scanability, status legibility, and keyboard/focus quality.
+
 ## Notes for the strategist
 - B2B SaaS is the densest pack: it forces auth, payments, dashboard, billing, and operations surfaces. Strategist must add corresponding integrations to the brief automatically.
 - Free-trial vs talk-to-sales motion is a choice — strategist defaults to "free trial" for self-serve PLG and adds an assumption for the human to confirm.
