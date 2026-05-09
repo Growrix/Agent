@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "project": "Apex Roofing Co.",
+    "run": "20260509T1200-roofing",
+    "visual_archetype": "local-business-trust",
+    "locale": "en",
+    "generated": "2026-05-09T12:00:00Z"
+  },
+  "color": {
+    "light": {
+      "--color-background": "#FAF8F5",
+      "--color-surface": "#FFFFFF",
+      "--color-inset": "#F0EDE8",
+      "--color-overlay": "rgba(15, 25, 35, 0.65)",
+      "--color-border": "#E2DDD6",
+      "--color-text": "#0F1923",
+      "--color-text-muted": "#4A5568",
+      "--color-text-on-dark": "#FAF8F5",
+      "--color-primary": "#0F1923",
+      "--color-primary-hover": "#1D2B35",
+      "--color-primary-foreground": "#FAF8F5",
+      "--color-accent": "#D4750A",
+      "--color-accent-hover": "#B8620A",
+      "--color-accent-foreground": "#FFFFFF",
+      "--color-accent-muted": "#FFF3E0",
+      "--color-destructive": "#C0392B",
+      "--color-destructive-foreground": "#FFFFFF",
+      "--color-success": "#2E7D32",
+      "--color-warning": "#D4750A",
+      "--color-info": "#1565C0",
+      "--color-focus-ring": "#D4750A",
+      "--color-card": "#FFFFFF",
+      "--color-card-foreground": "#0F1923",
+      "--color-input": "#FFFFFF",
+      "--color-ring": "#D4750A"
+    },
+    "dark_surface_sections": {
+      "--color-dark-bg": "#0F1923",
+      "--color-dark-surface": "#1D2B35",
+      "--color-dark-border": "#2D3F4F",
+      "--color-dark-text": "#FAF8F5",
+      "--color-dark-text-muted": "#94A3B8"
+    },
+    "dark_theme": {
+      "selector": "[data-theme=\"dark\"]",
+      "tokens": {
+        "--color-background": "#0A1018",
+        "--color-surface": "#111927",
+        "--color-inset": "#1D2B35",
+        "--color-overlay": "rgba(0, 0, 0, 0.72)",
+        "--color-border": "#2D3F4F",
+        "--color-text": "#EEE9E2",
+        "--color-text-muted": "#94A3B8",
+        "--color-primary": "#D4750A",
+        "--color-primary-hover": "#B8620A",
+        "--color-primary-foreground": "#0A1018",
+        "--color-accent": "#E8870A",
+        "--color-accent-hover": "#CC7209",
+        "--color-accent-foreground": "#0A1018",
+        "--color-accent-muted": "rgba(212, 117, 10, 0.15)",
+        "--color-card": "#111927",
+        "--color-card-foreground": "#EEE9E2",
+        "--color-input": "#1D2B35",
+        "--color-ring": "#E8870A",
+        "--color-focus-ring": "#E8870A"
+      }
+    }
+  },
+  "typography": {
+    "families": {
+      "--font-display": "'Space Grotesk', system-ui, sans-serif",
+      "--font-body": "'Inter', system-ui, sans-serif",
+      "--font-mono": "'JetBrains Mono', 'Fira Code', monospace"
+    },
+    "scale": {
+      "--font-size-display-1": { "mobile": "48px", "desktop": "72px" },
+      "--font-size-display-2": { "mobile": "36px", "desktop": "56px" },
+      "--font-size-h1": { "mobile": "32px", "desktop": "48px" },
+      "--font-size-h2": { "mobile": "28px", "desktop": "36px" },
+      "--font-size-h3": { "mobile": "22px", "desktop": "28px" },
+      "--font-size-h4": { "mobile": "18px", "desktop": "22px" },
+      "--font-size-h5": { "mobile": "16px", "desktop": "18px" },
+      "--font-size-lead": { "mobile": "18px", "desktop": "21px" },
+      "--font-size-body-lg": { "mobile": "17px", "desktop": "18px" },
+      "--font-size-body": { "mobile": "15px", "desktop": "16px" },
+      "--font-size-body-sm": { "mobile": "13px", "desktop": "14px" },
+      "--font-size-label": { "mobile": "12px", "desktop": "12px" },
+      "--font-size-caption": { "mobile": "11px", "desktop": "12px" },
+      "--font-size-overline": { "mobile": "11px", "desktop": "12px" },
+      "--font-size-mono": { "mobile": "13px", "desktop": "14px" }
+    },
+    "line_heights": {
+      "--font-line-height-display-1": "1.05",
+      "--font-line-height-display-2": "1.1",
+      "--font-line-height-h1": "1.15",
+      "--font-line-height-h2": "1.2",
+      "--font-line-height-h3": "1.25",
+      "--font-line-height-h4": "1.3",
+      "--font-line-height-h5": "1.3",
+      "--font-line-height-lead": "1.6",
+      "--font-line-height-body-lg": "1.65",
+      "--font-line-height-body": "1.65",
+      "--font-line-height-body-sm": "1.6",
+      "--font-line-height-label": "1.4",
+      "--font-line-height-caption": "1.4",
+      "--font-line-height-overline": "1.3",
+      "--font-line-height-mono": "1.4"
+    },
+    "weights": {
+      "--font-weight-regular": "400",
+      "--font-weight-medium": "500",
+      "--font-weight-semibold": "600",
+      "--font-weight-bold": "700",
+      "--font-weight-display": "800"
+    },
+    "letter_spacing": {
+      "--letter-spacing-display": "-0.03em",
+      "--letter-spacing-heading": "-0.02em",
+      "--letter-spacing-body": "0",
+      "--letter-spacing-overline": "0.1em",
+      "--letter-spacing-label": "0.05em"
+    }
+  },
+  "spacing": {
+    "--space-0": "0px",
+    "--space-1": "4px",
+    "--space-2": "8px",
+    "--space-3": "12px",
+    "--space-4": "16px",
+    "--space-6": "24px",
+    "--space-8": "32px",
+    "--space-12": "48px",
+    "--space-16": "64px",
+    "--space-24": "96px",
+    "--space-32": "128px",
+    "--space-section-y-desktop": "96px",
+    "--space-section-y-tablet": "64px",
+    "--space-section-y-mobile": "48px",
+    "--space-container-x-desktop": "80px",
+    "--space-container-x-tablet": "40px",
+    "--space-container-x-mobile": "24px",
+    "--space-card-padding": "24px"
+  },
+  "radius": {
+    "--radius-sm": "6px",
+    "--radius-md": "10px",
+    "--radius-card": "12px",
+    "--radius-hero": "16px",
+    "--radius-xl": "20px",
+    "--radius-full": "9999px"
+  },
+  "shadow": {
+    "--shadow-xs": "0 1px 2px rgba(15,25,35,0.06)",
+    "--shadow-sm": "0 2px 6px rgba(15,25,35,0.08)",
+    "--shadow-md": "0 4px 16px rgba(15,25,35,0.10)",
+    "--shadow-lg": "0 8px 32px rgba(15,25,35,0.12)",
+    "--shadow-xl": "0 16px 48px rgba(15,25,35,0.14)",
+    "--shadow-accent": "0 4px 16px rgba(212,117,10,0.25)"
+  },
+  "motion": {
+    "--motion-duration-instant": "0ms",
+    "--motion-duration-fast": "120ms",
+    "--motion-duration-base": "200ms",
+    "--motion-duration-slow": "280ms",
+    "--motion-duration-cinematic": "320ms",
+    "--motion-easing-standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "--motion-easing-out": "cubic-bezier(0, 0, 0.2, 1)",
+    "--motion-easing-in": "cubic-bezier(0.4, 0, 1, 1)",
+    "--motion-easing-cinematic": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "--motion-stagger-base": "60ms",
+    "--motion-stagger-headline": "80ms"
+  },
+  "breakpoints": {
+    "--bp-sm": "640px",
+    "--bp-md": "768px",
+    "--bp-lg": "1024px",
+    "--bp-xl": "1280px",
+    "--bp-2xl": "1536px"
+  },
+  "z_index": {
+    "--z-below": "-1",
+    "--z-base": "0",
+    "--z-raised": "10",
+    "--z-sticky": "40",
+    "--z-nav": "50",
+    "--z-overlay": "60",
+    "--z-modal": "70",
+    "--z-toast": "80",
+    "--z-tooltip": "90"
+  },
+  "iconography": {
+    "library": "lucide-react",
+    "default_size": "20",
+    "default_stroke": "1.5",
+    "tab_bar_size": "22",
+    "badge_variant": "filled"
+  },
+  "imagery": {
+    "--img-aspect-hero": "21/9",
+    "--img-aspect-feature": "4/3",
+    "--img-aspect-portrait": "1/1",
+    "--img-aspect-worksite": "3/2",
+    "--img-aspect-thumbnail": "16/9"
+  }
+}
