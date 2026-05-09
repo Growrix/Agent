@@ -74,3 +74,4 @@ Service type chips: Roof Installation / Roof Repair / Roof Replacement / Emergen
 - Honeypot field added (hidden, client users never fill it; bots may)
 - Input sanitized server-side before sending to Resend
 - No PII in client-side error logs
+

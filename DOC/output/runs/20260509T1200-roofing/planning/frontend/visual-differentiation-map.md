@@ -83,3 +83,4 @@ The following patterns are explicitly forbidden to prevent visual convergence:
 | `/faq` | LOW | Utility — clarity first |
 | `/privacy`, `/terms` | LOW | Legal — no creative latitude |
 | `/404` | MEDIUM | Memorable error is an opportunity for brand voice |
+

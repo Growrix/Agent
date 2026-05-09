@@ -72,6 +72,16 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `areas_intro`: Purpose: immediate coverage clarity. Draft copy: "We Come to You" + coverage subhead. Layout: heading + lookup at top.
+2. `map_and_lookup`: Purpose: visual proof of service radius. Draft copy: lookup prompt and helper text. Layout: desktop 60/40 map/content, mobile stacked.
+3. `areas_chip_grid`: Purpose: fast neighborhood scan. Draft copy: area names and CTA "Check My Area". Layout: dense chip grid.
+4. `coverage_outcome`: Purpose: confirmed/not-found response. Draft copy: `areas.coverage_found` and `areas.coverage_not_found`. Layout: inline confirmation panel.
+5. `conversion_band`: Purpose: move qualified users to quote. Draft copy: quote CTA and phone fallback. Layout: centered dark CTA strip.
+
+---
+
 ## Motion
 
 - Area chips: `Reveal` with 20ms stagger on scroll.
@@ -140,3 +150,4 @@
 | `area_lookup_fail` | Zip/area not found |
 | `area_chip_click` | Any area chip clicked |
 | `areas_cta_click` | Quote CTA from this page |
+

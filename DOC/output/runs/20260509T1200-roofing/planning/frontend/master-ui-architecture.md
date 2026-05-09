@@ -120,7 +120,7 @@ Entry (Search "[city] roofing contractor")
 ### Desktop Header (≥ 1024px)
 
 **Topbar (utility bar — always visible):**
-- Left: Address / "Serving [Metro Area]" tagline
+- Left: Address / "Serving Greater Austin area" tagline
 - Center: Business hours ("Mon–Sat 7am–7pm | 24hr Emergency")
 - Right: Phone number (large, click-to-call) + "Free Quote" pill button
 
@@ -392,3 +392,4 @@ Full map: [visual-differentiation-map.md](visual-differentiation-map.md)
 | `/about` | Team photo editorial split, oversized names | Story-narrative, long-form | restrained-cinematic | Alternating warm-light + dark |
 | `/contact` | 50/50 split panel (no traditional hero) | Utility-dense, no sections | calm-precise | Light split |
 | `/quote` | Focused minimal, step-progress bar top | Single column, form-focused | calm-precise | Light, no distractions |
+

@@ -84,6 +84,17 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `repair_hero_damage`: Purpose: immediate problem recognition. Draft copy: repair hero heading/subhead + call CTA. Layout: full-bleed damage image with bottom-left content.
+2. `repair_type_cluster`: Purpose: scope matching. Draft copy: storm, leak, flashing, shingles categories with short fix notes. Layout: chip cluster + accordion details.
+3. `diagnosis_band`: Purpose: repair vs replacement decision support. Draft copy: 3 diagnostic criteria and cross-link CTA. Layout: dark informative band.
+4. `emergency_escalation`: Purpose: fast crisis routing. Draft copy: "Active leak?" line + emergency call action. Layout: destructive-muted strip.
+5. `repair_proof`: Purpose: trust through outcomes. Draft copy: before/after captions + customer quotes. Layout: 2-col proof grid + testimonial row.
+6. `repair_cta`: Purpose: conversion close. Draft copy: phone-first CTA and free quote secondary CTA. Layout: dark conversion band.
+
+---
+
 ## Motion
 
 - Hero content reveals bottom-to-top as `Reveal` on mount (text first, trust badges after).
@@ -154,3 +165,4 @@
 | `emergency_escalation_click` | Emergency band CTA |
 | `replacement_crosslink_click` | Diagnosis band → replacement |
 | `repair_type_expanded` | Accordion category opened |
+

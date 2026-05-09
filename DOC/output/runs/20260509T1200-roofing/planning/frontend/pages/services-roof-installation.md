@@ -86,6 +86,17 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `installation_hero_split`: Purpose: skill and trust above fold. Draft copy: installation hero heading/subhead + quote CTA. Layout: 60/40 photo/content split.
+2. `material_options`: Purpose: choice clarity. Draft copy: material names, durability notes, quick recommendation lines. Layout: card cluster.
+3. `installation_process`: Purpose: timeline transparency. Draft copy: 5 step headings with concise body copy. Layout: dark numbered trail.
+4. `project_gallery`: Purpose: visual proof. Draft copy: project captions (area, roof type, completion). Layout: 3-col photo grid.
+5. `warranty_and_testimonial`: Purpose: risk reduction. Draft copy: warranty summary + installation testimonial excerpt. Layout: stacked inset section.
+6. `installation_cta`: Purpose: conversion. Draft copy: pricing posture + quote CTA + phone fallback. Layout: dark CTA band.
+
+---
+
 ## Motion
 
 - Hero split: right panel slides in from right (20px), left photo fades from dark. `--motion-duration-normal`.
@@ -154,3 +165,4 @@
 | `quote_cta_click` | Any quote CTA on this page |
 | `gallery_image_view` | Gallery section enters viewport |
 | `process_section_view` | Process Trail enters viewport |
+

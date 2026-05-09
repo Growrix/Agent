@@ -257,3 +257,4 @@
 - Accent word highlight: occasional use of `--color-accent` (copper-amber) on a single keyword in a headline (e.g., "Expert **Roofing** Services")
 - Never more than one accent-colored word per headline
 - Large decorative numbers (counter stats, section numbers): `Space Grotesk 800`, `--color-accent`, opacity 0.9
+

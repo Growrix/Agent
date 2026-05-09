@@ -75,5 +75,11 @@ The footer is the last trust-confirmation surface. It must contain every piece o
 - `footer.legal.privacy`
 - `footer.legal.terms`
 
-## Open Question
-- `footer.attribution.*` values: **FOOTER_ATTRIBUTION_UNDECLARED** — agency must supply before build.
+## Attribution Contract
+- `footer.attribution.*` values use the deterministic default contract:
+	- text: "Built and maintenance by"
+	- link_text: "Growrix OS"
+	- url: "https://www.growrixos.com"
+	- aria_label: "Built and maintenance by Growrix OS (opens in a new tab)"
+- Contract remains brief-overridable for client-specific attribution.
+

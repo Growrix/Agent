@@ -87,6 +87,18 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `replacement_header_and_slider`: Purpose: transformation-first persuasion. Draft copy: replacement heading/subhead above before/after slider. Layout: dark header band + 60svh slider.
+2. `decision_criteria`: Purpose: justify replacement decision. Draft copy: repair vs replace vs defer comparison copy. Layout: 3-column comparison section.
+3. `timeline_process`: Purpose: procedural confidence. Draft copy: 6 timeline stage labels and brief descriptions. Layout: horizontal trail desktop, vertical mobile.
+4. `materials_gallery`: Purpose: finish/quality selection. Draft copy: material names, lifespan notes, style fit lines. Layout: tiled media gallery.
+5. `transformation_gallery`: Purpose: repeated proof. Draft copy: per-project before/after captions and location lines. Layout: dark 2-col pair grid.
+6. `replacement_testimonials`: Purpose: social proof at purchase threshold. Draft copy: 3 replacement-focused testimonials. Layout: light masonry cards.
+7. `investment_cta`: Purpose: close high-ticket lead. Draft copy: financing/support line + quote CTA. Layout: dark bottom band.
+
+---
+
 ## Motion
 
 **Temperament:** `restrained-cinematic`
@@ -164,3 +176,4 @@
 | `quote_cta_click_replacement` | Any quote CTA on this page |
 | `gallery_pair_viewed` | Gallery section in viewport |
 | `timeline_viewed` | Timeline section in viewport |
+

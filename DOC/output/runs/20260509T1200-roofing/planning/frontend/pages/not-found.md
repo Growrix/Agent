@@ -49,6 +49,15 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `error_code_hero`: Purpose: immediate recognition of missing page. Draft copy: large "404" + `not_found.heading`. Layout: centered stack on dark surface.
+2. `recovery_message`: Purpose: reassure and redirect. Draft copy: `not_found.subhead`. Layout: concise body below heading.
+3. `recovery_links`: Purpose: get users back on-path. Draft copy: Home, Services, Quote, Contact links. Layout: clustered link buttons.
+4. `direct_contact`: Purpose: support urgent visitors. Draft copy: phone label and direct call CTA. Layout: bottom action row.
+
+---
+
 ## Motion
 
 - 404 number: scale-in from 0.8 → 1.0 on mount, `--motion-duration-normal`.
@@ -69,3 +78,4 @@
 
 - Clear H1 indicating the page was not found
 - Navigation links are keyboard-accessible
+

@@ -103,13 +103,14 @@ Apex Roofing Co. is designed to be the gold standard roofing website in the temp
 
 ## Open Questions
 
-1. **Business name**: Using placeholder "Apex Roofing Co." — client to confirm actual name.
-2. **License number**: Placeholder `LIC-XXXXXXX` — client to supply state roofing license number.
-3. **Phone number**: Placeholder `(555) 800-ROOF` — client to supply.
-4. **Service area**: Placeholder "Greater Metro Area + 50 surrounding towns" — client to confirm exact geography.
+1. **Business name**: Using working draft "Apex Roofing Co." — client to confirm legal name.
+2. **License number**: Draft `TX-RC-847219` — client to confirm state roofing license number.
+3. **Phone number**: Draft `(512) 555-0198` — client to confirm.
+4. **Service area**: Draft "Greater Austin area + 50 surrounding towns" — client to confirm exact geography.
 5. **Review source**: Google Business reviews assumed — confirm integration approach (embed vs. API pull vs. Sanity seeded).
 6. **Booking integration**: Calendar booking optional — confirm whether Calendly, Acuity, or custom is preferred.
-7. **Footer attribution**: `brief.brand.footer_attribution` not supplied in intake — using placeholder `{ enabled: true, text: "Built by [Agency]", url: "#" }`. Client/agency to confirm.
+7. **Footer attribution**: Intake attribution not supplied — deterministic default applied: "Built and maintenance by Growrix OS" linking to `https://www.growrixos.com`.
 8. **Years in business**: Placeholder "20+ years" — client to confirm founding year.
 9. **Project count**: Placeholder "2,400+ projects" — client to confirm.
 10. **Blog**: P1 — confirm whether blog launches with site or is phase 2.
+

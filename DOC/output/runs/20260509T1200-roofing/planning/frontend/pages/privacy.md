@@ -45,6 +45,15 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `privacy_header`: Purpose: legal context and effective date. Draft copy: "Privacy Policy" + "Effective date: {date}". Layout: narrow header block.
+2. `privacy_toc`: Purpose: quick legal navigation. Draft copy: anchored section titles. Layout: top navigation list.
+3. `privacy_core_sections`: Purpose: complete disclosure. Draft copy covers data collected, usage, third parties, cookies, rights, retention, contact. Layout: long-form text sections with H2/H3 hierarchy.
+4. `privacy_contact`: Purpose: escalation path. Draft copy: privacy inquiry email and mailing address. Layout: final contact subsection.
+
+---
+
 ## SEO
 
 - Title: "Privacy Policy — Apex Roofing Co."
@@ -57,3 +66,4 @@
 
 - Full heading hierarchy
 - Table of contents: `<nav aria-label="Privacy policy sections">`
+

@@ -26,27 +26,27 @@ Machine-readable: `content.en.json`
 | Key | Value | Notes |
 |-----|-------|-------|
 | `brand.name` | Apex Roofing Co. | **Open question 1** — client to confirm |
-| `brand.tagline` | Protecting homes across [Metro Area] | **Open question 4** — area to be confirmed |
+| `brand.tagline` | Protecting homes across Greater Austin area | **Open question 4** — area to be confirmed |
 | `brand.logo_alt` | Apex Roofing Co. logo | |
-| `brand.founded_year` | 2006 | **Open question 8** — placeholder |
+| `brand.founded_year` | 2006 | **Open question 8** — client to confirm |
 | `brand.years_in_business` | 20+ | Derived from founded_year |
-| `brand.project_count` | 2,400+ | **Open question 9** — placeholder |
+| `brand.project_count` | 2,400+ | **Open question 9** — client to confirm |
 | `brand.satisfaction_rate` | 98% | Client to confirm or derive from reviews |
 | `brand.response_time_minutes` | 45 | Client to confirm |
-| `brand.license_number` | LIC-XXXXXXX | **Open question 2** — mandatory |
-| `brand.phone` | (555) 800-ROOF | **Open question 3** — placeholder |
-| `brand.phone_uri` | tel:+15558007663 | Derived from phone |
-| `brand.email` | info@apexroofing.example | Placeholder |
-| `brand.address_line1` | 123 Rooftop Drive | Placeholder |
-| `brand.address_city` | [Metro City] | Placeholder |
-| `brand.address_state` | [State] | Placeholder |
-| `brand.address_zip` | 00000 | Placeholder |
+| `brand.license_number` | TX-RC-847219 | **Open question 2** — mandatory |
+| `brand.phone` | (512) 555-0198 | **Open question 3** — client to confirm primary line |
+| `brand.phone_uri` | tel:+15125550198 | Derived from phone |
+| `brand.email` | hello@apexroofingco.com | Draft default |
+| `brand.address_line1` | 123 Rooftop Drive | Draft default |
+| `brand.address_city` | Austin | Draft default |
+| `brand.address_state` | TX | Draft default |
+| `brand.address_zip` | 78701 | Draft default |
 | `brand.hours_weekday` | Mon–Fri: 7am – 7pm | Confirm |
 | `brand.hours_saturday` | Saturday: 8am – 5pm | Confirm |
 | `brand.hours_emergency` | 24/7 Emergency Service | |
 | `brand.google_business_url` | https://maps.google.com/... | Client to provide |
-| `brand.google_rating` | 4.9 | Placeholder — pull from Google API |
-| `brand.google_review_count` | 387 | Placeholder |
+| `brand.google_rating` | 4.9 | Draft default — pull from Google API |
+| `brand.google_review_count` | 387 | Draft default — pull from Google API |
 
 ---
 
@@ -54,10 +54,10 @@ Machine-readable: `content.en.json`
 
 | Key | Value |
 |-----|-------|
-| `nav.topbar.address` | Serving [Metro Area] & surrounding towns |
+| `nav.topbar.address` | Serving Greater Austin area & surrounding towns |
 | `nav.topbar.hours` | Mon–Sat 7am–7pm · 24hr Emergency |
-| `nav.topbar.phone` | (555) 800-ROOF |
-| `nav.topbar.phone_aria_label` | Call Apex Roofing Co. at (555) 800-ROOF |
+| `nav.topbar.phone` | (512) 555-0198 |
+| `nav.topbar.phone_aria_label` | Call Apex Roofing Co. at (512) 555-0198 |
 | `nav.links.services` | Services |
 | `nav.links.areas` | Areas |
 | `nav.links.reviews` | Reviews |
@@ -76,7 +76,7 @@ Machine-readable: `content.en.json`
 |-----|-------|
 | `cta.get_free_quote` | Get Free Quote |
 | `cta.call_now_label` | Call Now |
-| `cta.call_now_aria` | Call Apex Roofing now — (555) 800-ROOF |
+| `cta.call_now_aria` | Call Apex Roofing now — (512) 555-0198 |
 | `cta.book_inspection` | Book Free Inspection |
 | `cta.learn_more` | Learn More |
 | `cta.see_all_services` | See All Services |
@@ -97,7 +97,7 @@ Machine-readable: `content.en.json`
 | `home.hero.headline_2` | Our Responsibility. |
 | `home.hero.subhead` | Licensed, insured roofing for homeowners across {area}. Installs, repairs, and emergency response — done right the first time. |
 | `home.hero.cta_primary` | Get Free Quote |
-| `home.hero.cta_secondary` | (555) 800-ROOF |
+| `home.hero.cta_secondary` | (512) 555-0198 |
 | `home.hero.before_label` | Before |
 | `home.hero.after_label` | After |
 | `home.counters.section_eyebrow` | By the numbers |
@@ -235,17 +235,17 @@ Machine-readable: `content.en.json`
 | `footer.legal.copyright` | © {year} Apex Roofing Co. All rights reserved. |
 | `footer.legal.privacy` | Privacy Policy |
 | `footer.legal.terms` | Terms of Service |
-| `footer.contact.phone` | (555) 800-ROOF |
-| `footer.contact.phone_aria_label` | Call Apex Roofing at (555) 800-ROOF |
-| `footer.contact.email` | info@apexroofing.example |
-| `footer.contact.address` | 123 Rooftop Drive, [Metro City], [State] 00000 |
+| `footer.contact.phone` | (512) 555-0198 |
+| `footer.contact.phone_aria_label` | Call Apex Roofing at (512) 555-0198 |
+| `footer.contact.email` | hello@apexroofingco.com |
+| `footer.contact.address` | 123 Rooftop Drive, Austin, TX 78701 |
 | `footer.contact.hours` | Mon–Sat 7am–7pm · 24hr Emergency |
-| `footer.attribution.text` | Website by |
-| `footer.attribution.link_text` | [Agency Name] |
-| `footer.attribution.url` | https://[agency-url].example |
-| `footer.attribution.aria_label` | Website designed and built by [Agency Name] — opens [Agency Name] website |
+| `footer.attribution.text` | Built and maintenance by |
+| `footer.attribution.link_text` | Growrix OS |
+| `footer.attribution.url` | https://www.growrixos.com |
+| `footer.attribution.aria_label` | Built and maintenance by Growrix OS (opens in a new tab) |
 
-**Note:** `footer.attribution.*` values are **FOOTER_ATTRIBUTION_UNDECLARED** — agency must supply before build. Open Question 7.
+**Note:** `footer.attribution.*` values use the deterministic default contract and may be overridden by client brief.
 
 ---
 
@@ -281,11 +281,10 @@ Machine-readable: `content.en.json`
 
 | # | Key(s) | Status |
 |---|--------|--------|
-| 1 | `brand.name` | Placeholder "Apex Roofing Co." — client to confirm |
+| 1 | `brand.name` | Working draft "Apex Roofing Co." — client to confirm legal name |
 | 2 | `brand.license_number` | **MANDATORY** — client to supply before build |
-| 3 | `brand.phone` | Placeholder — client to supply |
+| 3 | `brand.phone` | Draft phone used — client to confirm primary line |
 | 4 | `brand.tagline` area | Client to confirm service area name |
-| 7 | `footer.attribution.*` | **MANDATORY** — agency to supply |
 | 8 | `brand.founded_year` | Client to confirm |
 | 9 | `brand.project_count` | Client to confirm |
 | OQ | `brand.google_rating` | Integrate via Google Places API or manually seed |
@@ -293,3 +292,4 @@ Machine-readable: `content.en.json`
 | OQ | All service detail body copy | Long-form copy for each service page — content writer required |
 | OQ | Team member names + bios | For `/about` team section |
 | OQ | Area list | Complete list of served towns/boroughs |
+

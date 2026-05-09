@@ -65,3 +65,4 @@ interface BeforeAfterSliderProps {
   aspectRatio?: string  // default "16/9"
 }
 ```
+

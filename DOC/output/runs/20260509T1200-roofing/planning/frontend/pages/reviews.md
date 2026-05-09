@@ -72,6 +72,16 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `reviews_intro`: Purpose: establish credibility instantly. Draft copy: review heading + aggregate rating/count. Layout: editorial header, no hero media.
+2. `review_filters`: Purpose: relevant proof by service type. Draft copy: All / Installation / Repair / Replacement / Emergency tabs. Layout: horizontal cluster.
+3. `masonry_reviews`: Purpose: authentic voice at scale. Draft copy: testimonial body, customer name, area, service badge, rating. Layout: 3-col masonry desktop, 1-col mobile.
+4. `platform_proof`: Purpose: source transparency. Draft copy: Google/source badge and link labels. Layout: compact inline row.
+5. `conversion_band`: Purpose: convert trust into action. Draft copy: quote CTA + call CTA line. Layout: dark bottom strip.
+
+---
+
 ## Motion
 
 - Individual testimonial cards: stagger `Reveal` 30ms per card, `opacity 0→1` only (no translate — respects masonry layout).
@@ -142,3 +152,4 @@
 | `load_more_reviews` | "Show more" clicked |
 | `reviews_cta_click` | Bottom quote CTA |
 | `platform_link_click` | Google / platform badge clicked |
+

@@ -60,3 +60,4 @@ The root layout must apply `padding-bottom: calc(60px + env(safe-area-inset-bott
 ## Responsive
 - Hidden on `≥ 1024px` via `hidden lg:hidden` (Tailwind)
 - No tablet variant — collapses at lg breakpoint
+

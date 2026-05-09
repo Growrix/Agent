@@ -65,6 +65,17 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `services_hero_tiles`: Purpose: fast service discovery. Draft copy: "Every Roofing Need, Covered" + "Four core services. One team. Zero shortcuts." Layout: desktop 2x2 tile grid, tablet 2-col, mobile stacked. Surface: dark primary. Interaction: tile hover/focus lift and CTA row action.
+2. `services_catalog`: Purpose: compare all service paths. Draft copy uses `service.*.name`, `service.*.card_summary`, `service.*.starts_at`. Layout: desktop 2-col cards, tablet 2-col, mobile 1-col. Surface: light. Interaction: card click-through to detail routes.
+3. `emergency_highlight`: Purpose: isolate urgent path. Draft copy: emergency label + response-time promise. Layout: full-width emphasized card/band. Surface: destructive-accented. Interaction: primary phone CTA + emergency route click.
+4. `social_proof_strip`: Purpose: confidence before action. Draft copy: short testimonial + aggregate rating label. Layout: split strip desktop, stacked mobile. Surface: light-inset. Interaction: review source link.
+5. `process_orientation`: Purpose: explain what happens next. Draft copy: concise 3-step process headlines and supporting line per step. Layout: horizontal trail desktop, vertical mobile. Surface: dark.
+6. `conversion_band`: Purpose: capture undecided users. Draft copy: "Ready to protect your home?" and quote CTA. Layout: centered stack mobile, split row desktop. Surface: dark.
+
+---
+
 ## Motion Temperament
 
 - Hero tile reveals: `Reveal` with 80ms stagger per tile, `opacity 0→1` + `translateY 16px→0`, `--motion-duration-slow`
@@ -129,3 +140,4 @@
 |-------|---------|
 | `service_card_click` | Which service card clicked |
 | `emergency_cta_click` | Emergency service card or band CTA |
+

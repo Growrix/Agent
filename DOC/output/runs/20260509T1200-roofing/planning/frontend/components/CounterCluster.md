@@ -61,3 +61,4 @@ interface CounterClusterProps {
 
 ## Surface Context
 Appears on: dark `Surface` band (`--color-dark-bg`) on Home below hero, and CTA band. Text colors declared explicitly — not inherited from Surface.
+

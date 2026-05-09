@@ -68,6 +68,18 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `quote_intro`: Purpose: explain outcome and commitment. Draft copy: "Get Your Free Quote" + "We'll call you back within 1 business hour." Layout: centered heading stack. Surface: clean white.
+2. `step_progress`: Purpose: reduce abandonment anxiety. Draft copy: step labels (Service & Area, Contact, Project Details). Layout: horizontal progress rail; sticky compact on mobile.
+3. `step_1_service_area`: Purpose: scope request quickly. Draft copy from service options and urgency labels. Layout: single-column form group. Interaction: required validation before next.
+4. `step_2_contact`: Purpose: capture response channel. Draft copy from name/email/phone/preferred method labels. Layout: single-column form group.
+5. `step_3_details_upload`: Purpose: improve quote accuracy. Draft copy for description, roof age, upload helper text. Layout: textarea + file input stack.
+6. `trust_note`: Purpose: reinforce safety and no-obligation promise. Draft copy: "Free, no-obligation estimate · Licensed & Insured · Respond within 24h". Layout: line below form card.
+7. `success_panel`: Purpose: close conversion loop. Draft copy from `form.quote.success.*` with next-step timeline and phone fallback. Layout: card replacement state.
+
+---
+
 ## Form Plan
 
 **Step 1 — Service & Area:**
@@ -164,3 +176,4 @@
 | `quote_form_submit` | Form submitted successfully |
 | `quote_form_abandon` | User exits mid-form (session end) |
 | `quote_draft_recovered` | Session restored with prior draft |
+

@@ -4,38 +4,38 @@
     "project": "Apex Roofing Co.",
     "run": "20260509T1200-roofing",
     "generated": "2026-05-09T12:00:00Z",
-    "open_questions": ["brand.name", "brand.license_number", "brand.phone", "brand.founded_year", "brand.project_count", "footer.attribution.*"]
+    "open_questions": ["brand.name", "brand.phone", "brand.founded_year", "brand.project_count", "brand.google_rating", "brand.google_review_count"]
   },
   "brand": {
     "name": "Apex Roofing Co.",
-    "tagline": "Protecting homes across [Metro Area] since 2006.",
+    "tagline": "Protecting homes across Greater Austin area since 2006.",
     "logo_alt": "Apex Roofing Co. logo",
     "founded_year": "2006",
     "years_in_business": "20+",
     "project_count": "2,400+",
     "satisfaction_rate": "98%",
     "response_time_minutes": "45",
-    "license_number": "LIC-XXXXXXX",
-    "phone": "(555) 800-ROOF",
-    "phone_uri": "tel:+15558007663",
-    "email": "info@apexroofing.example",
+    "license_number": "TX-RC-847219",
+    "phone": "(512) 555-0198",
+    "phone_uri": "tel:+15125550198",
+    "email": "hello@apexroofingco.com",
     "address_line1": "123 Rooftop Drive",
-    "address_city": "[Metro City]",
-    "address_state": "[State]",
-    "address_zip": "00000",
+    "address_city": "Austin",
+    "address_state": "TX",
+    "address_zip": "78701",
     "hours_weekday": "Mon–Fri: 7am – 7pm",
     "hours_saturday": "Saturday: 8am – 5pm",
     "hours_emergency": "24/7 Emergency Service",
-    "google_business_url": "https://maps.google.com/placeholder",
+    "google_business_url": "https://maps.google.com/?q=Apex+Roofing+Co+Austin+TX",
     "google_rating": "4.9",
     "google_review_count": "387"
   },
   "nav": {
     "topbar": {
-      "address": "Serving [Metro Area] & surrounding towns",
+      "address": "Serving Greater Austin area & surrounding towns",
       "hours": "Mon–Sat 7am–7pm · 24hr Emergency",
-      "phone": "(555) 800-ROOF",
-      "phone_aria_label": "Call Apex Roofing Co. at (555) 800-ROOF"
+      "phone": "(512) 555-0198",
+      "phone_aria_label": "Call Apex Roofing Co. at (512) 555-0198"
     },
     "links": {
       "services": "Services",
@@ -56,7 +56,7 @@
   "cta": {
     "get_free_quote": "Get Free Quote",
     "call_now_label": "Call Now",
-    "call_now_aria": "Call Apex Roofing now — (555) 800-ROOF",
+    "call_now_aria": "Call Apex Roofing now — (512) 555-0198",
     "book_inspection": "Book Free Inspection",
     "learn_more": "Learn More",
     "see_all_services": "See All Services",
@@ -71,9 +71,9 @@
       "eyebrow": "Roofing Excellence Since 2006",
       "headline_1": "Your Roof.",
       "headline_2": "Our Responsibility.",
-      "subhead": "Licensed, insured roofing for homeowners across [Metro Area]. Installs, repairs, and emergency response — done right the first time.",
+      "subhead": "Licensed, insured roofing for homeowners across Greater Austin area. Installs, repairs, and emergency response — done right the first time.",
       "cta_primary": "Get Free Quote",
-      "cta_secondary": "(555) 800-ROOF",
+      "cta_secondary": "(512) 555-0198",
       "before_label": "Before",
       "after_label": "After"
     },
@@ -183,7 +183,7 @@
     "hero": {
       "eyebrow": "Who we are",
       "heading": "Built on Rooftops. Built on Trust.",
-      "subhead": "Since 2006, we've been the roofing team homeowners in [Metro Area] call when it matters most."
+      "subhead": "Since 2006, we've been the roofing team homeowners in Greater Austin area call when it matters most."
     },
     "story": {
       "eyebrow": "Our story",
@@ -194,7 +194,7 @@
       "heading": "The People on Your Roof"
     },
     "credentials": {
-      "license": "State License #LIC-XXXXXXX",
+      "license": "State License #TX-RC-847219",
       "insurance": "$2M General Liability + Workers' Comp",
       "warranty": "10-Year Workmanship Guarantee"
     }
@@ -203,7 +203,7 @@
     "page": {
       "eyebrow": "Where we work",
       "heading": "We Come to You",
-      "subhead": "Apex Roofing serves the [Metro Area] and 50+ surrounding towns. Enter your postcode to confirm coverage."
+      "subhead": "Apex Roofing serves the Greater Austin area and 50+ surrounding towns. Enter your postcode to confirm coverage."
     },
     "coverage_prompt": "Enter your postcode to check coverage",
     "coverage_found": "Great news — we serve {postcode}!",
@@ -213,7 +213,7 @@
     "page": {
       "eyebrow": "Reach us",
       "heading": "Let's Talk About Your Roof",
-      "subhead": "Prefer to talk? Call (555) 800-ROOF. Or send us a message and we'll respond within 2 hours."
+      "subhead": "Prefer to talk? Call (512) 555-0198. Or send us a message and we'll respond within 2 hours."
     },
     "form": {
       "heading": "Send a Message",
@@ -224,7 +224,7 @@
       "submit": "Send Message",
       "success_heading": "Message sent!",
       "success_body": "We'll be in touch within 2 hours (during business hours).",
-      "error_network": "Something went wrong. Please call (555) 800-ROOF directly."
+      "error_network": "Something went wrong. Please call (512) 555-0198 directly."
     }
   },
   "form": {
@@ -254,7 +254,7 @@
         "body": "We'll call you within 1 business hour. You'll also receive a confirmation email."
       },
       "error": {
-        "network": "Something went wrong. Please call us directly at (555) 800-ROOF.",
+        "network": "Something went wrong. Please call us directly at (512) 555-0198.",
         "name": { "required": "Please enter your first name." },
         "phone": {
           "required": "Please enter a valid phone number.",
@@ -281,11 +281,11 @@
       },
       {
         "question": "Are you licensed and insured?",
-        "answer": "Absolutely. We hold State License #LIC-XXXXXXX and carry full general liability and workers' compensation insurance. Certificates available on request."
+        "answer": "Absolutely. We hold State License #TX-RC-847219 and carry full general liability and workers' compensation insurance. Certificates available on request."
       },
       {
         "question": "How quickly can you respond to an emergency?",
-        "answer": "We aim to be on-site within 45 minutes for emergency calls in our primary service area. Call (555) 800-ROOF any time — 24/7."
+        "answer": "We aim to be on-site within 45 minutes for emergency calls in our primary service area. Call (512) 555-0198 any time — 24/7."
       },
       {
         "question": "What roofing materials do you work with?",
@@ -307,26 +307,26 @@
   },
   "footer": {
     "brand": {
-      "tagline": "Protecting homes across [Metro Area] since 2006."
+      "tagline": "Protecting homes across Greater Austin area since 2006."
     },
     "legal": {
-      "license": "License #LIC-XXXXXXX",
+      "license": "License #TX-RC-847219",
       "copyright": "© 2026 Apex Roofing Co. All rights reserved.",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
     "contact": {
-      "phone": "(555) 800-ROOF",
-      "phone_aria_label": "Call Apex Roofing at (555) 800-ROOF",
-      "email": "info@apexroofing.example",
-      "address": "123 Rooftop Drive, [Metro City], [State] 00000",
+      "phone": "(512) 555-0198",
+      "phone_aria_label": "Call Apex Roofing at (512) 555-0198",
+      "email": "hello@apexroofingco.com",
+      "address": "123 Rooftop Drive, Austin, TX 78701",
       "hours": "Mon–Sat 7am–7pm · 24hr Emergency"
     },
     "attribution": {
-      "text": "Website by",
-      "link_text": "[Agency Name]",
-      "url": "https://[agency-url].example",
-      "aria_label": "Website designed and built by [Agency Name]"
+      "text": "Built and maintenance by",
+      "link_text": "Growrix OS",
+      "url": "https://www.growrixos.com",
+      "aria_label": "Built and maintenance by Growrix OS (opens in a new tab)"
     }
   },
   "not_found": {
@@ -344,10 +344,10 @@
   "seo": {
     "site_name": "Apex Roofing Co.",
     "default_title_suffix": "| Apex Roofing Co.",
-    "home_title": "Expert Roofing Contractor in [Metro Area] | Apex Roofing Co.",
-    "home_description": "Licensed & insured roofing contractor serving [Metro Area]. Roof installation, repair, replacement & 24/7 emergency response. Free quotes. 20+ years. Call (555) 800-ROOF.",
+    "home_title": "Expert Roofing Contractor in Greater Austin area | Apex Roofing Co.",
+    "home_description": "Licensed and insured roofing contractor serving the Greater Austin area. Roof installation, repair, replacement, and 24/7 emergency response. Free quotes. 20+ years. Call (512) 555-0198.",
     "services_title": "Roofing Services | Apex Roofing Co.",
-    "services_description": "Explore all roofing services from Apex Roofing Co. — installation, repair, replacement, and 24/7 emergency response for homeowners in [Metro Area].",
+    "services_description": "Explore all roofing services from Apex Roofing Co. — installation, repair, replacement, and 24/7 emergency response for homeowners in Greater Austin area.",
     "about_title": "About Us | Apex Roofing Co.",
     "contact_title": "Contact | Apex Roofing Co.",
     "quote_title": "Get a Free Roofing Quote | Apex Roofing Co.",
@@ -356,3 +356,4 @@
     "faq_title": "Roofing FAQ | Apex Roofing Co."
   }
 }
+

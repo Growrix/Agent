@@ -50,6 +50,16 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `faq_header`: Purpose: orient and reduce friction. Draft copy: FAQ heading + short subhead. Layout: dark header with search field.
+2. `faq_search`: Purpose: quick answer retrieval. Draft copy: search placeholder and no-results helper line. Layout: single input row below heading.
+3. `faq_categories`: Purpose: group objections logically. Draft copy: General, Installation, Repair, Replacement, Cost, Insurance. Layout: tab row.
+4. `faq_accordion`: Purpose: expandable answer delivery. Draft copy from `faq.items[*].question` and `faq.items[*].answer`. Layout: stacked accordion list.
+5. `faq_conversion_band`: Purpose: capture unresolved intent. Draft copy: "Still have questions?" + quote CTA + phone. Layout: dark bottom band.
+
+---
+
 ## State Requirements
 
 | State | Handling |
@@ -90,3 +100,4 @@
 | `faq_search` | Search input used |
 | `faq_item_open` | Accordion item expanded (which item) |
 | `faq_cta_click` | CTA at bottom clicked |
+

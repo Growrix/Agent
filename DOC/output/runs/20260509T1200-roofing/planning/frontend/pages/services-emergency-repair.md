@@ -87,6 +87,18 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `emergency_hero_call_first`: Purpose: immediate action. Draft copy: "Storm Hit. We're Coming." + 24/7 subhead + large phone CTA. Layout: centered dark-red hero.
+2. `emergency_scenarios`: Purpose: help users self-identify urgency. Draft copy: active leak, storm impact, fallen debris, structural risk list. Layout: icon-led single-column blocks.
+3. `while_you_wait`: Purpose: reduce harm before crew arrival. Draft copy: safety tip steps in calm language. Layout: light instructional panel.
+4. `insurance_help`: Purpose: administrative reassurance. Draft copy: claim documentation and coordination summary. Layout: concise support strip.
+5. `emergency_proof`: Purpose: trust under pressure. Draft copy: brief emergency testimonials + trust badges. Layout: light inset section.
+6. `emergency_faq`: Purpose: resolve last-minute objections. Draft copy: emergency-specific FAQ items. Layout: accordion stack.
+7. `final_call_band`: Purpose: zero-friction conversion repeat. Draft copy: repeated phone CTA and hours. Layout: dark closing band.
+
+---
+
 ## Motion
 
 **CTAs only use `alive-energetic`:**
@@ -162,3 +174,4 @@
 | `emergency_form_start` | Short emergency form interaction |
 | `insurance_section_view` | Insurance section in viewport |
 | `emergency_faq_open` | FAQ item expanded |
+

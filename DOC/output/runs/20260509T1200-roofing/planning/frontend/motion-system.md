@@ -225,3 +225,4 @@ All animation is wrapped in a `useReducedMotion()` check (Framer Motion built-in
 - Target: 60fps on mid-range Android (Moto G Power class device).
 - Hero video backgrounds: not used. Static photography only. `next/image` for all hero media.
 - Framer Motion code-split: `LazyMotion` + `domAnimation` feature set only (no full motion bundle on initial load).
+

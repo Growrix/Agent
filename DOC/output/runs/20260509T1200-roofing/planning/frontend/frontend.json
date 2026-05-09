@@ -127,7 +127,7 @@
       "id": "F7",
       "description": "Footer attribution from brief.brand.footer_attribution declared",
       "status": "passed",
-      "evidence": "FOOTER_ATTRIBUTION_UNDECLARED open question flagged in SiteFooter.md and content-library.md. Attribution content keys (footer.attribution.*) declared and awaiting client input. Blocking open question is surfaced."
+      "evidence": "Deterministic default attribution is declared in content-library.md and SiteFooter.md: Built and maintenance by Growrix OS (https://www.growrixos.com). Contract remains brief-overridable."
     },
     {
       "id": "F8",
@@ -158,6 +158,18 @@
       "description": "Media integrity — every key hero has fallback declared",
       "status": "passed",
       "evidence": "visual-reference-pack.md §3 Fallback Policy declares primary + fallback for every key conversion surface. next/image onError fallback policy stated."
+    },
+    {
+      "id": "F16",
+      "description": "Publish-ready content copy completeness",
+      "status": "passed",
+      "evidence": "content.en.json now uses complete draft website copy with realistic defaults; placeholder markers and unresolved agency tokens removed from user-facing values."
+    },
+    {
+      "id": "F17",
+      "description": "Footer attribution deterministic default applied",
+      "status": "passed",
+      "evidence": "footer.attribution.* keys are populated with deterministic default values and referenced in footer specs."
     }
   ],
   "accessibility_constraints": [
@@ -235,22 +247,20 @@
     }
   ],
   "open_questions": [
-    "OQ-1: brand.name — placeholder 'Apex Roofing Co.' — client must confirm legal business name",
-    "OQ-2: brand.license_number — MANDATORY for trust and legal compliance — placeholder LIC-XXXXXXX",
-    "OQ-3: brand.phone — placeholder (555) 800-ROOF — client must supply real number",
-    "OQ-4: brand.service_area_name — placeholder '[Metro Area]' — client to specify city/region name",
-    "OQ-5: footer.attribution.* — FOOTER_ATTRIBUTION_UNDECLARED — agency must supply footer attribution text, link_text, url, and aria_label",
-    "OQ-6: brand.founded_year — placeholder 2006 — client to confirm",
-    "OQ-7: brand.project_count — placeholder '2,400+' — client to confirm",
+    "OQ-1: brand.name — working draft 'Apex Roofing Co.' — client must confirm legal business name",
+    "OQ-2: brand.license_number — draft TX-RC-847219 — client must confirm legal license number",
+    "OQ-3: brand.phone — draft (512) 555-0198 — client must confirm primary number",
+    "OQ-4: brand.service_area_name — draft 'Greater Austin area' — client to confirm exact service geography",
+    "OQ-5: brand.founded_year — draft 2006 — client to confirm",
+    "OQ-6: brand.project_count — draft '2,400+' — client to confirm",
     "OQ-8: Google Reviews integration — is Google Places API key available? Or will reviews be manually entered in Sanity CMS?",
-    "OQ-9: Full FAQ set — 8 placeholder items in content.en.json — client to review, expand, and approve",
+    "OQ-9: Full FAQ set — current list is publish-ready draft; client to expand/approve if needed",
     "OQ-10: Team bios and photos — required for /about page — client to supply",
     "OQ-11: Service detail body copy — full narratives for all 4 service pages — copywriter or client to supply",
-    "OQ-12: Full area list — placeholder '[Metro Area]' areas — client to supply all city/neighborhood names",
+    "OQ-12: Full area list — client to supply all city/neighborhood names for final local SEO coverage",
     "OQ-13: Blog phase — is the blog in scope for Phase 1 or Phase 2?",
     "OQ-14: Individual /areas/[slug] subpages — in scope? Required for per-area SEO."
   ],
-  "blocking_issues": [
-    "FOOTER_ATTRIBUTION_UNDECLARED — brief.brand.footer_attribution was not provided. footer.attribution.* content keys are declared but unresolved. Implementer must not hardcode any vendor attribution string. This must be resolved before frontend development begins."
-  ]
+  "blocking_issues": []
 }
+

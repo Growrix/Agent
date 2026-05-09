@@ -70,6 +70,17 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `blog_intro`: Purpose: frame editorial value. Draft copy: blog heading and subhead for homeowners. Layout: light header with category tags.
+2. `category_filters`: Purpose: fast topic navigation. Draft copy: category labels from `blog.categories.*`. Layout: horizontal tab cluster.
+3. `featured_post`: Purpose: spotlight highest-value article. Draft copy: title, excerpt, read time, "Read Article" CTA. Layout: large media card with dark overlay.
+4. `post_grid`: Purpose: browse recent content. Draft copy: card title/excerpt/category/date. Layout: 3-col desktop, 1-col mobile.
+5. `load_more_block`: Purpose: pagination clarity. Draft copy: "Load More Articles" CTA. Layout: centered control row.
+6. `conversion_band`: Purpose: transition from education to action. Draft copy: quote CTA + phone fallback. Layout: dark CTA strip.
+
+---
+
 ## Motion
 
 - Featured post: `Reveal` on mount, `opacity 0→1` + `translateY 12px→0`, `--motion-duration-normal`.
@@ -121,3 +132,4 @@
 | `blog_post_click` | Any post card clicked + which post |
 | `blog_category_filter` | Category tab selected |
 | `blog_load_more` | Load more button clicked |
+

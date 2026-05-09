@@ -47,3 +47,4 @@ No animation on this component — purely static.
 ## ARIA
 - Container: `aria-label="Business credentials"`
 - Each badge: `role="img"` + `aria-label={trust.badge.[key]_aria}`
+

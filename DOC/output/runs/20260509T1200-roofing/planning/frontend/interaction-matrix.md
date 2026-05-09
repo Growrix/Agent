@@ -213,3 +213,4 @@ Every interaction above has documented touch/pointer behavior. The following pat
 - No tooltips used as primary information delivery — all information is in visible text
 - FAQ accordion is touch-friendly (44px min tap targets)
 - All form inputs use appropriate `inputmode` attributes: `tel` for phone, `text` for name, `numeric` for postcode (numeric keyboard)
+

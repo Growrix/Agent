@@ -297,3 +297,4 @@ No deviations from archetype defaults are required. The following intentional el
 | Motion duration cinematic | n/a | 320ms | Hero reveal storytelling |
 
 All overrides are intentional and approved. No raw values appear in component or page specs — all reference tokens above.
+

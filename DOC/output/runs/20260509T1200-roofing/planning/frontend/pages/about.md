@@ -83,6 +83,17 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `about_hero`: Purpose: human-first trust. Draft copy: "Built on Rooftops. Built on Trust." + founder-era subhead. Layout: 50/50 portrait/story split.
+2. `origin_story`: Purpose: differentiate via narrative. Draft copy: founding story paragraphs and pull-quote. Layout: long-form editorial surface.
+3. `values_panel`: Purpose: communicate standards. Draft copy: 3-4 value statements with supporting detail. Layout: dark value strip with icon-led rows.
+4. `team_grid`: Purpose: prove real people. Draft copy: name, role, short bio per team member. Layout: 3-col desktop grid.
+5. `credentials_block`: Purpose: compliance confidence. Draft copy: license, insurance, workmanship guarantee lines. Layout: dark structured list/table.
+6. `about_conversion_band`: Purpose: convert trust to action. Draft copy: quote CTA + phone line. Layout: dark bottom CTA band.
+
+---
+
 ## Motion
 
 **Temperament:** `restrained-cinematic`
@@ -156,3 +167,4 @@
 | `about_cta_click` | Any CTA on this page |
 | `team_section_view` | Team section enters viewport |
 | `credentials_section_view` | Credentials section enters viewport |
+

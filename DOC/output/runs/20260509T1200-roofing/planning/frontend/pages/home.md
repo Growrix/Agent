@@ -94,6 +94,19 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `home_hero`: Purpose: instant value and first conversion. Draft copy: "Your Roof. Our Responsibility." + localized subhead + quote/call CTAs. Layout: full-bleed media hero with bottom-left content.
+2. `trust_counter_strip`: Purpose: quantitative credibility. Draft copy: projects, years, satisfaction, response stats + aggregate review line. Layout: dark full-width strip with 4 stat cards.
+3. `services_overview`: Purpose: capability clarity. Draft copy: services heading/subhead and 4 service summaries. Layout: light grid cards.
+4. `proof_testimonials`: Purpose: customer confidence. Draft copy: testimonial heading + selected review excerpts. Layout: masonry-style cards.
+5. `process_walkthrough`: Purpose: remove uncertainty. Draft copy: 3-step process with short action verbs and helper lines. Layout: dark asymmetric split.
+6. `areas_preview`: Purpose: service-area confirmation. Draft copy: area heading and lookup prompt. Layout: light section with chips/map teaser.
+7. `blog_teaser`: Purpose: educational authority. Draft copy: blog heading and 3 teaser cards. Layout: light inset strip.
+8. `final_cta`: Purpose: close conversion loop. Draft copy: "Ready to protect your home?" + quote and phone CTA. Layout: dark CTA band.
+
+---
+
 ## Motion Temperament
 
 **Temperament:** `restrained-cinematic` on hero, `calm-precise` on all body sections.
@@ -230,3 +243,4 @@
 2. Before/after photo pair: client to supply — real project, same address angle.
 3. Exact areas list for "Serving Your Neighborhood" section.
 4. 3–5 featured testimonials with customer name, area, and service type consent.
+

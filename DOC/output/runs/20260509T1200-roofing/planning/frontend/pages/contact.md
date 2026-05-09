@@ -51,6 +51,17 @@
 
 ---
 
+## Section Blueprint (E2E)
+
+1. `contact_intro`: Purpose: orient and reduce friction. Draft copy: "Let's Talk About Your Roof" + response-time line. Layout: compact heading block above split layout. Surface: light.
+2. `emergency_banner`: Purpose: route urgent users immediately. Draft copy: "Roofing emergency? Call (512) 555-0198 now." Layout: full-width alert strip above form. Surface: destructive-muted. Interaction: tap-to-call.
+3. `contact_form_panel`: Purpose: structured inquiry capture. Draft copy from `form.contact.*` labels and helper lines. Layout: left panel desktop, top panel mobile. Surface: white card.
+4. `contact_info_panel`: Purpose: provide direct channels. Draft copy: phone, email, address, business hours. Layout: right panel desktop, second panel mobile. Surface: inset light. Interaction: tap-to-call, mailto, map link.
+5. `map_embed_panel`: Purpose: location trust. Draft copy: "Visit by appointment" microcopy. Layout: below contact info panel. Surface: light. Interaction: open maps.
+6. `post_submit_state`: Purpose: confirm completion and next step. Draft copy: "Message sent" + "We'll respond within 2 hours during business hours." Layout: replaces form panel.
+
+---
+
 ## Form Plan
 
 | Field | Type | Validation | Content key |
@@ -112,3 +123,4 @@
 | `contact_form_submit` | Form submit success |
 | `contact_phone_click` | Phone CTA click |
 | `emergency_escalation_click` | Emergency banner CTA |
+
