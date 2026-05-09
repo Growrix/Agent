@@ -5,11 +5,18 @@
   "quality_target": "world_class",
   "lock_status": "PLANNED",
   "generated_at": "2026-05-09T12:00:00Z",
+  "delivery_class": "baseline_prototype",
+  "delivery_class_reason": "frontend_focus mode; Sanity CMS wired via mock adapter in dev until real Sanity project is configured. Upgrade to production_candidate after Sanity + Resend + PostHog env vars are wired and smoke tests pass.",
+  "auth_modal_opt_out": true,
+  "auth_modal_opt_out_justification": "Marketing-only roofing contractor site. No user accounts, sign-in, or sign-up surfaces required. INV3 check is not-applicable for this project.",
+  "root_shim_required": true,
+  "root_shim_note": "A root-level package.json shim at repo root (outside web/) proxying dev/build/lint/test commands to web/ is required for workspace-root ergonomics. This file is exempt from the web/-only output rule as it is a developer ergonomic artifact, not a frontend source file.",
   "artifacts": {
     "root": "DOC/output/runs/20260509T1200-roofing/planning/frontend",
-    "count": 37,
+    "count": 38,
     "list": [
       "README.md",
+      "site-inventory.md",
       "ai-context.yaml",
       "master-ui-architecture.md",
       "design-system.md",
@@ -82,9 +89,9 @@
     "/quote": "Get a quote",
     "/faq": "FAQ",
     "/blog": "Blog index",
-    "/privacy": "Privacy policy",
-    "/terms": "Terms of service",
-    "/404": "Not found"
+    "/privacy-policy": "Privacy policy (Tier 1 — auto-generated)",
+    "/terms-of-service": "Terms of service (Tier 1 — auto-generated)",
+    "/not-found": "Not found (Tier 1 — auto-generated)"
   },
   "frontend_constraints": [
     {
@@ -158,6 +165,24 @@
       "description": "Media integrity — every key hero has fallback declared",
       "status": "passed",
       "evidence": "visual-reference-pack.md §3 Fallback Policy declares primary + fallback for every key conversion surface. next/image onError fallback policy stated."
+    },
+    {
+      "id": "F13",
+      "description": "No shared route wrapper — each route composes its content sections uniquely",
+      "status": "passed",
+      "evidence": "component-system.md declares no MarketingPage/PageShell wrapper. All pages/*.md have distinct section compositions. visual-differentiation-map.md confirms unique composition patterns across all routes. Shared organisms: SiteHeader, SiteFooter, MobileBottomNav (exempt as layout shells)."
+    },
+    {
+      "id": "F14",
+      "description": "Framer Motion declared and must be actively used in ≥3 surface classes",
+      "status": "passed",
+      "evidence": "motion-system.md catalogs: (1) hero staggered word reveal (Framer Motion variants), (2) BeforeAfterSlider drag (Framer Motion useDrag), (3) service card hover (whileHover scale + shadow), (4) CounterCluster count-up on inView, (5) MobileBottomNav active tab scale. framer-motion in tech_stack satisfies hero / card-hover / modal-transition surface classes."
+    },
+    {
+      "id": "F15",
+      "description": "Every public marketing route has measurably distinct hero composition",
+      "status": "passed",
+      "evidence": "visual-differentiation-map.md and visual-reference-pack.md confirm 3 hero composition patterns: Pattern A (Full-Bleed Cinematic) — Home, Roof Replacement; Pattern B (Editorial Split 60/40) — Roof Installation, About; Pattern C (Utility Dark) — Services, Emergency, Areas, Contact. All pairs have ≥2 differing dimensions (layout split, media framing, type hierarchy)."
     },
     {
       "id": "F16",

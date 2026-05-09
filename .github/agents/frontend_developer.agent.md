@@ -49,7 +49,8 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 15. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
 
 ## STRICT RULES
-- MUST place ALL emitted code under `web/`. No file outside `web/`.
+- MUST place ALL frontend source code under `web/`. No frontend source file outside `web/`.
+  - **Exception — root ergonomic shim:** When `constraints.root_shim_required == true` (or the planning bundle declares it), generate a minimal root-level `package.json` at the repo root (one directory above `web/`) containing only script proxies (`dev`, `build`, `lint`, `test`, `e2e`) that delegate to `web/`. This file is a developer ergonomic artifact, not frontend source code, and is explicitly exempt from the `web/`-only rule. Emit it with a comment header: `# Ergonomic shim — proxies to web/. Do not add dependencies here.`
 - MUST support workspace-root developer ergonomics: when `web/` is the frontend root and repository root has no runnable scripts, generate a root `package.json` command shim so `npm run dev|build|lint|test` works from repo root by proxying to `web/`.
 - MUST NOT generate any backend code: no `web/src/app/api/**` route handlers beyond stubs that *consume* the backend contract documented in the planning bundle. (Stub routes that proxy to backend are allowed; route handlers that hold business logic, DB access, or integration SDKs are forbidden.)
 - MUST NOT generate any CMS schema files (CMS lives in the backend's separate `studio/` folder, owned by `backend_developer`).

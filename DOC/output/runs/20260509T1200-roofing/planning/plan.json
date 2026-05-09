@@ -1,0 +1,37 @@
+{
+  "run_id": "20260509T1200-roofing",
+  "project": "Apex Roofing Co. — Roofing Contractor Website",
+  "lock_status": "LOCKED",
+  "generated_at": "2026-05-09T12:00:00Z",
+  "archetype": "local_services",
+  "quality_target": "world_class",
+  "execution_mode": "frontend_focus",
+  "scope": {
+    "frontend": true,
+    "backend": false,
+    "cms": false,
+    "devops": false
+  },
+  "artifacts": {
+    "frontend": "DOC/output/runs/20260509T1200-roofing/planning/frontend/frontend.json",
+    "site_inventory": "DOC/output/runs/20260509T1200-roofing/planning/frontend/site-inventory.md"
+  },
+  "tech_stack": {
+    "framework": "Next.js 15 (App Router, RSC-first)",
+    "styling": "Tailwind CSS v4 + CSS custom properties",
+    "animation": "Framer Motion 12",
+    "cms": "Sanity v3 (mock adapter in frontend_focus mode)",
+    "forms": "React Hook Form + Zod",
+    "email": "Resend",
+    "analytics": "PostHog",
+    "deployment": "Vercel",
+    "package_manager": "npm"
+  },
+  "output_root": "web",
+  "notes": [
+    "frontend_focus mode: no backend or OpenAPI spec required. Developer generates typed mock adapters for CMS and form submission surfaces.",
+    "Auth modal opted out: marketing-only site, no user accounts.",
+    "Root package.json shim required at repo root for workspace ergonomics.",
+    "delivery_class: baseline_prototype until Sanity CMS and integrations are wired with real env vars."
+  ]
+}

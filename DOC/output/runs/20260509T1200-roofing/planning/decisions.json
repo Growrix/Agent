@@ -1,0 +1,45 @@
+{
+  "run_id": "20260509T1200-roofing",
+  "generated_at": "2026-05-09T12:00:00Z",
+  "decisions": [
+    {
+      "id": "D1",
+      "category": "scope",
+      "decision": "frontend_focus execution mode",
+      "rationale": "No backend brief provided. Roofing contractor site requires marketing frontend only. Backend (Sanity CMS, Resend, PostHog) wired via env vars post-build."
+    },
+    {
+      "id": "D2",
+      "category": "auth",
+      "decision": "AuthModal opted out",
+      "rationale": "No user accounts or gated content. Marketing-only surface. INV3 check is not-applicable.",
+      "opt_out": true
+    },
+    {
+      "id": "D3",
+      "category": "delivery",
+      "decision": "delivery_class: baseline_prototype",
+      "rationale": "CMS pages (blog, reviews) render from mock adapter in dev. Upgrade path: wire real Sanity project ID + dataset + API key → re-run smoke tests → promote to production_candidate."
+    },
+    {
+      "id": "D4",
+      "category": "ergonomics",
+      "decision": "Root package.json shim at repo root",
+      "rationale": "Developer ergonomics require npm run dev/build/lint/test to work from repo root. Shim proxies to web/. File lives outside web/ and is exempt from the web/-only output rule.",
+      "shim_commands": ["dev", "build", "lint", "test", "e2e"]
+    },
+    {
+      "id": "D5",
+      "category": "routes",
+      "decision": "Privacy and Terms as Tier 1 auto-generated routes",
+      "rationale": "site-inventory.md classifies /privacy-policy and /terms-of-service as Tier 1 infrastructure. The planning briefs pages/privacy.md and pages/terms.md are content reference only.",
+      "routes": ["/privacy-policy", "/terms-of-service"]
+    },
+    {
+      "id": "D6",
+      "category": "cms",
+      "decision": "Sanity v3 with mock adapter in frontend_focus mode",
+      "rationale": "No Sanity project credentials available at planning time. Developer generates a typed Sanity client singleton and a mock data layer. Real client activates when NEXT_PUBLIC_SANITY_PROJECT_ID env var is present."
+    }
+  ]
+}
