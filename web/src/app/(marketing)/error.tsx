@@ -1,19 +1,29 @@
 "use client";
 
-export default function Error({ reset }: { error: Error; reset: () => void }) {
+export default function MarketingError({
+  error: _error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   return (
-    <main className="mx-auto flex min-h-[60svh] w-full max-w-6xl flex-col items-center justify-center gap-4 px-4 py-16 text-center">
-      <h1 className="text-3xl font-semibold text-foreground">Something went wrong.</h1>
+    <div
+      className="flex min-h-[60vh] flex-col items-center justify-center text-center px-[var(--space-6)]"
+      role="alert"
+    >
+      <h2 className="font-display font-bold text-2xl text-[var(--color-text)] mb-[var(--space-4)]">
+        Something went wrong
+      </h2>
+      <p className="text-[var(--color-text-muted)] mb-[var(--space-6)] max-w-[36ch]">
+        We couldn&apos;t load this page. Please try again.
+      </p>
       <button
-        type="button"
         onClick={reset}
-        className="rounded-full bg-primary-600 px-5 py-3 text-theme-inverse focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+        className="inline-flex items-center px-[var(--space-6)] py-[var(--space-3)] rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] font-semibold transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)] focus-visible:outline-offset-2"
       >
-        Try again
+        Retry
       </button>
-    </main>
+    </div>
   );
 }
-
-
-
