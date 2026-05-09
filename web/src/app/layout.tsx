@@ -1,36 +1,71 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import "./globals.css";
+import { seo, brand } from "@/lib/content";
+import "@/styles/globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Summit Ridge Roofing",
-  description: "Inspection-first roofing with storm response, financing guidance, and warranty confidence.",
-  metadataBase: new URL("https://summitridge.example")
+  metadataBase: new URL("https://apexroofingco.com"),
+  title: {
+    default: seo.home_title,
+    template: `%s ${seo.default_title_suffix}`,
+  },
+  description: seo.home_description,
+  applicationName: seo.site_name,
+  authors: [{ name: brand.name }],
+  openGraph: {
+    type: "website",
+    siteName: seo.site_name,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en-US" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full bg-background text-foreground">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-surface-raised focus:px-4 focus:py-2 focus:text-foreground focus:shadow-theme-sm"
-        >
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var t = localStorage.getItem('theme');
+                if (t) { document.documentElement.setAttribute('data-theme', t); }
+                else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              } catch(e){}
+            `,
+          }}
+        />
+      </head>
+      <body className={`${spaceGrotesk.variable} ${inter.variable}`}>
+        {/* Skip link — first focusable element on every page */}
+        <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
         <ThemeProvider>{children}</ThemeProvider>
@@ -38,6 +73,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-

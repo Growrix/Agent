@@ -45,6 +45,9 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - MUST fail execution if placeholder business facts remain active in production-classified public output.
 - MUST fail execution if CMS-backed public pages render from mock arrays in a production-classified output.
 - MUST fail execution if required visual QA evidence is missing or fails.
+- MUST determine and persist the runtime app root before install/dev checks (for example `web/` in split-root repos).
+- MUST run install/dev/smoke commands from the runtime app root, not from a parent shim root.
+- MUST classify repeated Windows native-binary install failures (EPERM/UNKNOWN/spawn on esbuild/swc/sharp) as blocking environment failures with explicit recovery evidence.
 - MUST fail execution if implemented header behavior differs from the planner-defined state machine for required routes.
 - MUST fail execution if footer readability/alignment fails in either light or dark theme screenshots.
 - MUST fail execution if any required public media asset is broken and no fallback behavior is present.
@@ -140,4 +143,5 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - VISUAL_QA_FAILED
 - OUTPUT_MISMATCH
 - ENV_SETUP_INCOMPLETE
+- ENV_SETUP_WINDOWS_BINARY_LOCK
 - QUALITY_GATE_FAILED

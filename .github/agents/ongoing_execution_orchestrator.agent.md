@@ -29,6 +29,30 @@ A generic, reusable execution agent for active projects. This agent converts app
 - Avoid hardcoded values when configuration or content systems exist.
 - Treat failed validation as blocking until fixed.
 - Treat visual regressions (contrast, broken media, alignment drift) as blocking failures for UI work.
+- Treat runtime-root ambiguity as blocking until resolved (install/dev must run from actual app root such as `web/`).
+- Always apply deterministic dev-server preflight before startup attempts.
+
+## FRONTEND KNOWLEDGE PARITY BASELINE
+This agent must apply the same frontend execution knowledge baseline as the frontend developer entrypoint for regular execution tasks and environment fixes.
+
+Required knowledge references:
+- DOC/core/system-rules.md
+- DOC/core/quality-gates.md
+- DOC/core/anti-hallucination-rules.md
+- DOC/knowledge/frontend-rules/frontend-rules.md
+- DOC/knowledge/frontend-rules/design-tokens-rules.md
+- DOC/knowledge/frontend-rules/component-state-matrix.md
+- DOC/knowledge/frontend-rules/motion-rules.md
+- DOC/knowledge/frontend-rules/content-rules.md
+- DOC/knowledge/frontend-rules/responsive-rules.md
+- DOC/knowledge/frontend-rules/accessibility-rules.md
+- DOC/knowledge/skills/*.md
+- DOC/knowledge/ux-patterns/*.md
+- DOC/validation/constraints/frontend-constraints.md
+- DOC/validation/constraints/accessibility-constraints.md
+- DOC/execution/post-build-environment-setup.md
+- DOC/execution/spec-templates/dev-server-checklist.template.md
+- DOC/execution/spec-templates/export-manifest.template.md
 
 ## REQUIRED EXECUTION FLOW
 1. Gather context: requirements, architecture notes, affected files.
@@ -36,8 +60,17 @@ A generic, reusable execution agent for active projects. This agent converts app
 3. Implement focused edits.
 4. Run narrow validation immediately.
 5. Update docs/specs if behavior or contracts changed.
+5.1 For frontend tasks, ensure `dev-server-checklist.md` and `export-manifest.md` exist in app root (for example `web/`) and reflect current setup.
 6. Run final quality gate checks.
 7. Commit locally with a clear, scoped message.
+
+## DEV SERVER SOP (MANDATORY)
+Before running dev server commands:
+1. Determine runtime app root and run commands there.
+2. Verify dependencies are installed.
+3. Verify env files (`ENV.example` and `.env.local` shape) are valid.
+4. Check/clear conflicting processes and port usage.
+5. If on Windows and native binary install fails (esbuild/swc/sharp): stop node processes, remove lockfile + node_modules, reinstall once, then classify blocker with exact error if still failing.
 
 ## QUALITY GATES
 Run applicable checks in this order:

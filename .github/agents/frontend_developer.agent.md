@@ -45,13 +45,20 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 11. Generate test scaffolds (Vitest unit, Playwright E2E setup) following the qa plan structure — leave actual test bodies as TODO stubs for the dedicated frontend testing agent (or backend_developer's qa stage).
 12. Generate SEO assets: `sitemap.xml` route, `robots.txt`, `og-image` defaults, `web/src/app/manifest.ts`.
 13. Produce `web/RUN.md` with install + dev + build + smoke commands.
-14. Produce `web/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
-15. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
+14. Produce `web/dev-server-checklist.md` with deterministic preflight and recovery SOP for local dev boot.
+15. Produce `web/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
+16. Produce `web/export-manifest.md` documenting minimum portable bundle (`.github/`, `DOC/`, app root) and post-export run steps.
+17. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
 
 ## STRICT RULES
 - MUST place ALL frontend source code under `web/`. No frontend source file outside `web/`.
-  - **Exception — root ergonomic shim:** When `constraints.root_shim_required == true` (or the planning bundle declares it), generate a minimal root-level `package.json` at the repo root (one directory above `web/`) containing only script proxies (`dev`, `build`, `lint`, `test`, `e2e`) that delegate to `web/`. This file is a developer ergonomic artifact, not frontend source code, and is explicitly exempt from the `web/`-only rule. Emit it with a comment header: `# Ergonomic shim — proxies to web/. Do not add dependencies here.`
+  - **Exception — root ergonomic shim:** When `constraints.root_shim_required == true` (or the planning bundle declares it), generate a minimal root-level `package.json` at the repo root (one directory above `web/`) containing only script proxies (`dev`, `build`, `lint`, `test`, `e2e`) that delegate to `web/`.
+  - Root `package.json` MUST be valid JSON only. Do not add comment lines or non-JSON header text.
+  - Place shim notes in `README.md` instead of `package.json`.
 - MUST support workspace-root developer ergonomics: when `web/` is the frontend root and repository root has no runnable scripts, generate a root `package.json` command shim so `npm run dev|build|lint|test` works from repo root by proxying to `web/`.
+- MUST treat `web/` as the execution root for dependency install, dev server start, and smoke checks even when a root command shim exists.
+- MUST include `web/dev-server-checklist.md` in every generated frontend output. It must include at minimum: runtime-root detection, dependency install steps, env validation, port conflict checks, known Windows lock/binary recovery, and smoke verification.
+- MUST include `web/export-manifest.md` in every generated frontend output with standardized export instructions and post-export bootstrap commands.
 - MUST NOT generate any backend code: no `web/src/app/api/**` route handlers beyond stubs that *consume* the backend contract documented in the planning bundle. (Stub routes that proxy to backend are allowed; route handlers that hold business logic, DB access, or integration SDKs are forbidden.)
 - MUST NOT generate any CMS schema files (CMS lives in the backend's separate `studio/` folder, owned by `backend_developer`).
 - MUST NOT generate deployment configs (`vercel.json`, GitHub Actions, IaC) — those belong to `backend_developer`.
@@ -246,8 +253,19 @@ For each `pages/<route-slug>.md` (now in design-brief shape — outcomes + conte
 
 ### Phase 9 — Run manual + envs
 1. Generate `web/RUN.md` with: prereqs, install (`<pkg> install`), dev (`<pkg> dev`), build (`<pkg> build`), test (`<pkg> test`), e2e (`<pkg> exec playwright test`), smoke checklist, common pitfalls.
-2. Generate `web/ENV.example` listing only `NEXT_PUBLIC_*` vars consumed by the frontend.
-3. Generate `web/README.md` (developer overview + folder map).
+2. Generate `web/dev-server-checklist.md` with mandatory sections:
+  - Project root and runtime root detection.
+  - Clean install procedure.
+  - Env variable preflight (`ENV.example` to `.env.local`).
+  - Port/process conflict checks.
+  - Windows binary lock recovery flow (`node_modules` + lockfile cleanup and process kill).
+  - Dev startup verification and HTTP smoke probe checklist.
+3. Generate `web/export-manifest.md` with standardized portability contract:
+  - Required folders/files to copy (`.github/`, `DOC/`, app root such as `web/`).
+  - Post-export setup commands from runtime root.
+  - Validation steps to confirm exported project boots.
+4. Generate `web/ENV.example` listing only `NEXT_PUBLIC_*` vars consumed by the frontend.
+5. Generate `web/README.md` (developer overview + folder map).
 
 ### Phase 10 — Self-audit
 1. Walk emitted files. For each, run the relevant frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12 checks.
@@ -287,7 +305,7 @@ The full file tree depends on the page + component count, but always includes:
 web/
 ├── package.json, tsconfig.json, next.config.ts, postcss.config.mjs, tailwind.config.ts
 ├── .eslintrc, .prettierrc, .gitignore
-├── README.md, RUN.md, ENV.example
+├── README.md, RUN.md, ENV.example, dev-server-checklist.md, export-manifest.md
 ├── src/
 │   ├── app/                      ← App Router pages + route groups + layouts
 │   ├── components/               ← Shared components per spec
