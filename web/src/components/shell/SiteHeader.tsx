@@ -4,8 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { nav, brand } from "@/lib/content";
+import { Clock, Facebook, Instagram, Linkedin, Menu, PhoneCall, X, Youtube } from "lucide-react";
+import { nav, brand, social } from "@/lib/content";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 import { cn } from "@/lib/utils";
 
@@ -80,22 +80,67 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
       {/* Topbar */}
       <div
         ref={topbarRef}
-        className={cn(
-          "hidden xl:block text-[var(--font-size-body-sm)] border-b border-[var(--color-border)]",
-          isTransparent
-            ? "bg-[var(--color-overlay)] text-[var(--color-text-on-dark)] border-white/20"
-            : "bg-[var(--color-surface)] text-[var(--color-text-muted)]",
-          "transition-all duration-200"
-        )}
+        className="hidden xl:block bg-[var(--color-overlay)] backdrop-blur-sm text-[var(--color-text-on-dark)] border-b border-white/10"
       >
         <div className="container-x flex items-center justify-between gap-[var(--space-4)] py-[var(--space-2)]">
-          <div className="flex min-w-0 items-center gap-[var(--space-3)]">
-            <span className="shrink-0">{nav.topbar.hours}</span>
-            <span aria-hidden="true">|</span>
-            <span className="truncate">{nav.topbar.license}</span>
-          </div>
+          {/* Social links */}
           <div className="flex items-center gap-[var(--space-3)]">
-            <span className="font-semibold whitespace-nowrap">{nav.topbar.emergency}</span>
+            <a
+              href={social.facebook.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.facebook.aria}
+              className="opacity-60 hover:opacity-100 hover:text-[var(--color-accent)] transition-all duration-150"
+            >
+              <Facebook size={14} aria-hidden="true" />
+            </a>
+            <a
+              href={social.instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.instagram.aria}
+              className="opacity-60 hover:opacity-100 hover:text-[var(--color-accent)] transition-all duration-150"
+            >
+              <Instagram size={14} aria-hidden="true" />
+            </a>
+            <a
+              href={social.youtube.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.youtube.aria}
+              className="opacity-60 hover:opacity-100 hover:text-[var(--color-accent)] transition-all duration-150"
+            >
+              <Youtube size={14} aria-hidden="true" />
+            </a>
+            <a
+              href={social.linkedin.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.linkedin.aria}
+              className="opacity-60 hover:opacity-100 hover:text-[var(--color-accent)] transition-all duration-150"
+            >
+              <Linkedin size={14} aria-hidden="true" />
+            </a>
+          </div>
+
+          {/* Hours + Emergency contact */}
+          <div className="flex items-center gap-[var(--space-4)] text-[var(--font-size-body-sm)]">
+            <div className="flex items-center gap-[var(--space-1)]">
+              <Clock size={13} aria-hidden="true" className="shrink-0 text-[var(--color-accent)]" />
+              <span>{nav.topbar.hours}</span>
+            </div>
+            <span aria-hidden="true" className="opacity-30 select-none">|</span>
+            <a
+              href={nav.topbar.phone_uri}
+              aria-label={nav.topbar.phone_aria}
+              className="flex items-center gap-[var(--space-2)] font-medium hover:text-[var(--color-accent)] transition-colors duration-150"
+            >
+              <PhoneCall size={13} aria-hidden="true" className="shrink-0 text-[var(--color-accent)]" />
+              <span className="inline-flex items-center rounded-sm px-[var(--space-1)] py-px bg-[var(--color-accent)] text-[var(--color-accent-foreground)] text-[10px] font-bold leading-tight tracking-wide">
+                24/7
+              </span>
+              <span>{nav.topbar.phone}</span>
+            </a>
           </div>
         </div>
       </div>
@@ -112,7 +157,7 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
           "fixed top-0 left-0 right-0 z-[var(--z-nav)]",
           "transition-[background-color,border-color,box-shadow] duration-200",
           isTransparent && !mobileOpen
-            ? "bg-[var(--color-overlay)] border-b border-white/20 shadow-[var(--shadow-sm)]"
+            ? "bg-transparent border-b border-transparent"
             : "bg-[var(--color-surface)] border-b border-[var(--color-border)] shadow-[var(--shadow-sm)]"
         )}
         style={{ top: isAtTop ? topbarHeight : 0 }}
