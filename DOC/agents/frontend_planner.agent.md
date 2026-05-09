@@ -150,6 +150,20 @@ These are non-negotiable requirements. Every frontend plan produced by this agen
 - Planner MUST declare placement and behavior: footer bottom bar, explicit link target behavior, and accessible link label.
 - Attribution text/URL stays brief-overridable; the default above is used only when brief data is missing.
 
+**Social media icons — presence, placement, and design contract:**
+- Planner MUST include a `social_links` block in the content library spec (`content.<locale>.json`) for every project. Required keys per platform: `href`, `aria_label`, and an icon identifier mapping to a lucide-react or project icon name.
+- Planner MUST declare social icon placement for ALL three canonical zones (omit a zone only with an explicit brief-based justification):
+  1. **Topbar right slot** (desktop, `xl+`): icon-only links at 14–16px, `opacity-60 → 100` on hover, accent color on hover. Order: Facebook → Instagram → YouTube → LinkedIn (adjust to brief's declared platforms).
+  2. **Footer social row** (all breakpoints): icon-only links at 20px inside a dedicated `SocialRow` organism. Render below the footer logo/tagline column or in a centered bottom-bar strip depending on footer archetype.
+  3. **Hero side rail** (optional — HIGH-latitude marketing heroes only): a vertical fixed-left or fixed-right strip of icon links rendered at ≥ 80vh hero height, 18–20px icons, white/semi-transparent on dark overlays. MUST include `aria-label` and be keyboard-navigable. Do not plan on both left and right simultaneously.
+- Planner MUST specify icon set source: use lucide-react named icons (Facebook, Instagram, Youtube, Linkedin, Twitter/X, Pinterest, TikTok if available) or project SVG sprites. Do NOT plan custom drawn icons unless brief explicitly requires brand-specific glyphs.
+- Planner MUST ensure every social icon link opens in a new tab (`target="_blank"`, `rel="noopener noreferrer"`) and has an accessible `aria-label` that identifies both the platform name and the company name (e.g., `"Follow Apex Roofing on Instagram"`).
+- Planner MUST declare the icon size contract per zone: topbar = 14px, footer = 20px, hero rail = 18–20px.
+- Planner MUST NOT plan social icons as text labels — icons only (with aria-labels) in all three zones.
+- Content keys for social links MUST live at `social.<platform>.href` and `social.<platform>.aria` — never hardcoded in component specs.
+- In the header/topbar behavior declaration, explicitly note: topbar social zone sits on the LEFT of the topbar (before hours/contact), hours/emergency/contact sit on the RIGHT. Do not invert this default without brief justification.
+- In footer specs, declare the social row's alignment (centered vs. left-aligned) and its position relative to copyright and attribution lines.
+
 **Hero visual standards:**
 - Every public route hero MUST be full-bleed (100vw, min-height: 100svh or 80vh), not a narrow boxed layout.
 - Heroes MUST use animated text reveal (staggered entrance per word or line) with `useReducedMotion()` fallback to instant.
@@ -169,7 +183,7 @@ These are non-negotiable requirements. Every frontend plan produced by this agen
 **Header/topbar/footer behavior invariants:**
 - Planner MUST define a deterministic header state machine for every public route group: `initial at top`, `scroll down`, and `scroll up` states.
 - Planner MUST explicitly specify whether header is transparent at top and what contrast strategy keeps nav items readable over real hero/media backgrounds.
-- Planner MUST define topbar slot order and icon requirements (contact actions, social actions, hours/status) so implementers do not improvise layout order.
+- Planner MUST define topbar slot order and icon requirements (contact actions, social actions, hours/status) so implementers do not improvise layout order. The canonical topbar slot order is: [LEFT: social icon links] | [RIGHT: clock icon + hours | phone icon + 24/7 badge + number].
 - Planner MUST specify footer information architecture with alignment and density constraints; avoid over-segmentation patterns unless the brief explicitly requires cardized footers.
 - Planner MUST include light and dark theme contrast acceptance criteria for header and footer interactive elements.
 
@@ -340,8 +354,9 @@ Owns: hero composition specs, mobile composition specs, asset brief.
 
 ### Phase 10 — Emit summary + index
 1. Emit `README.md` (human-first index for the output folder).
-2. Emit `frontend.json` for `plan.json` aggregation.
-3. Mark output `lock_status: PLANNED` when all artifacts pass.
+2. Derive `project_root_slug` as `kebab-case(brief.brand.name)-website` (e.g., `"Apex Roofing Co."` → `"apex-roofing-website"`). Include it in `frontend.json` so `frontend_developer` reads and applies the correct project root directory name.
+3. Emit `frontend.json` for `plan.json` aggregation.
+4. Mark output `lock_status: PLANNED` when all artifacts pass.
 
 ## OUTPUT FORMAT
 Output root: `DOC/output/runs/<timestamp>/planning/frontend/` (configurable via `constraints.output_root`).
@@ -370,6 +385,7 @@ Required artifacts:
 ```json
 {
   "status": "passed | failed",
+  "project_root_slug": "<kebab-case-brand-name>-website",
   "artifacts": {
     "root": "DOC/output/runs/<timestamp>/planning/frontend",
     "count": 0,

@@ -49,10 +49,14 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 15. Produce `web/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
 16. Produce `web/export-manifest.md` documenting minimum portable bundle (`.github/`, `DOC/`, app root) and post-export run steps.
 17. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
+18. When `constraints.execution_mode == "frontend_focus"`, proceed without blocking on backend/OpenAPI artifacts by generating typed mock adapters and stable fixtures for all dynamic UI surfaces.
+19. Read `site-inventory.md` and auto-generate ALL Tier 1 infrastructure routes without a brief. These are mandatory on every build regardless of whether they appear in the `pages/` brief folder. Missing any Tier 1 route is `BLOCK TIER1_INFRASTRUCTURE_MISSING`.
 
 ## STRICT RULES
-- MUST place ALL frontend source code under `web/`. No frontend source file outside `web/`.
-  - **Exception — root ergonomic shim:** When `constraints.root_shim_required == true` (or the planning bundle declares it), generate a minimal root-level `package.json` at the repo root (one directory above `web/`) containing only script proxies (`dev`, `build`, `lint`, `test`, `e2e`) that delegate to `web/`.
+- MUST name the frontend project root folder after the site/project, NOT `web/`. The folder name MUST be a lowercase, hyphen-separated slug derived from the project's brand or service name as declared in `brief.brand.name` or `brief.project_slug`. Examples: `apex-roofing-website/`, `solar-pro-website/`, `bright-electric-web/`. The rule: `<brand-slug>-website` where `<brand-slug>` is the first 1–3 meaningful words of the brand name. The planner emits `project_root_slug` in `frontend.json`; the developer reads and applies it. If `project_root_slug` is absent from `frontend.json`, derive it as `<kebab-case(brand.name)>-website`.
+- Every rule below that references `web/` applies equally to whatever the actual `<project-root-slug>/` is. Substitute the real slug in all paths, configs, scripts, and documentation. The root shim and all generated paths MUST use the real slug — never the literal string `web` unless the brief or planning bundle explicitly declares `project_root_slug: "web"`.
+- MUST place ALL frontend source code under `<project-root-slug>/`. No frontend source file outside this directory.
+  - **Exception — root ergonomic shim:** When `constraints.root_shim_required == true` (or the planning bundle declares it), generate a minimal root-level `package.json` at the repo root (one directory above the project root) containing only script proxies (`dev`, `build`, `lint`, `test`, `e2e`) that delegate to `<project-root-slug>/`.
   - Root `package.json` MUST be valid JSON only. Do not add comment lines or non-JSON header text.
   - Place shim notes in `README.md` instead of `package.json`.
 - MUST support workspace-root developer ergonomics: when `web/` is the frontend root and repository root has no runnable scripts, generate a root `package.json` command shim so `npm run dev|build|lint|test` works from repo root by proxying to `web/`.
@@ -141,17 +145,21 @@ These requirements mirror the planner's mandatory UX infrastructure and are enfo
   "planning_root":      "DOC/output/runs/<timestamp>/planning/frontend",
   "openapi_spec_path":  "DOC/output/runs/<timestamp>/planning/backend/docs/openapi.yaml",
   "constraints": {
-    "output_root":      "web",
+    "output_root":      "<project-root-slug> (derived from frontend.json.project_root_slug; falls back to kebab-case(brand.name)-website)",
     "package_manager":  "pnpm | npm | yarn",
-    "framework_version":"nextjs-15 | nextjs-14"
+    "framework_version":"nextjs-15 | nextjs-14",
+    "execution_mode":   "frontend_focus | full_stack"
   }
 }
 ```
 
+`execution_mode` defaults to `frontend_focus`. In this mode, `openapi_spec_path` is optional.
+
 ## WORKFLOW
 
 ### Phase 1 — Project scaffold
-1. Create `web/` directory tree per the architecture template's frontend `folder_structure`.
+1. Read `project_root_slug` from `frontend.json`. If absent, derive as `kebab-case(brand.name)-website`. This slug is the frontend project root directory for all subsequent steps (replaces the literal `web/` in all paths, configs, and scripts).
+2. Create `<project-root-slug>/` directory tree per the architecture template's frontend `folder_structure`.
 2. Generate `web/package.json` with declared deps from the planning bundle (Next.js, React, Tailwind, shadcn/ui primitives, Framer Motion if motion plan uses it, react-hook-form + zod, clsx, etc.).
 3. Generate `web/tsconfig.json`, `web/next.config.ts`, `web/postcss.config.mjs`.
 4. Generate `web/src/app/layout.tsx` with: HTML lang, theme provider, font setup via `next/font`, skip-link, global toaster mount, analytics provider mount.
