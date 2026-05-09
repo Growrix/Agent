@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { nav, brand } from "@/lib/content";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 import { cn } from "@/lib/utils";
@@ -83,7 +83,7 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
         className={cn(
           "hidden xl:block text-[var(--font-size-body-sm)] border-b border-[var(--color-border)]",
           isTransparent
-            ? "bg-transparent text-white border-white/20"
+            ? "bg-[var(--color-overlay)] text-[var(--color-text-on-dark)] border-white/20"
             : "bg-[var(--color-surface)] text-[var(--color-text-muted)]",
           "transition-all duration-200"
         )}
@@ -95,14 +95,7 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
             <span className="truncate">{nav.topbar.license}</span>
           </div>
           <div className="flex items-center gap-[var(--space-3)]">
-            <span className="hidden 2xl:inline">{nav.topbar.emergency}</span>
-            <a
-              href={brand.phone_uri}
-              aria-label={nav.topbar.phone_aria}
-              className="font-semibold whitespace-nowrap text-[var(--color-accent)] hover:underline focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)] focus-visible:outline-offset-2"
-            >
-              {nav.topbar.phone}
-            </a>
+            <span className="font-semibold whitespace-nowrap">{nav.topbar.emergency}</span>
           </div>
         </div>
       </div>
@@ -119,7 +112,7 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
           "fixed top-0 left-0 right-0 z-[var(--z-nav)]",
           "transition-[background-color,border-color,box-shadow] duration-200",
           isTransparent && !mobileOpen
-            ? "bg-transparent border-b border-white/10"
+            ? "bg-[var(--color-overlay)] border-b border-white/20 shadow-[var(--shadow-sm)]"
             : "bg-[var(--color-surface)] border-b border-[var(--color-border)] shadow-[var(--shadow-sm)]"
         )}
         style={{ top: isAtTop ? topbarHeight : 0 }}
@@ -155,12 +148,12 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "text-sm font-medium transition-colors duration-150",
+                    "text-sm font-semibold transition-colors duration-150",
                     "focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)] focus-visible:outline-offset-2 rounded-[var(--radius-sm)]",
                     isTransparent && !mobileOpen
                       ? isActive
-                        ? "text-white"
-                        : "text-white/80 hover:text-white"
+                        ? "text-[var(--color-accent)]"
+                        : "text-[var(--color-text-on-dark)] hover:text-white"
                       : isActive
                       ? "text-[var(--color-accent)]"
                       : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
@@ -174,21 +167,13 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
 
           {/* Desktop CTA row */}
           <div className="hidden lg:flex shrink-0 items-center gap-[var(--space-2)] xl:gap-[var(--space-3)]">
-            <ThemeSwitcher />
-            <a
-              href={brand.phone_uri}
-              aria-label={`Call ${brand.name} at ${brand.phone}`}
+            <ThemeSwitcher
               className={cn(
-                "hidden xl:flex items-center gap-[var(--space-2)] px-[var(--space-4)] py-[var(--space-2)] rounded-[var(--radius-md)] text-sm font-semibold transition-colors duration-150",
-                "focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)] focus-visible:outline-offset-2",
-                isTransparent
-                  ? "border border-white/40 text-white hover:bg-white/10"
-                  : "border border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-inset)]"
+                isTransparent && !mobileOpen
+                  ? "text-[var(--color-text-on-dark)] border border-white/25 hover:bg-white/10 hover:text-white"
+                  : ""
               )}
-            >
-              <Phone size={16} strokeWidth={1.5} aria-hidden="true" />
-              {nav.topbar.phone}
-            </a>
+            />
             <Link
               href="/quote"
               className={cn(
@@ -203,7 +188,13 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
 
           {/* Mobile toolbar */}
           <div className="flex lg:hidden items-center gap-[var(--space-2)]">
-            <ThemeSwitcher />
+            <ThemeSwitcher
+              className={cn(
+                isTransparent && !mobileOpen
+                  ? "text-[var(--color-text-on-dark)] border border-white/25 hover:bg-white/10 hover:text-white"
+                  : ""
+              )}
+            />
             <button
               type="button"
               aria-label={mobileOpen ? nav.mobile_menu_close : nav.mobile_menu_open}
@@ -214,7 +205,7 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
                 "flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] transition-colors",
                 "focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)] focus-visible:outline-offset-2",
                 isTransparent && !mobileOpen
-                  ? "text-white hover:bg-white/10"
+                  ? "text-[var(--color-text-on-dark)] border border-white/25 hover:bg-white/10 hover:text-white"
                   : "text-[var(--color-text)] hover:bg-[var(--color-inset)]"
               )}
             >
@@ -264,13 +255,6 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
                   );
                 })}
                 <div className="pt-[var(--space-3)] flex flex-col gap-[var(--space-2)] border-t border-[var(--color-border)] mt-[var(--space-2)]">
-                  <a
-                    href={brand.phone_uri}
-                    className="flex items-center justify-center gap-[var(--space-2)] py-[var(--space-3)] px-[var(--space-4)] rounded-[var(--radius-md)] border border-[var(--color-border)] font-semibold text-[var(--color-text)] hover:bg-[var(--color-inset)] focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)]"
-                  >
-                    <Phone size={16} strokeWidth={1.5} aria-hidden="true" />
-                    {nav.topbar.phone}
-                  </a>
                   <Link
                     href="/quote"
                     className="flex items-center justify-center py-[var(--space-3)] px-[var(--space-4)] rounded-[var(--radius-md)] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] font-semibold focus-visible:outline-[3px] focus-visible:outline-[var(--color-focus-ring)]"
