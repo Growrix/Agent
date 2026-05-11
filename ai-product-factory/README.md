@@ -25,6 +25,22 @@ This standalone root now includes:
 - a generated Next.js app under `generated/apps/<run-id>/<project-slug>/`
 - a root release gate that installs, tests, builds, and audits the generated app
 
+## Input And Output Roots
+
+### Inputs
+
+- standalone briefs: `briefs/`
+- stable DOC frontend planning root: `../DOC/output/runs/<timestamp>/planning/frontend/`
+- experimental factory planner root: `../DOC/output/runs/<timestamp>/planning/frontend-factory/`
+
+### Outputs
+
+- standalone planning/spec/report artifacts: `generated/runs/<run-id>/`
+- standalone final product app: `generated/apps/<run-id>/<project-slug>/`
+- experimental DOC bridge final app: the runtime app root declared in `DOC/output/runs/<timestamp>/planning/frontend-factory/roots.json`
+
+For the current standalone factory MVP, the final built product you open and ship is the generated app under `generated/apps/<run-id>/<project-slug>/`.
+
 ## Top-Level Structure
 
 - `apps/`
@@ -67,6 +83,16 @@ The factory runner emits:
 - component/content specs under `generated/runs/<run-id>/specs/`
 - preflight and execution reports under `generated/runs/<run-id>/reports/`
 - a production-shaped Next.js app under `generated/apps/<run-id>/<project-slug>/`
+
+## Safe Cleanup
+
+For safe deletion guidance between runs and projects, see `CLEANUP.md`.
+
+Short version:
+
+- safe to delete per project: `generated/runs/<run-id>/` and `generated/apps/<run-id>/`
+- safe to clear between projects: contents under `generated/runs/`, `generated/apps/`, and run-specific files under `previews/`
+- do not delete source-system folders like `core-engineering/`, `design-system/`, `orchestrator/`, `builders/`, `validators/`, `scripts/`, and `tests/`
 
 ## Rule
 

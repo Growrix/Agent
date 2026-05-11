@@ -4,6 +4,15 @@
 
 All commands in this runbook are executed from `ai-product-factory/`.
 
+## Root Locations
+
+- standalone briefs: `briefs/`
+- standalone planning/spec/report output: `generated/runs/<run-id>/`
+- final standalone product app: `generated/apps/<run-id>/<project-slug>/`
+- experimental factory planner output: `../DOC/output/runs/<timestamp>/planning/frontend-factory/`
+
+For cleanup-safe deletions after a run, see `CLEANUP.md`.
+
 ## Validate Structure
 
 ```bash

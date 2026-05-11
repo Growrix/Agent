@@ -8,7 +8,7 @@ Update this file whenever an agent is added, removed, renamed, or its `runs_befo
 
 ## Workflow shape (5 named entry points)
 
-The OS still exposes 5 default user-facing agents. One experimental mirrored adjunct, `frontend_factory_developer`, exists for factory-native scoped frontend execution without changing the default workflow below.
+The OS still exposes 5 default user-facing agents. Two experimental mirrored adjuncts, `frontend_factory_planner` and `frontend_factory_developer`, exist for factory-native frontend planning and execution without changing the default workflow below.
 
 The OS exposes **5 user-facing agents**, mirrored at `.github/agents/` for VS Code Copilot. Two for planning, two for execution, one out-of-band meta-agent.
 
@@ -26,7 +26,7 @@ system_architect               ← Out-of-band: AUDIT, DESIGN, FIX, SMOKE, DETER
 
 Two prompts in planning. Two prompts in execution. One meta-agent.
 
-`frontend_factory_developer` is intentionally outside the default path above. It is opt-in, experimental, and exists to benchmark a scoped factory execution model while `frontend_developer` remains the production default.
+`frontend_factory_planner` and `frontend_factory_developer` are intentionally outside the default path above. They are opt-in, experimental, and exist to benchmark a scoped factory planning/execution model while `frontend_planner` and `frontend_developer` remain the production defaults.
 
 ---
 
@@ -47,7 +47,8 @@ Two prompts in planning. Two prompts in execution. One meta-agent.
 
 | Agent | Version | Phase | Inputs | Outputs |
 |---|---|---|---|---|
-| `frontend_factory_developer` | 1 | Execution (frontend, experimental factory-native) | frontend planning bundle + explicit factory scope packet | scoped frontend runtime code under the declared app root + `.audit/frontend-self-audit.md` + `.audit/frontend-factory-manifest.json` |
+| `frontend_factory_planner` | 1 | Planning (frontend, experimental factory-native) | brief | `factory-frontend.json` + `frontend-contract.json` + `experience-contract.json` + `retrieval-manifest.json` + `scope-manifest.json` + `roots.json` + `scopes/<scope-id>.json` + `README.md` + `ai-context.yaml` under `DOC/output/runs/<timestamp>/planning/frontend-factory/` |
+| `frontend_factory_developer` | 1 | Execution (frontend, experimental factory-native) | factory frontend planning bundle + explicit factory scope packet | scoped frontend runtime code under the declared app root + `.audit/frontend-self-audit.md` + `.audit/frontend-factory-manifest.json` |
 
 ---
 
@@ -113,9 +114,10 @@ If any row is missing or its producer doesn't exist, audit Section D.4 fails.
 
 ## Mirror discipline
 
-Six files live at both `DOC/agents/<name>.agent.md` and `.github/agents/<name>.agent.md`:
+Seven files live at both `DOC/agents/<name>.agent.md` and `.github/agents/<name>.agent.md`:
 
 - `frontend_planner`
+- `frontend_factory_planner`
 - `backend_planner`
 - `frontend_developer`
 - `frontend_factory_developer`

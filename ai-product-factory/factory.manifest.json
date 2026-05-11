@@ -45,6 +45,7 @@
   "requiredFiles": [
     "README.md",
     "RUN.md",
+    "CLEANUP.md",
     "package.json",
     "factory.manifest.json",
     "briefs/demo-locked-brief.json",

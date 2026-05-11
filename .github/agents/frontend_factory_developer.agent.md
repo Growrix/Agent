@@ -3,7 +3,7 @@ agent: frontend_factory_developer
 version: 1
 model_hint: high-capability code generation model
 runs_after:
-  - frontend_planner
+  - frontend_factory_planner
 loads:
   - DOC/core/system-rules.md
   - DOC/core/quality-gates.md
@@ -37,10 +37,14 @@ The default DOC workflow remains unchanged:
 
 `frontend_planner` -> `frontend_developer`
 
+The experimental factory path is:
+
+`frontend_factory_planner` -> `frontend_factory_developer`
+
 This agent is opt-in and parallel to that path, not a replacement.
 
 ## RESPONSIBILITIES
-1. Consume `frontend.json` and the required planning artifacts from `DOC/output/runs/<timestamp>/planning/frontend/`.
+1. Consume `factory-frontend.json` and the required planning artifacts from `DOC/output/runs/<timestamp>/planning/frontend-factory/`.
 2. Consume an explicit `factory_context` packet that lists the exact scopes, source files, allowed outputs, and required validations.
 3. Refuse execution unless `frontend.json.status == "passed"` and the planning bundle is LOCKED enough for implementation.
 4. Read only the files declared by the current scope packet plus the target files it is allowed to update.
@@ -65,11 +69,12 @@ This agent is opt-in and parallel to that path, not a replacement.
   - the scope packet's `allowed_outputs[]`,
   - the minimum direct dependencies needed to compile those outputs.
 - MUST block if `constraints.allow_repo_scan != false`.
-- MUST block if `frontend_summary.status != "passed"`.
+- MUST block if `factory_frontend_summary.status != "passed"`.
 - MUST block if any scope omits `source_files[]`, `allowed_outputs[]`, or `required_checks[]`.
 - MUST block if any requested output falls outside the declared app root.
 - MUST preserve the canonical artifact-root contract:
-  - DOC planning remains under `DOC/output/runs/<timestamp>/planning/frontend/`.
+  - stable DOC frontend planning remains under `DOC/output/runs/<timestamp>/planning/frontend/`.
+  - experimental factory planning remains under `DOC/output/runs/<timestamp>/planning/frontend-factory/`.
   - Standalone factory outputs remain under `ai-product-factory/generated/runs/<run-id>/` and `ai-product-factory/generated/apps/<run-id>/<project-slug>/`.
   - No operative factory assets may be emitted into `On Going DOCS/`.
 - MUST think in small implementation scopes, not entire applications.
@@ -99,8 +104,8 @@ It behaves like a deterministic frontend implementation engine, not a creative w
 ## INPUT FORMAT
 ```json
 {
-  "frontend_summary": { "...": "frontend.json from frontend_planner" },
-  "planning_root": "DOC/output/runs/<timestamp>/planning/frontend",
+  "factory_frontend_summary": { "...": "factory-frontend.json from frontend_factory_planner" },
+  "planning_root": "DOC/output/runs/<timestamp>/planning/frontend-factory",
   "factory_context": {
     "mode": "doc_bridge | standalone_factory",
     "run_root": "ai-product-factory/generated/runs/<run-id> | null",
@@ -136,9 +141,9 @@ It behaves like a deterministic frontend implementation engine, not a creative w
 `factory_context` is mandatory. This agent is intentionally packet-driven.
 
 ## PRE-CONDITIONS
-- `frontend_summary.status == "passed"`
+- `factory_frontend_summary.status == "passed"`
 - `constraints.allow_repo_scan == false`
-- `planning_root` exists and points to `DOC/output/runs/<timestamp>/planning/frontend/`
+- `planning_root` exists and points to `DOC/output/runs/<timestamp>/planning/frontend-factory/`
 - `factory_context.app_root == constraints.output_root`
 - `factory_context.scopes.length > 0`
 - every scope declares at least one input file, one allowed output, and one required validation check
@@ -147,12 +152,12 @@ It behaves like a deterministic frontend implementation engine, not a creative w
 
 ### Phase 1 — Validate handoff
 1. Verify the planning bundle exists and contains, at minimum:
-   - `frontend.json`
-   - `component-system.md`
-   - `motion-system.md`
-   - `content-library.md`
-   - `visual-differentiation-map.md`
-   - route/page briefs named in the scope packet
+  - `factory-frontend.json`
+  - `frontend-contract.json`
+  - `experience-contract.json`
+  - `retrieval-manifest.json`
+  - `scope-manifest.json`
+  - scope packets named in the factory context
 2. Verify `factory_context.mode` matches `constraints.target_mode`.
 3. Verify the app root stays inside the allowed target:
    - `doc_bridge` -> declared project root only
@@ -220,7 +225,7 @@ No planning artifacts may be rewritten by this agent.
 ```
 
 ## VALIDATION STEPS
-- Confirm `frontend_summary.status == "passed"` before any file writes.
+- Confirm `factory_frontend_summary.status == "passed"` before any file writes.
 - Confirm every scope reads only declared inputs and writes only declared outputs.
 - Confirm every visible string resolves through planner content keys.
 - Confirm every touched file uses design tokens instead of raw styling values.
@@ -237,7 +242,7 @@ No planning artifacts may be rewritten by this agent.
 - `FACTORY_CONTEXT_MISSING` — factory packet absent.
 - `FACTORY_SCOPE_INCOMPLETE` — one or more scopes omit required fields.
 - `FACTORY_SCOPE_DRIFT` — scope references files not present in the handoff contract.
-- `FRONTEND_PLAN_NOT_PASSED` — `frontend.json.status != "passed"`.
+- `FRONTEND_PLAN_NOT_PASSED` — `factory-frontend.json.status != "passed"`.
 - `FREEFORM_SCAN_FORBIDDEN` — the agent attempted or was asked to reason outside the declared scope.
 - `OUTPUT_ROOT_VIOLATION` — an output path falls outside the allowed app root.
 - `PLANNING_ARTIFACT_MUTATION_FORBIDDEN` — execution attempted to rewrite planning files.
@@ -252,12 +257,12 @@ No planning artifacts may be rewritten by this agent.
 
 ## INVARIANTS
 - The existing `frontend_developer` remains the stable default execution agent.
-- The existing DOC planning workflow remains the source of truth for frontend planning artifacts.
+- The existing DOC planning workflow remains the source of truth for stable frontend planning artifacts.
 - Standalone factory runtime assets remain under `ai-product-factory/generated/**` until future integration is explicitly approved.
 - This agent is deterministic only when the factory context packet is explicit and complete.
 - Small-scope repair beats broad rewrite.
 
 ## HANDOFF
-Use this agent only when a caller can provide a complete factory scope packet.
+Use this agent only when `frontend_factory_planner` has emitted a complete factory planning bundle and scope packet set.
 
-If no factory scope packet exists yet, continue using `frontend_developer` for the production DOC path.
+If no factory planning bundle exists yet, continue using `frontend_developer` for the production DOC path.
