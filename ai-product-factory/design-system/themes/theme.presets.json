@@ -1,0 +1,25 @@
+{
+  "presets": [
+    {
+      "id": "modern-saas",
+      "personality": "precise",
+      "density": "balanced",
+      "motion": "restrained",
+      "radius": "rounded"
+    },
+    {
+      "id": "editorial-premium",
+      "personality": "confident",
+      "density": "spacious",
+      "motion": "cinematic",
+      "radius": "soft"
+    },
+    {
+      "id": "dashboard-ops",
+      "personality": "utilitarian",
+      "density": "dense",
+      "motion": "minimal",
+      "radius": "tight"
+    }
+  ]
+}

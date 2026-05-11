@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-product-factory.local/design-system/contracts/design-token-engine.schema.json",
+  "title": "DesignTokenEngine",
+  "type": "object",
+  "required": ["theme", "typography", "spacing", "radii", "shadows", "motion"],
+  "properties": {
+    "theme": {
+      "type": "object",
+      "required": ["light", "dark"],
+      "properties": {
+        "light": { "type": "object", "additionalProperties": true },
+        "dark": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": false
+    },
+    "typography": { "type": "object", "additionalProperties": true },
+    "spacing": { "type": "object", "additionalProperties": true },
+    "radii": { "type": "object", "additionalProperties": true },
+    "shadows": { "type": "object", "additionalProperties": true },
+    "motion": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

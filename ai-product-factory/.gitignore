@@ -1,0 +1,8 @@
+node_modules/
+npm-debug.log*
+
+# generated factory outputs
+/generated/apps/*
+/generated/runs/*
+!/generated/apps/.gitkeep
+!/generated/runs/.gitkeep

@@ -1,0 +1,15 @@
+{
+  "name": "ai-product-factory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone AI Product Factory foundation",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate:structure": "node scripts/validate-structure.mjs",
+    "test": "node --test tests/factory-structure.test.mjs",
+    "release:check": "npm run validate:structure && npm test"
+  }
+}

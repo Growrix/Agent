@@ -1,0 +1,24 @@
+{
+  "layout": [
+    { "name": "Container", "states": ["default"], "accessibility": [] },
+    { "name": "Stack", "states": ["default"], "accessibility": [] },
+    { "name": "Grid", "states": ["default"], "accessibility": [] },
+    { "name": "Surface", "states": ["default", "elevated", "muted"], "accessibility": [] }
+  ],
+  "typography": [
+    { "name": "Heading", "states": ["default"], "accessibility": ["semantic-level"] },
+    { "name": "Text", "states": ["default", "muted", "inverse"], "accessibility": ["contrast"] },
+    { "name": "Label", "states": ["default", "required"], "accessibility": ["form-association"] }
+  ],
+  "interaction": [
+    { "name": "Button", "states": ["default", "hover", "focus-visible", "active", "disabled", "loading"], "accessibility": ["keyboard", "focus-ring", "aria-busy"] },
+    { "name": "IconButton", "states": ["default", "hover", "focus-visible", "active", "disabled"], "accessibility": ["aria-label", "keyboard", "focus-ring"] },
+    { "name": "Input", "states": ["default", "focus-visible", "invalid", "disabled"], "accessibility": ["label", "describedby", "error-message"] },
+    { "name": "Modal", "states": ["closed", "open"], "accessibility": ["focus-trap", "escape-close", "aria-modal"] }
+  ],
+  "display": [
+    { "name": "Card", "states": ["default", "hover", "selected"], "accessibility": [] },
+    { "name": "Accordion", "states": ["collapsed", "expanded"], "accessibility": ["button-trigger", "aria-expanded"] },
+    { "name": "Skeleton", "states": ["loading"], "accessibility": ["aria-hidden"] }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-product-factory.local/validators/contracts/production-readiness.schema.json",
+  "title": "ProductionReadinessReport",
+  "type": "object",
+  "required": ["status", "checks", "blockers", "evidence"],
+  "properties": {
+    "status": { "type": "string", "enum": ["passed", "failed", "blocked"] },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "status": { "type": "string", "enum": ["passed", "failed", "not-applicable"] },
+          "reason": { "type": "string" },
+          "evidence": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "evidence": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

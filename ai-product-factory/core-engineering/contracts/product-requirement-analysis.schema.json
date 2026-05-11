@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-product-factory.local/core-engineering/contracts/product-requirement-analysis.schema.json",
+  "title": "ProductRequirementAnalysis",
+  "type": "object",
+  "required": [
+    "brief",
+    "productType",
+    "features",
+    "routes",
+    "frontendArchitecture",
+    "apiArchitecture",
+    "stateManagement",
+    "deployment"
+  ],
+  "properties": {
+    "brief": {
+      "type": "object",
+      "required": ["summary", "audience", "goals"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "audience": { "type": "array", "items": { "type": "string" } },
+        "goals": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "productType": { "type": "string", "enum": ["saas", "dashboard", "marketing", "hybrid"] },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "priority"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "priority": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "routes": { "type": "array", "items": { "type": "string" } },
+    "frontendArchitecture": { "type": "object", "additionalProperties": true },
+    "apiArchitecture": { "type": "object", "additionalProperties": true },
+    "stateManagement": { "type": "object", "additionalProperties": true },
+    "deployment": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

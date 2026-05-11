@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-product-factory.local/orchestrator/contracts/experience-composition.schema.json",
+  "title": "ExperienceCompositionPlan",
+  "type": "object",
+  "required": ["routeId", "userIntent", "creativeLatitude", "sectionSequence", "responsiveStrategy"],
+  "properties": {
+    "routeId": { "type": "string" },
+    "userIntent": { "type": "string" },
+    "creativeLatitude": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "sectionSequence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sectionId", "purpose", "contentSlots"],
+        "properties": {
+          "sectionId": { "type": "string" },
+          "purpose": { "type": "string" },
+          "contentSlots": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": true
+      }
+    },
+    "responsiveStrategy": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

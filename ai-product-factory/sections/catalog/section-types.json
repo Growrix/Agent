@@ -1,0 +1,13 @@
+{
+  "sections": [
+    { "id": "hero", "purpose": "Value proposition and primary conversion" },
+    { "id": "trust-strip", "purpose": "Immediate trust and proof" },
+    { "id": "feature-grid", "purpose": "Explain product capabilities" },
+    { "id": "comparison", "purpose": "Clarify trade-offs and pricing" },
+    { "id": "workflow", "purpose": "Show step-by-step usage or process" },
+    { "id": "proof", "purpose": "Case studies, reviews, or outcomes" },
+    { "id": "faq", "purpose": "Handle objections" },
+    { "id": "cta-band", "purpose": "Repeat and reinforce conversion" },
+    { "id": "footer", "purpose": "Navigation, support, attribution" }
+  ]
+}
