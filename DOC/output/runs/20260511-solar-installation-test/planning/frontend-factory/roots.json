@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "target_mode": "standalone_factory",
+  "planning_root": "DOC/output/runs/20260511-solar-installation-test/planning/frontend-factory",
+  "brief_path": "ai-product-factory/briefs/solar-installation-service-test-brief.json",
+  "runtime_app_root": "ai-product-factory/generated/apps/solar-installation-test-20260511/heliorise-solar",
+  "standalone_run_root": "ai-product-factory/generated/runs/solar-installation-test-20260511",
+  "final_product_root": "ai-product-factory/generated/apps/solar-installation-test-20260511/heliorise-solar"
+}

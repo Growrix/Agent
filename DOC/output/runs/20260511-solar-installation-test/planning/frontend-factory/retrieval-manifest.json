@@ -1,0 +1,130 @@
+{
+  "planning_root": "DOC/output/runs/20260511-solar-installation-test/planning/frontend-factory",
+  "allowed_section_families": [
+    "hero",
+    "trust-strip",
+    "feature-grid",
+    "comparison",
+    "workflow",
+    "proof",
+    "faq",
+    "cta-band",
+    "footer"
+  ],
+  "allowed_primitive_families": [
+    "Container",
+    "Stack",
+    "Grid",
+    "Surface",
+    "Heading",
+    "Text",
+    "Label",
+    "Button",
+    "IconButton",
+    "Input",
+    "Modal",
+    "Card",
+    "Accordion"
+  ],
+  "allowed_composed_component_families": [
+    "SiteHeader",
+    "MobileContactBar",
+    "WhatsAppFab",
+    "CallNowBar",
+    "AiAssistantDock",
+    "LeadQuoteForm",
+    "SavingsEstimatorCard",
+    "ServiceHero",
+    "ProofQuoteGrid",
+    "ProcessSteps",
+    "ChannelCardRail"
+  ],
+  "token_references": {
+    "color": [
+      "solar-green",
+      "sun-amber",
+      "mineral-surface",
+      "charcoal-ink"
+    ],
+    "radius": [
+      "rounded-soft",
+      "rounded-hero"
+    ],
+    "motion": [
+      "duration.fast",
+      "duration.base",
+      "duration.slow",
+      "easing.standard",
+      "easing.emphasis",
+      "spring.gentle",
+      "reducedMotion.enter",
+      "reducedMotion.hover"
+    ]
+  },
+  "motion_presets": [
+    {
+      "id": "sunrise-reveal",
+      "applies_to": [
+        "home.hero",
+        "residential.hero",
+        "commercial.hero"
+      ],
+      "default": {
+        "duration": "slow",
+        "easing": "emphasis"
+      },
+      "reduced_motion": "instant"
+    },
+    {
+      "id": "proof-stagger",
+      "applies_to": [
+        "home.proof",
+        "residential.proof",
+        "commercial.proof"
+      ],
+      "default": {
+        "duration": "base",
+        "easing": "standard"
+      },
+      "reduced_motion": "instant"
+    },
+    {
+      "id": "contact-dock-slide",
+      "applies_to": [
+        "shared.communication.channels"
+      ],
+      "default": {
+        "duration": "base",
+        "easing": "standard"
+      },
+      "reduced_motion": "instant"
+    }
+  ],
+  "direct_dependency_sets": [
+    {
+      "id": "navigation-and-footer",
+      "components": [
+        "SiteHeader",
+        "MobileContactBar",
+        "SiteFooter"
+      ]
+    },
+    {
+      "id": "lead-capture",
+      "components": [
+        "LeadQuoteForm",
+        "AiAssistantDock",
+        "WhatsAppFab",
+        "CallNowBar"
+      ]
+    },
+    {
+      "id": "proof-and-objections",
+      "components": [
+        "ProofQuoteGrid",
+        "Accordion",
+        "ChannelCardRail"
+      ]
+    }
+  ]
+}

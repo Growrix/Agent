@@ -1,0 +1,24 @@
+{
+  "id": "shared.communication.channels",
+  "kind": "component",
+  "source_files": [
+    "frontend-contract.json",
+    "experience-contract.json",
+    "retrieval-manifest.json"
+  ],
+  "allowed_outputs": [
+    "<app-root>/src/components/contact/WhatsAppFab.tsx",
+    "<app-root>/src/components/contact/CallNowBar.tsx",
+    "<app-root>/src/components/contact/AiAssistantDock.tsx",
+    "<app-root>/src/components/forms/LeadQuoteForm.tsx",
+    "<app-root>/src/components/contact/ChannelCardRail.tsx"
+  ],
+  "required_checks": [
+    "typecheck",
+    "lint",
+    "smoke"
+  ],
+  "depends_on": [
+    "shared.foundation.layout"
+  ]
+}

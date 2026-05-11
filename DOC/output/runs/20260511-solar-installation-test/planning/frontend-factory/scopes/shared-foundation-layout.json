@@ -1,0 +1,22 @@
+{
+  "id": "shared.foundation.layout",
+  "kind": "layout",
+  "source_files": [
+    "frontend-contract.json",
+    "experience-contract.json",
+    "roots.json"
+  ],
+  "allowed_outputs": [
+    "<app-root>/src/app/layout.tsx",
+    "<app-root>/src/components/layout/SiteShell.tsx",
+    "<app-root>/src/components/navigation/SiteHeader.tsx",
+    "<app-root>/src/components/navigation/MobileContactBar.tsx",
+    "<app-root>/src/components/footer/SiteFooter.tsx"
+  ],
+  "required_checks": [
+    "typecheck",
+    "lint",
+    "smoke"
+  ],
+  "depends_on": []
+}

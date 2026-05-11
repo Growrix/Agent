@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "target_mode": "standalone_factory",
+  "project_root_slug": "heliorise-solar",
+  "planning_root": "DOC/output/runs/20260511-solar-installation-test/planning/frontend-factory",
+  "runtime_app_root": "ai-product-factory/generated/apps/solar-installation-test-20260511/heliorise-solar",
+  "final_product_root": "ai-product-factory/generated/apps/solar-installation-test-20260511/heliorise-solar",
+  "communication_priorities": [
+    "whatsapp",
+    "call",
+    "ai_chat",
+    "quote_form"
+  ],
+  "route_coverage": [
+    {
+      "route": "/",
+      "scope": "marketing.home.route",
+      "status": "covered"
+    },
+    {
+      "route": "/residential-solar",
+      "scope": "marketing.residential.route",
+      "status": "covered"
+    },
+    {
+      "route": "/commercial-solar",
+      "scope": "marketing.commercial.route",
+      "status": "covered"
+    },
+    {
+      "route": "/financing-and-incentives",
+      "scope": "marketing.financing.route",
+      "status": "covered"
+    },
+    {
+      "route": "/contact",
+      "scope": "marketing.contact.route",
+      "status": "covered"
+    }
+  ],
+  "artifacts": {
+    "frontend_contract": "frontend-contract.json",
+    "experience_contract": "experience-contract.json",
+    "retrieval_manifest": "retrieval-manifest.json",
+    "scope_manifest": "scope-manifest.json",
+    "roots": "roots.json"
+  }
+}
