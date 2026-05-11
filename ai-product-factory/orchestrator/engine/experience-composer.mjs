@@ -137,23 +137,28 @@ function heroCandidates({ brief, analysis, experienceLibrary }) {
 
 function assignHeroArchetypes({ routes, brief, analysis, experienceLibrary }) {
   const candidates = heroCandidates({ brief, analysis, experienceLibrary });
+  const allArchetypes = experienceLibrary?.heroArchetypes ?? [];
   const fallback = { id: 'hero-editorial-split', mediaPolicy: 'optional' };
 
   if (candidates.length === 0) {
     return Object.fromEntries(routes.map((route) => [route, fallback]));
   }
 
+  const assignmentPool = candidates.length >= routes.length
+    ? candidates
+    : [...candidates, ...allArchetypes.filter((entry) => !candidates.some((candidate) => candidate.id === entry.id))];
+
   const used = new Set();
   const assignments = {};
   const baseSeed = hashSeed(`${analysis.brief.projectSlug}:${routes.join('|')}`);
 
   routes.forEach((routePath, index) => {
-    let selected = candidates[(baseSeed + index * 7) % candidates.length];
+    let selected = assignmentPool[(baseSeed + index * 7) % assignmentPool.length];
     let attempts = 0;
 
-    while (used.has(selected.id) && attempts < candidates.length) {
+    while (used.has(selected.id) && attempts < assignmentPool.length) {
       attempts += 1;
-      selected = candidates[(baseSeed + index * 7 + attempts) % candidates.length];
+      selected = assignmentPool[(baseSeed + index * 7 + attempts) % assignmentPool.length];
     }
 
     assignments[routePath] = selected;

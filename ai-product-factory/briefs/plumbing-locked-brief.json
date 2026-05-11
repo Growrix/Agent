@@ -1,0 +1,74 @@
+{
+  "lock_status": "LOCKED",
+  "projectName": "FlowRight Plumbing",
+  "projectSlug": "flowright-plumbing",
+  "summary": "Build a high-conversion plumbing service website focused on emergency calls, quote capture, and trust-building proof for homeowners and small businesses.",
+  "audience": [
+    "Homeowners with urgent plumbing issues",
+    "Property managers",
+    "Small business owners"
+  ],
+  "goals": [
+    "Increase qualified emergency call leads",
+    "Improve quote request conversion rate",
+    "Provide clear service coverage and trust proof"
+  ],
+  "primaryCta": "Call Now",
+  "secondaryCta": "Get Free Quote",
+  "contactEmail": "hello@flowrightplumbing.com",
+  "contactPhone": "+1 (713) 555-0198",
+  "whatsAppLink": "https://wa.me/17135550198",
+  "productType": "local-services",
+  "brandPersonality": {
+    "tone": "reassuring",
+    "density": "balanced",
+    "motion": "measured",
+    "style": "local-business-trust"
+  },
+  "brandPalette": {
+    "secondary": "#0f766e",
+    "accent": "#f97316",
+    "surface": "#f8fafc",
+    "darkSurface": "#082f49"
+  },
+  "requestedFeatures": [
+    "24/7 emergency plumbing",
+    "Leak detection and repair",
+    "Drain cleaning",
+    "Water heater installation",
+    "Sewer line inspection",
+    "Live AI chat assistant",
+    "WhatsApp quick support",
+    "Mobile bottom navigation",
+    "Theme switcher"
+  ],
+  "serviceAreas": [
+    "Houston",
+    "Sugar Land",
+    "Pearland",
+    "Katy"
+  ],
+  "highlightMetrics": [
+    {
+      "value": "15 min",
+      "label": "average emergency response callback"
+    },
+    {
+      "value": "4.9/5",
+      "label": "customer rating"
+    },
+    {
+      "value": "2,300+",
+      "label": "completed service jobs"
+    }
+  ],
+  "footer_attribution": {
+    "enabled": true,
+    "text": "Built and maintenance by",
+    "link_text": "Growrix OS",
+    "url": "https://www.growrixos.com",
+    "placement": "footer_bottom_bar",
+    "new_tab": true,
+    "aria_label": "Built and maintenance by Growrix OS (opens in a new tab)"
+  }
+}
