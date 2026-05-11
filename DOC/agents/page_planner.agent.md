@@ -19,16 +19,16 @@ Produces one fully-detailed page spec per route so implementation happens withou
 ## RESPONSIBILITIES
 1. Read `brief.json`, `master-ui-architecture.md`, design system, component system, motion system, content library, and interaction matrix.
 2. Emit `<output_root>/pages/<route-slug>.md` for every route.
-3. Define sections in visual order with purpose, components, keys, states, interactions, responsive behavior, and motion.
+3. Define sections in visual order with purpose, content keys, publish-ready draft copy, layout blueprint, states, interactions, responsive behavior, and motion.
 4. Define SEO/metadata, conversion paths, accessibility plan, and performance budget per page.
 5. Define form plan and data-fetching plan where applicable.
 
 ## STRICT RULES
 - MUST follow `execution/spec-rules/per-page-spec.md` completely.
-- MUST satisfy frontend constraints F1..F15.
+- MUST satisfy frontend constraints F1..F17.
 - MUST include >=7 sections for each public page unless exempt with reason.
 - MUST declare explicit data source/query for dynamic sections.
-- MUST avoid page-level hardcoded copy and use content keys only.
+- MUST map every visible label to content keys and provide publish-ready draft copy in section blueprints.
 
 ### Creative design rules (CRITICAL — prevents template collapse)
 - MUST describe sections by their **UX purpose and desired user outcome** — not by component class name. Use names like "trust-builder strip", "solar-process walkthrough", "panel: impact metrics" instead of "TestimonialSection", "FeatureSection", "CardGrid".

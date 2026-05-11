@@ -165,7 +165,7 @@ Derive `brand.footer_attribution` deterministically:
 - If client provides attribution text/url, use it verbatim after safety normalization.
 - Else default to:
   - `enabled: true`
-  - `text: "Built & Maintained by"`
+  - `text: "Built and maintenance by"`
   - `link_text: "Growrix OS"`
   - `url: "https://www.growrixos.com"`
 - Always emit placement `footer_bottom_bar`, target behavior (`new_tab` true/false), and accessible label.

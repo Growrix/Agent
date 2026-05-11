@@ -8,7 +8,7 @@ Emitted by `frontend_planner` (page-design phase). One file per route, written t
 
 ## Philosophy
 
-This is **not** a fill-in template. It is a **design brief** — the planner authors outcomes, constraints, and forbidden patterns. The frontend developer composes the page from primitives within this envelope, exercising design judgment on HIGH-latitude surfaces and following standard composition on LOW-latitude surfaces.
+This is a **design brief + implementation blueprint**. The planner authors outcomes, constraints, and forbidden patterns, then provides a section-by-section blueprint with publish-ready draft copy so the frontend developer can implement without redesigning content or layout strategy.
 
 Pages that look the same across a site = template collapse. Pages that satisfy outcomes + constraints + differentiation = world-class output.
 
@@ -73,7 +73,7 @@ Forbidden examples (these are HOW, not WHAT):
 - ~~"Use the PricingTable component."~~
 
 ### 3. Required content slots
-List the **content the page must carry**. Order is NOT prescribed. The developer chooses placement.
+List the **content the page must carry**. This list is exhaustive and must align with the Section Blueprint below.
 
 ```yaml
 required_content_slots:
@@ -116,17 +116,42 @@ differentiation_vs_routes:
 ### 6. Composition guidance (per latitude)
 
 **For HIGH latitude:**
-List composition primitives the developer MAY draw from. NO prescription of order or count.
+List composition primitives and provide a concrete section-order blueprint. Component names remain implementation-defined.
 ```yaml
 composition_palette:
   primitives_allowed: [Stack, Cluster, Frame, Surface, Reveal, Grid, MediaFrame, Trail]
   surface_stack_pattern: "layered (paper base + frosted panel + inset data well + elevated CTA card)"
   rhythm_pattern: "irregular (hero spacious, mid-page dense, conversion spacious)"
   asymmetry_target: "60/40 split hero; 40/60 mid-page reverse"
+section_blueprint:
+  - section_id: hero
+    purpose: "Immediate value proposition and primary conversion"
+    draft_copy:
+      headline: "..."
+      subhead: "..."
+      cta_primary: "..."
+      cta_secondary: "..."
+    layout:
+      desktop: "..."
+      tablet: "..."
+      mobile: "..."
+    surface: "..."
+    interactions: ["..."]
+  - section_id: trust_strip
+    purpose: "..."
+    draft_copy:
+      heading: "..."
+      body: "..."
+    layout:
+      desktop: "..."
+      tablet: "..."
+      mobile: "..."
+    surface: "..."
+    interactions: ["..."]
 ```
 
 **For MEDIUM latitude:**
-List a recommended outline as a starting point; developer may deviate with documented reason.
+List a recommended outline plus section-level draft copy and layout intent; developer may deviate with documented reason.
 ```yaml
 recommended_outline:
   - hero
@@ -137,17 +162,30 @@ recommended_outline:
   - footer
 deviation_allowed: yes
 deviation_must_document: "Deviation note in component spec or audit file."
+section_blueprint_required: true
 ```
 
 **For LOW latitude:**
-Specify the standard composition explicitly.
+Specify the standard composition explicitly with section-level draft copy and responsive layout notes.
 ```yaml
 standard_composition:
   - header
   - hero (utility)
   - body (legal text, FAQ accordion, or 404 message)
   - footer
+section_blueprint_required: true
 ```
+
+### 6.1 Section blueprint (required for all latitudes)
+For every planned section in visual order, include:
+- `section_id` and UX purpose
+- `content_slots` mapped to keys
+- `draft_copy` (publish-ready, not placeholder)
+- desktop/tablet/mobile layout intent
+- surface treatment and contrast notes
+- interaction and state hooks for this section
+
+If facts are client-specific and unknown, provide realistic draft copy and flag the exact field in section-level open questions.
 
 ### 7. Motion temperament
 Reference the chosen temperament from `motion-system.md`. State the surface's mood and key moments.
@@ -274,6 +312,14 @@ quality_bar:
 ### 18. Open questions for human
 Anything the planner could not resolve from the brief and rules — flagged for the human.
 
+### 19. Section-level open questions ledger
+For each unresolved field in any section blueprint, list:
+- `section_id`
+- `field`
+- `current_draft_value`
+- `client_replacement_needed` (yes/no)
+- `impact_if_unchanged`
+
 ---
 
 ## Reviewer checks per page brief
@@ -284,11 +330,13 @@ Anything the planner could not resolve from the brief and rules — flagged for 
 - `forbidden_patterns[]` present and references at least one differentiation rule per HIGH/MEDIUM-latitude page.
 - `differentiation_vs_routes[]` covers every other route on the site (cross-checked against `visual-differentiation-map.md`).
 - `composition_palette` (HIGH) or `recommended_outline` (MEDIUM) or `standard_composition` (LOW) present per latitude.
+- Section blueprint present for every section with publish-ready draft copy and responsive layout intent.
 - Motion temperament + key moments + reduced-motion fallback declared.
 - SEO + Schema.org + accessibility + performance + conversion path all present.
 - Quality bar dimensions declared with per-dimension targets summing to `quality_target_score`.
 - Every content key referenced resolves to `content-library.md`.
 - No prescriptive "Section 1: Hero, Section 2: Value..." list (template-collapse pattern).
+ - No placeholder draft copy (`TODO`, `lorem`, `sample text`, `coming soon`) in section blueprint.
 
 ## Forbidden in this brief
 - Numbered section lists that prescribe HOW to compose. Use outcomes + content slots + composition palette instead.
