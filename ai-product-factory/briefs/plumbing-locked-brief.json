@@ -2,73 +2,92 @@
   "lock_status": "LOCKED",
   "projectName": "FlowRight Plumbing",
   "projectSlug": "flowright-plumbing",
-  "summary": "Build a high-conversion plumbing service website focused on emergency calls, quote capture, and trust-building proof for homeowners and small businesses.",
+  "summary": "Build a high-converting local plumbing services website that drives emergency call bookings, WhatsApp enquiries, and online quote requests 24/7.",
   "audience": [
-    "Homeowners with urgent plumbing issues",
+    "Homeowners",
+    "Landlords",
     "Property managers",
-    "Small business owners"
+    "Commercial facility managers"
   ],
   "goals": [
-    "Increase qualified emergency call leads",
-    "Improve quote request conversion rate",
-    "Provide clear service coverage and trust proof"
+    "Drive emergency call conversions at all hours",
+    "Build trust through reviews and credentials",
+    "Capture quote leads via online form and WhatsApp",
+    "Rank for local plumbing search intent"
   ],
-  "primaryCta": "Call Now",
-  "secondaryCta": "Get Free Quote",
-  "contactEmail": "hello@flowrightplumbing.com",
-  "contactPhone": "+1 (713) 555-0198",
-  "whatsAppLink": "https://wa.me/17135550198",
+  "primaryCta": "Call Now — 24/7 Emergency",
+  "secondaryCta": "Get a Free Quote",
+  "contactEmail": "hello@flowright-plumbing.example",
+  "contactPhone": "+1 800 FLOW RIGHT",
+  "whatsapp": "+18003569444",
   "productType": "local-services",
+  "industry": "plumbing",
   "brandPersonality": {
-    "tone": "reassuring",
-    "density": "balanced",
-    "motion": "measured",
-    "style": "local-business-trust"
+    "tone": "trustworthy",
+    "density": "comfortable",
+    "motion": "subtle",
+    "style": "professional-local"
   },
   "brandPalette": {
-    "secondary": "#0f766e",
+    "primary": "#1e40af",
+    "secondary": "#0369a1",
     "accent": "#f97316",
     "surface": "#f8fafc",
-    "darkSurface": "#082f49"
+    "darkSurface": "#0c1a2e"
   },
   "requestedFeatures": [
-    "24/7 emergency plumbing",
-    "Leak detection and repair",
-    "Drain cleaning",
-    "Water heater installation",
-    "Sewer line inspection",
-    "Live AI chat assistant",
-    "WhatsApp quick support",
-    "Mobile bottom navigation",
-    "Theme switcher"
+    "24/7 emergency call button",
+    "WhatsApp contact integration",
+    "AI chat widget",
+    "Online quote request form",
+    "ThemeSwitcher",
+    "MobileBottomNav",
+    "AuthModal",
+    "LiveStatusPanel"
   ],
-  "serviceAreas": [
-    "Houston",
-    "Sugar Land",
-    "Pearland",
-    "Katy"
+  "services": [
+    "Emergency plumbing",
+    "Drain unblocking",
+    "Boiler installation & repair",
+    "Bathroom fitting",
+    "Leak detection & repair",
+    "Gas safety checks",
+    "Central heating",
+    "Commercial plumbing"
   ],
   "highlightMetrics": [
     {
-      "value": "15 min",
-      "label": "average emergency response callback"
+      "value": "24/7",
+      "label": "emergency response"
     },
     {
-      "value": "4.9/5",
-      "label": "customer rating"
+      "value": "4.9★",
+      "label": "average customer rating"
     },
     {
-      "value": "2,300+",
-      "label": "completed service jobs"
+      "value": "2,000+",
+      "label": "jobs completed"
+    },
+    {
+      "value": "60 min",
+      "label": "average response time"
     }
   ],
-  "footer_attribution": {
-    "enabled": true,
-    "text": "Built and maintenance by",
-    "link_text": "Growrix OS",
-    "url": "https://www.growrixos.com",
-    "placement": "footer_bottom_bar",
-    "new_tab": true,
-    "aria_label": "Built and maintenance by Growrix OS (opens in a new tab)"
+  "serviceArea": "Greater Metro Area",
+  "certifications": [
+    "Gas Safe Registered",
+    "CIPHE Member",
+    "Which? Trusted Trader"
+  ],
+  "footer": {
+    "attribution": {
+      "enabled": true,
+      "text": "Built and maintenance by",
+      "link_text": "Growrix OS",
+      "url": "https://www.growrixos.com",
+      "placement": "footer_bottom_bar",
+      "new_tab": true,
+      "aria_label": "Built and maintenance by Growrix OS (opens in a new tab)"
+    }
   }
 }
