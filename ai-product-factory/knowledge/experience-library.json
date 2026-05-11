@@ -1,0 +1,70 @@
+{
+  "heroArchetypes": [
+    { "id": "hero-editorial-split", "style": ["editorial", "premium"], "industry": ["saas", "ai", "services"], "density": "comfortable", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["trust-logo-cloud", "stats-outcome-grid", "cta-dual-band"] },
+    { "id": "hero-media-dominant", "style": ["immersive", "visual"], "industry": ["services", "commerce", "agency"], "density": "comfortable", "motion": "medium", "mediaPolicy": "required", "compatibleWith": ["proof-story-cards", "workflow-journey", "cta-contact-rail"] },
+    { "id": "hero-calculator-first", "style": ["utility", "conversion"], "industry": ["services", "fintech", "saas"], "density": "balanced", "motion": "low", "mediaPolicy": "optional", "compatibleWith": ["calculator-strip", "comparison-plan-matrix", "faq-objection-stack"] },
+    { "id": "hero-minimal-authority", "style": ["minimal", "enterprise"], "industry": ["legal", "healthcare", "b2b"], "density": "compact", "motion": "low", "mediaPolicy": "none", "compatibleWith": ["trust-credentials-band", "feature-pillars", "cta-single-assertive"] },
+    { "id": "hero-proof-first", "style": ["trust-heavy", "conversion"], "industry": ["services", "agency", "saas"], "density": "balanced", "motion": "low", "mediaPolicy": "optional", "compatibleWith": ["testimonial-carousel", "case-study-rail", "cta-dual-band"] },
+    { "id": "hero-bento-mix", "style": ["modern", "modular"], "industry": ["ai", "saas", "developer-tools"], "density": "comfortable", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["feature-bento-grid", "workflow-journey", "cta-inline-proof"] },
+    { "id": "hero-timeline-launch", "style": ["story", "process"], "industry": ["services", "operations", "consulting"], "density": "comfortable", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["workflow-timeline-extended", "proof-story-cards", "cta-contact-rail"] },
+    { "id": "hero-dashboard-snapshot", "style": ["product-led", "technical"], "industry": ["saas", "ai", "analytics"], "density": "balanced", "motion": "medium", "mediaPolicy": "required", "compatibleWith": ["feature-command-grid", "state-readiness-panel", "cta-product-tour"] },
+    { "id": "hero-service-local", "style": ["local-trust", "service"], "industry": ["services", "home-services", "solar"], "density": "comfortable", "motion": "low", "mediaPolicy": "required", "compatibleWith": ["trust-service-badges", "workflow-on-site", "cta-call-chat"] },
+    { "id": "hero-enterprise-clean", "style": ["enterprise", "clean"], "industry": ["b2b", "saas", "security"], "density": "balanced", "motion": "low", "mediaPolicy": "optional", "compatibleWith": ["feature-pillars", "proof-kpi-strip", "cta-meeting-booker"] },
+    { "id": "hero-storyframe", "style": ["narrative", "editorial"], "industry": ["agency", "media", "consulting"], "density": "comfortable", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["workflow-journey", "testimonial-carousel", "cta-inline-proof"] },
+    { "id": "hero-command-center", "style": ["technical", "dense"], "industry": ["devtools", "ai", "ops"], "density": "dense", "motion": "low", "mediaPolicy": "optional", "compatibleWith": ["feature-command-grid", "state-readiness-panel", "cta-product-tour"] },
+    { "id": "hero-warm-conversion", "style": ["warm", "human"], "industry": ["education", "health", "services"], "density": "comfortable", "motion": "low", "mediaPolicy": "optional", "compatibleWith": ["proof-story-cards", "faq-objection-stack", "cta-dual-band"] },
+    { "id": "hero-data-forward", "style": ["analytical", "modern"], "industry": ["fintech", "saas", "analytics"], "density": "balanced", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["stats-outcome-grid", "comparison-plan-matrix", "cta-single-assertive"] },
+    { "id": "hero-community-driven", "style": ["social-proof", "community"], "industry": ["creator", "consumer", "education"], "density": "comfortable", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["testimonial-carousel", "logo-cloud-community", "cta-dual-band"] },
+    { "id": "hero-contrast-stack", "style": ["bold", "high-contrast"], "industry": ["agency", "startup", "commerce"], "density": "balanced", "motion": "medium", "mediaPolicy": "optional", "compatibleWith": ["feature-bento-grid", "proof-kpi-strip", "cta-inline-proof"] },
+    { "id": "hero-product-led-minimal", "style": ["minimal", "product"], "industry": ["saas", "devtools", "ai"], "density": "compact", "motion": "low", "mediaPolicy": "required", "compatibleWith": ["feature-command-grid", "state-readiness-panel", "cta-product-tour"] },
+    { "id": "hero-service-operator", "style": ["service", "operator"], "industry": ["solar", "electrical", "roofing"], "density": "comfortable", "motion": "low", "mediaPolicy": "required", "compatibleWith": ["workflow-on-site", "trust-service-badges", "cta-call-chat"] },
+    { "id": "hero-legal-authority", "style": ["authority", "minimal"], "industry": ["legal", "finance"], "density": "compact", "motion": "low", "mediaPolicy": "none", "compatibleWith": ["trust-credentials-band", "faq-objection-stack", "cta-meeting-booker"] },
+    { "id": "hero-brand-film", "style": ["cinematic", "story"], "industry": ["agency", "consumer", "commerce"], "density": "comfortable", "motion": "high", "mediaPolicy": "required", "compatibleWith": ["proof-story-cards", "feature-bento-grid", "cta-dual-band"] }
+  ],
+  "sectionArchetypes": {
+    "feature": [
+      "feature-grid-classic", "feature-bento-grid", "feature-pillars", "feature-command-grid", "feature-icon-rows",
+      "feature-split-media", "feature-comparison-cards", "feature-process-panels", "feature-benefit-matrix", "feature-proof-aligned",
+      "feature-usecase-tabs", "feature-role-based", "feature-density-compact", "feature-density-comfortable", "feature-vertical-story",
+      "feature-horizontal-scroll", "feature-trust-anchored", "feature-enterprise-checklist", "feature-outcome-led", "feature-lite-minimal"
+    ],
+    "trust": [
+      "trust-logo-cloud", "trust-credentials-band", "trust-service-badges", "trust-kpi-marquee", "trust-certification-grid",
+      "trust-security-panel", "trust-warranty-strip", "trust-testimonial-stack", "trust-case-study-highlight", "trust-local-presence"
+    ],
+    "proof": [
+      "proof-story-cards", "proof-kpi-strip", "proof-quote-mosaic", "proof-case-before-after", "proof-result-grid",
+      "proof-video-testimonials", "proof-partner-wall", "proof-timeline-outcomes", "proof-comparison-outcomes", "proof-customer-logos"
+    ],
+    "cta": [
+      "cta-single-assertive", "cta-dual-band", "cta-inline-proof", "cta-call-chat", "cta-contact-rail",
+      "cta-meeting-booker", "cta-estimator", "cta-trial-drive", "cta-resource-download", "cta-multi-channel",
+      "cta-whatsapp-primary", "cta-phone-primary", "cta-modal-qualifier", "cta-footer-hook", "cta-sticky-mobile"
+    ],
+    "pricing": [
+      "comparison-plan-matrix", "pricing-tier-cards", "pricing-slider", "pricing-toggle-monthly-yearly", "pricing-enterprise-quote",
+      "pricing-feature-comparison", "pricing-outcome-led", "pricing-service-packages", "pricing-estimator-table", "pricing-faq-coupled"
+    ],
+    "faq": [
+      "faq-objection-stack", "faq-category-tabs", "faq-two-column", "faq-inline-accordion", "faq-searchable",
+      "faq-pricing-focused", "faq-trust-focused", "faq-service-scope", "faq-tech-integrations", "faq-conversion-footer"
+    ],
+    "workflow": [
+      "workflow-journey", "workflow-on-site", "workflow-timeline-extended", "workflow-state-machine", "workflow-step-cards",
+      "workflow-operations-rail", "workflow-compliance-lane", "workflow-installation-flow", "workflow-onboarding-flow", "workflow-support-loop"
+    ],
+    "footer": [
+      "footer-3-column-classic", "footer-4-column-structured", "footer-contact-heavy", "footer-resource-hub", "footer-minimal-legal",
+      "footer-service-coverage", "footer-enterprise-links", "footer-community-links", "footer-conversion-hook", "footer-multi-region"
+    ]
+  },
+  "compatibilityGraph": {
+    "hero-service-local": ["trust-service-badges", "workflow-on-site", "proof-case-before-after", "cta-call-chat", "footer-service-coverage"],
+    "hero-service-operator": ["trust-local-presence", "workflow-installation-flow", "proof-result-grid", "cta-whatsapp-primary", "footer-contact-heavy"],
+    "hero-dashboard-snapshot": ["feature-command-grid", "workflow-state-machine", "proof-kpi-strip", "cta-product-tour", "footer-4-column-structured"],
+    "hero-editorial-split": ["feature-bento-grid", "workflow-journey", "proof-story-cards", "cta-dual-band", "footer-3-column-classic"],
+    "hero-minimal-authority": ["trust-credentials-band", "feature-pillars", "faq-objection-stack", "cta-single-assertive", "footer-minimal-legal"],
+    "hero-calculator-first": ["pricing-estimator-table", "comparison-plan-matrix", "faq-pricing-focused", "cta-estimator", "footer-resource-hub"],
+    "hero-proof-first": ["trust-logo-cloud", "proof-quote-mosaic", "faq-trust-focused", "cta-inline-proof", "footer-4-column-structured"]
+  }
+}

@@ -56,12 +56,13 @@ export async function runFactory({ briefPath = 'briefs/demo-locked-brief.json', 
   }
 
   const analysis = analyzeProductBrief(brief);
-  const [baseTokens, themePresets, sectionCatalog, primitivesCatalog, motionTokens] = await Promise.all([
+  const [baseTokens, themePresets, sectionCatalog, primitivesCatalog, motionTokens, experienceLibrary] = await Promise.all([
     readJson('design-system/tokens/base.tokens.json'),
     readJson('design-system/themes/theme.presets.json'),
     readJson('sections/catalog/section-types.json'),
     readJson('components/primitives/primitives.catalog.json'),
-    readJson('motion/motion.tokens.json')
+    readJson('motion/motion.tokens.json'),
+    readJson('knowledge/experience-library.json')
   ]);
 
   const designTokens = composeDesignTokens(brief, baseTokens, themePresets);
@@ -71,7 +72,8 @@ export async function runFactory({ briefPath = 'briefs/demo-locked-brief.json', 
     designTokens,
     sectionCatalog,
     primitivesCatalog,
-    motionTokens
+    motionTokens,
+    experienceLibrary
   });
   const buildPlan = buildFrontendPlan({ brief, analysis, composition, runId });
 

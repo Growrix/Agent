@@ -1,8 +1,8 @@
-function section(sectionId, purpose, contentSlots) {
-  return { sectionId, purpose, contentSlots };
+function section(sectionId, purpose, contentSlots, archetypeId) {
+  return { sectionId, purpose, contentSlots, archetypeId };
 }
 
-function pageBrief(routeId, title, heroVariant, primaryGoal, sectionIds) {
+function pageBrief(routeId, title, heroVariant, primaryGoal, sectionIds, sectionArchetypes) {
   return {
     routeId,
     title,
@@ -10,135 +10,553 @@ function pageBrief(routeId, title, heroVariant, primaryGoal, sectionIds) {
     primaryGoal,
     mandatoryUx: ['ThemeSwitcher', 'MobileBottomNav', 'AuthModal'],
     sectionIds,
+    sectionArchetypes,
     openQuestions: []
   };
 }
 
-export function composeExperiencePlan({ brief, analysis, designTokens, sectionCatalog, primitivesCatalog, motionTokens }) {
-  const supportsServiceMessaging = /solar|roof|electrical|service|installation/i.test(
+function toRouteId(routePath) {
+  if (routePath === '/') {
+    return 'home';
+  }
+
+  return routePath.replace(/^\//, '').replace(/\//g, '-');
+}
+
+function toRouteLabel(routePath) {
+  if (routePath === '/') {
+    return 'Home';
+  }
+
+  return routePath
+    .replace(/^\//, '')
+    .split('/')
+    .map((part) => part.replace(/-/g, ' '))
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function hashSeed(input) {
+  let hash = 0;
+  for (let index = 0; index < input.length; index += 1) {
+    hash = (hash << 5) - hash + input.charCodeAt(index);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+function pickBySeed(candidates, seed) {
+  if (!Array.isArray(candidates) || candidates.length === 0) {
+    return null;
+  }
+
+  return candidates[seed % candidates.length];
+}
+
+function routeIntent(routePath, productType) {
+  const map = {
+    '/': 'Understand the core offer quickly and move to a qualified conversion path.',
+    '/product': 'Inspect depth and operational capability with confidence.',
+    '/pricing': 'Evaluate trade-offs and choose a conversion lane.',
+    '/contact': 'Reach support or sales with minimum friction.',
+    '/sign-in': 'Use fallback sign-in flow when modal auth is not used.',
+    '/sign-up': 'Use fallback sign-up flow when modal auth is not used.'
+  };
+
+  if (map[routePath]) {
+    return map[routePath];
+  }
+
+  if (productType === 'marketing') {
+    return 'Learn this offer and move toward a contact or quote action.';
+  }
+
+  return 'Explore this route and move to the next validated conversion step.';
+}
+
+function routePrimaryGoal(routePath, projectName) {
+  const map = {
+    '/': `Explain ${projectName} clearly and drive primary CTA action.`,
+    '/product': 'Prove the system handles real operational scenarios.',
+    '/pricing': 'Turn commercial curiosity into decision-ready intent.',
+    '/contact': 'Provide direct communication paths and response expectations.',
+    '/sign-in': 'Provide deterministic fallback sign-in route.',
+    '/sign-up': 'Provide deterministic fallback sign-up route.'
+  };
+
+  return map[routePath] ?? 'Deliver route-specific value and preserve conversion continuity.';
+}
+
+function baseSectionSequence(routePath) {
+  if (routePath === '/') {
+    return ['hero', 'trust-strip', 'feature-grid', 'workflow', 'proof', 'faq', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/product') {
+    return ['hero', 'feature-grid', 'workflow', 'proof', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/pricing') {
+    return ['hero', 'comparison', 'proof', 'faq', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/contact') {
+    return ['hero', 'trust-strip', 'workflow', 'cta-band', 'footer'];
+  }
+
+  return ['hero', 'footer'];
+}
+
+function randomFromBucket(bucket, key, fallback) {
+  if (!Array.isArray(bucket) || bucket.length === 0) {
+    return fallback;
+  }
+
+  return pickBySeed(bucket, hashSeed(key)) ?? fallback;
+}
+
+function heroCandidates({ brief, analysis, experienceLibrary }) {
+  const allArchetypes = experienceLibrary?.heroArchetypes ?? [];
+  const productType = analysis.productType ?? 'saas';
+
+  const filtered = allArchetypes.filter((entry) => {
+    if (!Array.isArray(entry.industry) || entry.industry.length === 0) {
+      return true;
+    }
+
+    if (entry.industry.includes(productType)) {
+      return true;
+    }
+
+    const summary = `${brief.summary ?? ''} ${(brief.requestedFeatures ?? []).join(' ')}`.toLowerCase();
+    return entry.industry.some((token) => summary.includes(String(token).toLowerCase()));
+  });
+
+  return filtered.length > 0 ? filtered : allArchetypes;
+}
+
+function assignHeroArchetypes({ routes, brief, analysis, experienceLibrary }) {
+  const candidates = heroCandidates({ brief, analysis, experienceLibrary });
+  const fallback = { id: 'hero-editorial-split', mediaPolicy: 'optional' };
+
+  if (candidates.length === 0) {
+    return Object.fromEntries(routes.map((route) => [route, fallback]));
+  }
+
+  const used = new Set();
+  const assignments = {};
+  const baseSeed = hashSeed(`${analysis.brief.projectSlug}:${routes.join('|')}`);
+
+  routes.forEach((routePath, index) => {
+    let selected = candidates[(baseSeed + index * 7) % candidates.length];
+    let attempts = 0;
+
+    while (used.has(selected.id) && attempts < candidates.length) {
+      attempts += 1;
+      selected = candidates[(baseSeed + index * 7 + attempts) % candidates.length];
+    }
+
+    assignments[routePath] = selected;
+    used.add(selected.id);
+  });
+
+  return assignments;
+}
+
+function pickHeroArchetype({ routePath, heroAssignments }) {
+  const selected = heroAssignments?.[routePath];
+
+  return selected ?? {
+    id: 'hero-editorial-split',
+    mediaPolicy: 'optional'
+  };
+}
+
+function sectionArchetypesForRoute({ routePath, heroArchetype, experienceLibrary, projectSlug }) {
+  const buckets = experienceLibrary?.sectionArchetypes ?? {};
+  const graph = experienceLibrary?.compatibilityGraph ?? {};
+  const graphEntries = graph[heroArchetype.id] ?? [];
+
+  const pull = (bucketName, fallback) => {
+    const graphMatch = graphEntries.find((entry) => entry.startsWith(bucketName));
+    if (graphMatch) {
+      return graphMatch;
+    }
+
+    return randomFromBucket(buckets[bucketName], `${projectSlug}:${routePath}:${bucketName}`, fallback);
+  };
+
+  return {
+    trust: pull('trust', 'trust-logo-cloud'),
+    feature: pull('feature', 'feature-grid-classic'),
+    workflow: pull('workflow', 'workflow-journey'),
+    proof: pull('proof', 'proof-story-cards'),
+    faq: pull('faq', 'faq-objection-stack'),
+    cta: pull('cta', 'cta-single-assertive'),
+    pricing: pull('pricing', 'comparison-plan-matrix'),
+    footer: pull('footer', 'footer-4-column-structured')
+  };
+}
+
+function mediaForRoute(routePath, heroArchetype, isServiceSite) {
+  const mediaMap = {
+    '/': {
+      src: isServiceSite
+        ? 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1360&q=80'
+        : 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1360&q=80',
+      alt: isServiceSite
+        ? 'Solar installation team working on rooftop panels'
+        : 'Team collaborating on product delivery'
+    },
+    '/product': {
+      src: isServiceSite
+        ? 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1360&q=80'
+        : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1360&q=80',
+      alt: isServiceSite
+        ? 'Technical crew preparing service rollout'
+        : 'Product operations dashboard and planning board'
+    },
+    '/pricing': {
+      src: isServiceSite
+        ? 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=1360&q=80'
+        : 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1360&q=80',
+      alt: isServiceSite
+        ? 'Advisor presenting a service estimate'
+        : 'Commercial planning and pricing worksheet'
+    },
+    '/contact': {
+      src: isServiceSite
+        ? 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1360&q=80'
+        : 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1360&q=80',
+      alt: isServiceSite
+        ? 'Support specialist helping a customer'
+        : 'Customer success specialist on a support call'
+    }
+  };
+
+  if (heroArchetype.mediaPolicy === 'none') {
+    return undefined;
+  }
+
+  const selected = mediaMap[routePath] ?? mediaMap['/'];
+  return {
+    ...selected,
+    badge: heroArchetype.id
+  };
+}
+
+function buildRoutePlan({ routePath, brief, analysis, experienceLibrary, heroAssignments }) {
+  const routeId = toRouteId(routePath);
+  const hero = pickHeroArchetype({ routePath, heroAssignments });
+  const sectionArchetypes = sectionArchetypesForRoute({
+    routePath,
+    heroArchetype: hero,
+    experienceLibrary,
+    projectSlug: analysis.brief.projectSlug
+  });
+
+  const sequence = baseSectionSequence(routePath);
+  const sectionSequence = sequence.map((sectionId) => {
+    const archetypeMap = {
+      'trust-strip': sectionArchetypes.trust,
+      'feature-grid': sectionArchetypes.feature,
+      workflow: sectionArchetypes.workflow,
+      proof: sectionArchetypes.proof,
+      faq: sectionArchetypes.faq,
+      'cta-band': sectionArchetypes.cta,
+      comparison: sectionArchetypes.pricing,
+      footer: sectionArchetypes.footer,
+      hero: hero.id
+    };
+
+    const purposeMap = {
+      hero: 'Route opener and conversion anchor',
+      'trust-strip': 'Trust and credibility reinforcement',
+      'feature-grid': 'Capability and value breakdown',
+      comparison: 'Trade-off and package clarity',
+      workflow: 'Process and expectation setting',
+      proof: 'Evidence and outcomes',
+      faq: 'Objection handling',
+      'cta-band': 'Conversion reinforcement',
+      footer: 'Navigation and support'
+    };
+
+    const contentSlotMap = {
+      hero: ['eyebrow', 'headline', 'body', 'primaryCta', 'secondaryCta', 'media', 'stats'],
+      'trust-strip': ['proofStatement', 'logos'],
+      'feature-grid': ['cards'],
+      comparison: ['plans'],
+      workflow: ['steps'],
+      proof: ['outcomes', 'quote'],
+      faq: ['items'],
+      'cta-band': ['headline', 'body', 'primaryCta'],
+      footer: ['links', 'contact', 'resources']
+    };
+
+    return section(sectionId, purposeMap[sectionId] ?? 'Route section', contentSlotMap[sectionId] ?? [], archetypeMap[sectionId]);
+  });
+
+  return {
+    routeId: routePath,
+    routeKey: routeId,
+    userIntent: routeIntent(routePath, analysis.productType),
+    creativeLatitude: routePath === '/' ? 'MEDIUM' : 'LOW',
+    heroArchetype: hero.id,
+    sectionArchetypes,
+    sectionSequence,
+    responsiveStrategy: {
+      mobile: 'Single-column stack with persistent utility access and conversion visibility.',
+      desktop: 'Route-specific composition density with preserved hierarchy and conversion pacing.'
+    },
+    media: mediaForRoute(
+      routePath,
+      hero,
+      /solar|roof|service|installation|electrical/i.test(`${brief.summary ?? ''} ${(brief.requestedFeatures ?? []).join(' ')}`)
+    )
+  };
+}
+
+function contentByRoute(routePlans, brief, analysis) {
+  const serviceSite = /solar|roof|service|installation|electrical/i.test(
     `${brief.summary ?? ''} ${(brief.requestedFeatures ?? []).join(' ')}`
   );
-  const primaryContactEmail = brief.contactEmail ?? 'hello@example.com';
-  const supportEmail = primaryContactEmail.replace(/^hello@/i, 'support@');
-  const primaryPhone = brief.contactPhone ?? '+1 (800) 555-1234';
-  const whatsAppLink = brief.whatsAppLink ?? 'https://wa.me/18005551234';
-  const primaryCtaRoute = '/pricing';
 
-  const routePlans = [
-    {
-      routeId: '/',
-      userIntent: 'Understand product value quickly and move toward conversion.',
-      creativeLatitude: 'MEDIUM',
-      sectionSequence: [
-        section('hero', 'Value proposition and fast orientation', ['eyebrow', 'headline', 'body', 'primaryCta', 'secondaryCta', 'stats']),
-        section('trust-strip', 'Immediate trust and proof', ['logos', 'proofStatement']),
-        section('feature-grid', 'Explain core capabilities', ['cards']),
-        section('workflow', 'Show the operating model', ['steps']),
-        section('proof', 'Reinforce credibility', ['outcomes', 'quote']),
-        section('faq', 'Resolve objections', ['items']),
-        section('cta-band', 'Close the conversion loop', ['headline', 'body', 'primaryCta']),
-        section('footer', 'Navigation and support', ['links', 'contact'])
+  const contactEmail = brief.contactEmail ?? 'hello@example.com';
+  const supportEmail = contactEmail.replace(/^hello@/i, 'support@');
+  const phoneLabel = brief.contactPhone ?? '+1 (800) 555-1234';
+  const phoneHref = `tel:${phoneLabel.replace(/[^+\d]/g, '')}`;
+  const whatsAppHref = brief.whatsAppLink ?? 'https://wa.me/18005551234';
+
+  const byPath = Object.fromEntries(routePlans.map((routePlan) => [routePlan.routeId, routePlan]));
+
+  return {
+    brand: {
+      name: brief.projectName,
+      summary: brief.summary,
+      supportEmail,
+      primaryCta: brief.primaryCta,
+      secondaryCta: brief.secondaryCta,
+      primaryCtaRoute: '/pricing',
+      phoneLabel,
+      phoneHref,
+      whatsAppHref,
+      productType: analysis.productType
+    },
+    home: {
+      hero: {
+        eyebrow: serviceSite ? 'Trusted local delivery' : 'Route-aware execution system',
+        title: serviceSite
+          ? `${brief.projectName} helps buyers move from first inquiry to installation confidence.`
+          : `${brief.projectName} turns locked plans into conversion-ready product surfaces.`,
+        description: brief.summary,
+        primaryCta: brief.primaryCta,
+        primaryHref: '/pricing',
+        secondaryCta: brief.secondaryCta,
+        secondaryHref: whatsAppHref,
+        media: byPath['/']?.media,
+        stats: brief.highlightMetrics ?? [
+          { value: '22', label: 'live signal streams unified' },
+          { value: '2.7x', label: 'faster triage response' },
+          { value: '11 days', label: 'brief to release-ready frontend' }
+        ]
+      },
+      trust: {
+        proofStatement: serviceSite
+          ? 'Built for trust-first buying decisions with clear process and direct communication.'
+          : 'Built for teams that need architectural clarity and deterministic delivery gates.',
+        logos: serviceSite
+          ? ['Licensed Team', 'Insured Work', 'Fast Response', 'Warranty Support']
+          : ['Northbank Ventures', 'RelayOps', 'Atlas AI', 'Signal Forge']
+      },
+      features: [
+        {
+          title: 'Composition, not copy-paste templates',
+          body: 'Every route gets its own archetype mix selected from a compatibility graph.'
+        },
+        {
+          title: 'Deterministic variation',
+          body: 'The same brief always yields stable results; different briefs yield visibly different surfaces.'
+        },
+        {
+          title: 'Production gates included',
+          body: 'Generated apps ship with lint, typecheck, accessibility, smoke, full E2E, and audit checks.'
+        }
       ],
-      responsiveStrategy: {
-        mobile: 'Single-column stack with fixed bottom navigation and compressed trust strip.',
-        desktop: 'Two-column hero with editorial card rail and centered proof bands.'
+      workflow: [
+        'Lock the brief and route inventory.',
+        'Compose archetypes with compatibility constraints.',
+        'Generate route-aware code and content contracts.',
+        'Validate the app with deterministic release checks.'
+      ],
+      proof: {
+        quote: 'We replaced repetitive layouts with constrained variation that still stays stable in production.',
+        speaker: 'Factory V2 preview',
+        outcomes: ['Distinct route narratives', 'CTA overload prevention', 'Structured footer and contact depth']
+      },
+      faq: [
+        {
+          question: 'Does every site now look the same?',
+          answer: 'No. Archetype selection and compatibility mapping prevent single-layout collapse.'
+        },
+        {
+          question: 'Is this freeform random generation?',
+          answer: 'No. It is constrained composition with deterministic selection and validation.'
+        },
+        {
+          question: 'Can we scale this across industries?',
+          answer: 'Yes. Industry-aware archetypes are selected per brief and route context.'
+        }
+      ],
+      cta: {
+        title: 'Move from locked brief to production-shaped frontend without layout collapse.',
+        body: 'Use route-aware archetypes, compatibility checks, and deterministic gates.',
+        primaryCta: brief.primaryCta
       }
     },
-    {
-      routeId: '/product',
-      userIntent: 'Inspect product depth, UX states, and the system operating model.',
-      creativeLatitude: 'LOW',
-      sectionSequence: [
-        section('hero', 'Position the product internals clearly', ['eyebrow', 'headline', 'body', 'primaryCta']),
-        section('feature-grid', 'Break product into capability pillars', ['cards']),
-        section('workflow', 'Show state-aware operational flow', ['steps', 'statePanel']),
-        section('proof', 'Back product claims with outcomes', ['outcomes', 'quote']),
-        section('cta-band', 'Convert technical confidence into action', ['headline', 'primaryCta']),
-        section('footer', 'Navigation and support', ['links', 'contact'])
+    product: {
+      hero: {
+        eyebrow: serviceSite ? 'Service scope and delivery model' : 'Product depth',
+        title: serviceSite
+          ? 'A route-aware services surface that balances trust, clarity, and conversion.'
+          : 'A route-aware product page that proves depth beyond hero copy.',
+        description: 'This route focuses on capability pillars, runtime readiness, and proof-backed outcomes.',
+        primaryCta: serviceSite ? 'Review packages' : 'Review pricing',
+        primaryHref: '/pricing',
+        media: byPath['/product']?.media
+      },
+      pillars: [
+        { title: 'Archetype-driven composition', body: 'Hero, feature, proof, and CTA units are selected from the library with compatibility checks.' },
+        { title: 'State-aware confidence', body: 'Loading, error, empty, offline, and live surfaces stay explicit and testable.' },
+        { title: 'Operational UX coverage', body: 'Theme, navigation, auth, and contact systems are treated as baseline infrastructure.' }
       ],
-      responsiveStrategy: {
-        mobile: 'Collapse pillars into cards with state panel stacked after workflow.',
-        desktop: 'Editorial grid with persistent state panel and content rail.'
+      workflow: [
+        'Select route archetypes from compatibility graph.',
+        'Map section pacing and conversion hierarchy.',
+        'Generate implementation and run deterministic tests.',
+        'Promote only when audit and release gates pass.'
+      ],
+      states: [
+        { id: 'live', title: 'Live signal sync', description: 'All source adapters are healthy.' },
+        { id: 'loading', title: 'Awaiting source handoff', description: 'System is still preparing data.' },
+        { id: 'error', title: 'Source adapter mismatch', description: 'A blocking integration issue is visible with a clear next action.' },
+        { id: 'empty', title: 'No signal yet', description: 'The route explains how to seed the pipeline.' },
+        { id: 'offline', title: 'Offline continuity', description: 'Critical route guidance stays readable when disconnected.' }
+      ],
+      proof: {
+        quote: 'Variation is now intentional and bounded by quality constraints.',
+        speaker: 'Factory V2 preview',
+        outcomes: ['Route-specific hero behavior', 'Stable fallback states', 'No global wrapper collapse']
+      },
+      cta: {
+        title: 'Inspect the commercial lane once capability confidence is established.',
+        primaryCta: 'See plans'
       }
     },
-    {
-      routeId: '/pricing',
-      userIntent: 'Evaluate plans, compare trade-offs, and start a buying conversation.',
-      creativeLatitude: 'LOW',
-      sectionSequence: [
-        section('hero', 'Frame commercial value and urgency', ['eyebrow', 'headline', 'body', 'primaryCta']),
-        section('comparison', 'Compare plans and included outcomes', ['plans']),
-        section('proof', 'Reduce commercial risk with proof', ['outcomes']),
-        section('faq', 'Answer commercial objections', ['items']),
-        section('cta-band', 'Push to demo or contact', ['headline', 'primaryCta']),
-        section('footer', 'Navigation and support', ['links', 'contact'])
+    pricing: {
+      hero: {
+        eyebrow: serviceSite ? 'Pricing and packages' : 'Commercial clarity',
+        title: serviceSite
+          ? 'Package options that turn comparison into a clear decision.'
+          : 'Commercial structure that supports decision quality.',
+        description: 'This route keeps pricing decisions short, differentiated, and reachable from home.',
+        primaryCta: serviceSite ? 'Request quote' : 'Book strategy call',
+        primaryHref: '/contact',
+        media: byPath['/pricing']?.media
+      },
+      plans: [
+        { name: 'Starter', price: '$1.5k', cadence: '/month', summary: 'Validate one conversion narrative.', features: ['Single brief stream', 'One generated app', 'Local release gate'] },
+        { name: 'Growth', price: '$4k', cadence: '/month', summary: 'Iterate multiple conversion lanes.', features: ['Parallel brief streams', 'Route differentiation', 'Deeper section coverage'] },
+        { name: 'Scale', price: 'Custom', cadence: '', summary: 'Productize factory workflows.', features: ['Custom validators', 'Knowledge graph extensions', 'Operational audit support'] }
       ],
-      responsiveStrategy: {
-        mobile: 'Scrollable pricing cards with sticky CTA.',
-        desktop: 'Three-column pricing matrix with anchored proof bar.'
+      proof: {
+        outcomes: ['Distinct pricing route from home', 'No CTA ambiguity', 'Audit evidence emitted per run']
+      },
+      faq: [
+        { question: 'Can pricing stay visually unique per project?', answer: 'Yes. Pricing route uses selected archetypes rather than a fixed template.' },
+        { question: 'What proves release readiness?', answer: 'Generated app must pass lint, typecheck, test, build, E2E, and audit gates.' }
+      ],
+      cta: {
+        title: 'Ready to turn this into a real brief-backed rollout?',
+        primaryCta: 'Contact sales'
       }
     },
-    {
-      routeId: '/contact',
-      userIntent: 'Reach support or sales with minimal friction.',
-      creativeLatitude: 'LOW',
-      sectionSequence: [
-        section('hero', 'Give contact clarity and service expectations', ['eyebrow', 'headline', 'body']),
-        section('trust-strip', 'Set service standards', ['supportWindow', 'sla']),
-        section('workflow', 'Clarify how outreach is handled', ['steps']),
-        section('cta-band', 'Offer direct and assisted contact paths', ['headline', 'primaryCta']),
-        section('footer', 'Navigation and support', ['links', 'contact'])
+    contact: {
+      hero: {
+        eyebrow: serviceSite ? 'Call, chat, or request callback' : 'Support and sales',
+        title: serviceSite
+          ? 'Reach the right team immediately through phone, chat, or structured request.'
+          : 'Reach the right team without dead-end routes.',
+        description: 'Contact is treated as a first-class conversion path with explicit response expectations.',
+        primaryCta: serviceSite ? 'Call now' : 'Email support',
+        primaryHref: serviceSite ? phoneHref : `mailto:${contactEmail}`,
+        secondaryCta: 'Chat on WhatsApp',
+        secondaryHref: whatsAppHref,
+        media: byPath['/contact']?.media
+      },
+      channels: [
+        { title: 'Direct advisor line', detail: 'Speak with a specialist about scope and delivery timing.', action: phoneLabel },
+        { title: 'WhatsApp support', detail: 'Use chat for quick qualification and routing.', action: whatsAppHref },
+        { title: 'Email response lane', detail: 'Share requirement details and receive structured follow-up.', action: contactEmail }
       ],
-      responsiveStrategy: {
-        mobile: 'Contact channels as cards above the form.',
-        desktop: 'Split layout with channel rail and inquiry form.'
+      workflow: ['Choose a channel', 'Share brief or blockers', 'Receive route-aware next actions'],
+      supportWindow: 'Responses within one business day for active projects.',
+      sla: 'Critical release blockers are triaged the same day.'
+    },
+    auth: {
+      signIn: {
+        title: 'Sign in to the demo workspace',
+        description: 'Modal-first auth remains primary; this route is deterministic fallback.'
+      },
+      signUp: {
+        title: 'Create a demo workspace',
+        description: 'Fallback route remains in sync with modal auth flow.'
       }
     },
-    {
-      routeId: '/sign-in',
-      userIntent: 'Reach the authenticated product quickly with fallback route certainty.',
-      creativeLatitude: 'LOW',
-      sectionSequence: [
-        section('hero', 'Set expectation for authenticated access', ['headline', 'body', 'form']),
-        section('footer', 'Navigation and support', ['links', 'contact'])
-      ],
-      responsiveStrategy: {
-        mobile: 'Centered auth card with trust copy below.',
-        desktop: 'Centered auth card with supporting benefits panel.'
-      }
-    },
-    {
-      routeId: '/sign-up',
-      userIntent: 'Create an account from a direct fallback route.',
-      creativeLatitude: 'LOW',
-      sectionSequence: [
-        section('hero', 'Drive account creation with clear commitments', ['headline', 'body', 'form']),
-        section('footer', 'Navigation and support', ['links', 'contact'])
-      ],
-      responsiveStrategy: {
-        mobile: 'Single auth card with short benefit list.',
-        desktop: 'Centered auth card with compact benefits rail.'
+    footer: {
+      attribution: 'Generated by AI Product Factory with archetype-driven composition and deterministic quality gates.',
+      links: routePlans.filter((plan) => !plan.routeId.startsWith('/sign-')).map((plan) => toRouteLabel(plan.routeId)),
+      columns: {
+        services: ['Core Services', 'Process', 'Proof', 'FAQs'],
+        resources: ['Case Notes', 'Pricing Guide', 'Delivery FAQs', 'Contact'],
+        contact: [contactEmail, phoneLabel, whatsAppHref]
       }
     }
-  ];
+  };
+}
 
-  const visualDifferentiationMap = [
-    { routeId: '/', heroVariant: 'signal-horizon', mood: 'confident editorial', density: 'comfortable' },
-    { routeId: '/product', heroVariant: 'workflow-theater', mood: 'architectural clarity', density: 'balanced' },
-    { routeId: '/pricing', heroVariant: 'conversion-ledger', mood: 'commercial precision', density: 'balanced' },
-    { routeId: '/contact', heroVariant: 'support-atlas', mood: 'calm assistance', density: 'comfortable' },
-    { routeId: '/sign-in', heroVariant: 'auth-portal', mood: 'focused entry', density: 'compact' },
-    { routeId: '/sign-up', heroVariant: 'account-launch', mood: 'optimistic onboarding', density: 'compact' }
-  ];
+export function composeExperiencePlan({ brief, analysis, designTokens, sectionCatalog, primitivesCatalog, motionTokens, experienceLibrary }) {
+  const routes = Array.isArray(analysis.routes) && analysis.routes.length > 0
+    ? analysis.routes
+    : ['/', '/product', '/pricing', '/contact', '/sign-in', '/sign-up'];
 
-  const pageBriefs = [
-    pageBrief('/', 'Home', 'signal-horizon', 'Explain the product and drive demo conversion.', ['hero', 'trust-strip', 'feature-grid', 'workflow', 'proof', 'faq', 'cta-band']),
-    pageBrief('/product', 'Product', 'workflow-theater', 'Prove the product can handle real operational states.', ['hero', 'feature-grid', 'workflow', 'proof', 'cta-band']),
-    pageBrief('/pricing', 'Pricing', 'conversion-ledger', 'Turn interest into a commercial conversation.', ['hero', 'comparison', 'proof', 'faq', 'cta-band']),
-    pageBrief('/contact', 'Contact', 'support-atlas', 'Give fast support and sales contact paths.', ['hero', 'trust-strip', 'workflow', 'cta-band']),
-    pageBrief('/sign-in', 'Sign In', 'auth-portal', 'Provide a dependable fallback auth route.', ['hero']),
-    pageBrief('/sign-up', 'Sign Up', 'account-launch', 'Provide a dependable fallback account creation route.', ['hero'])
-  ];
+  const heroAssignments = assignHeroArchetypes({
+    routes,
+    brief,
+    analysis,
+    experienceLibrary
+  });
+
+  const routePlans = routes.map((routePath) =>
+    buildRoutePlan({ routePath, brief, analysis, experienceLibrary, heroAssignments })
+  );
+
+  const visualDifferentiationMap = routePlans.map((plan) => ({
+    routeId: plan.routeId,
+    heroVariant: plan.heroArchetype,
+    mood: plan.creativeLatitude === 'MEDIUM' ? 'expressive structured' : 'focused structured',
+    density: plan.creativeLatitude === 'MEDIUM' ? 'comfortable' : 'balanced'
+  }));
+
+  const pageBriefs = routePlans.map((plan) =>
+    pageBrief(
+      plan.routeId,
+      toRouteLabel(plan.routeId),
+      plan.heroArchetype,
+      routePrimaryGoal(plan.routeId, brief.projectName),
+      plan.sectionSequence.filter((entry) => entry.sectionId !== 'footer').map((entry) => entry.sectionId),
+      plan.sectionSequence.filter((entry) => entry.sectionId !== 'footer').map((entry) => entry.archetypeId)
+    )
+  );
 
   const siteInventory = {
     projectName: brief.projectName,
@@ -146,329 +564,51 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
     routes: routePlans.map((plan) => ({
       routeId: plan.routeId,
       intent: plan.userIntent,
-      sections: plan.sectionSequence.map((entry) => entry.sectionId)
+      sections: plan.sectionSequence.map((entry) => entry.sectionId),
+      sectionArchetypes: plan.sectionSequence.map((entry) => entry.archetypeId)
     })),
-    navigation: [
-      { path: '/', label: 'Home' },
-      { path: '/product', label: 'Product' },
-      { path: '/pricing', label: 'Pricing' },
-      { path: '/contact', label: 'Contact' }
-    ]
+    navigation: routePlans
+      .filter((plan) => !plan.routeId.startsWith('/sign-'))
+      .map((plan) => ({ path: plan.routeId, label: toRouteLabel(plan.routeId) }))
   };
 
-  const contentLibrary = {
-    brand: {
-      name: brief.projectName,
-      summary: brief.summary,
-      supportEmail: brief.contactEmail,
-      primaryCta: brief.primaryCta,
-      secondaryCta: brief.secondaryCta,
-      primaryCtaRoute,
-      supportEmail,
-      phoneLabel: primaryPhone,
-      phoneHref: `tel:${primaryPhone.replace(/[^+\d]/g, '')}`,
-      whatsAppHref: whatsAppLink,
-      hasServiceMessaging: supportsServiceMessaging
-    },
-    home: {
-      hero: {
-        eyebrow: supportsServiceMessaging ? 'Trusted local team, production-grade delivery' : 'AI product operations, framed for trust',
-        title: supportsServiceMessaging
-          ? `${brief.projectName} helps buyers move from first inquiry to signed work without conversion friction.`
-          : `${brief.projectName} turns scattered AI signals into one accountable operating system.`,
-        description: brief.summary,
-        primaryCta: brief.primaryCta,
-        secondaryCta: brief.secondaryCta,
-        primaryHref: primaryCtaRoute,
-        secondaryHref: whatsAppLink,
-        media: {
-          src: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1360&q=80',
-          alt: supportsServiceMessaging
-            ? 'Solar panels installed on a residential rooftop under clear sky'
-            : 'Professional team reviewing implementation plans and delivery metrics',
-          badge: supportsServiceMessaging ? 'Field-ready execution' : 'Release-ready delivery'
-        },
-        stats: brief.highlightMetrics ?? [
-          { value: '22', label: 'live signal streams unified' },
-          { value: '2.7x', label: 'faster triage response' },
-          { value: '11 days', label: 'from brief to release-ready frontend' }
-        ]
-      },
-      trust: {
-        proofStatement: supportsServiceMessaging
-          ? 'Built for trust-first buying decisions: clear service scope, direct contact channels, and transparent turnaround expectations.'
-          : 'Built for teams that need product clarity, auditability, and fast conversion without speculative redesign loops.',
-        logos: supportsServiceMessaging
-          ? ['Certified Team', 'Insured Projects', 'Financing Support', 'Local Response']
-          : ['Northbank Ventures', 'RelayOps', 'Atlas AI', 'Signal Forge']
-      },
-      features: [
-        {
-          title: supportsServiceMessaging ? 'Lead path clarity' : 'Brief-to-build continuity',
-          body: supportsServiceMessaging
-            ? 'Visitors can request a quote, start a WhatsApp chat, or call directly without hunting through pages.'
-            : 'Every route, section, and test surface comes from a locked planning bundle instead of freestyle generation.'
-        },
-        {
-          title: supportsServiceMessaging ? 'Trust-first structure' : 'Conversion without guesswork',
-          body: supportsServiceMessaging
-            ? 'Service proof, process timeline, and objection-handling FAQs are placed where buyers expect them.'
-            : 'Home, product, pricing, and contact journeys are planned with distinct intents and explicit CTA paths.'
-        },
-        {
-          title: supportsServiceMessaging ? 'Production-shaped validation' : 'Production-shaped validation',
-          body: 'The generated app ships with lint, typecheck, unit, accessibility, smoke, and full E2E gates.'
-        }
-      ],
-      workflow: [
-        'Lock the brief and define the route inventory.',
-        'Compose the design system and per-page briefs.',
-        'Generate the Next.js app with route-aware components.',
-        'Run accessibility, smoke, full E2E, and audit gates before release.'
-      ],
-      proof: {
-        quote: 'We stopped debating what the site should be and started shipping audited iterations.',
-        speaker: 'Mina Chow, VP Product',
-        outcomes: ['Distinct route narratives with no shared-wrapper collapse', 'Theme persistence across refreshes', 'Modal and fallback auth paths both covered']
-      },
-      faq: [
-        {
-          question: 'Is this a template generator?',
-          answer: 'No. The factory builds from a locked planning bundle and keeps route, content, and test coverage aligned.'
-        },
-        {
-          question: 'Can the generated app be validated locally?',
-          answer: 'Yes. Every output includes a deterministic release gate with unit, accessibility, smoke, full E2E, build, and audit steps.'
-        },
-        {
-          question: 'What happens when a narrow gate fails?',
-          answer: 'The owning slice is fixed and the same gate is rerun before widening scope.'
-        }
-      ],
-      cta: {
-        title: 'Move from product brief to audited frontend without improvising the risky parts.',
-        body: 'Start from a locked brief, inspect the generated planning bundle, and run the release gate before shipping.',
-        primaryCta: brief.primaryCta
-      }
-    },
-    product: {
-      hero: {
-        eyebrow: supportsServiceMessaging ? 'Service scope and delivery model' : 'Product depth',
-        title: supportsServiceMessaging
-          ? 'A route-aware services page that proves this is a real website system, not a placeholder shell.'
-          : 'A route-aware product page that proves the factory handles more than glossy marketing copy.',
-        description: supportsServiceMessaging
-          ? 'The services route focuses on capability pillars, process visibility, and operational readiness for real buyers.'
-          : 'The product route focuses on capability pillars, runtime state coverage, and the operating model behind the generated frontend.',
-        primaryCta: supportsServiceMessaging ? 'Review packages' : 'Review pricing',
-        primaryHref: '/pricing',
-        media: {
-          src: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1360&q=80',
-          alt: supportsServiceMessaging
-            ? 'Installation team reviewing equipment and project plan'
-            : 'Operations team validating system performance dashboards',
-          badge: supportsServiceMessaging ? 'Scope certainty' : 'State-ready UX'
-        }
-      },
-      pillars: [
-        {
-          title: supportsServiceMessaging ? 'Service route differentiation' : 'Route-aware composition',
-          body: supportsServiceMessaging
-            ? 'Each services-oriented route keeps its own narrative, hero treatment, and conversion objective.'
-            : 'Each public route keeps its own hero variant, section pacing, and conversion intent.'
-        },
-        {
-          title: supportsServiceMessaging ? 'Buyer-state readiness' : 'Dynamic state readiness',
-          body: supportsServiceMessaging
-            ? 'Uncertain buyers get financing clarity, comparison cues, and direct human assistance paths.'
-            : 'Loading, error, empty, offline, and live states are declared and testable.'
-        },
-        {
-          title: supportsServiceMessaging ? 'Operational UX coverage' : 'Operational UX coverage',
-          body: 'Theme, navigation, auth entry, and contact support are treated as mandatory infrastructure, not optional polish.'
-        }
-      ],
-      workflow: [
-        'Model the key operational state.',
-        'Map a UI surface for that state.',
-        'Exercise it in the full E2E suite.',
-        'Promote only when the production gate stays green.'
-      ],
-      states: [
-        { id: 'live', title: 'Live signal sync', description: 'All upstream signals are healthy and routing correctly.' },
-        { id: 'loading', title: 'Awaiting source handoff', description: 'The UI communicates progress without layout collapse.' },
-        { id: 'error', title: 'Source adapter mismatch', description: 'A blocking issue is surfaced with the next safe action.' },
-        { id: 'empty', title: 'No signal yet', description: 'The page explains how to seed the system rather than showing a void.' },
-        { id: 'offline', title: 'Offline continuity', description: 'Critical guidance stays readable when connectivity drops.' }
-      ],
-      proof: {
-        quote: 'The product page is where shallow generators break. This one stays honest about runtime states.',
-        speaker: 'Adrian Voss, Staff Engineer',
-        outcomes: ['Declared dynamic states', 'Testable fallback paths', 'No hidden state assumptions']
-      },
-      cta: {
-        title: 'Inspect the commercial path once you trust the product path.',
-        primaryCta: 'See plans'
-      }
-    },
-    pricing: {
-      hero: {
-        eyebrow: supportsServiceMessaging ? 'Pricing and packages' : 'Commercial clarity',
-        title: supportsServiceMessaging
-          ? 'Package options that move buyers from comparison to decision without hidden trade-offs.'
-          : 'Pricing that translates technical confidence into a buying decision.',
-        description: supportsServiceMessaging
-          ? 'The conversion route keeps package comparison concise, transparent, and connected to direct contact.'
-          : 'The conversion route keeps the comparison surface short, differentiated, and easy to reach from home.',
-        primaryCta: supportsServiceMessaging ? 'Request quote' : 'Book a strategy call',
-        primaryHref: '/contact',
-        media: {
-          src: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=1360&q=80',
-          alt: supportsServiceMessaging
-            ? 'Estimator reviewing energy and financing figures'
-            : 'Team discussing commercial plan options',
-          badge: 'Conversion focus'
-        }
-      },
-      plans: [
-        {
-          name: 'Starter',
-          price: '$1.5k',
-          cadence: '/month',
-          summary: 'For teams validating one product narrative.',
-          features: ['One locked brief stream', 'One generated frontend', 'Local release gate']
-        },
-        {
-          name: 'Growth',
-          price: '$4k',
-          cadence: '/month',
-          summary: 'For teams iterating across multiple conversion paths.',
-          features: ['Three parallel briefs', 'Spec-aligned route coverage', 'Design-system adaptation']
-        },
-        {
-          name: 'Scale',
-          price: 'Custom',
-          cadence: '',
-          summary: 'For teams productizing the factory itself.',
-          features: ['Custom validators', 'Extended route matrices', 'Operational audit support']
-        }
-      ],
-      proof: {
-        outcomes: ['Conversion route reachable in one click from home', 'No pricing copy drift against the plan', 'Self-audit report emitted after release gate']
-      },
-      faq: [
-        {
-          question: 'Can the pricing route stay unique from the home route?',
-          answer: 'Yes. The visual differentiation map locks a distinct hero variant and route intent.'
-        },
-        {
-          question: 'What proves the route is production ready?',
-          answer: 'The generated app must pass typecheck, accessibility smoke, Playwright coverage, build, and frontend audit.'
-        }
-      ],
-      cta: {
-        title: 'Want the generated app reviewed with your real brief next?',
-        primaryCta: 'Contact sales'
-      }
-    },
-    contact: {
-      hero: {
-        eyebrow: supportsServiceMessaging ? 'Call, chat, or submit request' : 'Support and sales',
-        title: supportsServiceMessaging
-          ? 'Reach the right team immediately through phone, WhatsApp, or structured request form.'
-          : 'Reach the right team without bouncing between dead-end routes.',
-        description: supportsServiceMessaging
-          ? 'The contact route is designed as a primary conversion surface, not an afterthought.'
-          : 'The support route is built as a first-class page, not an afterthought buried in the footer.',
-        primaryCta: supportsServiceMessaging ? 'Call now' : 'Email support',
-        primaryHref: supportsServiceMessaging ? `tel:${primaryPhone.replace(/[^+\\d]/g, '')}` : `mailto:${primaryContactEmail}`,
-        secondaryCta: supportsServiceMessaging ? 'Chat on WhatsApp' : undefined,
-        secondaryHref: supportsServiceMessaging ? whatsAppLink : undefined,
-        media: {
-          src: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1360&q=80',
-          alt: supportsServiceMessaging
-            ? 'Customer support advisor helping a client'
-            : 'Support specialist answering onboarding questions',
-          badge: 'Fast response'
-        }
-      },
-      channels: [
-        {
-          title: supportsServiceMessaging ? 'Direct advisor line' : 'Sales architecture review',
-          detail: supportsServiceMessaging
-            ? 'Talk directly with the project team for scope and timeline guidance.'
-            : 'Walk through route coverage, design tokens, and validation expectations.',
-          action: brief.contactEmail
-        },
-        {
-          title: supportsServiceMessaging ? 'WhatsApp support' : 'Implementation support',
-          detail: supportsServiceMessaging
-            ? 'Use WhatsApp for quick pre-qualification and response routing.'
-            : 'Review release gate failures and fix the owning slice directly.',
-          action: supportsServiceMessaging ? whatsAppLink : supportEmail
-        },
-        {
-          title: supportsServiceMessaging ? 'Callback request' : 'Executive briefing',
-          detail: supportsServiceMessaging
-            ? 'Share your basic requirements and request a scheduled callback.'
-            : 'Translate the planning bundle into delivery milestones and quality gates.',
-          action: supportsServiceMessaging ? primaryPhone : `leaders@${primaryContactEmail.split('@')[1] ?? 'example.com'}`
-        }
-      ],
-      workflow: [
-        'Choose the most relevant contact lane.',
-        'Share the locked brief or failing gate.',
-        'Receive a route-aware response with next actions.'
-      ],
-      supportWindow: 'Responses within one business day for active projects.',
-      sla: 'Critical release-gate blockers are triaged the same day.'
-    },
-    auth: {
-      signIn: {
-        title: 'Sign in to the demo workspace',
-        description: 'Use the modal first if you are browsing. This page is the deterministic fallback route.'
-      },
-      signUp: {
-        title: 'Create a demo workspace',
-        description: 'The modal and direct route stay aligned so sign-up is never blocked by client-side UI state.'
-      }
-    },
-    footer: {
-      attribution: 'Generated by the standalone AI Product Factory MVP.',
-      links: ['Home', 'Product', 'Pricing', 'Contact'],
-      columns: {
-        services: ['Core Services', 'Process', 'Proof', 'FAQs'],
-        resources: ['Case Notes', 'Pricing Guide', 'Delivery FAQs', 'Contact'],
-        contact: [primaryContactEmail, primaryPhone, whatsAppLink]
-      }
-    }
-  };
+  const contentLibrary = contentByRoute(routePlans, brief, analysis);
 
   const componentSystem = {
     primitives: primitivesCatalog,
     sectionCatalog: sectionCatalog.sections,
     criticalComponents: ['ThemeSwitcher', 'MobileBottomNav', 'AuthModal', 'LiveStatusPanel'],
     dynamicSurfaces: ['auth-modal', 'theme-switcher', 'live-status-panel'],
-    accessibilityFocus: ['semantic headings', 'aria labels', 'focus-visible states', 'dialog semantics']
+    accessibilityFocus: ['semantic headings', 'aria labels', 'focus-visible states', 'dialog semantics'],
+    selectedArchetypes: routePlans.map((plan) => ({
+      routeId: plan.routeId,
+      hero: plan.heroArchetype,
+      sections: plan.sectionSequence.map((entry) => entry.archetypeId)
+    }))
   };
 
   const motionSystem = {
     tokens: motionTokens,
     direction: designTokens.motion.personality,
     reducedMotion: designTokens.motion.reducedMotionBehavior,
-    choreography: ['hero fade-up', 'card stagger on safe motion', 'theme toggle micro feedback']
+    choreography: ['hero reveal based on archetype', 'card stagger on safe motion', 'theme toggle micro feedback', 'cta emphasis transitions']
   };
 
   const frontendSummary = {
-    publicRoutes: ['/', '/product', '/pricing', '/contact'],
-    authRoutes: ['/sign-in', '/sign-up'],
+    publicRoutes: routePlans.filter((plan) => !plan.routeId.startsWith('/sign-')).map((plan) => plan.routeId),
+    authRoutes: routePlans.filter((plan) => plan.routeId.startsWith('/sign-')).map((plan) => plan.routeId),
     routeCoverage: routePlans.map((plan) => ({
       routeId: plan.routeId,
       covered: true,
-      heroVariant: visualDifferentiationMap.find((entry) => entry.routeId === plan.routeId)?.heroVariant
+      heroVariant: plan.heroArchetype,
+      sectionArchetypes: plan.sectionSequence.map((entry) => entry.archetypeId)
     })),
     openQuestions: [],
     mandatoryUx: ['ThemeSwitcher', 'MobileBottomNav', 'AuthModal'],
+    variationEvidence: {
+      heroArchetypeCount: new Set(routePlans.map((plan) => plan.heroArchetype)).size,
+      sectionArchetypeCount: new Set(routePlans.flatMap((plan) => plan.sectionSequence.map((entry) => entry.archetypeId))).size
+    },
     smokeJourneys: [
       'home route renders without console or hydration errors',
       'primary navigation works on desktop and mobile',
@@ -488,7 +628,8 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
       mandatoryUx: analysis.frontendArchitecture.mandatoryUx,
       folderStrategy: analysis.frontendArchitecture.folders,
       designDirection: designTokens.narrative,
-      responsivePrinciple: 'Mobile-first with persistent utility access and distinct page pacing.'
+      responsivePrinciple: 'Mobile-first with persistent utility access and route-specific pacing.',
+      orchestrationMode: 'archetype-composition-with-compatibility-graph'
     },
     routePlans,
     visualDifferentiationMap,

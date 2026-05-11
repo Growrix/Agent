@@ -8,6 +8,51 @@
     { "id": "proof", "purpose": "Case studies, reviews, or outcomes" },
     { "id": "faq", "purpose": "Handle objections" },
     { "id": "cta-band", "purpose": "Repeat and reinforce conversion" },
-    { "id": "footer", "purpose": "Navigation, support, attribution" }
+    { "id": "footer", "purpose": "Navigation, support, attribution" },
+
+    { "id": "logo-cloud", "purpose": "Show partner and customer trust logos" },
+    { "id": "stats-grid", "purpose": "Highlight measurable outcomes" },
+    { "id": "testimonial-carousel", "purpose": "Display rotating customer proof" },
+    { "id": "case-study-rail", "purpose": "Show before-after or outcome stories" },
+    { "id": "service-badges", "purpose": "Expose certifications and service guarantees" },
+    { "id": "coverage-map", "purpose": "Show service area or market coverage" },
+    { "id": "estimator", "purpose": "Interactive estimate or calculator surface" },
+    { "id": "timeline-extended", "purpose": "Long-form process and phase progression" },
+    { "id": "resource-download", "purpose": "Collect leads via downloadable assets" },
+    { "id": "meeting-booker", "purpose": "Schedule a consultation or demo" },
+
+    { "id": "feature-bento", "purpose": "Show capabilities in varied card hierarchy" },
+    { "id": "feature-pillars", "purpose": "Present strategic capability pillars" },
+    { "id": "feature-tabs", "purpose": "Switch between feature groups and personas" },
+    { "id": "feature-comparison", "purpose": "Compare feature sets by plan or role" },
+    { "id": "feature-checklist", "purpose": "Checklist-style capability summary" },
+    { "id": "feature-command-grid", "purpose": "Technical capability modules with command cues" },
+
+    { "id": "proof-kpi-strip", "purpose": "Dense KPI and metric proof row" },
+    { "id": "proof-quote-mosaic", "purpose": "Grid of testimonial quote snippets" },
+    { "id": "proof-video", "purpose": "Video proof and walkthrough highlights" },
+    { "id": "proof-security", "purpose": "Security and compliance proof surface" },
+
+    { "id": "pricing-tier-cards", "purpose": "Card-based package pricing" },
+    { "id": "pricing-matrix", "purpose": "Feature and package comparison matrix" },
+    { "id": "pricing-toggle", "purpose": "Toggle plans by billing period or model" },
+    { "id": "pricing-enterprise", "purpose": "Enterprise quote and custom package route" },
+
+    { "id": "faq-tabs", "purpose": "Categorized FAQ with tab grouping" },
+    { "id": "faq-search", "purpose": "Searchable FAQ and support answers" },
+    { "id": "faq-inline", "purpose": "Inline accordion FAQ stack" },
+
+    { "id": "contact-rail", "purpose": "Multi-channel contact options in rail layout" },
+    { "id": "whatsapp-primary", "purpose": "WhatsApp-first conversion surface" },
+    { "id": "phone-primary", "purpose": "Phone-first conversion surface" },
+    { "id": "contact-form-extended", "purpose": "Extended qualification form" },
+
+    { "id": "blog-grid", "purpose": "Content and article discovery grid" },
+    { "id": "team-showcase", "purpose": "People and leadership credibility section" },
+    { "id": "integration-cloud", "purpose": "Integration and ecosystem showcase" },
+    { "id": "compliance-panel", "purpose": "Policy and compliance assurance section" },
+    { "id": "social-proof-wall", "purpose": "Community logos and social endorsements" },
+    { "id": "announcement-strip", "purpose": "Urgent update or promotion strip" },
+    { "id": "newsletter-signup", "purpose": "Retain visitors with content subscription" }
   ]
 }
