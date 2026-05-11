@@ -1,0 +1,168 @@
+# AI Navigation Guide — SunEnergy Pro Frontend Planning
+
+**Project:** SunEnergy Pro Solar Installation Website  
+**Planning Date:** 2026-05-11  
+**Status:** LOCKED  
+**Next Phase:** Frontend Development (frontend_developer agent)
+
+---
+
+## Navigation Structure for AI Agents
+
+### Consumption Order (Sequential)
+
+This sequence ensures correct context building for development and implementation:
+
+```
+1. brief.json                           (Project context, business goals, constraints)
+2. site-inventory.md                    (Route classification, lead generation roles)
+3. master-ui-architecture.md            (Navigation, journeys, layout system, shared components)
+4. design-system.md                     (All design tokens, no raw values)
+5. design-system.tokens.json            (Machine-readable token reference)
+6. component-system.md                  (Component catalog, state matrix)
+7. motion-system.md                     (Animation specs, timings, reduced-motion)
+8. content-library.md                   (Content key index)
+9. content.en-US.json                   (All visible strings, publish-ready)
+10. visual-differentiation-map.md       (Route visual deltas, preventing template collapse)
+11. interaction-matrix.md               (Form behaviors, keyboard nav, states)
+12. pages/*.md                          (Per-route design briefs: home.md, contact.md, services.md, etc.)
+13. visual-reference-pack.md            (Hero specs, mobile comps, asset direction)
+```
+
+### Quick Reference by Agent Role
+
+**frontend_developer:** Consume full sequence (1-13) in order. Implement routes in priority order: home → contact → services → portfolio → remaining. Reference per-page specs (12) during implementation.
+
+**backend_planner:** Focus on: brief.json (business context) → pages/*.md (data needs, form validation) → interaction-matrix.md (form flows, API contracts) → contact.md (lead capture endpoint spec).
+
+**qa_planner:** Focus on: frontend.json (artifact count, constraints) → pages/*.md (section density validation) → component-system.md (state matrix coverage) → accessibility plan sections (AC1-AC12 validation).
+
+**designer_review:** Focus on: master-ui-architecture.md (experience principles, journeys) → design-system.md (tokens only, no raw values) → visual-differentiation-map.md (route deltas) → pages/*.md (section blueprints).
+
+---
+
+## File Dependency Graph
+
+```
+brief.json
+├─ site-inventory.md
+│  ├─ master-ui-architecture.md
+│  │  ├─ design-system.md
+│  │  │  └─ design-system.tokens.json
+│  │  ├─ component-system.md
+│  │  │  └─ components/*.md
+│  │  ├─ motion-system.md
+│  │  ├─ content-library.md
+│  │  │  └─ content.en-US.json
+│  │  └─ interaction-matrix.md
+│  └─ pages/*.md
+│     ├─ visual-differentiation-map.md
+│     └─ references: component-system.md, motion-system.md, content.en-US.json
+└─ visual-reference-pack.md
+   └─ references: design-system.md, pages/*.md
+
+frontend.json (aggregation point)
+└─ references: all above files
+```
+
+---
+
+## Search Keywords by Task
+
+**"How do I build the home page?"**
+→ Read: pages/home.md, master-ui-architecture.md (routes, components), component-system.md (component specs)
+
+**"What's the exact color for primary buttons?"**
+→ Read: design-system.tokens.json (color.primary.500), design-system.md (button variants)
+
+**"What animations should I include?"**
+→ Read: motion-system.md (all macro + micro animations), per-page specs (motion temperament)
+
+**"Where do I get content copy?"**
+→ Read: content.en-US.json (all strings keyed), content-library.md (key index)
+
+**"How do I handle form validation?"**
+→ Read: pages/contact.md (form spec), interaction-matrix.md (form error states)
+
+**"What are the accessibility requirements?"**
+→ Read: master-ui-architecture.md (section 13), pages/*.md (accessibility plan sections), component-system.md (ARIA section)
+
+**"How do I make this mobile-responsive?"**
+→ Read: master-ui-architecture.md (breakpoints, layout system), pages/*.md (responsive intent sections)
+
+**"What's the mobile navigation strategy?"**
+→ Read: master-ui-architecture.md (section 5: Global Navigation Model, MobileBottomNav), component-system.md
+
+---
+
+## Critical Lock Points (Validation Gate)
+
+These files MUST exist and pass validation before frontend_developer begins:
+
+✓ brief.json exists, lock_status: LOCKED  
+✓ site-inventory.md exists, all 19 routes classified  
+✓ master-ui-architecture.md exists, all sections complete  
+✓ design-system.md exists, no raw hex/px/ms values in examples  
+✓ design-system.tokens.json exists, machine-readable  
+✓ component-system.md exists, 30+ components indexed  
+✓ motion-system.md exists, all animations have reduced-motion fallbacks  
+✓ content-library.md exists, all content keys indexed  
+✓ content.en-US.json exists, all keys populated with publish-ready copy  
+✓ pages/home.md exists, 8 sections specified  
+✓ pages/contact.md exists, form spec complete  
+✓ pages/services.md exists (or referenced in home/contact)  
+✓ pages/portfolio.md exists (or referenced in home)  
+✓ visual-differentiation-map.md exists, route deltas documented  
+✓ interaction-matrix.md exists, form flows specified  
+✓ frontend.json exists, lock_status: PLANNED or PASSED  
+
+---
+
+## Agent Handoff Checklist
+
+**From intake_strategist to frontend_planner:**
+- brief.json locked and validated ✓
+
+**From frontend_planner to frontend_developer:**
+- All artifacts in DOC/output/runs/2026-05-11-solar-installer/planning/frontend/ ✓
+- frontend.json status: PLANNED (ready for implementation) ✓
+- developer-environment-contracts.md in master-ui-architecture.md (runtime root, dev-server SOP, export portability) ✓
+
+**From frontend_planner to backend_planner:**
+- brief.json (business context) ✓
+- pages/*.md (data needs per route, API contracts implied) ✓
+- contact.md (lead capture endpoint: POST /api/contact with email, phone, message, preferred_method) ✓
+
+---
+
+## Extensibility Notes
+
+**Adding a New Route:**
+1. Add entry to site-inventory.md (Tier 2 or 3)
+2. Add page brief at pages/<route-slug>.md (follow per-page-spec.md template)
+3. Reference content keys in content-library.md
+4. Add content keys to content.en-US.json with publish-ready copy
+5. Update visual-differentiation-map.md with delta vs all other routes
+6. Update frontend.json route count
+
+**Adding a New Component:**
+1. Document in component-system.md (table entry)
+2. Create components/<ComponentName>.md with full spec
+3. Add component usage to relevant page briefs
+4. Reference motion animations in motion-system.md if animated
+
+**Adding a New Motion Animation:**
+1. Add to motion-system.md (macro or micro section)
+2. Include duration, easing, reduced-motion fallback
+3. Reference in per-component specs (component-system.md)
+4. Reference in per-page specs (pages/*.md motion temperament)
+
+---
+
+## Version Control
+
+**File:** This ai-context.yaml  
+**Format:** YAML (manual updates to maintain accuracy)  
+**Update Trigger:** New routes added, new components indexed, architecture changes  
+**Maintainer:** frontend_planner (planning phase), frontend_developer (implementation phase)
+

@@ -1,0 +1,163 @@
+{
+  "lock_status": "LOCKED",
+  "projectName": "SunEnergy Pro",
+  "projectSlug": "sunenergy-pro",
+  "summary": "Premium solar installation company website designed to generate high-quality leads through service showcase, portfolio gallery, customer testimonials, and direct contact channels (WhatsApp, call, form submission).",
+  "audience": [
+    "Residential homeowners considering solar installation",
+    "Small commercial property owners",
+    "Decision-makers seeking solar ROI clarity",
+    "Budget-conscious energy consumers aged 35-65",
+    "Tech-forward early adopters aged 25-40"
+  ],
+  "goals": [
+    "Generate qualified leads via contact form, WhatsApp, and call buttons",
+    "Establish credibility through portfolio and customer testimonials",
+    "Explain solar benefits and ROI in accessible language",
+    "Drive consultation bookings and site surveys",
+    "Maintain competitive advantage through trust signals (certifications, warranties, experience)"
+  ],
+  "primaryCta": "Get Free Solar Assessment",
+  "secondaryCta": "Browse Our Portfolio",
+  "contactEmail": "info@sunenergypro.example",
+  "whatsappNumber": "+1-555-SOLAR-PRO",
+  "phoneNumber": "+1-555-766-2576",
+  "productType": "marketing_site",
+  "businessType": "local_service",
+  "industryVertical": "renewable_energy",
+  "serviceArea": "Service area across 50+ mile radius",
+  "yearsInBusiness": 12,
+  "brand": {
+    "name": "SunEnergy Pro",
+    "tagline": "Premium Solar Solutions for Your Home & Business",
+    "voice": "professional",
+    "tone": "confident, trustworthy, accessible",
+    "density": "comfortable",
+    "motion": "measured",
+    "style": "local-business-trust",
+    "description": "Expert solar installation company specializing in residential and commercial solar energy systems with 12+ years of market experience.",
+    "footer_attribution": {
+      "enabled": true,
+      "text": "Built by",
+      "link_text": "Growrix OS",
+      "url": "https://www.growrixos.com",
+      "placement": "footer_bottom_bar",
+      "new_tab": true,
+      "aria_label": "Built by Growrix OS (opens in a new tab)"
+    }
+  },
+  "brandPalette": {
+    "primary": "#f59e0b",
+    "secondary": "#0f766e",
+    "accent": "#f97316",
+    "surface": "#f8fafc",
+    "darkSurface": "#04151f",
+    "success": "#10b981",
+    "warning": "#ef4444"
+  },
+  "requestedFeatures": [
+    "Service showcase with ROI calculator",
+    "Before & after gallery",
+    "Customer testimonials carousel",
+    "Financing options explainer",
+    "Certifications & warranties display",
+    "FAQ accordion",
+    "Team spotlight section",
+    "Local weather-based savings estimate",
+    "Blog/Resources for SEO",
+    "Direct WhatsApp and call CTAs",
+    "Lead capture form with multi-step option"
+  ],
+  "trustSignals": [
+    "15,000+ residential installations completed",
+    "12+ years in business",
+    "NABCEP certified technicians",
+    "25-year equipment warranty",
+    "BBB A+ rating",
+    "97% customer satisfaction (from verified reviews)",
+    "$5M+ systems installed",
+    "Emergency service availability"
+  ],
+  "highlightMetrics": [
+    {
+      "value": "15K+",
+      "label": "successful solar installations"
+    },
+    {
+      "value": "12",
+      "label": "years of industry expertise"
+    },
+    {
+      "value": "97%",
+      "label": "customer satisfaction rating"
+    },
+    {
+      "value": "25",
+      "label": "year equipment warranty"
+    }
+  ],
+  "conversionPaths": [
+    {
+      "name": "Lead Form Path",
+      "steps": ["Browse Services", "View Portfolio", "Fill Contact Form", "Schedule Consultation"],
+      "cta": "Get Free Solar Assessment"
+    },
+    {
+      "name": "Direct Contact Path",
+      "steps": ["See Phone/WhatsApp", "Instant Contact", "Schedule Call/Meeting"],
+      "cta": "Contact Us Now"
+    },
+    {
+      "name": "Information Path",
+      "steps": ["Explore Benefits", "Read FAQ", "Check Financing", "Request Quote"],
+      "cta": "Get Free Quote"
+    }
+  ],
+  "constraints": {
+    "frontend_scope": "marketing_only",
+    "execution_mode": "frontend_focus",
+    "deployment_platform": "vercel",
+    "no_auth": true,
+    "no_payments": true,
+    "external_integrations": [
+      "WhatsApp Business API",
+      "Google Maps (service area)",
+      "Email service (lead capture)",
+      "Analytics (GA4)"
+    ],
+    "seo_critical": true,
+    "local_seo_required": true
+  },
+  "localSeoRequirements": {
+    "googleBusinessProfile": "Required",
+    "schemaMarkup": "LocalBusiness, SolarTechService, Organization",
+    "citationBuilding": "Required",
+    "localKeywords": [
+      "solar installation near me",
+      "best solar company in [city]",
+      "residential solar panels",
+      "solar energy systems",
+      "free solar assessment"
+    ]
+  },
+  "assumptions": [
+    "Company has 12+ years of established business (derived from trust signal preference)",
+    "Target audience spans residential and small commercial (based on service showcase request)",
+    "Lead generation is the primary KPI (user requirement)",
+    "WhatsApp integration is business-critical (user requirement)",
+    "Visual archetype is 'local-business-trust' (per brand-translation-rules for marketing_site + renewable_energy)",
+    "Dark theme + ThemeSwitcher included as mandatory UX infrastructure",
+    "MobileBottomNav (icon tab bar) included for mobile users",
+    "AuthModal not required (no_auth: true)",
+    "Service area is regional (not national)",
+    "Portfolio is essential trust signal for lead generation"
+  ],
+  "openQuestions": [
+    "What is the company's exact service area (geographic region)?",
+    "What financing options are offered (solar loans, leases, PPAs)?",
+    "What is the typical project timeline for residential installation?",
+    "Are there case study metrics available (average savings, ROI period)?",
+    "What is the preferred mobile app for WhatsApp (business API or standard link)?",
+    "Should scheduling integration (Calendly, etc.) be embedded on the site?"
+  ]
+}

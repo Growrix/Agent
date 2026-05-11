@@ -1,0 +1,565 @@
+{
+  "locale": "en-US",
+  "header": {
+    "nav": {
+      "services": "Services",
+      "portfolio": "Portfolio",
+      "about": "About",
+      "financing": "Financing",
+      "contact": "Contact",
+      "faq": "FAQ"
+    },
+    "cta": {
+      "schedule": "Schedule Now",
+      "quote": "Get Free Quote"
+    },
+    "theme_switcher": {
+      "label": "Toggle dark mode"
+    }
+  },
+  "footer": {
+    "company_name": "SunEnergy Pro",
+    "tagline": "Premium Solar Solutions for Your Home & Business",
+    "address": "123 Solar Boulevard, Sunville, CA 95001",
+    "phone": "+1-555-766-2576",
+    "email": "info@sunenergypro.example",
+    "hours_label": "Hours",
+    "service_area": "Service Area",
+    "service_area_detail": "We serve over 50 miles across Northern California",
+    "social": {
+      "facebook": { "label": "Follow us on Facebook" },
+      "instagram": { "label": "Follow us on Instagram" },
+      "youtube": { "label": "Subscribe on YouTube" },
+      "linkedin": { "label": "Connect on LinkedIn" }
+    },
+    "copyright": "© 2026 SunEnergy Pro. All rights reserved.",
+    "attribution": {
+      "text": "Built by",
+      "link_text": "Growrix OS",
+      "url": "https://www.growrixos.com"
+    },
+    "privacy_link": "Privacy Policy",
+    "terms_link": "Terms of Service",
+    "contact": {
+      "hours_title": "Business Hours",
+      "hours_value": "Monday - Friday: 8 AM - 6 PM | Saturday: 9 AM - 3 PM | Sunday: Closed",
+      "emergency_title": "Emergency Support",
+      "emergency_value": "Available 24/7 for system issues",
+      "languages": "English • Spanish • Mandarin"
+    }
+  },
+  "contact": {
+    "whatsapp_label": "Message on WhatsApp",
+    "whatsapp_message_template": "Hi SunEnergy Pro, I'm interested in solar installation. Can you help?",
+    "phone_label": "Call Us",
+    "call_now": "Call Now",
+    "email_label": "Email"
+  },
+  "cta": {
+    "get_assessment": "Get Free Solar Assessment",
+    "schedule_consultation": "Schedule Consultation",
+    "browse_portfolio": "Browse Our Portfolio",
+    "learn_more": "Learn More",
+    "get_quote": "Get Free Quote",
+    "contact_us": "Contact Us",
+    "chat_now": "Chat Now",
+    "explore_services": "Explore Services"
+  },
+  "home": {
+    "hero": {
+      "headline": "Power Your Home with Solar Energy",
+      "subheadline": "Go solar and save up to 80% on your energy bills",
+      "description": "Over 12 years and 15,000+ successful installations. Join thousands of satisfied customers enjoying clean, affordable solar energy.",
+      "cta_primary": "Get Free Solar Assessment",
+      "cta_secondary": "Browse Our Portfolio"
+    },
+    "trust_badges": {
+      "title": "Why Choose SunEnergy Pro?",
+      "installations": "15,000+ Successful Installations",
+      "years": "12+ Years of Industry Expertise",
+      "satisfaction": "97% Customer Satisfaction Rating",
+      "warranty": "25-Year Equipment Warranty"
+    },
+    "services_preview": {
+      "title": "Our Solar Solutions",
+      "description": "From residential rooftop systems to large-scale commercial installations, we design custom solar solutions for every need.",
+      "service_1_name": "Residential Solar",
+      "service_1_desc": "Transform your home into a power-generating asset with our premium residential solar systems.",
+      "service_2_name": "Commercial Solar",
+      "service_2_desc": "Reduce operating costs and boost your business image with large-scale commercial solar.",
+      "service_3_name": "Solar Maintenance",
+      "service_3_desc": "Keep your system running at peak efficiency with our comprehensive maintenance and monitoring.",
+      "cta": "Explore All Services"
+    },
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "subtitle": "Real stories from real homeowners",
+      "testimonial_1_quote": "SunEnergy Pro made the entire process effortless. Our system was installed perfectly, and we're saving hundreds every month!",
+      "testimonial_1_author": "Maria Santos",
+      "testimonial_1_role": "Homeowner, Sacramento",
+      "testimonial_2_quote": "Professional team, competitive pricing, and excellent after-sale support. Highly recommend!",
+      "testimonial_2_author": "David Chen",
+      "testimonial_2_role": "Business Owner, Folsom"
+    },
+    "featured_projects": {
+      "title": "Featured Projects",
+      "description": "See the transformations we've made for our valued clients.",
+      "project_1_name": "Residential Rooftop System",
+      "project_1_savings": "$8,450+ Annual Savings",
+      "project_2_name": "Commercial Warehouse",
+      "project_2_savings": "$42,000+ Annual Savings",
+      "cta": "View Full Portfolio"
+    },
+    "cta_band": {
+      "headline": "Ready to Go Solar?",
+      "description": "Start with a free, no-obligation solar assessment. Our experts will analyze your property and show you exactly how much you can save.",
+      "cta_text": "Get Free Assessment"
+    }
+  },
+  "services": {
+    "hero": {
+      "headline": "Solar Solutions Tailored to Your Needs",
+      "description": "Whether you're powering a home or a business, we design and install custom solar systems that maximize your savings and environmental impact.",
+      "cta": "Schedule Free Consultation"
+    },
+    "grid": {
+      "title": "Our Services",
+      "subtitle": "Complete solar energy solutions from design to installation to maintenance"
+    },
+    "service_1": {
+      "name": "Residential Solar Systems",
+      "description": "Transform your home into a clean energy powerhouse. Our custom-designed systems are sized to match your energy needs and budget.",
+      "benefits": "Lower energy bills • Environmental impact • Increased home value • 25-year warranty",
+      "price_label": "Starting from $0 down financing",
+      "cta": "Learn More"
+    },
+    "service_2": {
+      "name": "Commercial Solar Solutions",
+      "description": "Reduce operating costs and boost your business sustainability with large-scale commercial solar installations.",
+      "benefits": "Significant cost reduction • Tax incentives • Corporate sustainability • Custom sizing",
+      "price_label": "Custom quote available",
+      "cta": "Get Commercial Quote"
+    },
+    "service_3": {
+      "name": "System Maintenance & Monitoring",
+      "description": "Keep your solar system running at peak efficiency. Our maintenance plans include cleaning, monitoring, and emergency support.",
+      "benefits": "24/7 monitoring • Regular maintenance • Fast response times • System optimization",
+      "price_label": "Starting from $149/year",
+      "cta": "Learn About Maintenance"
+    },
+    "financing_preview": {
+      "title": "Flexible Financing Options",
+      "description": "Solar should be affordable. Explore our financing programs designed to fit your budget.",
+      "cta": "Explore Financing"
+    },
+    "cta_band": {
+      "headline": "Not Sure Which Solution Is Right for You?",
+      "cta_text": "Schedule a free consultation with our solar experts"
+    }
+  },
+  "portfolio": {
+    "hero": {
+      "headline": "Our Work Speaks for Itself",
+      "description": "Browse hundreds of residential and commercial solar installations. Real projects. Real results. Real savings."
+    },
+    "gallery": {
+      "title": "Project Gallery",
+      "filter_all": "All Projects",
+      "filter_residential": "Residential",
+      "filter_commercial": "Commercial",
+      "filter_rooftop": "Rooftop"
+    },
+    "project_1": {
+      "name": "Residential Rooftop Installation - Sacramento",
+      "location": "Sacramento, CA",
+      "before_label": "Before Solar",
+      "after_label": "After Solar",
+      "savings_amount": "$8,450 annual savings",
+      "payback_period": "8-year payback period"
+    },
+    "project_2": {
+      "name": "Commercial Warehouse Solar Array - Folsom",
+      "location": "Folsom, CA",
+      "before_label": "Before Solar",
+      "after_label": "After Solar",
+      "savings_amount": "$42,000 annual savings",
+      "payback_period": "5-year payback period"
+    },
+    "case_study_link": "View Full Case Study",
+    "cta_band": {
+      "headline": "Ready to Become Our Next Success Story?",
+      "cta_text": "Get Your Free Solar Assessment Today"
+    }
+  },
+  "contact": {
+    "hero": {
+      "headline": "Let's Talk Solar",
+      "description": "Have questions? Ready to go solar? Get in touch with our team. We're here to help!"
+    },
+    "form": {
+      "step_1_label": "Step 1: Your Email",
+      "step_1_description": "Start by sharing your email address so we can follow up with your results.",
+      "email_label": "Email Address",
+      "email_placeholder": "you@example.com",
+      "email_required": "Email is required",
+      "next_step": "Next",
+      "step_2_label": "Step 2: Your Details",
+      "step_2_description": "Tell us a bit about your property and energy needs.",
+      "name_label": "Full Name",
+      "name_placeholder": "John Doe",
+      "phone_label": "Phone Number",
+      "phone_placeholder": "+1-555-123-4567",
+      "property_type_label": "Property Type",
+      "property_type_residential": "Residential",
+      "property_type_commercial": "Commercial",
+      "step_3_label": "Step 3: Your Message",
+      "step_3_description": "Any specific questions or preferences?",
+      "message_label": "Message (optional)",
+      "message_placeholder": "Tell us more about your solar interests...",
+      "preferred_contact_label": "Preferred Contact Method",
+      "preferred_contact_phone": "Phone Call",
+      "preferred_contact_email": "Email",
+      "preferred_contact_whatsapp": "WhatsApp",
+      "submit_label": "Send My Information",
+      "submitting_label": "Sending...",
+      "success_title": "Thank You!",
+      "success_message": "We've received your information and will contact you within 24 hours.",
+      "success_next_step": "Check your email for next steps"
+    },
+    "map": {
+      "title": "Our Service Area",
+      "service_area_label": "We serve over 50 miles across Northern California",
+      "zip_code_placeholder": "Enter your ZIP code to check availability"
+    },
+    "info_strip": {
+      "hours_title": "Business Hours",
+      "hours_value": "Monday-Friday: 8 AM - 6 PM | Saturday: 9 AM - 3 PM",
+      "emergency_title": "Emergency Support",
+      "emergency_value": "24/7 availability for system emergencies",
+      "response_time": "We respond to inquiries within 24 hours"
+    }
+  },
+  "financing": {
+    "hero": {
+      "headline": "Affordable Solar for Everyone",
+      "description": "Go solar without breaking the bank. Explore our flexible financing options designed to fit your budget."
+    },
+    "options": {
+      "title": "Financing Options",
+      "option_1_name": "Solar Loans",
+      "option_1_description": "Own your system from day one. Competitive rates with flexible terms. Immediate tax credit eligibility.",
+      "option_1_cta": "Learn About Loans",
+      "option_2_name": "Solar Leases",
+      "option_2_description": "No money down. Let us maintain your system. Predictable monthly payments.",
+      "option_2_cta": "Learn About Leases",
+      "option_3_name": "Power Purchase Agreements (PPAs)",
+      "option_3_description": "Pay only for the energy you produce. Zero upfront cost. Guaranteed savings.",
+      "option_3_cta": "Learn About PPAs"
+    },
+    "calculator": {
+      "title": "Calculate Your Savings",
+      "description": "See how much you can save with solar energy.",
+      "zip_code_label": "ZIP Code",
+      "annual_usage_label": "Annual Energy Usage (kWh)",
+      "roof_type_label": "Roof Type",
+      "calculate_button": "Calculate My Savings",
+      "results_title": "Your Savings Estimate",
+      "results_monthly_savings": "Monthly Savings",
+      "results_annual_savings": "Annual Savings",
+      "results_payback_period": "Payback Period",
+      "results_system_size": "Recommended System Size",
+      "results_cta": "Get Detailed Quote"
+    },
+    "incentives": {
+      "title": "Don't Miss Out on Incentives",
+      "federal_tax_credit": "Federal Tax Credit: Up to 30% of system cost",
+      "state_incentives": "California State Incentives: Additional rebates available",
+      "utility_rebates": "Utility Rebates: PG&E and other utilities offer incentive programs"
+    },
+    "cta_band": {
+      "headline": "Ready to Start Saving?",
+      "cta_text": "Get a personalized financing quote today"
+    }
+  },
+  "testimonials": {
+    "hero": {
+      "headline": "Trusted by Thousands",
+      "description": "Real customers, real stories, real savings."
+    },
+    "carousel": {
+      "title": "Customer Reviews",
+      "subtitle": "See what our satisfied customers have to say"
+    },
+    "testimonial_1": {
+      "quote": "SunEnergy Pro made going solar easy and affordable. The installation was smooth, and our first month's bill showed we're saving over $200!",
+      "author": "Maria Santos",
+      "role": "Homeowner",
+      "location": "Sacramento, CA",
+      "rating": "5"
+    },
+    "testimonial_2": {
+      "quote": "Excellent service from start to finish. The team was professional, punctual, and thorough. I recommend them to everyone interested in solar.",
+      "author": "David Chen",
+      "role": "Business Owner",
+      "location": "Folsom, CA",
+      "rating": "5"
+    },
+    "stats": {
+      "title": "Our Track Record",
+      "satisfaction_rating": "97% Customer Satisfaction",
+      "total_reviews": "1,200+ Google Reviews",
+      "average_rating": "4.9 out of 5 stars"
+    },
+    "cta_band": {
+      "headline": "Join Our Community of Solar Owners",
+      "cta_text": "Get your free solar assessment"
+    }
+  },
+  "about": {
+    "hero": {
+      "headline": "About SunEnergy Pro",
+      "description": "12 years of solar expertise. 15,000+ happy customers. A commitment to clean energy."
+    },
+    "story": {
+      "title": "Our Story",
+      "subtitle": "How we became Northern California's most trusted solar installer",
+      "paragraph_1": "Founded in 2014, SunEnergy Pro started with a simple mission: make solar energy accessible to everyone. What began as a small team of passionate solar enthusiasts has grown into a full-service solar company trusted by thousands of homeowners and businesses.",
+      "paragraph_2": "We've installed over 15,000 solar systems, saved our customers over $150 million in energy costs, and maintained a 97% customer satisfaction rating. Our success is built on our commitment to quality, transparency, and exceptional customer service.",
+      "paragraph_3": "Today, we're proud to be one of Northern California's leading solar installers, recognized for our expertise, professionalism, and dedication to helping our community transition to clean, renewable energy."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "To empower homeowners and businesses to harness the sun's energy, reduce their environmental footprint, and achieve long-term energy independence through premium solar solutions."
+    },
+    "certifications": {
+      "title": "Certifications & Credentials",
+      "nabcep": "NABCEP Certified Technicians",
+      "warranty": "25-Year Equipment Warranty",
+      "insurance": "Fully Licensed, Insured, and Bonded"
+    },
+    "team": {
+      "title": "Meet Our Team",
+      "description": "Expert solar installers and designers dedicated to your success"
+    },
+    "team_member_1": {
+      "name": "James Rodriguez",
+      "role": "Founder & Chief Solar Officer",
+      "bio": "With 20+ years in renewable energy, James leads our mission to make solar accessible to all."
+    },
+    "team_member_2": {
+      "name": "Sarah Johnson",
+      "role": "Lead Installation Manager",
+      "bio": "NABCEP certified with 15+ years of solar installation expertise. Sarah ensures every project exceeds expectations."
+    },
+    "cta_band": {
+      "headline": "Ready to Join the Solar Revolution?",
+      "cta_text": "Start your journey to clean energy today"
+    }
+  },
+  "faq": {
+    "hero": {
+      "headline": "Frequently Asked Questions",
+      "description": "Have questions about solar? We've got answers."
+    },
+    "question_1": {
+      "question": "How much can I save with solar?",
+      "answer": "Savings depend on your location, roof condition, and current energy usage. Most customers save $8,000-$20,000 over 25 years. Use our calculator for a personalized estimate."
+    },
+    "question_2": {
+      "question": "What's the installation timeline?",
+      "answer": "From consultation to activation typically takes 4-8 weeks, depending on permits and weather. We'll give you a specific timeline during your consultation."
+    },
+    "question_3": {
+      "question": "Do I need batteries for my solar system?",
+      "answer": "Not required for grid-tied systems. Batteries add cost but provide backup power during outages. We can design a system with or without batteries based on your needs."
+    },
+    "question_4": {
+      "question": "What's included in your warranty?",
+      "answer": "We offer 25-year equipment warranties, 10-year workmanship warranties, and full insurance coverage. Your system is protected."
+    },
+    "question_5": {
+      "question": "Can I add more panels later?",
+      "answer": "Yes! Most systems are designed to expand. We can add panels in the future if your needs change."
+    },
+    "search_placeholder": "Search FAQ...",
+    "no_results_message": "No matching questions found. Contact us for help.",
+    "contact_support_link": "Contact our support team",
+    "cta_band": {
+      "headline": "Still Have Questions?",
+      "cta_text": "Chat with a solar expert"
+    }
+  },
+  "blog": {
+    "hero": {
+      "headline": "Solar Insights & Updates",
+      "description": "Expert tips, industry news, and everything you need to know about solar energy."
+    },
+    "featured": {
+      "title": "Is Solar Right for Your Home? A Complete Guide",
+      "category": "Solar Basics",
+      "read_time": "5 min read",
+      "excerpt": "Everything you need to know before going solar, from roof suitability to financial incentives."
+    },
+    "post_1": {
+      "title": "5 Benefits of Solar Energy You Didn't Know",
+      "category": "Solar Benefits",
+      "read_time": "4 min read",
+      "excerpt": "Beyond lower bills: discover the hidden benefits of switching to solar."
+    },
+    "post_2": {
+      "title": "How to Maintain Your Solar System",
+      "category": "Maintenance",
+      "read_time": "6 min read",
+      "excerpt": "Simple maintenance tips to keep your solar system running at peak efficiency."
+    },
+    "filter_all": "All Posts",
+    "filter_installation": "Installation",
+    "filter_maintenance": "Maintenance",
+    "filter_solar_basics": "Solar Basics",
+    "filter_news": "News",
+    "pagination_prev": "Previous",
+    "pagination_next": "Next",
+    "cta_band": {
+      "headline": "Ready to Go Solar?",
+      "cta_text": "Get your free solar assessment"
+    }
+  },
+  "assessment": {
+    "hero": {
+      "headline": "Free Solar Assessment",
+      "description": "Answer a few quick questions and get a personalized solar savings estimate."
+    },
+    "form": {
+      "step_1": {
+        "question": "What type of property do you have?",
+        "option_a": "Single-family home",
+        "option_b": "Multi-unit or commercial",
+        "option_c": "Not sure"
+      },
+      "step_2": {
+        "question": "What's your annual energy bill approximately?",
+        "option_a": "Under $100",
+        "option_b": "$100 - $200",
+        "option_c": "Over $200"
+      },
+      "step_3": {
+        "question": "Your email address",
+        "label": "Email",
+        "placeholder": "you@example.com"
+      }
+    },
+    "results": {
+      "title": "Your Solar Potential",
+      "subtitle": "Based on your responses:",
+      "your_potential_savings": "Potential Annual Savings",
+      "estimated_payback": "Estimated Payback Period",
+      "system_recommendation": "Recommended System Size",
+      "cta_email_capture": "Get detailed results",
+      "email_placeholder": "Enter your email",
+      "submit_button": "Get My Full Assessment"
+    },
+    "error": {
+      "message": "Something went wrong. Please try again.",
+      "retry_button": "Retry"
+    }
+  },
+  "calculator": {
+    "hero": {
+      "headline": "Solar Savings Calculator",
+      "description": "Enter your details and see exactly how much you can save with solar."
+    },
+    "form": {
+      "zip_code_label": "ZIP Code",
+      "zip_code_placeholder": "95001",
+      "annual_usage_label": "Annual Energy Usage (kWh)",
+      "annual_usage_unit": "kWh/year (check your electric bill)",
+      "roof_type_label": "Roof Type",
+      "roof_type_flat": "Flat",
+      "roof_type_pitched": "Pitched",
+      "roof_type_metal": "Metal",
+      "calculate_button": "Calculate Savings"
+    },
+    "results": {
+      "title": "Your Savings Estimate",
+      "monthly_savings": "Monthly Savings",
+      "annual_savings": "Annual Savings",
+      "payback_period": "Payback Period",
+      "system_size": "Recommended System Size",
+      "federal_tax_credit": "Federal Tax Credit Eligible"
+    },
+    "results_cta_primary": "Get Detailed Quote",
+    "results_cta_secondary": "Schedule Consultation",
+    "disclaimer": "This is an estimate. Actual savings may vary based on system design, equipment, and installation specifics.",
+    "accuracy_note": "Our calculator is accurate to within ±10% of actual savings."
+  },
+  "form": {
+    "validation": {
+      "email_required": "Email is required",
+      "email_invalid": "Please enter a valid email address",
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Please enter a valid phone number",
+      "name_required": "Name is required",
+      "message_required": "Message is required"
+    },
+    "error": {
+      "network_error": "Network error. Please check your connection and try again.",
+      "server_error": "Something went wrong. Please try again later.",
+      "try_again": "Try Again"
+    },
+    "success": {
+      "message": "Your message has been sent successfully!",
+      "thank_you": "Thank you for reaching out. We'll contact you shortly."
+    },
+    "loading": {
+      "submitting": "Submitting..."
+    }
+  },
+  "error": {
+    "page_404": {
+      "headline": "Page Not Found",
+      "description": "The page you're looking for doesn't exist or has been moved.",
+      "home_link": "Back to Home"
+    },
+    "page_500": {
+      "headline": "Server Error",
+      "description": "Something went wrong on our end. We're working to fix it.",
+      "support_link": "Contact Support"
+    }
+  },
+  "empty": {
+    "no_posts": "No blog posts found.",
+    "no_results": "No results match your search.",
+    "no_testimonials": "No testimonials available at this time."
+  },
+  "offline": {
+    "message": "You're offline. Some features may not be available.",
+    "retry_button": "Retry"
+  },
+  "social": {
+    "follow_us": "Follow Us",
+    "facebook_url": "https://facebook.com/sunenergypro",
+    "instagram_url": "https://instagram.com/sunenergypro",
+    "youtube_url": "https://youtube.com/@sunenergypro",
+    "linkedin_url": "https://linkedin.com/company/sunenergypro"
+  },
+  "trust": {
+    "bbb_rating": "BBB A+ Rating",
+    "customer_reviews": "1,200+ Google Reviews",
+    "years_established": "12+ Years in Business",
+    "installations_completed": "15,000+ Installations Completed",
+    "satisfaction_rate": "97% Customer Satisfaction",
+    "warranty_years": "25-Year Warranty"
+  },
+  "certifications": {
+    "nabcep": "NABCEP Certified",
+    "licensed": "Fully Licensed",
+    "insured": "Fully Insured",
+    "bonded": "Bonded"
+  },
+  "metrics": {
+    "installations": "15,000+",
+    "years_business": "12",
+    "satisfaction": "97%",
+    "warranty": "25"
+  }
+}
