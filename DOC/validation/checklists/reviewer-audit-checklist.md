@@ -60,7 +60,7 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] C28
 - [ ] C29
 
-## SECTION D — FRONTEND CONSTRAINTS F1..F12
+## SECTION D — FRONTEND CONSTRAINTS F1..F17 + Q1..Q3 + CC1..CC6
 - [ ] F1
 - [ ] F2
 - [ ] F3
@@ -73,6 +73,20 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] F10
 - [ ] F11
 - [ ] F12
+- [ ] F13
+- [ ] F14
+- [ ] F15
+- [ ] F16
+- [ ] F17
+- [ ] Q1
+- [ ] Q2
+- [ ] Q3
+- [ ] CC1
+- [ ] CC2
+- [ ] CC3
+- [ ] CC4
+- [ ] CC5
+- [ ] CC6
 
 ## SECTION E — DOMAIN CONSTRAINTS
 - [ ] Security constraints SC1..SC12
@@ -84,6 +98,7 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] Runtime readiness gate confirmed.
 - [ ] Environment readiness gate confirmed.
 - [ ] Operation-mode compliance confirmed.
+- [ ] Frontend production gate contract confirmed.
 
 ## SECTION G — SWEEPS
 - [ ] Anti-hallucination sweep completed.
