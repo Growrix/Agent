@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Standalone AI Product Factory foundation",
+  "description": "Standalone AI Product Factory MVP with executable planning and frontend generation",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
     "validate:structure": "node scripts/validate-structure.mjs",
-    "test": "node --test tests/factory-structure.test.mjs",
-    "release:check": "npm run validate:structure && npm test"
+    "test": "node --test tests/factory-structure.test.mjs tests/factory-pipeline.test.mjs",
+    "factory:run": "node scripts/run-factory.mjs --brief briefs/demo-locked-brief.json --run-id demo-run",
+    "factory:release": "node scripts/run-generated-release-check.mjs --run-id demo-run",
+    "release:check": "node scripts/release-check.mjs"
   }
 }

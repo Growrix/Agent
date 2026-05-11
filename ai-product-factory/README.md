@@ -15,15 +15,15 @@ Build a composition-first frontend factory that can:
 - emit production-grade frontend outputs
 - validate readiness with deterministic checks
 
-## Current Foundation
+## Current MVP
 
-This standalone root currently includes:
+This standalone root now includes:
 
-- the planned top-level layer folders from the blueprint
-- JSON contracts for engineering, design-system, orchestration, builder, and validator layers
-- primitive catalogs and seed tokens
-- a standalone agent registry and core agent specs
-- executable structure validation and test scripts
+- executable engineering, design-system, orchestration, builder, and validator modules
+- a locked demo brief that drives a deterministic factory run
+- generated planning/spec/report artifacts under `generated/runs/<run-id>/`
+- a generated Next.js app under `generated/apps/<run-id>/<project-slug>/`
+- a root release gate that installs, tests, builds, and audits the generated app
 
 ## Top-Level Structure
 
@@ -53,7 +53,20 @@ Run from `ai-product-factory/`:
 
 - `npm run validate:structure`
 - `npm test`
+- `npm run factory:run`
+- `npm run factory:release`
 - `npm run release:check`
+
+`npm run release:check` runs the full root gate with an isolated generated run id, so validation does not collide with a stale `demo-run` directory from an earlier session.
+
+## Generated Output Contract
+
+The factory runner emits:
+
+- planning artifacts under `generated/runs/<run-id>/planning/`
+- component/content specs under `generated/runs/<run-id>/specs/`
+- preflight and execution reports under `generated/runs/<run-id>/reports/`
+- a production-shaped Next.js app under `generated/apps/<run-id>/<project-slug>/`
 
 ## Rule
 

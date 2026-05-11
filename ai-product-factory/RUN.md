@@ -18,7 +18,28 @@ Checks required folders, files, JSON contracts, and package command surface.
 npm test
 ```
 
-Runs the standalone factory root tests with the Node test runner.
+Runs the standalone factory root tests, including the pipeline test that emits a generated app shell and planning bundle.
+
+## Run The Factory
+
+```bash
+npm run factory:run
+```
+
+Builds the deterministic demo run from the locked brief and writes:
+
+1. planning artifacts under `generated/runs/demo-run/planning/`
+2. specs under `generated/runs/demo-run/specs/`
+3. reports under `generated/runs/demo-run/reports/`
+4. a generated Next.js app under `generated/apps/demo-run/northstar-ai/`
+
+## Validate The Generated App
+
+```bash
+npm run factory:release
+```
+
+Installs the generated app dependencies, installs Playwright Chromium, and runs the generated app's `release:check` gate.
 
 ## Release Check
 
@@ -26,17 +47,21 @@ Runs the standalone factory root tests with the Node test runner.
 npm run release:check
 ```
 
-Runs the standalone production-readiness gate for this factory foundation:
+Runs the standalone production-readiness gate for the actual factory MVP:
 
 1. structure validation
-2. contract parsing tests
-3. command-surface verification
+2. root contract and pipeline tests
+3. isolated locked-brief factory run
+4. generated-app dependency install
+5. generated-app release gate
+
+By default this command uses a fresh verification run id, so it does not depend on `generated/apps/demo-run/` being free from a prior terminal session.
 
 ## Expected Outcome
 
 The release check passes only when:
 
 - the standalone root matches the planned folder map
-- required contracts exist and parse as JSON
-- agent/validator docs required by the manifest are present
-- package scripts expose the expected command surface
+- required contracts and briefs parse as JSON
+- the demo run emits the expected planning/spec/report artifacts
+- the generated Next.js app passes runtime detection, dependency checks, lint, typecheck, unit, a11y, smoke, build, full E2E, and frontend audit

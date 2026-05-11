@@ -1,0 +1,51 @@
+{
+  "lock_status": "LOCKED",
+  "projectName": "Northstar AI",
+  "projectSlug": "northstar-ai",
+  "summary": "Build a premium AI SaaS frontend that explains the product, proves operational depth, and converts qualified demo requests without route drift.",
+  "audience": [
+    "AI product leaders",
+    "Founders",
+    "Operations teams"
+  ],
+  "goals": [
+    "Explain product value quickly",
+    "Preserve route differentiation",
+    "Pass a deterministic local production gate"
+  ],
+  "primaryCta": "Book demo",
+  "secondaryCta": "View product",
+  "contactEmail": "hello@northstarai.example",
+  "productType": "saas",
+  "brandPersonality": {
+    "tone": "confident",
+    "density": "comfortable",
+    "motion": "measured",
+    "style": "editorial-premium"
+  },
+  "brandPalette": {
+    "secondary": "#0f766e",
+    "accent": "#f97316",
+    "surface": "#f8fafc",
+    "darkSurface": "#04151f"
+  },
+  "requestedFeatures": [
+    "Analytics hub",
+    "Team permissions",
+    "Live status panel"
+  ],
+  "highlightMetrics": [
+    {
+      "value": "22",
+      "label": "live signal streams unified"
+    },
+    {
+      "value": "2.7x",
+      "label": "faster triage response"
+    },
+    {
+      "value": "11 days",
+      "label": "from brief to audited frontend"
+    }
+  ]
+}
