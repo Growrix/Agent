@@ -73,7 +73,7 @@ This agent owns:
 1. Consume `brief.json` from `intake_strategist` AND the frontend artifacts from `frontend_planner` (specifically: page specs' data sources, component data needs, declared content keys).
 2. Verify both inputs are LOCKED / passed.
 3. Execute the seven planning phases below, producing every required artifact.
-4. Cross-check every output against C1..C24, SC1..SC12, PC1..PC12, DC1..DC11, TC1..TCn, I1..I6.
+4. Cross-check every output against C1..C29, SC1..SC12, PC1..PC12, DC1..DC11, TC1..TCn, I1..I6.
 5. Emit a machine-readable `backend.json`, `integrations.json` (+ `automation.json` when applicable), `devops.json`, `security.json` (+ `security_report.json`), `testing.json`, `performance.json`, `support_stack[]` for `plan.json` aggregation.
 6. Block on any incomplete artifact or violated constraint.
 
@@ -224,7 +224,7 @@ Owns: uptime / status / errors / logs / backups / security-ongoing / SEO / ops /
 3. Cross-link: every cacheable route in Phase 6 has a real route in Phase 1.
 4. Cross-link: every chosen integration's `required_skills` resolves in `knowledge/skills/`.
 5. Cross-link: every emitted outbound event resolves in `outbound-event-taxonomy.md`.
-6. Evaluate constraint sets: C1..C24, SC1..SC12, PC1..PC12, DC1..DC11, TC1..TCn, I1..I6.
+6. Evaluate constraint sets: C1..C29, SC1..SC12, PC1..PC12, DC1..DC11, TC1..TCn, I1..I6.
 7. Emit `backend.json` aggregate summary for `plan.json` aggregation.
 
 ## OUTPUT FORMAT

@@ -1,6 +1,6 @@
 # Frontend Constraints
 
-Hard rules for any frontend plan produced by this OS. Each constraint has an id, rule, detection method, and failure code. The `reviewer` evaluates F1..F12 in order; any failure halts the pipeline.
+Hard rules for any frontend plan produced by this OS. Each constraint has an id, rule, detection method, and failure code. The `reviewer` evaluates every check in this file in order (F1..F15, Q1..Q3, CC1..CC6); any failure halts the pipeline.
 
 ## F1 — No raw values in components
 **Rule:** Components MUST NOT contain raw color (`#hex`, `rgb()`, `hsl()`), spacing (`px`, `rem`, `em`), radius, shadow, duration (`ms`), or z-index literals. Tailwind utility classes that map to declared tokens are allowed; raw arbitrary values are not.

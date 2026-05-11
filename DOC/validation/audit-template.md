@@ -166,7 +166,7 @@ DOC/
 
 ### B.5 Reviewer constraint references resolve
 **Command:**
-1. `Read DOC/agents/reviewer.agent.md` → extract every constraint id mentioned in WORKFLOW (e.g., `C1..C24`, `F1..F12`, `SC1..SC12`, `PC1..PC12`, `DC1..DC11`, `TC1..TCn`, `AC1..AC12`, `I1..I6`).
+1. `Read DOC/agents/reviewer.agent.md` → extract every constraint id mentioned in WORKFLOW (e.g., `C1..C29`, `F1..F15`, `Q1..Q3`, `CC1..CC6`, `SC1..SC12`, `PC1..PC12`, `DC1..DC11`, `TC1..TCn`, `AC1..AC12`, `I1..I6`).
 2. For each id family, `Read` the corresponding constraint file in `DOC/validation/constraints/`.
 3. `Grep` the file for the id pattern.
 **Expected:** every id has a definition.

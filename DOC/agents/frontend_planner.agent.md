@@ -11,6 +11,7 @@ loads:
   - DOC/knowledge/frontend-rules/project-archetypes.md
   - DOC/knowledge/frontend-rules/brand-translation-rules.md
   - DOC/knowledge/frontend-rules/design-tokens-rules.md
+  - DOC/knowledge/frontend-rules/frontend-visual-structure-checklist.md
   - DOC/knowledge/frontend-rules/component-state-matrix.md
   - DOC/knowledge/frontend-rules/motion-rules.md
   - DOC/knowledge/frontend-rules/content-rules.md

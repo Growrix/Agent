@@ -185,7 +185,7 @@ Three artifacts, in machine-readable form:
 ## VALIDATION STEPS
 - Pre-planning checklist must be fully `[x]`.
 - Pre-build checklist must be fully `[x]`.
-- All C1..C24 constraints must pass.
+- All C1..C29 constraints must pass.
 - No item in `plan.json` may name an entity absent from the knowledge base.
 
 ## FAILURE MODES

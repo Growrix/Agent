@@ -121,11 +121,11 @@ For every major issue cluster, apply this sequence before any output-level patch
    - Closes BLOCKER first.
    - Within blockers, prefer fixes that close multiple check ids.
    - Within ties, prefer the smallest blast radius.
-5. **EMIT** `<target>/reports/audit-report.<timestamp>.md` and the JSON sibling, both following the report template.
+5. **EMIT** `<target>/output/runs/<timestamp>/reports/audit-report.<timestamp>.md` and the JSON sibling, both following the report template.
 6. **VERDICT** — emit `READY`, `READY_WITH_ADVISORIES`, or `NOT_READY` with a one-sentence reason.
 
 ### MODE: FIX
-1. **REQUIRES** a recent audit report at `<target>/reports/audit-report.*.json`.
+1. **REQUIRES** a recent audit report at `<target>/output/runs/<timestamp>/reports/audit-report.*.json`.
 2. **READ** the report's `fixes` block.
 3. **FOR EACH FIX (capped at `options.fix_max_count`, default 10)**:
    1. Read the target file.
@@ -177,20 +177,20 @@ For every major issue cluster, apply this sequence before any output-level patch
    - required content slots vs emitted route composition
    - planned content types vs emitted card components
    - planned content keys vs consumed content keys in emitted pages/components
-5. **EMIT** `spec-diff-report.<timestamp>.md` and JSON sibling under `<target>/reports/`.
+5. **EMIT** `spec-diff-report.<timestamp>.md` and JSON sibling under `<target>/output/runs/<timestamp>/reports/`.
 6. **RETURN** `NOT_READY` if any critical coverage drift is found.
 
 ## OUTPUT FORMAT — per mode
 
 | Mode | Outputs |
 |---|---|
-| DESIGN | `<target>/reports/system-design.<timestamp>.md`, `<target>/reports/build-plan.<timestamp>.md` |
-| AUDIT | `<target>/reports/audit-report.<timestamp>.md`, `<target>/reports/audit-report.<timestamp>.json` |
-| FIX | `<target>/reports/fix-report.<timestamp>.md` + a fresh AUDIT |
-| SMOKE | `<target>/reports/smoke-report.<fixture>.<timestamp>.md` |
-| DETERMINISM | `<target>/reports/determinism-report.<fixture>.<timestamp>.md` |
-| DOCUMENT | `<target>/reports/document-report.<timestamp>.md` plus updates to `_index.md` and mirrors |
-| SPEC_DIFF | `<target>/reports/spec-diff-report.<timestamp>.md`, `<target>/reports/spec-diff-report.<timestamp>.json` |
+| DESIGN | `<target>/output/runs/<timestamp>/reports/system-design.<timestamp>.md`, `<target>/output/runs/<timestamp>/reports/build-plan.<timestamp>.md` |
+| AUDIT | `<target>/output/runs/<timestamp>/reports/audit-report.<timestamp>.md`, `<target>/output/runs/<timestamp>/reports/audit-report.<timestamp>.json` |
+| FIX | `<target>/output/runs/<timestamp>/reports/fix-report.<timestamp>.md` + a fresh AUDIT |
+| SMOKE | `<target>/output/runs/<timestamp>/reports/smoke-report.<fixture>.<timestamp>.md` |
+| DETERMINISM | `<target>/output/runs/<timestamp>/reports/determinism-report.<fixture>.<timestamp>.md` |
+| DOCUMENT | `<target>/output/runs/<timestamp>/reports/document-report.<timestamp>.md` plus updates to `_index.md` and mirrors |
+| SPEC_DIFF | `<target>/output/runs/<timestamp>/reports/spec-diff-report.<timestamp>.md`, `<target>/output/runs/<timestamp>/reports/spec-diff-report.<timestamp>.json` |
 
 All reports follow the structure declared in `DOC/validation/audit-report.template.md`.
 

@@ -53,7 +53,7 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 ## RESPONSIBILITIES
 1. Run pre-planning checklist.
 2. Run pre-build checklist.
-3. Run constraints C1..C24.
+3. Run constraints C1..C29.
 4. Detect anti-hallucination violations.
 5. Detect responsibility leaks (frontend/backend mixing).
 6. Detect missing components vs integration rules.
@@ -86,8 +86,8 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 2. **CHECKLIST: PRE-BUILD** — for each item, verify or fail.
 3. **CHECKLIST: PRE-DEPLOYMENT** — for each item, verify or fail (run only when reviewer is invoked at the deployment gate).
 4. **CHECKLIST: REVIEWER-AUDIT** — execute `reviewer-audit-checklist.md` and record section-wise pass/fail.
-5. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
-6. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
+5. **CONSTRAINTS** — evaluate C1..C29 in order, recording status.
+6. **FRONTEND CONSTRAINTS** — evaluate every frontend constraint defined in `validation/constraints/frontend-constraints.md` (F1..F15, Q1..Q3, CC1..CC6).
 7. **ACCESSIBILITY CONSTRAINTS** — evaluate AC1..AC12 from `validation/constraints/accessibility-constraints.md`.
 8. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
 9. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.
@@ -275,7 +275,7 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 - Confirm frontend route inventory from `DOC/output/runs/<timestamp>/planning/frontend/ai-context.yaml` and `master-ui-architecture.md` fully resolves to page specs before passing F7.
 - Confirm each constraint block has a `status` and `reason` before emitting.
 - Confirm `validation_report.json` is emitted even when overall status is `failed`.
-- Confirm no constraint is skipped: each C1..C24 plus F, SC, PC, DC, AC, TC, I series must appear in output.
+- Confirm no constraint is skipped: each C1..C29 plus F, Q, CC, SC, PC, DC, AC, TC, I series must appear in output.
 - Confirm every `failed` result includes a non-empty `evidence` field citing the artifact path.
 - Confirm emitted report includes required top-level blocks from template: pre_planning, pre_build, pre_deployment, constraints, frontend, accessibility, security_constraints, performance_constraints, data_constraints, testing_constraints, integration_constraints, anti_hallucination, ownership, drift, status.
 

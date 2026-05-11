@@ -60,7 +60,7 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] C28
 - [ ] C29
 
-## SECTION D — FRONTEND CONSTRAINTS F1..F12
+## SECTION D — FRONTEND CONSTRAINTS (F + Q + CC)
 - [ ] F1
 - [ ] F2
 - [ ] F3
@@ -73,6 +73,22 @@ If any required section is missing, reviewer must return `BLOCK`.
 - [ ] F10
 - [ ] F11
 - [ ] F12
+- [ ] F13
+- [ ] F14
+- [ ] F15
+
+### Quality bar constraints (Q-series)
+- [ ] Q1
+- [ ] Q2
+- [ ] Q3
+
+### Developer completeness contract (CC-series)
+- [ ] CC1
+- [ ] CC2
+- [ ] CC3
+- [ ] CC4
+- [ ] CC5
+- [ ] CC6
 
 ## SECTION E — DOMAIN CONSTRAINTS
 - [ ] Security constraints SC1..SC12
