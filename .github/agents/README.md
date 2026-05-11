@@ -1,6 +1,6 @@
 # Agent Entry Points (Copilot / VS Code)
 
-This folder is the **public agent surface** for VS Code Copilot and any AI session opening the repo. Pick one of the 5 named agents below per phase.
+This folder is the **public agent surface** for VS Code Copilot and any AI session opening the repo. Pick one of the 5 default named agents below per phase. One experimental adjunct agent is listed separately.
 
 The canonical agent files live at `DOC/agents/<name>.agent.md`. Files here are byte-identical mirrors maintained by `system_architect DOCUMENT` mode.
 
@@ -42,6 +42,8 @@ The canonical agent files live at `DOC/agents/<name>.agent.md`. Files here are b
 
 **Two prompts for the planning phase. Two prompts for the execution phase. One meta-agent that audits the lot.**
 
+The default workflow above remains the stable system. `frontend_factory_developer` is mirrored here as an experimental factory-native execution surface and does not replace `frontend_developer`.
+
 ---
 
 ## The five agents
@@ -76,6 +78,18 @@ The canonical agent files live at `DOC/agents/<name>.agent.md`. Files here are b
 **Use when:** auditing the OS itself, designing a new agentic workflow, fixing audit findings, smoke-testing a fixture, verifying determinism.
 **Role:** out-of-band meta-agent. Six modes: `DESIGN`, `AUDIT`, `FIX`, `SMOKE`, `DETERMINISM`, `DOCUMENT`.
 **Output root:** `DOC/output/runs/<timestamp>/reports/` (or `<target>/reports/` when auditing a different system).
+
+---
+
+## Experimental mirrored agent
+
+### `frontend_factory_developer`
+**Use when:** testing the factory-native frontend execution path without changing the current production DOC workflow.
+**Role:** scoped, packet-driven frontend executor. It consumes the same locked frontend planning bundle plus an explicit factory context packet that declares exact scopes, inputs, outputs, and validations. It implements only the declared slices, validates each slice immediately, and blocks instead of widening into repo-wide reasoning.
+**Output roots:**
+- `doc_bridge` mode -> declared project runtime root only
+- `standalone_factory` mode -> `ai-product-factory/generated/apps/<run-id>/<project-slug>/`
+**Important:** this agent is optional and experimental. If no factory scope packet exists yet, continue using `frontend_developer`.
 
 ---
 

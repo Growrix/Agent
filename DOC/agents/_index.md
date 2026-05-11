@@ -8,6 +8,8 @@ Update this file whenever an agent is added, removed, renamed, or its `runs_befo
 
 ## Workflow shape (5 named entry points)
 
+The OS still exposes 5 default user-facing agents. One experimental mirrored adjunct, `frontend_factory_developer`, exists for factory-native scoped frontend execution without changing the default workflow below.
+
 The OS exposes **5 user-facing agents**, mirrored at `.github/agents/` for VS Code Copilot. Two for planning, two for execution, one out-of-band meta-agent.
 
 ```
@@ -24,6 +26,8 @@ system_architect               ← Out-of-band: AUDIT, DESIGN, FIX, SMOKE, DETER
 
 Two prompts in planning. Two prompts in execution. One meta-agent.
 
+`frontend_factory_developer` is intentionally outside the default path above. It is opt-in, experimental, and exists to benchmark a scoped factory execution model while `frontend_developer` remains the production default.
+
 ---
 
 ## Public registry (mirrored to `.github/agents/`)
@@ -36,6 +40,14 @@ Two prompts in planning. Two prompts in execution. One meta-agent.
 | `frontend_developer` | 1 | Execution (frontend) | frontend planning bundle | `web/` directory tree (Next.js App Router code, components, pages, tokens, content, motion, tests scaffold, SEO assets, RUN.md, ENV.example, self-audit) |
 | `backend_developer` | 1 | Execution (backend + ship) | backend planning bundle | `src/server/`, `src/inngest/`, `src/lib/`, `src/app/api/`, `prisma/`, `studio/`, `emails/`, `terraform/`, `.github/workflows/`, `docs/runbooks/`, `RUN.md`, `DEPLOY.md`, `ENV.example`, deployed application, smoke green |
 | `system_architect` | 1 | Meta (out-of-band) | mode + target + options | `audit-report.md/.json`, `system-design.md`, `build-plan.md`, `smoke-report.md`, `determinism-report.md`, `fix-report.md`, `document-report.md` |
+
+---
+
+## Experimental mirrored adjuncts (not part of the default 5-agent workflow)
+
+| Agent | Version | Phase | Inputs | Outputs |
+|---|---|---|---|---|
+| `frontend_factory_developer` | 1 | Execution (frontend, experimental factory-native) | frontend planning bundle + explicit factory scope packet | scoped frontend runtime code under the declared app root + `.audit/frontend-self-audit.md` + `.audit/frontend-factory-manifest.json` |
 
 ---
 
@@ -101,11 +113,12 @@ If any row is missing or its producer doesn't exist, audit Section D.4 fails.
 
 ## Mirror discipline
 
-Five files live at both `DOC/agents/<name>.agent.md` and `.github/agents/<name>.agent.md`:
+Six files live at both `DOC/agents/<name>.agent.md` and `.github/agents/<name>.agent.md`:
 
 - `frontend_planner`
 - `backend_planner`
 - `frontend_developer`
+- `frontend_factory_developer`
 - `backend_developer`
 - `system_architect`
 
