@@ -23,15 +23,18 @@ export function validateProductionReadiness({ brief, runRoot, appRoot, buildPlan
     'reports/frontend-summary.json'
   ];
 
+  const routeArtifacts = (buildPlan.routes ?? []).map((routePath) => {
+    if (routePath === '/') {
+      return 'src/app/page.tsx';
+    }
+
+    return `src/app/${routePath.replace(/^\//, '')}/page.tsx`;
+  });
+
   const requiredAppArtifacts = [
     'package.json',
     'RUN.generated.md',
-    'src/app/page.tsx',
-    'src/app/product/page.tsx',
-    'src/app/pricing/page.tsx',
-    'src/app/contact/page.tsx',
-    'src/app/sign-in/page.tsx',
-    'src/app/sign-up/page.tsx',
+    ...routeArtifacts,
     'src/components/theme-switcher.tsx',
     'src/components/mobile-bottom-nav.tsx',
     'src/components/auth-modal.tsx',

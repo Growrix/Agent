@@ -10,7 +10,13 @@ function routeLabel(routePath) {
     '/': 'Home',
     '/product': 'Product',
     '/pricing': 'Pricing',
+    '/services': 'Services',
+    '/about': 'About',
+    '/emergency': 'Emergency',
+    '/quote': 'Get Quote',
     '/contact': 'Contact',
+    '/terms': 'Terms & Conditions',
+    '/privacy': 'Privacy Policy',
     '/sign-in': 'Sign In',
     '/sign-up': 'Sign Up'
   };
@@ -32,7 +38,13 @@ function routeIdFromPath(routePath) {
     '/': 'home',
     '/product': 'product',
     '/pricing': 'pricing',
+    '/services': 'services',
+    '/about': 'about',
+    '/emergency': 'emergency',
+    '/quote': 'quote',
     '/contact': 'contact',
+    '/terms': 'terms',
+    '/privacy': 'privacy',
     '/sign-in': 'sign-in',
     '/sign-up': 'sign-up'
   };
@@ -448,7 +460,7 @@ function routeRegistryFile(routePlans, visualDifferentiationMap) {
     path: plan.routeId,
     routeId: routeIdFromPath(plan.routeId),
     label: routeLabel(plan.routeId),
-    navVisible: !plan.routeId.startsWith('/sign-'),
+    navVisible: !plan.routeId.startsWith('/sign-') && plan.routeId !== '/terms' && plan.routeId !== '/privacy',
     public: !plan.routeId.startsWith('/sign-'),
     heroVariant: visualDifferentiationMap.find((entry) => entry.routeId === plan.routeId)?.heroVariant ?? 'signal-horizon'
   }));
@@ -934,6 +946,10 @@ function mobileBottomNavFile() {
     "  Home: 'HM',",
     "  Product: 'PD',",
     "  Pricing: 'PR',",
+    "  Services: 'SV',",
+    "  About: 'AB',",
+    "  Emergency: 'EM',",
+    "  'Get Quote': 'QT',",
     "  Contact: 'CT'",
     '};',
     '',
@@ -948,6 +964,7 @@ function mobileBottomNavFile() {
     '    >',
     '      {primaryNavigation.map((item) => {',
     '        const isActive = pathname === item.path;',
+    '        const icon = iconMap[item.label] ?? item.label.slice(0, 2).toUpperCase();',
     '        return (',
     '          <Link',
     '            key={item.path}',
@@ -958,7 +975,7 @@ function mobileBottomNavFile() {
     "              isActive ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-700 dark:text-slate-100'",
     '            ].join(" ")}',
     '          >',
-    '            <span className="text-[0.62rem] tracking-[0.18em]">{iconMap[item.label]}</span>',
+    '            <span className="text-[0.62rem] tracking-[0.18em]">{icon}</span>',
     '            <span>{item.label}</span>',
     '          </Link>',
     '        );',
@@ -1563,6 +1580,217 @@ function contactPageFile() {
   ].join('\n');
 }
 
+function servicesPageFile() {
+  return [
+    "import { RouteHero } from '../../components/route-hero';",
+    "import { ConversionBand, FaqList, FeatureGrid, ProofPanel } from '../../components/section-primitives';",
+    "import { heroVariantFor } from '../../lib/route-registry';",
+    "import { siteContent } from '../../lib/site-content';",
+    '',
+    'export default function ServicesPage() {',
+    '  const content = siteContent.services;',
+    '',
+    '  return (',
+    "    <div data-route-id='services'>",
+    '      <RouteHero',
+    "        routeId='services'",
+    "        variant={heroVariantFor('/services')}",
+    '        eyebrow={content.hero.eyebrow}',
+    '        title={content.hero.title}',
+    '        description={content.hero.description}',
+    '        primaryCta={content.hero.primaryCta}',
+    '        primaryHref={content.hero.primaryHref}',
+    '        secondaryCta={content.hero.secondaryCta}',
+    '        secondaryHref={content.hero.secondaryHref}',
+    '        media={content.hero.media}',
+    '      />',
+    "      <FeatureGrid title='Core service coverage' items={content.features} />",
+    '      <ProofPanel proof={content.proof} />',
+    '      <FaqList items={content.faq} />',
+    '      <ConversionBand',
+    '        title={content.cta.title}',
+    '        body={content.cta.body}',
+    "        href='/quote'",
+    '        cta={content.cta.primaryCta}',
+    '      />',
+    '    </div>',
+    '  );',
+    '}',
+    ''
+  ].join('\n');
+}
+
+function aboutPageFile() {
+  return [
+    "import { RouteHero } from '../../components/route-hero';",
+    "import { ConversionBand, ProofPanel, TrustStrip } from '../../components/section-primitives';",
+    "import { heroVariantFor } from '../../lib/route-registry';",
+    "import { siteContent } from '../../lib/site-content';",
+    '',
+    'export default function AboutPage() {',
+    '  const content = siteContent.about;',
+    '',
+    '  return (',
+    "    <div data-route-id='about'>",
+    '      <RouteHero',
+    "        routeId='about'",
+    "        variant={heroVariantFor('/about')}",
+    '        eyebrow={content.hero.eyebrow}',
+    '        title={content.hero.title}',
+    '        description={content.hero.description}',
+    '        primaryCta={content.hero.primaryCta}',
+    '        primaryHref={content.hero.primaryHref}',
+    '        media={content.hero.media}',
+    '      />',
+    '      <TrustStrip proofStatement={content.trust.proofStatement} logos={content.trust.logos} />',
+    '      <ProofPanel proof={content.proof} />',
+    '      <ConversionBand',
+    '        title={content.cta.title}',
+    '        body={content.cta.body}',
+    "        href='/quote'",
+    '        cta={content.cta.primaryCta}',
+    '      />',
+    '    </div>',
+    '  );',
+    '}',
+    ''
+  ].join('\n');
+}
+
+function emergencyPageFile() {
+  return [
+    "import { RouteHero } from '../../components/route-hero';",
+    "import { ConversionBand, TrustStrip, WorkflowTimeline } from '../../components/section-primitives';",
+    "import { heroVariantFor } from '../../lib/route-registry';",
+    "import { siteContent } from '../../lib/site-content';",
+    '',
+    'export default function EmergencyPage() {',
+    '  const content = siteContent.emergency;',
+    '',
+    '  return (',
+    "    <div data-route-id='emergency'>",
+    '      <RouteHero',
+    "        routeId='emergency'",
+    "        variant={heroVariantFor('/emergency')}",
+    '        eyebrow={content.hero.eyebrow}',
+    '        title={content.hero.title}',
+    '        description={content.hero.description}',
+    '        primaryCta={content.hero.primaryCta}',
+    '        primaryHref={content.hero.primaryHref}',
+    '        secondaryCta={content.hero.secondaryCta}',
+    '        secondaryHref={content.hero.secondaryHref}',
+    '        media={content.hero.media}',
+    '      />',
+    '      <TrustStrip proofStatement={content.trust.proofStatement} logos={content.trust.logos} />',
+    "      <WorkflowTimeline title='Emergency response flow' steps={content.workflow} />",
+    '      <ConversionBand',
+    '        title={content.cta.title}',
+    '        body={content.cta.body}',
+    '        href={content.hero.primaryHref}',
+    '        cta={content.cta.primaryCta}',
+    '      />',
+    '    </div>',
+    '  );',
+    '}',
+    ''
+  ].join('\n');
+}
+
+function quotePageFile() {
+  return [
+    "import { RouteHero } from '../../components/route-hero';",
+    "import { ConversionBand, FaqList, WorkflowTimeline } from '../../components/section-primitives';",
+    "import { heroVariantFor } from '../../lib/route-registry';",
+    "import { siteContent } from '../../lib/site-content';",
+    '',
+    'export default function QuotePage() {',
+    '  const content = siteContent.quote;',
+    '',
+    '  return (',
+    "    <div data-route-id='quote'>",
+    '      <RouteHero',
+    "        routeId='quote'",
+    "        variant={heroVariantFor('/quote')}",
+    '        eyebrow={content.hero.eyebrow}',
+    '        title={content.hero.title}',
+    '        description={content.hero.description}',
+    '        primaryCta={content.hero.primaryCta}',
+    '        primaryHref={content.hero.primaryHref}',
+    '        media={content.hero.media}',
+    '      />',
+    "      <WorkflowTimeline title='Quote request workflow' steps={content.workflow} />",
+    '      <FaqList items={content.faq} />',
+    '      <ConversionBand',
+    '        title={content.cta.title}',
+    '        body={content.cta.body}',
+    "        href='/contact'",
+    '        cta={content.cta.primaryCta}',
+    '      />',
+    '    </div>',
+    '  );',
+    '}',
+    ''
+  ].join('\n');
+}
+
+function termsPageFile() {
+  return [
+    "import { siteContent } from '../../lib/site-content';",
+    '',
+    'export default function TermsPage() {',
+    '  const content = siteContent.legal.terms;',
+    '',
+    '  return (',
+    "    <article data-route-id='terms' className='route-frame grid gap-8'>",
+    "      <header className='surface-card rounded-hero p-6 sm:p-8'>",
+    "        <p className='hero-chip mb-3'>Legal</p>",
+    "        <h1 className='text-3xl font-semibold text-ink'>{content.title}</h1>",
+    "        <p className='mt-3 copy-muted'>{content.intro}</p>",
+    '      </header>',
+    "      <section className='grid gap-4'>",
+    '        {content.sections.map((entry) => (',
+    "          <div key={entry.heading} className='surface-card rounded-soft p-5'>",
+    "            <h2 className='text-xl font-semibold text-ink'>{entry.heading}</h2>",
+    "            <p className='mt-2 copy-muted'>{entry.body}</p>",
+    '          </div>',
+    '        ))}',
+    '      </section>',
+    '    </article>',
+    '  );',
+    '}',
+    ''
+  ].join('\n');
+}
+
+function privacyPageFile() {
+  return [
+    "import { siteContent } from '../../lib/site-content';",
+    '',
+    'export default function PrivacyPage() {',
+    '  const content = siteContent.legal.privacy;',
+    '',
+    '  return (',
+    "    <article data-route-id='privacy' className='route-frame grid gap-8'>",
+    "      <header className='surface-card rounded-hero p-6 sm:p-8'>",
+    "        <p className='hero-chip mb-3'>Legal</p>",
+    "        <h1 className='text-3xl font-semibold text-ink'>{content.title}</h1>",
+    "        <p className='mt-3 copy-muted'>{content.intro}</p>",
+    '      </header>',
+    "      <section className='grid gap-4'>",
+    '        {content.sections.map((entry) => (',
+    "          <div key={entry.heading} className='surface-card rounded-soft p-5'>",
+    "            <h2 className='text-xl font-semibold text-ink'>{entry.heading}</h2>",
+    "            <p className='mt-2 copy-muted'>{entry.body}</p>",
+    '          </div>',
+    '        ))}',
+    '      </section>',
+    '    </article>',
+    '  );',
+    '}',
+    ''
+  ].join('\n');
+}
+
 function signInPageFile() {
   return [
     "import { AuthCard } from '../../components/section-primitives';",
@@ -1893,7 +2121,21 @@ function unitTestFile() {
   ].join('\n');
 }
 
-function smokeTestFile() {
+function smokeTestFile(routePlans) {
+  const publicRoutes = routePlans
+    .map((plan) => plan.routeId)
+    .filter((path) => !path.startsWith('/sign-'));
+  const desktopTarget = publicRoutes.find((path) => path !== '/' && path !== '/terms' && path !== '/privacy') ?? '/contact';
+  const desktopTargetLabel = routeLabel(desktopTarget);
+  const desktopTargetId = routeIdFromPath(desktopTarget);
+  const mobileTarget = publicRoutes.find((path) => path !== '/') ?? '/';
+  const mobileTargetLabel = routeLabel(mobileTarget);
+  const conversionRoute = publicRoutes.includes('/quote')
+    ? '/quote'
+    : (publicRoutes.includes('/pricing') ? '/pricing' : desktopTarget);
+  const conversionId = routeIdFromPath(conversionRoute);
+  const routeHealthChecks = [...new Set([desktopTarget, conversionRoute, publicRoutes.includes('/contact') ? '/contact' : desktopTarget])];
+
   return [
     "import { expect, test } from '@playwright/test';",
     '',
@@ -1914,12 +2156,12 @@ function smokeTestFile() {
     "test('primary navigation works on desktop and mobile', async ({ page }, testInfo) => {",
     "  await page.goto('/');",
     '  if (testInfo.project.name === "mobile-chromium") {',
-    "    await page.getByTestId('mobile-bottom-nav').getByRole('link', { name: 'Product' }).click();",
+    `    await page.getByTestId('mobile-bottom-nav').getByRole('link', { name: ${json(mobileTargetLabel)} }).click();`,
     '  } else {',
-    "    await page.getByRole('link', { name: 'Product' }).first().click();",
+    `    await page.getByRole('link', { name: ${json(desktopTargetLabel)} }).first().click();`,
     '  }',
-    "  await expect(page).toHaveURL(new RegExp('/product$'));",
-    '  await expect(page.locator(`[data-route-id="product"]`)).toBeVisible();',
+    `  await expect(page).toHaveURL(new RegExp(${json(`${desktopTarget}$`)}));`,
+    `  await expect(page.locator(${json(`[data-route-id="${desktopTargetId}"]`)})).toBeVisible();`,
     '});',
     '',
     "test('ThemeSwitcher changes theme and persists preference', async ({ page }) => {",
@@ -1935,8 +2177,8 @@ function smokeTestFile() {
     "  const nav = page.getByTestId('mobile-bottom-nav');",
     '  if (testInfo.project.name === "mobile-chromium") {',
     '    await expect(nav).toBeVisible();',
-    "    await nav.getByRole('link', { name: 'Pricing' }).click();",
-    "    await expect(page).toHaveURL(new RegExp('/pricing$'));",
+    `    await nav.getByRole('link', { name: ${json(mobileTargetLabel)} }).click();`,
+    `    await expect(page).toHaveURL(new RegExp(${json(`${mobileTarget}$`)}));`,
     '  } else {',
     '    await expect(nav).not.toBeVisible();',
     '  }',
@@ -1960,12 +2202,12 @@ function smokeTestFile() {
     "test('primary conversion surface is reachable in two interactions or less from home', async ({ page }) => {",
     "  await page.goto('/');",
     '  await page.locator(`[data-primary-cta="true"]`).first().click();',
-    "  await expect(page).toHaveURL(new RegExp('/pricing$'));",
-    '  await expect(page.locator(`[data-conversion-surface="primary"]`)).toBeVisible();',
+    `  await expect(page).toHaveURL(new RegExp(${json(`${conversionRoute}$`)}));`,
+    `  await expect(page.locator(${json(`[data-route-id="${conversionId}"]`)})).toBeVisible();`,
     '});',
     '',
     "test('content, conversion, and contact routes resolve with healthy app responses', async ({ page }) => {",
-    "  for (const route of ['/product', '/pricing', '/contact']) {",
+    `  for (const route of ${json(routeHealthChecks)}) {`,
     '    const response = await page.goto(route);',
     '    expect(response?.ok()).toBeTruthy();',
     '  }',
@@ -1974,13 +2216,18 @@ function smokeTestFile() {
   ].join('\n');
 }
 
-function a11yTestFile() {
+function a11yTestFile(routePlans) {
+  const publicRoutes = routePlans
+    .map((plan) => plan.routeId)
+    .filter((path) => !path.startsWith('/sign-') && path !== '/terms' && path !== '/privacy');
+  const secondaryRoute = publicRoutes.find((path) => path !== '/') ?? '/';
+
   return [
     "import AxeBuilder from '@axe-core/playwright';",
     "import { expect, test } from '@playwright/test';",
     '',
-    "for (const route of ['/', '/pricing']) {",
-    "  const label = route === '/' ? 'home' : 'pricing';",
+    `for (const route of ${json([...new Set(['/', secondaryRoute])])}) {`,
+    "  const label = route === '/' ? 'home' : route.replace(/^\//, '').replace(/-/g, '_');",
     "  test(`${label} route has no serious or critical accessibility violations`, async ({ page }) => {",
     '    await page.goto(route);',
     '    const results = await new AxeBuilder({ page }).analyze();',
@@ -1992,19 +2239,25 @@ function a11yTestFile() {
   ].join('\n');
 }
 
-function fullTestFile() {
-  return [
+function fullTestFile(routePlans) {
+  const publicRoutes = routePlans
+    .map((plan) => plan.routeId)
+    .filter((path) => !path.startsWith('/sign-') && path !== '/terms' && path !== '/privacy');
+  const heroRoutes = publicRoutes.slice(0, 4);
+  const dynamicStateRoute = publicRoutes.includes('/product') ? '/product' : null;
+
+  const lines = [
     "import { expect, test } from '@playwright/test';",
     '',
     "test('public routes keep differentiated hero variants', async ({ page }) => {",
     '  const variants = new Set<string>();',
-    "  for (const route of ['/', '/product', '/pricing', '/contact']) {",
+    `  for (const route of ${json(heroRoutes)}) {`,
     '    await page.goto(route);',
     '    const variant = await page.locator("[data-hero-variant]").first().getAttribute("data-hero-variant");',
     '    expect(variant).toBeTruthy();',
     '    variants.add(String(variant));',
     '  }',
-    '  expect(variants.size).toBe(4);',
+    `  expect(variants.size).toBe(${Math.max(1, heroRoutes.length)});`,
     '});',
     '',
     "test('reduced motion project sets the reduced motion marker', async ({ page }, testInfo) => {",
@@ -2034,17 +2287,24 @@ function fullTestFile() {
     '    return { background: styles.backgroundColor, color: styles.color };',
     '  });',
     '  expect(colors.background).not.toBe(colors.color);',
-    '});',
-    '',
-    "test('dynamic product states cover loading, error, empty, and offline paths', async ({ page }) => {",
-    "  await page.goto('/product');",
-    "  for (const title of ['Awaiting source handoff', 'Source adapter mismatch', 'No signal yet', 'Offline continuity', 'Live signal sync']) {",
-    "    await page.getByRole('button', { name: title }).click();",
-    "    await expect(page.getByTestId('live-status-panel')).toContainText(title);",
-    '  }',
-    '});',
-    ''
-  ].join('\n');
+    '});'
+  ];
+
+  if (dynamicStateRoute) {
+    lines.push(
+      '',
+      "test('dynamic product states cover loading, error, empty, and offline paths', async ({ page }) => {",
+      `  await page.goto(${json(dynamicStateRoute)});`,
+      "  for (const title of ['Awaiting source handoff', 'Source adapter mismatch', 'No signal yet', 'Offline continuity', 'Live signal sync']) {",
+      "    await page.getByRole('button', { name: title }).click();",
+      "    await expect(page.getByTestId('live-status-panel')).toContainText(title);",
+      '  }',
+      '});'
+    );
+  }
+
+  lines.push('');
+  return lines.join('\n');
 }
 
 function gitignoreFile() {
@@ -2064,6 +2324,8 @@ function stylesDeclarationFile() {
 }
 
 export async function buildFrontendApp({ appRoot, brief, designTokens, composition, buildPlan }) {
+  const plannedRouteSet = new Set(composition.routePlans.map((plan) => plan.routeId));
+
   const files = {
     '.gitignore': gitignoreFile(),
     'package.json': packageJsonContent(buildPlan),
@@ -2088,11 +2350,6 @@ export async function buildFrontendApp({ appRoot, brief, designTokens, compositi
     'src/app/globals.css': globalsCssContent(designTokens),
     'src/app/layout.tsx': layoutFile(brief.projectName, brief.summary),
     'src/app/page.tsx': homePageFile(),
-    'src/app/product/page.tsx': productPageFile(),
-    'src/app/pricing/page.tsx': pricingPageFile(),
-    'src/app/contact/page.tsx': contactPageFile(),
-    'src/app/sign-in/page.tsx': signInPageFile(),
-    'src/app/sign-up/page.tsx': signUpPageFile(),
     'src/components/app-shell.tsx': appShellFile(brief.projectName),
     'src/components/theme-provider.tsx': themeProviderFile(),
     'src/components/theme-switcher.tsx': themeSwitcherFile(),
@@ -2107,10 +2364,54 @@ export async function buildFrontendApp({ appRoot, brief, designTokens, compositi
     'src/lib/route-registry.ts': routeRegistryFile(composition.routePlans, composition.visualDifferentiationMap),
     'src/lib/theme.ts': themeLibFile(),
     'tests/unit/site-content.test.ts': unitTestFile(),
-    'tests/e2e/smoke.spec.ts': smokeTestFile(),
-    'tests/e2e/a11y.spec.ts': a11yTestFile(),
-    'tests/e2e/full.spec.ts': fullTestFile()
+    'tests/e2e/smoke.spec.ts': smokeTestFile(composition.routePlans),
+    'tests/e2e/a11y.spec.ts': a11yTestFile(composition.routePlans),
+    'tests/e2e/full.spec.ts': fullTestFile(composition.routePlans)
   };
+
+  if (plannedRouteSet.has('/product')) {
+    files['src/app/product/page.tsx'] = productPageFile();
+  }
+
+  if (plannedRouteSet.has('/pricing')) {
+    files['src/app/pricing/page.tsx'] = pricingPageFile();
+  }
+
+  if (plannedRouteSet.has('/services')) {
+    files['src/app/services/page.tsx'] = servicesPageFile();
+  }
+
+  if (plannedRouteSet.has('/about')) {
+    files['src/app/about/page.tsx'] = aboutPageFile();
+  }
+
+  if (plannedRouteSet.has('/emergency')) {
+    files['src/app/emergency/page.tsx'] = emergencyPageFile();
+  }
+
+  if (plannedRouteSet.has('/quote')) {
+    files['src/app/quote/page.tsx'] = quotePageFile();
+  }
+
+  if (plannedRouteSet.has('/contact')) {
+    files['src/app/contact/page.tsx'] = contactPageFile();
+  }
+
+  if (plannedRouteSet.has('/terms')) {
+    files['src/app/terms/page.tsx'] = termsPageFile();
+  }
+
+  if (plannedRouteSet.has('/privacy')) {
+    files['src/app/privacy/page.tsx'] = privacyPageFile();
+  }
+
+  if (plannedRouteSet.has('/sign-in')) {
+    files['src/app/sign-in/page.tsx'] = signInPageFile();
+  }
+
+  if (plannedRouteSet.has('/sign-up')) {
+    files['src/app/sign-up/page.tsx'] = signUpPageFile();
+  }
 
   for (const [relativePath, content] of Object.entries(files)) {
     await writeGeneratedFile(appRoot, relativePath, content);

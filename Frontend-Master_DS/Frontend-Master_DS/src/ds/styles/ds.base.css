@@ -1,0 +1,63 @@
+/* ==========================================================================
+   ds.base — HTML Element Base Styles (Handbook Ch 17 §15.2)
+   Layer: ds.base
+   Reset rules live in ds.reset.css. This file styles semantic HTML elements.
+   ========================================================================== */
+
+@layer ds.base {
+  body {
+    color: var(--ds-color-foreground);
+    background: var(--ds-color-background);
+    font-family: var(--ds-font-sans);
+    line-height: var(--ds-line-height-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    text-decoration-skip-ink: auto;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ds-color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  input,
+  textarea {
+    caret-color: var(--ds-color-accent);
+  }
+
+  code {
+    font-family: var(--ds-font-mono);
+    font-size: 0.95em;
+    padding: 0.1em 0.35em;
+    border-radius: var(--ds-radius-sm);
+    border: 1px solid var(--ds-color-border);
+    background: color-mix(in oklab, var(--ds-color-surface) 88%, var(--ds-color-accent) 12%);
+  }
+
+  pre {
+    font-family: var(--ds-font-mono);
+    overflow-x: auto;
+    padding: var(--ds-space-4);
+    border-radius: var(--ds-radius-md);
+    background: var(--ds-color-surface-sunken);
+    border: 1px solid var(--ds-color-border);
+  }
+
+  pre code {
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: inherit;
+    border-radius: 0;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--ds-color-accent) 35%, transparent);
+  }
+}

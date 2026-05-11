@@ -53,12 +53,31 @@ function pickBySeed(candidates, seed) {
   return candidates[seed % candidates.length];
 }
 
+function isLocalServiceSite(brief, analysis) {
+  if (analysis?.productType === 'local-services') {
+    return true;
+  }
+
+  const descriptor = `${brief?.summary ?? ''} ${(brief?.requestedFeatures ?? []).join(' ')} ${brief?.industry ?? ''}`.toLowerCase();
+  return /plumb|solar|roof|service|installation|electrical|hvac/.test(descriptor);
+}
+
+function isPrimaryNavRoute(routePath) {
+  return !routePath.startsWith('/sign-') && routePath !== '/terms' && routePath !== '/privacy';
+}
+
 function routeIntent(routePath, productType) {
   const map = {
     '/': 'Understand the core offer quickly and move to a qualified conversion path.',
     '/product': 'Inspect depth and operational capability with confidence.',
     '/pricing': 'Evaluate trade-offs and choose a conversion lane.',
     '/contact': 'Reach support or sales with minimum friction.',
+    '/services': 'Browse service coverage and choose the right task-specific help.',
+    '/about': 'Validate team credibility, certifications, and operating standards.',
+    '/emergency': 'Trigger urgent response with the fastest conversion path.',
+    '/quote': 'Submit structured job details for accurate quote turnaround.',
+    '/terms': 'Review service terms and engagement conditions.',
+    '/privacy': 'Review data collection, storage, and privacy commitments.',
     '/sign-in': 'Use fallback sign-in flow when modal auth is not used.',
     '/sign-up': 'Use fallback sign-up flow when modal auth is not used.'
   };
@@ -80,6 +99,12 @@ function routePrimaryGoal(routePath, projectName) {
     '/product': 'Prove the system handles real operational scenarios.',
     '/pricing': 'Turn commercial curiosity into decision-ready intent.',
     '/contact': 'Provide direct communication paths and response expectations.',
+    '/services': 'Present service scope clearly and route users to quote or emergency actions.',
+    '/about': 'Build trust through operational proof, team profile, and credentials.',
+    '/emergency': 'Prioritize immediate call and rapid-response conversion actions.',
+    '/quote': 'Collect the minimum required details to create a qualified quote lead.',
+    '/terms': 'Publish terms in clear and accessible language.',
+    '/privacy': 'Publish privacy commitments and contact methods for data requests.',
     '/sign-in': 'Provide deterministic fallback sign-in route.',
     '/sign-up': 'Provide deterministic fallback sign-up route.'
   };
@@ -102,6 +127,22 @@ function baseSectionSequence(routePath) {
 
   if (routePath === '/contact') {
     return ['hero', 'trust-strip', 'workflow', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/services') {
+    return ['hero', 'feature-grid', 'proof', 'faq', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/about') {
+    return ['hero', 'trust-strip', 'proof', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/emergency') {
+    return ['hero', 'trust-strip', 'workflow', 'cta-band', 'footer'];
+  }
+
+  if (routePath === '/quote') {
+    return ['hero', 'workflow', 'faq', 'cta-band', 'footer'];
   }
 
   return ['hero', 'footer'];
@@ -236,6 +277,22 @@ function mediaForRoute(routePath, heroArchetype, isServiceSite) {
       alt: isServiceSite
         ? 'Support specialist helping a customer'
         : 'Customer success specialist on a support call'
+    },
+    '/services': {
+      src: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1360&q=80',
+      alt: 'Plumbing technician performing service work'
+    },
+    '/about': {
+      src: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1360&q=80',
+      alt: 'Professional team standing together'
+    },
+    '/emergency': {
+      src: 'https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1360&q=80',
+      alt: 'Urgent plumbing repair in progress'
+    },
+    '/quote': {
+      src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1360&q=80',
+      alt: 'Service advisor preparing a quote'
     }
   };
 
@@ -322,15 +379,13 @@ function buildRoutePlan({ routePath, brief, analysis, experienceLibrary, heroAss
 }
 
 function contentByRoute(routePlans, brief, analysis) {
-  const serviceSite = /solar|roof|service|installation|electrical/i.test(
-    `${brief.summary ?? ''} ${(brief.requestedFeatures ?? []).join(' ')}`
-  );
+  const serviceSite = isLocalServiceSite(brief, analysis);
 
   const contactEmail = brief.contactEmail ?? 'hello@example.com';
   const supportEmail = contactEmail.replace(/^hello@/i, 'support@');
   const phoneLabel = brief.contactPhone ?? '+1 (800) 555-1234';
   const phoneHref = `tel:${phoneLabel.replace(/[^+\d]/g, '')}`;
-  const whatsAppHref = brief.whatsAppLink ?? 'https://wa.me/18005551234';
+  const whatsAppHref = brief.whatsAppLink ?? (brief.whatsapp ? `https://wa.me/${String(brief.whatsapp).replace(/[^+\d]/g, '').replace(/^\+/, '')}` : 'https://wa.me/18005551234');
 
   const byPath = Object.fromEntries(routePlans.map((routePlan) => [routePlan.routeId, routePlan]));
 
@@ -341,7 +396,7 @@ function contentByRoute(routePlans, brief, analysis) {
       supportEmail,
       primaryCta: brief.primaryCta,
       secondaryCta: brief.secondaryCta,
-      primaryCtaRoute: '/pricing',
+      primaryCtaRoute: serviceSite ? '/quote' : '/pricing',
       phoneLabel,
       phoneHref,
       whatsAppHref,
@@ -507,6 +562,124 @@ function contentByRoute(routePlans, brief, analysis) {
       supportWindow: 'Responses within one business day for active projects.',
       sla: 'Critical release blockers are triaged the same day.'
     },
+    services: {
+      hero: {
+        eyebrow: 'Plumbing services',
+        title: 'Plumbing support for urgent repairs, installs, and ongoing maintenance.',
+        description: 'Explore core services and choose emergency call, quote request, or planned work booking.',
+        primaryCta: 'Get a Free Quote',
+        primaryHref: '/quote',
+        secondaryCta: 'Emergency Call',
+        secondaryHref: '/emergency',
+        media: byPath['/services']?.media
+      },
+      features: (brief.services ?? []).map((item) => ({
+        title: item,
+        body: 'Delivered by licensed technicians with transparent scope and response expectations.'
+      })),
+      proof: {
+        quote: 'Clear service scope and fast communication is how we keep customers confident from first call to completion.',
+        speaker: 'Operations Lead',
+        outcomes: ['Licensed and insured teams', 'Transparent scope confirmation', 'Post-job quality follow-up']
+      },
+      faq: [
+        { question: 'Do you handle emergency callouts?', answer: 'Yes, emergency response is available 24/7 with priority dispatch.' },
+        { question: 'Can I get a fixed quote?', answer: 'Yes, share your issue details and we provide a clear quote before starting planned work.' },
+        { question: 'Do you cover both residential and commercial jobs?', answer: 'Yes, our team handles homes, landlords, and commercial facilities.' }
+      ],
+      cta: {
+        title: 'Need help now or planning upcoming work?',
+        body: 'Start with emergency call for urgent issues or submit a quote request for planned projects.',
+        primaryCta: 'Start Quote'
+      }
+    },
+    about: {
+      hero: {
+        eyebrow: 'About the team',
+        title: `${brief.projectName} is built around licensed workmanship and reliable response.`,
+        description: 'Our operating model prioritizes safety, transparency, and clear communication from intake to completion.',
+        primaryCta: 'View Services',
+        primaryHref: '/services',
+        media: byPath['/about']?.media
+      },
+      trust: {
+        proofStatement: 'Certified technicians, insured operations, and documented quality checks on every job.',
+        logos: brief.certifications ?? ['Licensed & Insured', 'Background Checked', 'Warranty Backed']
+      },
+      proof: {
+        quote: 'We treat every property like our own and keep customers informed at every step.',
+        speaker: 'Service Manager',
+        outcomes: ['Certified professionals', 'Safety-first procedures', 'Transparent job documentation']
+      },
+      cta: {
+        title: 'Ready to work with a verified local plumbing team?',
+        body: 'Choose a service route or request a tailored quote in minutes.',
+        primaryCta: 'Request Quote'
+      }
+    },
+    emergency: {
+      hero: {
+        eyebrow: '24/7 emergency response',
+        title: 'Plumbing emergency? Reach the rapid-response team immediately.',
+        description: 'For leaks, bursts, no-hot-water, or blocked drains, use the fastest contact path now.',
+        primaryCta: 'Call Emergency Line',
+        primaryHref: phoneHref,
+        secondaryCta: 'WhatsApp Dispatch',
+        secondaryHref: whatsAppHref,
+        media: byPath['/emergency']?.media
+      },
+      workflow: ['Call or chat dispatch', 'Immediate triage and ETA', 'On-site fix and safety check'],
+      trust: {
+        proofStatement: 'Emergency callouts are handled by licensed technicians with priority dispatch.',
+        logos: ['24/7 Coverage', 'Rapid Dispatch', 'Certified Team', 'Fully Insured']
+      },
+      cta: {
+        title: 'Need immediate plumbing support?',
+        body: 'Use direct call or dispatch chat now for fastest response.',
+        primaryCta: 'Call Now'
+      }
+    },
+    quote: {
+      hero: {
+        eyebrow: 'Free quote request',
+        title: 'Share your plumbing issue and receive a clear quote quickly.',
+        description: 'Tell us the problem, property type, and preferred schedule. We respond with next steps and pricing guidance.',
+        primaryCta: 'Submit Request',
+        primaryHref: '/contact',
+        media: byPath['/quote']?.media
+      },
+      workflow: ['Describe issue and location', 'Get response and estimated scope', 'Confirm booking window'],
+      faq: [
+        { question: 'How quickly do you respond to quote requests?', answer: 'Most requests receive an initial response within one business day.' },
+        { question: 'Do you charge for callouts?', answer: 'Callout policy depends on service area and time window; details are confirmed before dispatch.' },
+        { question: 'Can I include photos?', answer: 'Yes, photos help us scope faster and improve quote accuracy.' }
+      ],
+      cta: {
+        title: 'Prefer speaking with someone directly?',
+        body: 'Use phone or WhatsApp for immediate guidance before submitting details.',
+        primaryCta: 'Talk to Advisor'
+      }
+    },
+    legal: {
+      terms: {
+        title: 'Terms and Conditions',
+        intro: 'These terms govern service engagement, scope confirmation, payment expectations, and warranty boundaries.',
+        sections: [
+          { heading: 'Service Scope', body: 'Work scope is confirmed before planned jobs begin. Additional findings are communicated before extra work proceeds.' },
+          { heading: 'Payments', body: 'Payment terms, deposits, and invoices are disclosed before job confirmation.' },
+          { heading: 'Warranty', body: 'Warranty coverage applies to eligible repairs and installs as documented on completion.' }
+        ]
+      },
+      privacy: {
+        title: 'Privacy Policy',
+        intro: 'We collect only the information needed to provide service, scheduling, and customer support.',
+        sections: [
+          { heading: 'Information We Collect', body: 'Contact details, service address, job notes, and communications submitted via forms or chat.' },
+          { heading: 'How We Use Information', body: 'To schedule services, provide quotes, deliver support, and improve service quality.' },
+          { heading: 'Data Requests', body: `For data access or deletion requests, contact ${contactEmail}.` }
+        ]
+      }
+    },
     auth: {
       signIn: {
         title: 'Sign in to the demo workspace',
@@ -573,7 +746,7 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
       sectionArchetypes: plan.sectionSequence.map((entry) => entry.archetypeId)
     })),
     navigation: routePlans
-      .filter((plan) => !plan.routeId.startsWith('/sign-'))
+      .filter((plan) => isPrimaryNavRoute(plan.routeId))
       .map((plan) => ({ path: plan.routeId, label: toRouteLabel(plan.routeId) }))
   };
 

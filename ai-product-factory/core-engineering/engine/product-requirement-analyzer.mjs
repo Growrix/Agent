@@ -10,6 +10,14 @@ const CORE_FEATURES = [
 
 const DEFAULT_ROUTES = ['/', '/product', '/pricing', '/contact', '/sign-in', '/sign-up'];
 
+function defaultRoutesForProductType(productType) {
+  if (productType === 'local-services') {
+    return ['/', '/services', '/about', '/emergency', '/quote', '/contact', '/terms', '/privacy', '/sign-in', '/sign-up'];
+  }
+
+  return [...DEFAULT_ROUTES];
+}
+
 function slugify(value) {
   return String(value)
     .toLowerCase()
@@ -65,7 +73,7 @@ export function analyzeProductBrief(brief) {
     },
     productType,
     features,
-    routes: [...DEFAULT_ROUTES],
+    routes: defaultRoutesForProductType(productType),
     frontendArchitecture: {
       framework: 'Next.js App Router',
       language: 'TypeScript',
