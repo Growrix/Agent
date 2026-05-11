@@ -15,6 +15,15 @@ function pageBrief(routeId, title, heroVariant, primaryGoal, sectionIds) {
 }
 
 export function composeExperiencePlan({ brief, analysis, designTokens, sectionCatalog, primitivesCatalog, motionTokens }) {
+  const supportsServiceMessaging = /solar|roof|electrical|service|installation/i.test(
+    `${brief.summary ?? ''} ${(brief.requestedFeatures ?? []).join(' ')}`
+  );
+  const primaryContactEmail = brief.contactEmail ?? 'hello@example.com';
+  const supportEmail = primaryContactEmail.replace(/^hello@/i, 'support@');
+  const primaryPhone = brief.contactPhone ?? '+1 (800) 555-1234';
+  const whatsAppLink = brief.whatsAppLink ?? 'https://wa.me/18005551234';
+  const primaryCtaRoute = '/pricing';
+
   const routePlans = [
     {
       routeId: '/',
@@ -153,15 +162,32 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
       summary: brief.summary,
       supportEmail: brief.contactEmail,
       primaryCta: brief.primaryCta,
-      secondaryCta: brief.secondaryCta
+      secondaryCta: brief.secondaryCta,
+      primaryCtaRoute,
+      supportEmail,
+      phoneLabel: primaryPhone,
+      phoneHref: `tel:${primaryPhone.replace(/[^+\d]/g, '')}`,
+      whatsAppHref: whatsAppLink,
+      hasServiceMessaging: supportsServiceMessaging
     },
     home: {
       hero: {
-        eyebrow: 'AI product operations, framed for trust',
-        title: `${brief.projectName} turns scattered AI signals into one accountable operating system.`,
+        eyebrow: supportsServiceMessaging ? 'Trusted local team, production-grade delivery' : 'AI product operations, framed for trust',
+        title: supportsServiceMessaging
+          ? `${brief.projectName} helps buyers move from first inquiry to signed work without conversion friction.`
+          : `${brief.projectName} turns scattered AI signals into one accountable operating system.`,
         description: brief.summary,
         primaryCta: brief.primaryCta,
         secondaryCta: brief.secondaryCta,
+        primaryHref: primaryCtaRoute,
+        secondaryHref: whatsAppLink,
+        media: {
+          src: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1360&q=80',
+          alt: supportsServiceMessaging
+            ? 'Solar panels installed on a residential rooftop under clear sky'
+            : 'Professional team reviewing implementation plans and delivery metrics',
+          badge: supportsServiceMessaging ? 'Field-ready execution' : 'Release-ready delivery'
+        },
         stats: brief.highlightMetrics ?? [
           { value: '22', label: 'live signal streams unified' },
           { value: '2.7x', label: 'faster triage response' },
@@ -169,20 +195,28 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
         ]
       },
       trust: {
-        proofStatement: 'Built for teams that need product clarity, auditability, and fast conversion without speculative redesign loops.',
-        logos: ['Northbank Ventures', 'RelayOps', 'Atlas AI', 'Signal Forge']
+        proofStatement: supportsServiceMessaging
+          ? 'Built for trust-first buying decisions: clear service scope, direct contact channels, and transparent turnaround expectations.'
+          : 'Built for teams that need product clarity, auditability, and fast conversion without speculative redesign loops.',
+        logos: supportsServiceMessaging
+          ? ['Certified Team', 'Insured Projects', 'Financing Support', 'Local Response']
+          : ['Northbank Ventures', 'RelayOps', 'Atlas AI', 'Signal Forge']
       },
       features: [
         {
-          title: 'Brief-to-build continuity',
-          body: 'Every route, section, and test surface comes from a locked planning bundle instead of freestyle generation.'
+          title: supportsServiceMessaging ? 'Lead path clarity' : 'Brief-to-build continuity',
+          body: supportsServiceMessaging
+            ? 'Visitors can request a quote, start a WhatsApp chat, or call directly without hunting through pages.'
+            : 'Every route, section, and test surface comes from a locked planning bundle instead of freestyle generation.'
         },
         {
-          title: 'Conversion without guesswork',
-          body: 'Home, product, pricing, and contact journeys are planned with distinct intents and explicit CTA paths.'
+          title: supportsServiceMessaging ? 'Trust-first structure' : 'Conversion without guesswork',
+          body: supportsServiceMessaging
+            ? 'Service proof, process timeline, and objection-handling FAQs are placed where buyers expect them.'
+            : 'Home, product, pricing, and contact journeys are planned with distinct intents and explicit CTA paths.'
         },
         {
-          title: 'Production-shaped validation',
+          title: supportsServiceMessaging ? 'Production-shaped validation' : 'Production-shaped validation',
           body: 'The generated app ships with lint, typecheck, unit, accessibility, smoke, and full E2E gates.'
         }
       ],
@@ -219,22 +253,38 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
     },
     product: {
       hero: {
-        eyebrow: 'Product depth',
-        title: 'A route-aware product page that proves the factory handles more than glossy marketing copy.',
-        description: 'The product route focuses on capability pillars, runtime state coverage, and the operating model behind the generated frontend.',
-        primaryCta: 'Review pricing'
+        eyebrow: supportsServiceMessaging ? 'Service scope and delivery model' : 'Product depth',
+        title: supportsServiceMessaging
+          ? 'A route-aware services page that proves this is a real website system, not a placeholder shell.'
+          : 'A route-aware product page that proves the factory handles more than glossy marketing copy.',
+        description: supportsServiceMessaging
+          ? 'The services route focuses on capability pillars, process visibility, and operational readiness for real buyers.'
+          : 'The product route focuses on capability pillars, runtime state coverage, and the operating model behind the generated frontend.',
+        primaryCta: supportsServiceMessaging ? 'Review packages' : 'Review pricing',
+        primaryHref: '/pricing',
+        media: {
+          src: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1360&q=80',
+          alt: supportsServiceMessaging
+            ? 'Installation team reviewing equipment and project plan'
+            : 'Operations team validating system performance dashboards',
+          badge: supportsServiceMessaging ? 'Scope certainty' : 'State-ready UX'
+        }
       },
       pillars: [
         {
-          title: 'Route-aware composition',
-          body: 'Each public route keeps its own hero variant, section pacing, and conversion intent.'
+          title: supportsServiceMessaging ? 'Service route differentiation' : 'Route-aware composition',
+          body: supportsServiceMessaging
+            ? 'Each services-oriented route keeps its own narrative, hero treatment, and conversion objective.'
+            : 'Each public route keeps its own hero variant, section pacing, and conversion intent.'
         },
         {
-          title: 'Dynamic state readiness',
-          body: 'Loading, error, empty, offline, and live states are declared and testable.'
+          title: supportsServiceMessaging ? 'Buyer-state readiness' : 'Dynamic state readiness',
+          body: supportsServiceMessaging
+            ? 'Uncertain buyers get financing clarity, comparison cues, and direct human assistance paths.'
+            : 'Loading, error, empty, offline, and live states are declared and testable.'
         },
         {
-          title: 'Operational UX coverage',
+          title: supportsServiceMessaging ? 'Operational UX coverage' : 'Operational UX coverage',
           body: 'Theme, navigation, auth entry, and contact support are treated as mandatory infrastructure, not optional polish.'
         }
       ],
@@ -263,10 +313,22 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
     },
     pricing: {
       hero: {
-        eyebrow: 'Commercial clarity',
-        title: 'Pricing that translates technical confidence into a buying decision.',
-        description: 'The conversion route keeps the comparison surface short, differentiated, and easy to reach from home.',
-        primaryCta: 'Book a strategy call'
+        eyebrow: supportsServiceMessaging ? 'Pricing and packages' : 'Commercial clarity',
+        title: supportsServiceMessaging
+          ? 'Package options that move buyers from comparison to decision without hidden trade-offs.'
+          : 'Pricing that translates technical confidence into a buying decision.',
+        description: supportsServiceMessaging
+          ? 'The conversion route keeps package comparison concise, transparent, and connected to direct contact.'
+          : 'The conversion route keeps the comparison surface short, differentiated, and easy to reach from home.',
+        primaryCta: supportsServiceMessaging ? 'Request quote' : 'Book a strategy call',
+        primaryHref: '/contact',
+        media: {
+          src: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=1360&q=80',
+          alt: supportsServiceMessaging
+            ? 'Estimator reviewing energy and financing figures'
+            : 'Team discussing commercial plan options',
+          badge: 'Conversion focus'
+        }
       },
       plans: [
         {
@@ -311,26 +373,46 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
     },
     contact: {
       hero: {
-        eyebrow: 'Support and sales',
-        title: 'Reach the right team without bouncing between dead-end routes.',
-        description: 'The support route is built as a first-class page, not an afterthought buried in the footer.',
-        primaryCta: 'Email support'
+        eyebrow: supportsServiceMessaging ? 'Call, chat, or submit request' : 'Support and sales',
+        title: supportsServiceMessaging
+          ? 'Reach the right team immediately through phone, WhatsApp, or structured request form.'
+          : 'Reach the right team without bouncing between dead-end routes.',
+        description: supportsServiceMessaging
+          ? 'The contact route is designed as a primary conversion surface, not an afterthought.'
+          : 'The support route is built as a first-class page, not an afterthought buried in the footer.',
+        primaryCta: supportsServiceMessaging ? 'Call now' : 'Email support',
+        primaryHref: supportsServiceMessaging ? `tel:${primaryPhone.replace(/[^+\\d]/g, '')}` : `mailto:${primaryContactEmail}`,
+        secondaryCta: supportsServiceMessaging ? 'Chat on WhatsApp' : undefined,
+        secondaryHref: supportsServiceMessaging ? whatsAppLink : undefined,
+        media: {
+          src: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1360&q=80',
+          alt: supportsServiceMessaging
+            ? 'Customer support advisor helping a client'
+            : 'Support specialist answering onboarding questions',
+          badge: 'Fast response'
+        }
       },
       channels: [
         {
-          title: 'Sales architecture review',
-          detail: 'Walk through route coverage, design tokens, and validation expectations.',
+          title: supportsServiceMessaging ? 'Direct advisor line' : 'Sales architecture review',
+          detail: supportsServiceMessaging
+            ? 'Talk directly with the project team for scope and timeline guidance.'
+            : 'Walk through route coverage, design tokens, and validation expectations.',
           action: brief.contactEmail
         },
         {
-          title: 'Implementation support',
-          detail: 'Review release gate failures and fix the owning slice directly.',
-          action: 'support@northstarai.example'
+          title: supportsServiceMessaging ? 'WhatsApp support' : 'Implementation support',
+          detail: supportsServiceMessaging
+            ? 'Use WhatsApp for quick pre-qualification and response routing.'
+            : 'Review release gate failures and fix the owning slice directly.',
+          action: supportsServiceMessaging ? whatsAppLink : supportEmail
         },
         {
-          title: 'Executive briefing',
-          detail: 'Translate the planning bundle into delivery milestones and quality gates.',
-          action: 'leaders@northstarai.example'
+          title: supportsServiceMessaging ? 'Callback request' : 'Executive briefing',
+          detail: supportsServiceMessaging
+            ? 'Share your basic requirements and request a scheduled callback.'
+            : 'Translate the planning bundle into delivery milestones and quality gates.',
+          action: supportsServiceMessaging ? primaryPhone : `leaders@${primaryContactEmail.split('@')[1] ?? 'example.com'}`
         }
       ],
       workflow: [
@@ -353,7 +435,12 @@ export function composeExperiencePlan({ brief, analysis, designTokens, sectionCa
     },
     footer: {
       attribution: 'Generated by the standalone AI Product Factory MVP.',
-      links: ['Home', 'Product', 'Pricing', 'Contact']
+      links: ['Home', 'Product', 'Pricing', 'Contact'],
+      columns: {
+        services: ['Core Services', 'Process', 'Proof', 'FAQs'],
+        resources: ['Case Notes', 'Pricing Guide', 'Delivery FAQs', 'Contact'],
+        contact: [primaryContactEmail, primaryPhone, whatsAppLink]
+      }
     }
   };
 
