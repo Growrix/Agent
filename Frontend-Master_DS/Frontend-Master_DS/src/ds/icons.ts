@@ -66,8 +66,13 @@ export {
   Inbox,
   Mail,
   MapPin,
+  MessageCircle,
   MessageSquare,
+  Bot,
+  BotMessageSquare,
   Paperclip,
+  Phone,
+  PhoneCall,
   Star,
   Tag,
   User,
@@ -97,3 +102,4 @@ export {
   Moon,
   Zap,
 } from "lucide-react";
+

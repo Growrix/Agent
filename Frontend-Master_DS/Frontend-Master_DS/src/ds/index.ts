@@ -99,6 +99,8 @@ export * from "./visuals";
 export * from "./widgets";
 export * from "./composition";
 
+export * from "./platform";
+
 export * from "./preview/PreviewPlatform";
 
 export * from "./icons";

@@ -46,7 +46,8 @@ export function Lightbox({ images, open, onClose, startIndex = 0, className }: L
     <div className={cx("ui-lightbox", className)} role="dialog" aria-modal="true" aria-label="Image viewer">
       <div className="ui-lightbox__backdrop" onClick={onClose} />
       <div className="ui-lightbox__content">
-        <img className="ui-lightbox__img" src={img.src} alt={img.alt} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="ui-lightbox__img" src={img.src} alt={img.alt} />
         <div className="ui-lightbox__controls">
           <button type="button" className="ui-lightbox__nav ui-focus-ring" disabled={index <= 0} onClick={() => setIndex((i) => i - 1)} aria-label="Previous image">&larr;</button>
           <span className="ui-lightbox__counter text-body-small">{index + 1} / {images.length}</span>

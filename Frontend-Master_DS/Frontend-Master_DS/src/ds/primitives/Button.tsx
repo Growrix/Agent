@@ -5,17 +5,28 @@ export type ButtonVariant = "primary" | "secondary" | "ghost" | "text" | "icon" 
 export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonTone = "accent" | "danger" | "success";
 
-type ButtonElement = "button" | "a";
+type ButtonBaseProps = {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  tone?: ButtonTone;
+  isLoading?: boolean;
+  loadingText?: string;
+  disabled?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+};
 
-export type ButtonProps<T extends ButtonElement = "button"> = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    as?: T;
-    variant?: ButtonVariant;
-    size?: ButtonSize;
-    tone?: ButtonTone;
-    isLoading?: boolean;
-    loadingText?: string;
+type ButtonAsButtonProps = ButtonBaseProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    as?: "button";
   };
+
+type ButtonAsAnchorProps = ButtonBaseProps &
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+    as: "a";
+  };
+
+export type ButtonProps = ButtonAsButtonProps | ButtonAsAnchorProps;
 
 export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(
   {
