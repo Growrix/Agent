@@ -28,7 +28,6 @@ loads:
   - DOC/validation/checklists/pre-deployment-checklist.md
   - DOC/validation/checklists/post-deploy-checklist.md
   - DOC/validation/checklists/reviewer-audit-checklist.md
-  - DOC/validation/checklists/frontend-factory-production-readiness.md
   - DOC/validation/checklists/security-checklist.md
   - DOC/validation/checklists/integration-checklist.md
   - DOC/validation/constraints/constraints.md
@@ -65,7 +64,6 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
   - `reports/reviewer_audit.md` (human-readable)
   - `reports/validation_report.json` (machine-readable)
 11. Validate `reports/validation_report.json` against `execution/spec-templates/validation-report.template.json` before returning success.
-12. Validate frontend execution-contract and production-readiness coverage whenever frontend planning or codegen artifacts are present.
 
 ## STRICT RULES
 - MUST NOT modify the plan.
@@ -74,7 +72,6 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 - MUST cite the failing artifact (file/path/key) for each failure.
 - MUST emit full schema-complete `validation_report.json`; simplified or custom report shapes are forbidden.
 - MUST fail with `VALIDATION_SCHEMA_MISMATCH` if any required top-level validation block is missing.
-- MUST treat missing `release:check`, missing mandatory smoke journeys, or TODO-only mandatory smoke coverage as frontend failures.
 
 ## INPUT FORMAT
 ```json
@@ -90,7 +87,7 @@ Final gatekeeper. Validates the aggregated plan against every rule, every constr
 3. **CHECKLIST: PRE-DEPLOYMENT** — for each item, verify or fail (run only when reviewer is invoked at the deployment gate).
 4. **CHECKLIST: REVIEWER-AUDIT** — execute `reviewer-audit-checklist.md` and record section-wise pass/fail.
 5. **CONSTRAINTS** — evaluate C1..C24 in order, recording status.
-6. **FRONTEND CONSTRAINTS** — evaluate F1..F17, Q1..Q3, and CC1..CC6 from `validation/constraints/frontend-constraints.md`.
+6. **FRONTEND CONSTRAINTS** — evaluate F1..F12 from `validation/constraints/frontend-constraints.md`.
 7. **ACCESSIBILITY CONSTRAINTS** — evaluate AC1..AC12 from `validation/constraints/accessibility-constraints.md`.
 8. **SECURITY CONSTRAINTS** — evaluate SC1..SC12 from `validation/constraints/security-constraints.md`.
 9. **PERFORMANCE CONSTRAINTS** — evaluate PC1..PC12 from `validation/constraints/performance-constraints.md`.

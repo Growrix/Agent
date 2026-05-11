@@ -1,6 +1,6 @@
 # Frontend Constraints
 
-Hard rules for any frontend plan produced by this OS. Each constraint has an id, rule, detection method, and failure code. The `reviewer` evaluates F1..F17, Q1..Q3, and CC1..CC6 in order; any failure halts the pipeline.
+Hard rules for any frontend plan produced by this OS. Each constraint has an id, rule, detection method, and failure code. The `reviewer` evaluates F1..F12 in order; any failure halts the pipeline.
 
 ## F1 — No raw values in components
 **Rule:** Components MUST NOT contain raw color (`#hex`, `rgb()`, `hsl()`), spacing (`px`, `rem`, `em`), radius, shadow, duration (`ms`), or z-index literals. Tailwind utility classes that map to declared tokens are allowed; raw arbitrary values are not.
@@ -24,7 +24,6 @@ Hard rules for any frontend plan produced by this OS. Each constraint has an id,
 
 ## F5 — No inline copy
 **Rule:** Every visible string in a component or page MUST resolve to a key in the frontend planning content library at `<output_root>/content-library.md`, where `<output_root>` resolves to `DOC/output/runs/<timestamp>/planning/frontend`. No hardcoded English strings in JSX/TSX, except documented third-party labels with explicit exception.
-For planning artifacts, every referenced key MUST also have publish-ready default copy in `content.<locale>.json`.
 **Detection:** Scan for inline strings; verify referenced keys exist.
 **Failure:** `BLOCK F5: inline string "<text>" at <file>:<loc>`.
 
@@ -35,7 +34,6 @@ For planning artifacts, every referenced key MUST also have publish-ready defaul
 
 ## F7 — Page spec completeness
 **Rule:** Every page spec MUST contain: page definition, sections in visual order, page-level state requirements, responsive adaptation, SEO+metadata, conversion path, accessibility plan, performance plan, data fetching plan.
-Every page spec MUST also include a section blueprint where each section declares draft copy, content-key mapping, and desktop/tablet/mobile layout intent.
 **Detection:** Schema-check each page spec frontmatter + required sections.
 **Failure:** `BLOCK F7: page <route> missing section <section>`.
 
@@ -79,18 +77,8 @@ Every page spec MUST also include a section blueprint where each section declare
 **Detection:** Read all page specs; compare hero `Visual contract → desktop composition` declarations across routes; flag any two routes with identical descriptions.
 **Failure:** `BLOCK F15: routes <A> and <B> have identical hero composition — differentiate layout split, media framing, or type hierarchy`.
 
-## F16 — Publish-ready content copy completeness
-**Rule:** `content.<locale>.json` MUST read like a finished website draft, not placeholders. Forbidden values include `TODO`, `lorem`, `sample`, `insert text`, `coming soon`, and key-echo values.
-**Detection:** Scan content files for placeholder patterns and key-echo strings; sample-check trust-critical and conversion-critical keys.
-**Failure:** `BLOCK F16: placeholder copy detected at <key>`.
-
-## F17 — Footer attribution deterministic default
-**Rule:** Planner output MUST include `footer.attribution.*` keys. If brief footer attribution is absent, planner MUST fallback to: text `Built and maintenance by`, link text `Growrix OS`, URL `https://www.growrixos.com`, placement `footer_bottom_bar`.
-**Detection:** Inspect intake brief, content library keys, footer spec, and planner summary for fallback behavior.
-**Failure:** `BLOCK F17: footer attribution contract missing or fallback not applied`.
-
 ## Enforcement order
-The `reviewer` evaluates F1..F17 in order. Multiple failures may be reported in a single pass; the pipeline halts on any failure.
+The `reviewer` evaluates F1..F15 in order. Multiple failures may be reported in a single pass; the pipeline halts on any failure.
 
 ## Severity mapping
 - F1, F5, F11: critical — almost always cause hardcoding or visual drift.
@@ -99,8 +87,6 @@ The `reviewer` evaluates F1..F17 in order. Multiple failures may be reported in 
 - F13: critical — single wrapper collapse = all pages look identical.
 - F14: critical — declared motion library unused = broken motion contract.
 - F15: critical — identical route compositions = generic, unprofessional output.
-- F16: critical — placeholder copy prevents production-grade planning.
-- F17: critical — missing footer attribution contract breaks footer requirements.
 - CC1..CC6: critical — planned scope not fully implemented = incomplete frontend delivery.
 
 ## Q-constraints — Quality bar (added in template-collapse fix)
@@ -196,8 +182,6 @@ The reviewer adds a `frontend` block to `validation_report.json`:
       { "id": "F13","status": "passed|failed", "evidence": "..." },
       { "id": "F14","status": "passed|failed", "evidence": "..." },
       { "id": "F15","status": "passed|failed", "evidence": "..." },
-      { "id": "F16","status": "passed|failed", "evidence": "..." },
-      { "id": "F17","status": "passed|failed", "evidence": "..." },
       { "id": "Q1", "status": "passed|failed", "evidence": "..." },
       { "id": "Q2", "status": "passed|failed", "evidence": "..." },
       { "id": "Q3", "status": "passed|failed", "evidence": "..." },

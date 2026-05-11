@@ -40,7 +40,6 @@ Integration YAMLs declare `required_skills[]` naming the skills they need. The c
 | frontmatter-schema-validation-pattern | system_architect audit section C |
 | synthetic-fixture-smoke-test-pattern | system_architect smoke section H |
 | determinism-diff-pattern | system_architect determinism section F |
-| frontend-factory-production-gate-pattern | frontend_planner, frontend_developer, system_architect |
 | onboarding-checklist-pattern | userflow, appcues, onboarding flows |
 | feature-tour-pattern | userflow, appcues |
 | empty-state-pattern | first-run app surfaces |

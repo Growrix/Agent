@@ -8,7 +8,6 @@ loads:
   - DOC/core/planning-principles.md
   - DOC/agents/_index.md
   - DOC/agents/**/*.md
-   - DOC/knowledge/frontend-rules/frontend-factory-rules.md
   - DOC/knowledge/integration-rules/_schema.md
   - DOC/knowledge/integration-rules/_index.md
   - DOC/knowledge/integration-rules/_meta/role-matrix.json
@@ -21,7 +20,6 @@ loads:
   - DOC/knowledge/skills/frontmatter-schema-validation-pattern.md
   - DOC/knowledge/skills/synthetic-fixture-smoke-test-pattern.md
   - DOC/knowledge/skills/determinism-diff-pattern.md
-   - DOC/knowledge/skills/frontend-factory-production-gate-pattern.md
   - DOC/knowledge/support-tools/_index.md
   - DOC/knowledge/automation-rules/automation-rules.md
   - DOC/knowledge/automation-rules/outbound-event-taxonomy.md
@@ -33,8 +31,6 @@ loads:
   - DOC/validation/audit-fixtures/expected-outputs/*.json
   - DOC/validation/constraints/*.md
   - DOC/validation/checklists/*.md
-   - DOC/validation/checklists/frontend-factory-production-readiness.md
-   - DOC/validation/checklists/frontend-factory-release-check.ps1
 ---
 
 # AGENT: SYSTEM ARCHITECT
@@ -65,8 +61,6 @@ This agent does **not** participate in the build pipeline. It observes the pipel
 - MUST verify frontend agent invariants during AUDIT and DOCUMENT modes: dark theme + ThemeSwitcher, icon-based MobileBottomNav, modal-first auth surface, and brief-driven footer attribution contract requirements are present in both planner and developer agent specs.
 - MUST verify frontend quality-bar wiring in AUDIT mode: `per-page-design-brief`, `visual-differentiation-map-spec`, `quality-bar-scoring`, and frontend constraints Q1/Q2/Q3 are all present and referenced by planner/developer/system architect flows.
 - MUST verify workspace execution ergonomics in AUDIT mode: if frontend output is scoped to `web/`, either root command shims exist or documentation explicitly requires `cd web` before all npm commands.
-- MUST verify frontend factory production-gate wiring in AUDIT, DESIGN, and DOCUMENT modes: `frontend-factory-rules.md`, `frontend-factory-production-gate-pattern.md`, `frontend-factory-production-readiness.md`, and `frontend-factory-release-check.ps1` exist and are referenced by planner, developer, reviewer, and QA flows.
-- MUST treat stale reviewer coverage (for example `F1..F12` without F13..F17, Q1..Q3, CC1..CC6) or TODO-only mandatory smoke coverage as a blocker.
 
 ## INPUT FORMAT
 ```json

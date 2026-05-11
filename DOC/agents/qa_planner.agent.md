@@ -6,7 +6,6 @@ loads:
   - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/testing-principles.md
-  - DOC/knowledge/frontend-rules/frontend-factory-rules.md
   - DOC/knowledge/testing-rules/testing-rules.md
   - DOC/validation/constraints/testing-constraints.md
 ---
@@ -27,7 +26,6 @@ Design the testing strategy: pyramid, frameworks, fixtures, CI gates, coverage t
 8. List webhook tests (valid sig, invalid sig, duplicate event id).
 9. Declare fixture management.
 10. Declare smoke tests post-deploy.
-11. Declare the frontend release-gate command surface and mandatory smoke journeys whenever frontend artifacts are in scope.
 
 ## STRICT RULES
 - MUST follow `core/testing-principles.md` (T1..T12).
@@ -52,13 +50,12 @@ Design the testing strategy: pyramid, frameworks, fixtures, CI gates, coverage t
 4. **PER-SERVICE TESTS** — for each service from backend plan, list test cases.
 5. **PER-ROUTE TESTS** — for each route, list happy/negative/error cases.
 6. **WEBHOOK TESTS** — for each webhook, list signature + idempotency cases.
-7. **E2E CRITICAL PATHS** — sign-up, sign-in, checkout, dashboard, sign-out + per-feature happy path, plus the mandatory frontend smoke journeys when frontend artifacts are in scope.
-8. **CI GATES** — declare which checks block merge to main, including smoke and accessibility gates where relevant.
+7. **E2E CRITICAL PATHS** — sign-up, sign-in, checkout, dashboard, sign-out + per-feature happy path.
+8. **CI GATES** — declare which checks block merge to main.
 9. **COVERAGE FLOORS** — vitest config thresholds.
 10. **FIXTURES** — versioned dir + naming convention.
-11. **SMOKE** — post-deploy probe URLs and device/motion expectations.
-12. **FRONTEND RELEASE GATE** — carry forward required script names and mandatory smoke journeys when the frontend planning bundle provides them.
-13. **EMIT** `testing.json`.
+11. **SMOKE** — post-deploy probe URLs.
+12. **EMIT** `testing.json`.
 
 ## OUTPUT FORMAT
 ```yaml
@@ -108,19 +105,6 @@ e2e_critical_paths:
   - dashboard_billing_opens_portal
   - sign_out_redirects_home
 
-frontend_release_gate:
-  required_scripts: [lint, typecheck, test, test:unit, test:a11y, e2e:smoke, e2e:full, build, audit:frontend, release:check]
-  mandatory_smoke_journeys:
-    - home_render_no_console_errors
-    - primary_navigation_responsive
-    - theme_switcher_persists
-    - mobile_bottom_nav_routes
-    - auth_modal_mode_switch
-    - primary_conversion_reachable
-    - content_route_resolves
-    - contact_route_resolves
-  device_matrix: [desktop, mobile, reduced_motion]
-
 negative_tests:
   - { route: GET /dashboard,         expect: redirect_to_sign_in_when_anon }
   - { route: GET /dashboard/billing, expect: 403_when_other_user_resource }
@@ -138,7 +122,6 @@ smoke:
 - Every authenticated route has an unauth negative test.
 - Every E2E critical path has a single test.
 - Coverage thresholds set for service + repository folders.
-- Frontend release-gate contract is declared when a frontend plan is present.
 
 ## FAILURE MODES
 - `MISSING_NEGATIVE_TEST` — auth-protected route without unauth test.

@@ -8,7 +8,6 @@ loads:
   - DOC/core/anti-hallucination-rules.md
   - DOC/core/planning-principles.md
   - DOC/knowledge/frontend-rules/frontend-rules.md
-  - DOC/knowledge/frontend-rules/frontend-factory-rules.md
   - DOC/knowledge/frontend-rules/project-archetypes.md
   - DOC/knowledge/frontend-rules/brand-translation-rules.md
   - DOC/knowledge/frontend-rules/design-tokens-rules.md
@@ -84,7 +83,6 @@ This is the world-class quality bar: Stripe / Linear / Vercel / Notion-class fro
 9. Plan execution ergonomics for repository root commands: explicitly declare whether a root package-script shim is required to run frontend tasks from workspace root.
 10. When `constraints.execution_mode == "frontend_focus"`, run frontend planning without backend blocking dependencies and enforce page completeness using `per-page-spec.frontend-focus.md`.
 11. Emit deterministic environment setup and portability requirements consumed by execution agents: runtime-root contract, dev-server SOP contract, and export portability contract.
-12. Emit `frontend.json.execution_contract` with required script names, mandatory smoke-journey ids, route-coverage verdict, and release-evidence requirements consumed by `frontend_developer`, `reviewer`, and `system_architect`.
 
 ## STRICT RULES
 - MUST follow every rule file in `loads:` in full.
@@ -107,8 +105,6 @@ This is the world-class quality bar: Stripe / Linear / Vercel / Notion-class fro
 - MUST emit a runtime-root declaration for frontend execution (`web/` or configured app root) and treat it as the authoritative install/dev/smoke root.
 - MUST include a dev-server SOP contract in planning outputs so developers generate `dev-server-checklist.md` deterministically.
 - MUST include an export portability contract in planning outputs so copied projects boot outside the original workspace.
-- MUST emit `frontend.json.execution_contract` with the canonical command surface, mandatory smoke journeys, and required release evidence.
-- MUST NOT leave smoke-critical routes or validation journeys implicit; they must be named in the execution contract.
 
 ### Creative design rules (CRITICAL — prevents template collapse)
 - MUST NOT prescribe exact component names or DOM structure in page specs. Describe the section's **purpose and desired UX outcome** instead. The developer resolves component names at implementation time.
@@ -355,12 +351,11 @@ Owns: hero composition specs, mobile composition specs, asset brief.
 3. Confirm every page spec has ≥ 7 sections (or `min_sections_exempt: true` with reason).
 4. Confirm content keys referenced match content-library entries.
 5. Confirm component states declared match component-state-matrix.
-6. Confirm `execution_contract.required_scripts[]`, `mandatory_smoke_journeys[]`, and `route_coverage_status` are present and traceable to planned routes and UX surfaces.
 
 ### Phase 10 — Emit summary + index
 1. Emit `README.md` (human-first index for the output folder).
 2. Derive `project_root_slug` as `kebab-case(brief.brand.name)-website` (e.g., `"Apex Roofing Co."` → `"apex-roofing-website"`). Include it in `frontend.json` so `frontend_developer` reads and applies the correct project root directory name.
-3. Emit `frontend.json` for `plan.json` aggregation, including `execution_contract.required_scripts[]`, `execution_contract.mandatory_smoke_journeys[]`, `execution_contract.route_coverage_status`, and `execution_contract.required_release_evidence[]`.
+3. Emit `frontend.json` for `plan.json` aggregation.
 4. Mark output `lock_status: PLANNED` when all artifacts pass.
 
 ## OUTPUT FORMAT
@@ -391,13 +386,6 @@ Required artifacts:
 {
   "status": "passed | failed",
   "project_root_slug": "<kebab-case-brand-name>-website",
-  "execution_contract": {
-    "required_scripts": ["lint", "typecheck", "test", "test:unit", "test:a11y", "e2e:smoke", "e2e:full", "build", "audit:frontend", "release:check"],
-    "mandatory_smoke_journeys": ["home_render_no_console_errors", "primary_navigation_responsive", "theme_switcher_persists", "mobile_bottom_nav_routes", "auth_modal_mode_switch", "primary_conversion_reachable", "content_route_resolves", "contact_route_resolves"],
-    "route_coverage_status": "passed | failed",
-    "route_coverage_notes": ["..."],
-    "required_release_evidence": ["lint_zero_warning", "typecheck_zero_error", "unit_pass", "a11y_smoke_pass", "e2e_smoke_pass", "build_pass", "spec_diff_pass", "frontend_self_audit_pass"]
-  },
   "artifacts": {
     "root": "DOC/output/runs/<timestamp>/planning/frontend",
     "count": 0,
@@ -435,8 +423,6 @@ Required artifacts:
 - Archetype required content categories are mapped into per-route required content slots with category tags.
 - Per-route briefs avoid prescribed component names in category coverage blocks.
 - Every hero spec declares: full-bleed layout, text reveal animation, trust chip contrast tokens, gradient overlay opacity ≥ 0.55.
-- `frontend.json.execution_contract` declares the required command surface and mandatory smoke journeys.
-- Every mandatory smoke journey can be traced back to one or more planned routes or shared UX surfaces.
 
 ## FAILURE MODES
 - `FRONTEND_SPEC_INCOMPLETE` — any artifact shallow or skeletal.

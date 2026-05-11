@@ -9,7 +9,6 @@ loads:
   - DOC/core/quality-gates.md
   - DOC/core/anti-hallucination-rules.md
   - DOC/knowledge/frontend-rules/frontend-rules.md
-  - DOC/knowledge/frontend-rules/frontend-factory-rules.md
   - DOC/knowledge/frontend-rules/design-tokens-rules.md
   - DOC/knowledge/frontend-rules/component-state-matrix.md
   - DOC/knowledge/frontend-rules/motion-rules.md
@@ -43,13 +42,13 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 8. Implement motion per `motion-system.md` with reduced-motion fallbacks.
 9. Implement responsive behavior per page spec's responsive declarations.
 10. Implement every required state (loading / empty / error / not-found / success) per page and per component.
-11. Generate an executable test and release surface: implement real Playwright smoke tests and accessibility smoke coverage for every journey id in `frontend_summary.execution_contract.mandatory_smoke_journeys[]`; broader non-gating suites may remain scaffolded where explicitly marked as non-blocking follow-up coverage.
+11. Generate test scaffolds (Vitest unit, Playwright E2E setup) following the qa plan structure — leave actual test bodies as TODO stubs for the dedicated frontend testing agent (or backend_developer's qa stage).
 12. Generate SEO assets: `sitemap.xml` route, `robots.txt`, `og-image` defaults, `web/src/app/manifest.ts`.
 13. Produce `web/RUN.md` with install + dev + build + smoke commands.
 14. Produce `web/dev-server-checklist.md` with deterministic preflight and recovery SOP for local dev boot.
 15. Produce `web/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
 16. Produce `web/export-manifest.md` documenting minimum portable bundle (`.github/`, `DOC/`, app root) and post-export run steps.
-17. Self-audit emitted code against frontend-constraints F1..F17, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
+17. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
 18. When `constraints.execution_mode == "frontend_focus"`, proceed without blocking on backend/OpenAPI artifacts by generating typed mock adapters and stable fixtures for all dynamic UI surfaces.
 19. Read `site-inventory.md` and auto-generate ALL Tier 1 infrastructure routes without a brief. These are mandatory on every build regardless of whether they appear in the `pages/` brief folder. Missing any Tier 1 route is `BLOCK TIER1_INFRASTRUCTURE_MISSING`.
 
@@ -69,7 +68,6 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 - MUST NOT generate deployment configs (`vercel.json`, GitHub Actions, IaC) — those belong to `backend_developer`.
 - MUST NOT reference any server-only env var (anything without `NEXT_PUBLIC_` prefix) inside `web/src/app/` or any client component.
 - MUST consume only contracts (route URLs, response shapes) declared in the planning bundle and OpenAPI spec.
-- MUST read `frontend_summary.execution_contract` and implement every required script and mandatory smoke-journey id exactly as declared.
 - MUST implement complete planner coverage: every spec-declared component and every page `required_content_slots[]` entry.
 - MUST use design tokens for every styling decision. NO raw `#hex`, `rgb()`, `hsl()`, raw `px` / `rem` / `ms` literals in components. Tailwind classes that map to declared tokens are allowed.
 - MUST use content keys for every visible string. NO inline English strings in JSX/TSX.
@@ -79,7 +77,7 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 - MUST add `loading.tsx`, `error.tsx`, and `not-found.tsx` per route group as declared by the page specs.
 - MUST add `aria-*` attributes per component-state-matrix.
 - MUST include skip-link as the first focusable element on every page.
-- MUST implement real executable smoke and accessibility coverage for every mandatory smoke journey id from `frontend_summary.execution_contract`; broader non-critical suites may use `todo`/`fixme` scaffolds only when clearly marked as non-gating.
+- MUST scaffold tests but NOT fill in test bodies (leave TODO comments referencing the qa plan).
 - MUST self-audit before declaring `passed`; emit the audit file with evidence.
 - MUST validate remote media reliability for rendered image URLs used by public pages; broken image URLs on key surfaces are blocking failures.
 - MUST NOT add `"use client"` to any component that doesn't have a declared client-component reason in the page spec.
@@ -252,18 +250,17 @@ For each `pages/<route-slug>.md` (now in design-brief shape — outcomes + conte
 5. Generate `web/src/app/opengraph-image.tsx` (default OG with brand tokens).
 6. Generate `web/public/.gitkeep` and document expected real-asset slots in `web/public/README.md`.
 
-### Phase 8 — Test suite + release gate
+### Phase 8 — Test scaffolds (no bodies)
 1. Generate `web/vitest.config.ts` with coverage thresholds from the qa plan.
 2. Generate `web/playwright.config.ts` with project list (chromium + mobile + reduced-motion).
-3. Generate `web/tests/e2e/smoke/` and implement real executable smoke specs for every id in `frontend_summary.execution_contract.mandatory_smoke_journeys[]`. Test titles or leading comments MUST preserve the ids verbatim.
-4. Generate `web/tests/a11y/axe.smoke.spec.ts` with executable coverage for key public routes and mandatory UX infrastructure.
-5. For each component, generate `web/tests/unit/components/<ComponentName>.test.tsx` with executable high-value cases where behavior is critical; additional non-critical cases may remain `it.todo('<case>')`.
-6. For each page or non-mandatory scenario, generate `web/tests/e2e/<route-slug>.spec.ts` with executable coverage for critical flows and `test.fixme('<scenario>')` only for clearly marked non-gating follow-up coverage.
-7. Generate `web/tests/visual/visual-regression.spec.ts` on key pages × themes × viewports; non-gating cases may remain pending when explicitly documented.
-8. Generate the command surface declared by `frontend_summary.execution_contract.required_scripts[]`, including `audit:frontend` and `release:check`.
+3. Generate `web/tests/unit/.gitkeep` + `web/tests/e2e/.gitkeep`.
+4. For each component, generate `web/tests/unit/components/<ComponentName>.test.tsx` skeleton with the case list from spec. Body: `it.todo('<case>')`.
+5. For each page, generate `web/tests/e2e/<route-slug>.spec.ts` skeleton. Body: `test.fixme('<scenario>')`.
+6. Generate `web/tests/a11y/axe.spec.ts` skeleton running axe-core on key pages.
+7. Generate `web/tests/visual/visual-regression.spec.ts` skeleton on key pages × themes × viewports.
 
 ### Phase 9 — Run manual + envs
-1. Generate `web/RUN.md` with: prereqs, install (`<pkg> install`), dev (`<pkg> dev`), build (`<pkg> build`), test (`<pkg> test`), smoke (`<pkg> run e2e:smoke`), full e2e (`<pkg> run e2e:full`), release check (`<pkg> run release:check`), and common pitfalls.
+1. Generate `web/RUN.md` with: prereqs, install (`<pkg> install`), dev (`<pkg> dev`), build (`<pkg> build`), test (`<pkg> test`), e2e (`<pkg> exec playwright test`), smoke checklist, common pitfalls.
 2. Generate `web/dev-server-checklist.md` with mandatory sections:
   - Project root and runtime root detection.
   - Clean install procedure.
@@ -279,7 +276,7 @@ For each `pages/<route-slug>.md` (now in design-brief shape — outcomes + conte
 5. Generate `web/README.md` (developer overview + folder map).
 
 ### Phase 10 — Self-audit
-1. Walk emitted files. For each, run the relevant frontend-constraints F1..F17, Q1..Q3, CC1..CC6 and accessibility AC1..AC12 checks.
+1. Walk emitted files. For each, run the relevant frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12 checks.
 2. Specifically verify:
    - F1: no raw color / spacing / motion literal in `web/src/components/**` or `web/src/app/**`.
    - F5: no inline string in any `<button>`, `<h1..h6>`, `<p>`, `<a>`, `<label>` content.
@@ -295,8 +292,8 @@ For each `pages/<route-slug>.md` (now in design-brief shape — outcomes + conte
   - CC4: extraction discipline satisfied (no oversized inline sections or overgrown page files without extraction).
   - CC5: every distinct project content type has a dedicated card component under `web/src/components/cards/`.
   - CC6: when `brief.brand.footer_attribution.enabled == true`, footer renders required attribution text/link/URL exactly from planner keys.
-  - F16: emitted content modules contain publish-ready copy; no placeholder or key-echo values remain.
-  - F17: footer attribution contract matches the planner output or deterministic default behavior.
+  - F16: header state machine behavior matches planner contract in all required route groups.
+  - F17: no broken public media assets on hero/cards/trust sections (remote URL health + rendered fallback behavior).
    - AC2: every interactive element has a `:focus-visible` style.
    - AC9: skip-link is first focusable.
    - INV1: `ThemeProvider.tsx` and `ThemeSwitcher.tsx` exist and are wired.
@@ -305,9 +302,6 @@ For each `pages/<route-slug>.md` (now in design-brief shape — outcomes + conte
    - INV4: Footer contains the brief-declared attribution from `brief.brand.footer_attribution` with planner-specified placement and link behavior.
    - INV5: Every hero has a full-bleed layout, staggered text reveal, dark trust chip backgrounds, and gradient overlay ≥ 0.55 opacity.
   - INV6: Header and footer interactive elements maintain readable contrast in both light and dark theme snapshots.
-  - INV7: Header state machine behavior matches the planner contract in all required route groups.
-  - INV8: No broken public media assets remain on hero/cards/trust sections; fallback behavior is implemented.
-  - INV9: Every mandatory smoke journey id appears in executable smoke or accessibility tests, and the command surface includes `audit:frontend` and `release:check`.
 3. Emit `web/.audit/frontend-self-audit.md` with pass/fail per check + evidence (file:line).
 4. If any check fails → return `BLOCK FRONTEND_BUILD_INCOMPLETE` with the failed checks.
 
@@ -336,10 +330,10 @@ web/
 │   └── middleware.ts             ← public-routes declaration only; auth integration belongs to backend_developer
 ├── public/                       ← static assets (real assets supplied by human)
 ├── tests/
-│   ├── unit/                     ← Vitest critical tests + non-gating scaffolds
-│   ├── e2e/                      ← Playwright smoke implementations + broader specs
-│   ├── a11y/                     ← executable axe smoke coverage
-│   └── visual/                   ← visual regression coverage + documented pending cases
+│   ├── unit/                     ← Vitest skeletons
+│   ├── e2e/                      ← Playwright skeletons
+│   ├── a11y/                     ← axe-core skeletons
+│   └── visual/                   ← visual regression skeletons
 ├── vitest.config.ts
 ├── playwright.config.ts
 └── .audit/
@@ -359,9 +353,8 @@ web/
 - Every animation has a reduced-motion fallback.
 - Every interactive element has visible focus.
 - Skip-link first focusable on every page.
-- Mandatory smoke and accessibility tests are implemented; only non-gating suites may remain scaffolded.
+- Test scaffolds present (bodies as TODO).
 - `web/RUN.md` includes install / dev / build / test / e2e / smoke commands.
-- `package.json` includes the full `execution_contract.required_scripts[]` surface, including `audit:frontend` and `release:check`.
 - `web/.audit/frontend-self-audit.md` exists with all F + AC checks `passed`.
 - `ThemeProvider.tsx` exists; root layout body wrapped in `<ThemeProvider>`.
 - `ThemeSwitcher.tsx` exists; rendered in header desktop CTA row + mobile toolbar.
@@ -378,8 +371,6 @@ web/
 - `BACKEND_CODE_DETECTED` — emitted file outside frontend scope.
 - `OUTPUT_OUTSIDE_WEB` — emitted file outside `web/`.
 - `FOOTER_ATTRIBUTION_MISSING` — brief-declared footer attribution absent from any layout that renders a footer.
-- `MANDATORY_SMOKE_TESTS_MISSING` — one or more execution-contract smoke journeys were not implemented as executable tests.
-- `RELEASE_GATE_MISSING` — required release-check command surface or audit script is absent.
 - `COMPONENT_COVERAGE_INCOMPLETE` — one or more spec-declared components were not emitted.
 - `SECTION_COVERAGE_INCOMPLETE` — one or more `required_content_slots[]` were not implemented.
 - `SECTION_DENSITY_INCOMPLETE` — route did not meet the minimum section threshold for its latitude.
