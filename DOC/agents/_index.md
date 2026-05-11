@@ -49,6 +49,7 @@ Two prompts in planning. Two prompts in execution. One meta-agent.
 |---|---|---|---|---|
 | `frontend_factory_planner` | 1 | Planning (frontend, experimental factory-native) | brief | `factory-frontend.json` + `frontend-contract.json` + `experience-contract.json` + `retrieval-manifest.json` + `scope-manifest.json` + `roots.json` + `scopes/<scope-id>.json` + `README.md` + `ai-context.yaml` under `DOC/output/runs/<timestamp>/planning/frontend-factory/` |
 | `frontend_factory_developer` | 1 | Execution (frontend, experimental factory-native) | factory frontend planning bundle + explicit factory scope packet | scoped frontend runtime code under the declared app root + `.audit/frontend-self-audit.md` + `.audit/frontend-factory-manifest.json` |
+| `frontend_factory_hybrid_developer` | 1 | Execution (frontend, hybrid DOC plan + factory runtime) | stable DOC frontend planning bundle (`planning/frontend`) + runtime target | runtime code under `ai-product-factory/generated/apps/<run-id>/<project-slug>/` + `.audit/frontend-self-audit.md` + `.audit/frontend-hybrid-manifest.json` |
 
 ---
 
@@ -121,6 +122,7 @@ Seven files live at both `DOC/agents/<name>.agent.md` and `.github/agents/<name>
 - `backend_planner`
 - `frontend_developer`
 - `frontend_factory_developer`
+- `frontend_factory_hybrid_developer`
 - `backend_developer`
 - `system_architect`
 

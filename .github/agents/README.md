@@ -97,6 +97,13 @@ The default workflow above remains the stable system. `frontend_factory_planner`
 - `standalone_factory` mode -> `ai-product-factory/generated/apps/<run-id>/<project-slug>/`
 **Important:** this agent is optional and experimental. If no factory planning bundle exists yet, continue using `frontend_developer`.
 
+### `frontend_factory_hybrid_developer`
+**Use when:** you want to keep planning strictly on the stable DOC path and only use factory runtime execution/output.
+**Role:** hybrid frontend executor. It consumes only `DOC/output/runs/<timestamp>/planning/frontend/` artifacts and emits runtime code under the same factory app output contract.
+**Planning source:** `DOC/output/runs/<timestamp>/planning/frontend/` (read-only)
+**Runtime output:** `ai-product-factory/generated/apps/<run-id>/<project-slug>/`
+**Important:** this agent is optional and experimental. It does not replace `frontend_developer` or `frontend_factory_developer`.
+
 ---
 
 ## Recommended invocation order
