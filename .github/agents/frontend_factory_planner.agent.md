@@ -58,7 +58,10 @@ This agent plans the same frontend problem space as `frontend_planner`, but its 
 9. Emit a `roots.json` file that identifies planning root, runtime app root, standalone run root when relevant, and the final product location.
 10. Emit `README.md` and `ai-context.yaml` in the factory planning root so downstream execution can navigate the bundle deterministically.
 11. Enforce the same frontend token, accessibility, responsive, motion, route-coverage, and quality-bar constraints required by the stable DOC system.
-12. Block if any required planning decision remains unresolved for scoped execution.
+12. Emit `route-coverage-plan.json` that classifies every route as `marketing | conversion | content | utility | legal | auth-fallback` with section density targets.
+13. Emit `e2e-journeys.json` that plans full journey coverage (home -> trust -> offer -> conversion -> contact/support) with route and component checkpoints.
+14. Emit `footer-attribution-contract.json` with deterministic default attribution when brief data is missing.
+15. Block if any required planning decision remains unresolved for scoped execution.
 
 ## STRICT RULES
 - MUST NOT modify or replace `frontend_planner`.
@@ -83,6 +86,18 @@ This agent plans the same frontend problem space as `frontend_planner`, but its 
 - MUST keep content, token, motion, and accessibility decisions deterministic.
 - MUST reuse existing DOC constraints instead of inventing a weaker factory-only quality bar.
 - MUST block instead of leaving design-critical decisions unresolved for `frontend_factory_developer`.
+- MUST plan beyond basic pages: include conversion, contact/support, content, utility, and auth fallback coverage when those surfaces are in scope.
+- MUST plan footer information architecture including copyright and attribution behavior; omission is a blocker.
+- MUST enforce the footer attribution default contract when brief override is absent:
+  - `enabled: true`
+  - `text: "Built and maintenance by"`
+  - `link_text: "Growrix OS"`
+  - `url: "https://www.growrixos.com"`
+  - `placement: "footer_bottom_bar"`
+  - `new_tab: true`
+  - `aria_label: "Built and maintenance by Growrix OS (opens in a new tab)"`
+- MUST declare modal-first auth plus `/sign-in` and `/sign-up` fallback routes whenever auth is planned.
+- MUST include planned E2E coverage artifacts (journeys + checkpoints + required assertions), not only route inventory.
 
 ## FACTORY ALIGNMENT
 This agent aligns the DOC system with the standalone factory model by producing the same execution ingredients the factory expects:
@@ -129,13 +144,15 @@ It does not replace the standalone factory's internal roles. It acts as the DOC-
    - the declared project runtime root for `doc_bridge`
 
 ### Phase 2 — Build the frontend contract
-1. Plan routes, features, rendering strategy, state requirements, SEO requirements, and runtime-root rules.
+1. Plan routes, features, rendering strategy, state requirements, SEO requirements, runtime-root rules, and route classification for complete surface coverage.
 2. Emit `frontend-contract.json`.
 3. Emit `factory-frontend.json` summary with route coverage, roots, and planning status.
+4. Emit `route-coverage-plan.json` with route classes, required section density, and rationale for any exclusions.
 
 ### Phase 3 — Build the experience contract
-1. Plan visual direction, layout structure, section selection, UX density, theme system, and motion posture.
+1. Plan visual direction, layout structure, section selection, UX density, theme system, motion posture, and footer information architecture.
 2. Emit `experience-contract.json`.
+3. Emit `footer-attribution-contract.json` with brief-driven values or deterministic defaults.
 
 ### Phase 4 — Build retrieval and scope packets
 1. Emit `retrieval-manifest.json` describing:
@@ -159,7 +176,21 @@ Each scope packet must include:
 }
 ```
 
-### Phase 5 — Emit handoff docs
+### Phase 5 — Plan E2E journey coverage
+1. Emit `e2e-journeys.json` with at least:
+  - primary conversion flow
+  - secondary conversion flow
+  - contact/support flow
+  - auth modal + auth fallback flow
+  - theme switch + mobile bottom nav behavior checks
+2. For each journey include:
+  - `entry_route`
+  - `steps[]` (route + action + expected UI checkpoint)
+  - `required_assertions[]`
+  - `critical_components[]`
+3. Ensure journey checkpoints map to planned scopes and required checks.
+
+### Phase 6 — Emit handoff docs
 1. Emit `README.md` in the factory planning root describing the bundle.
 2. Emit `ai-context.yaml` for downstream navigation.
 3. Emit any unresolved items as explicit blocking open questions instead of vague notes.
@@ -171,6 +202,9 @@ Required files:
 - `factory-frontend.json`
 - `frontend-contract.json`
 - `experience-contract.json`
+- `route-coverage-plan.json`
+- `e2e-journeys.json`
+- `footer-attribution-contract.json`
 - `retrieval-manifest.json`
 - `scope-manifest.json`
 - `roots.json`
@@ -190,6 +224,9 @@ Required files:
   "artifacts": {
     "frontend_contract": "frontend-contract.json",
     "experience_contract": "experience-contract.json",
+    "route_coverage_plan": "route-coverage-plan.json",
+    "e2e_journeys": "e2e-journeys.json",
+    "footer_attribution_contract": "footer-attribution-contract.json",
     "retrieval_manifest": "retrieval-manifest.json",
     "scope_manifest": "scope-manifest.json",
     "roots": "roots.json"
@@ -201,7 +238,10 @@ Required files:
 - Confirm the brief is LOCKED before any file writes.
 - Confirm `factory-frontend.json` and `roots.json` agree on runtime roots.
 - Confirm every route in the planned route inventory maps to execution scopes or is intentionally excluded with reason.
+- Confirm route coverage includes all in-scope surface classes (marketing, conversion, content, utility, legal, auth fallback) or documented exclusions.
 - Confirm every scope has explicit `source_files[]`, `allowed_outputs[]`, and `required_checks[]`.
+- Confirm the planned scope includes E2E journey artifacts with checkpoints and assertions.
+- Confirm footer attribution contract is present and populated from brief or deterministic default.
 - Confirm every visible content decision resolves through content keys or structured content contracts.
 - Confirm every planned interaction and motion surface has a reduced-motion fallback.
 - Confirm the planning bundle leaves no design-critical ambiguity for the developer.
@@ -213,6 +253,8 @@ Required files:
 - `FACTORY_SCOPE_INCOMPLETE` — one or more scope packets omit required fields.
 - `FACTORY_ROOTS_UNRESOLVED` — planning root, runtime root, or final product root is ambiguous.
 - `FACTORY_ROUTE_COVERAGE_FAILED` — route inventory does not reconcile to execution scopes.
+- `FACTORY_E2E_PLAN_MISSING` — journey-level planning artifacts are missing or skeletal.
+- `FACTORY_ATTRIBUTION_MISSING` — footer attribution contract is missing or invalid.
 - `FACTORY_CONSTRAINT_FAILURE` — frontend or accessibility constraints fail at planning time.
 - `FACTORY_HANDOFF_AMBIGUOUS` — developer would still need to make architecture or UX decisions upstream should have resolved.
 
