@@ -55,6 +55,9 @@ Owns post-planning execution. Consumes LOCKED planning artifacts and orchestrate
 - MUST emit `delivery_class` as one of: `production_candidate`, `baseline_prototype`, `blocked`.
 - MUST set `delivery_class=blocked` whenever `quality_gate=failed` or any blocker failure code is present.
 - MUST NOT classify output as `production_candidate` if any parity, placeholder, depth, semantic, or testing gate failed.
+- MUST resolve `frontend.json.project_root_slug` (or the planner-declared runtime root contract) before any frontend install, dev, smoke, or export step and treat that resolved path as authoritative.
+- MUST fail execution if the generated or maintained frontend app root does not contain `RUN.md`, `dev-server-checklist.md`, and `export-manifest.md` aligned to the current runtime root contract.
+- MUST preserve planner-declared mandatory UX infrastructure when frontend scope is present: ThemeSwitcher, MobileBottomNav, modal-first auth, footer attribution, social-link placements, and one-tap phone/WhatsApp discovery.
 
 ## INPUT FORMAT
 ```json
