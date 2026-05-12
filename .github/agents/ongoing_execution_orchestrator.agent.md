@@ -31,8 +31,6 @@ A generic, reusable execution agent for active projects. This agent converts app
 - Treat visual regressions (contrast, broken media, alignment drift) as blocking failures for UI work.
 - Treat runtime-root ambiguity as blocking until resolved (install/dev must run from actual app root such as `web/`).
 - Always apply deterministic dev-server preflight before startup attempts.
-- Resolve `project_root_slug` or equivalent runtime-root contract before any frontend install/dev/smoke command and use that real app root, never an inferred parent folder.
-- Treat missing frontend execution docs (`RUN.md`, `dev-server-checklist.md`, `export-manifest.md`) in the active app root as a fix-first gap, not an optional follow-up.
 
 ## FRONTEND KNOWLEDGE PARITY BASELINE
 This agent must apply the same frontend execution knowledge baseline as the frontend developer entrypoint for regular execution tasks and environment fixes.
@@ -56,27 +54,19 @@ Required knowledge references:
 - DOC/execution/spec-templates/dev-server-checklist.template.md
 - DOC/execution/spec-templates/export-manifest.template.md
 
-When the task touches frontend execution, this agent must also inherit the frontend developer's mandatory implementation invariants for:
-- runtime-root path discipline (`<project-root-slug>/` rather than a hardcoded `web/` assumption)
-- dark theme + ThemeSwitcher infrastructure
-- icon-based mobile bottom navigation
-- modal-first authentication with fallback routes
-- footer attribution and social-link placement contracts
-- one-tap phone/WhatsApp discovery and reduced-motion compliance
-
 ## REQUIRED EXECUTION FLOW
 1. Gather context: requirements, architecture notes, affected files.
 2. Define the smallest hypothesis-driven change.
 3. Implement focused edits.
 4. Run narrow validation immediately.
 5. Update docs/specs if behavior or contracts changed.
-5.1 For frontend tasks, ensure `RUN.md`, `dev-server-checklist.md`, and `export-manifest.md` exist in the resolved app root (for example `<project-root-slug>/`) and reflect current setup.
+5.1 For frontend tasks, ensure `dev-server-checklist.md` and `export-manifest.md` exist in app root (for example `web/`) and reflect current setup.
 6. Run final quality gate checks.
 7. Commit locally with a clear, scoped message.
 
 ## DEV SERVER SOP (MANDATORY)
 Before running dev server commands:
-1. Determine runtime app root from planning/contracts (`project_root_slug`, runtime-root declaration, or equivalent) and run commands there.
+1. Determine runtime app root and run commands there.
 2. Verify dependencies are installed.
 3. Verify env files (`ENV.example` and `.env.local` shape) are valid.
 4. Check/clear conflicting processes and port usage.
@@ -104,7 +94,6 @@ If any required gate fails, the agent must:
 - Validate header/topbar/footer behavior against planned state transitions before completion.
 - Check light/dark theme parity for readability on navigation, CTA, and footer surfaces.
 - Verify public media integrity (no broken hero/card imagery; fallback present when remote media fails).
-- Preserve mandatory frontend infrastructure when declared by plan: ThemeSwitcher, MobileBottomNav, modal-first auth, footer attribution, social-link zones, and one-tap contact actions.
 
 ## GIT POLICY
 - Allowed: local `git add` and `git commit`.

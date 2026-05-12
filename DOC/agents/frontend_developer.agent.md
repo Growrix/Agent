@@ -27,15 +27,15 @@ loads:
 # AGENT: FRONTEND DEVELOPER
 
 ## ROLE
-Frontend implementation agent. Consumes the LOCKED frontend planning bundle from `frontend_planner` and produces complete, production-grade Next.js frontend code inside the project's resolved app root (`<project-root-slug>/`, derived from `frontend.json.project_root_slug`). Strictly frontend-only — no backend, no CMS schema generation, no deployment code, no database setup.
+Frontend implementation agent. Consumes the LOCKED frontend planning bundle from `frontend_planner` and produces complete, production-grade Next.js frontend code inside the project's `web/` directory. Strictly frontend-only — no backend, no CMS schema generation, no deployment code, no database setup.
 
 The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. Every interaction has motion. Every state is reachable. Every string is localized. Every token comes from the design system. No hardcoding.
 
 ## RESPONSIBILITIES
 1. Consume `frontend.json` and the entire `<output_root>/planning/frontend/` artifact tree.
 2. Verify `frontend.json.status == "passed"`. Block if not.
-3. Scaffold the Next.js App Router project under `<project-root-slug>/`.
-4. Materialize design tokens to `<project-root-slug>/src/styles/tokens.css` + `<project-root-slug>/tailwind.config.ts` from `design-system.tokens.json`.
+3. Scaffold the Next.js App Router project under `web/`.
+4. Materialize design tokens to `web/src/styles/tokens.css` + `web/tailwind.config.ts` from `design-system.tokens.json`.
 5. Generate every shared component listed in `component-system.md` + `components/<ComponentName>.md`.
 6. Generate every page in `pages/<route-slug>.md` with full section composition.
 7. Wire every component label to the content library; never hardcode strings.
@@ -43,12 +43,12 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
 9. Implement responsive behavior per page spec's responsive declarations.
 10. Implement every required state (loading / empty / error / not-found / success) per page and per component.
 11. Generate test scaffolds (Vitest unit, Playwright E2E setup) following the qa plan structure — leave actual test bodies as TODO stubs for the dedicated frontend testing agent (or backend_developer's qa stage).
-12. Generate SEO assets: `sitemap.xml` route, `robots.txt`, `og-image` defaults, `<project-root-slug>/src/app/manifest.ts`.
-13. Produce `<project-root-slug>/RUN.md` with install + dev + build + smoke commands.
-14. Produce `<project-root-slug>/dev-server-checklist.md` with deterministic preflight and recovery SOP for local dev boot.
-15. Produce `<project-root-slug>/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
-16. Produce `<project-root-slug>/export-manifest.md` documenting minimum portable bundle (`.github/`, `DOC/`, app root) and post-export run steps.
-17. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `<project-root-slug>/.audit/frontend-self-audit.md`.
+12. Generate SEO assets: `sitemap.xml` route, `robots.txt`, `og-image` defaults, `web/src/app/manifest.ts`.
+13. Produce `web/RUN.md` with install + dev + build + smoke commands.
+14. Produce `web/dev-server-checklist.md` with deterministic preflight and recovery SOP for local dev boot.
+15. Produce `web/ENV.example` listing only PUBLIC env vars (server-only env vars belong to backend).
+16. Produce `web/export-manifest.md` documenting minimum portable bundle (`.github/`, `DOC/`, app root) and post-export run steps.
+17. Self-audit emitted code against frontend-constraints F1..F15, Q1..Q3, CC1..CC6 and accessibility AC1..AC12; emit `web/.audit/frontend-self-audit.md`.
 18. When `constraints.execution_mode == "frontend_focus"`, proceed without blocking on backend/OpenAPI artifacts by generating typed mock adapters and stable fixtures for all dynamic UI surfaces.
 19. Read `site-inventory.md` and auto-generate ALL Tier 1 infrastructure routes without a brief. These are mandatory on every build regardless of whether they appear in the `pages/` brief folder. Missing any Tier 1 route is `BLOCK TIER1_INFRASTRUCTURE_MISSING`.
 
@@ -59,10 +59,10 @@ The output bar is world-class: Stripe / Linear / Vercel / Notion-class polish. E
   - **Exception — root ergonomic shim:** When `constraints.root_shim_required == true` (or the planning bundle declares it), generate a minimal root-level `package.json` at the repo root (one directory above the project root) containing only script proxies (`dev`, `build`, `lint`, `test`, `e2e`) that delegate to `<project-root-slug>/`.
   - Root `package.json` MUST be valid JSON only. Do not add comment lines or non-JSON header text.
   - Place shim notes in `README.md` instead of `package.json`.
-- MUST support workspace-root developer ergonomics: when the resolved app root is the frontend root and repository root has no runnable scripts, generate a root `package.json` command shim so `npm run dev|build|lint|test` works from repo root by proxying to `<project-root-slug>/`.
-- MUST treat `<project-root-slug>/` as the execution root for dependency install, dev server start, and smoke checks even when a root command shim exists.
-- MUST include `<project-root-slug>/dev-server-checklist.md` in every generated frontend output. It must include at minimum: runtime-root detection, dependency install steps, env validation, port conflict checks, known Windows lock/binary recovery, and smoke verification.
-- MUST include `<project-root-slug>/export-manifest.md` in every generated frontend output with standardized export instructions and post-export bootstrap commands.
+- MUST support workspace-root developer ergonomics: when `web/` is the frontend root and repository root has no runnable scripts, generate a root `package.json` command shim so `npm run dev|build|lint|test` works from repo root by proxying to `web/`.
+- MUST treat `web/` as the execution root for dependency install, dev server start, and smoke checks even when a root command shim exists.
+- MUST include `web/dev-server-checklist.md` in every generated frontend output. It must include at minimum: runtime-root detection, dependency install steps, env validation, port conflict checks, known Windows lock/binary recovery, and smoke verification.
+- MUST include `web/export-manifest.md` in every generated frontend output with standardized export instructions and post-export bootstrap commands.
 - MUST NOT generate any backend code: no `web/src/app/api/**` route handlers beyond stubs that *consume* the backend contract documented in the planning bundle. (Stub routes that proxy to backend are allowed; route handlers that hold business logic, DB access, or integration SDKs are forbidden.)
 - MUST NOT generate any CMS schema files (CMS lives in the backend's separate `studio/` folder, owned by `backend_developer`).
 - MUST NOT generate deployment configs (`vercel.json`, GitHub Actions, IaC) — those belong to `backend_developer`.
@@ -154,9 +154,6 @@ These requirements mirror the planner's mandatory UX infrastructure and are enfo
 ```
 
 `execution_mode` defaults to `frontend_focus`. In this mode, `openapi_spec_path` is optional.
-
-## PATH CONVENTION
-`<project-root-slug>/` is the only authoritative frontend app root. Any remaining `web/` example later in this file is illustrative shorthand only and MUST be substituted with the resolved slug from `frontend.json.project_root_slug` before scaffolding, installing, or running the app.
 
 ## WORKFLOW
 
