@@ -207,6 +207,24 @@
     --ds-color-focus-ring: rgb(var(--ds-color-accent-rgb) / 0.45);
     --ds-color-overlay: rgb(0 0 0 / 0.55);
 
+    /* Scrim scale — opacity ramp for hero overlays + text-on-media legibility.
+       Used by section variants. Ramp matches the typical gradient stops:
+       darker → light → clear across the panel that carries text. */
+    --ds-color-scrim-darker: rgb(0 0 0 / 0.78);
+    --ds-color-scrim-medium: rgb(0 0 0 / 0.55);
+    --ds-color-scrim-light: rgb(0 0 0 / 0.15);
+    --ds-color-scrim-clear: rgb(0 0 0 / 0);
+
+    /* Foreground colour intended for text rendered ON images / on-accent surfaces.
+       Use instead of palette-neutral-0 when the text sits over a photograph or
+       coloured backdrop so contrast stays predictable across themes. */
+    --ds-color-on-image: rgb(255 255 255 / 1);
+    --ds-color-on-image-strong: rgb(255 255 255 / 0.88);
+
+    /* Soft accent for radial-gradient atmospherics. */
+    --ds-color-accent-soft: color-mix(in oklab, var(--ds-color-accent) 18%, transparent);
+    --ds-color-accent-soft-strong: color-mix(in oklab, var(--ds-color-accent) 25%, transparent);
+
     /* Interactive state tokens (Ch 10 §18) */
     --ds-state-hover-opacity: 0.08;
     --ds-state-active-opacity: 0.12;
@@ -526,28 +544,6 @@
     --ds-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
     --ds-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
     --ds-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
-  }
-
-  /* ── Theme: Purple ──
-     Overrides brand palette + accent chain. All other semantic tokens
-     auto-resolve through their var() references. */
-
-  html.theme-purple,
-  [data-theme="purple"] {
-    --ds-palette-brand-50: #faf5ff;
-    --ds-palette-brand-100: #f3e8ff;
-    --ds-palette-brand-200: #e9d5ff;
-    --ds-palette-brand-300: #d8b4fe;
-    --ds-palette-brand-400: #c084fc;
-    --ds-palette-brand-500: #a855f7;
-    --ds-palette-brand-600: #9333ea;
-    --ds-palette-brand-700: #7e22ce;
-    --ds-palette-brand-800: #6b21a8;
-    --ds-palette-brand-900: #581c87;
-    --ds-palette-brand-950: #3b0764;
-
-    --ds-color-accent-rgb: 147 51 234;
-    --ds-color-accent-foreground: var(--ds-palette-neutral-0);
   }
 
   /* ── Density knobs (Ch 16 §6) ── */

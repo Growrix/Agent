@@ -1,0 +1,19 @@
+{
+  "id": "foundation.design-system",
+  "kind": "style",
+  "source_files": [
+    "design-system.md",
+    "design-system.tokens.json",
+    "motion-system.md",
+    "visual-reference-pack.md"
+  ],
+  "allowed_outputs": [
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/globals.css",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/design-tokens.ts"
+  ],
+  "required_checks": [
+    "typecheck",
+    "lint"
+  ],
+  "depends_on": []
+}

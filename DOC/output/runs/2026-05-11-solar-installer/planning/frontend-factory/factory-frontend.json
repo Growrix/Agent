@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "source": "stable_frontend_bridge",
+  "lock_status": "LOCKED",
+  "source_status": "PLANNED",
+  "source_planning_root": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend",
+  "planning_root": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend-factory",
+  "target_mode": "standalone_factory",
+  "project_root_slug": "sunenergy-pro-website",
+  "route_count": 17,
+  "component_count": 67,
+  "roots": {
+    "target_mode": "standalone_factory",
+    "source_planning_root": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend",
+    "planning_root": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend-factory",
+    "runtime_app_root": "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website",
+    "standalone_run_root": "ai-product-factory/generated/runs/solar-bridge-check",
+    "final_product_root": "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website",
+    "project_root_slug": "sunenergy-pro-website",
+    "brief_path": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend/brief.json"
+  },
+  "route_coverage": {
+    "planned_routes": 17,
+    "scoped_routes": 17,
+    "excluded_routes": 5
+  },
+  "quality": {
+    "frontend_constraints_passed": true,
+    "accessibility_constraints_passed": true
+  }
+}

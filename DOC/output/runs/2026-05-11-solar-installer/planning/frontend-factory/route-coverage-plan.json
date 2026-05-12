@@ -1,0 +1,184 @@
+{
+  "routes": [
+    {
+      "id": "about",
+      "path": "/about",
+      "class": "marketing",
+      "lead_gen_role": "SECONDARY — Build trust & credibility through company story and team authority",
+      "section_density": 6,
+      "seo_critical": false,
+      "source_file": "pages/about.md"
+    },
+    {
+      "id": "blog",
+      "path": "/blog",
+      "class": "content",
+      "lead_gen_role": "SECONDARY — Drive organic SEO traffic; nurture leads with solar education content",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/blog.md"
+    },
+    {
+      "id": "case-studies",
+      "path": "/case-studies",
+      "class": "content",
+      "lead_gen_role": "SECONDARY — In-depth social proof; high-intent nurturing",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/case-studies.md"
+    },
+    {
+      "id": "certifications",
+      "path": "/certifications",
+      "class": "content",
+      "lead_gen_role": "SECONDARY — Credibility + safety assurance; removes last-minute trust barriers",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/certifications.md"
+    },
+    {
+      "id": "contact",
+      "path": "/contact",
+      "class": "conversion",
+      "lead_gen_role": "PRIMARY (Direct lead capture point)",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/contact.md"
+    },
+    {
+      "id": "faq",
+      "path": "/faq",
+      "class": "utility",
+      "lead_gen_role": "SECONDARY — Reduce pre-conversion friction; answer objections before sales call",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/faq.md"
+    },
+    {
+      "id": "financing",
+      "path": "/financing",
+      "class": "conversion",
+      "lead_gen_role": "SECONDARY — Remove purchase barrier; educate on ROI; convert fence-sitters",
+      "section_density": 6,
+      "seo_critical": true,
+      "source_file": "pages/financing.md"
+    },
+    {
+      "id": "free-assessment",
+      "path": "/free-assessment",
+      "class": "conversion",
+      "lead_gen_role": "PRIMARY LEAD MAGNET — Collect qualified lead emails; qualify prospects before sales call",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/free-assessment.md"
+    },
+    {
+      "id": "home",
+      "path": "/",
+      "class": "marketing",
+      "lead_gen_role": "PRIMARY",
+      "section_density": 8,
+      "seo_critical": true,
+      "source_file": "pages/home.md"
+    },
+    {
+      "id": "news",
+      "path": "/news",
+      "class": "content",
+      "lead_gen_role": "TERTIARY — Brand authority; repeat engagement; local SEO",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/news.md"
+    },
+    {
+      "id": "portfolio",
+      "path": "/portfolio",
+      "class": "content",
+      "lead_gen_role": "PRIMARY — Proof of capability, trust trigger before conversion",
+      "section_density": 6,
+      "seo_critical": true,
+      "source_file": "pages/portfolio.md"
+    },
+    {
+      "id": "resources",
+      "path": "/resources",
+      "class": "content",
+      "lead_gen_role": "TERTIARY — Content nurturing; email capture via guide downloads",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/resources.md"
+    },
+    {
+      "id": "service-area",
+      "path": "/service-area",
+      "class": "utility",
+      "lead_gen_role": "SECONDARY — Local SEO + geographic qualification; confirm coverage before contact",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/service-area.md"
+    },
+    {
+      "id": "services",
+      "path": "/services",
+      "class": "marketing",
+      "lead_gen_role": "SECONDARY → Educate on solutions, drive to assessment CTA",
+      "section_density": 7,
+      "seo_critical": true,
+      "source_file": "pages/services.md"
+    },
+    {
+      "id": "solar-calculator",
+      "path": "/solar-calculator",
+      "class": "conversion",
+      "lead_gen_role": "PRIMARY LEAD MAGNET — Educate via real-time interaction; capture high-intent leads",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/solar-calculator.md"
+    },
+    {
+      "id": "team",
+      "path": "/team",
+      "class": "content",
+      "lead_gen_role": "SECONDARY — Personal trust building; humanizes the brand",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/team.md"
+    },
+    {
+      "id": "testimonials",
+      "path": "/testimonials",
+      "class": "content",
+      "lead_gen_role": "SECONDARY — Social proof at scale; reinforce trust before conversion",
+      "section_density": 5,
+      "seo_critical": false,
+      "source_file": "pages/testimonials.md"
+    }
+  ],
+  "intentionally_excluded": [
+    {
+      "path": "/sign-in",
+      "class": "auth-fallback",
+      "reason": "Stable LOCKED frontend bundle explicitly sets constraints.no_auth = true."
+    },
+    {
+      "path": "/sign-up",
+      "class": "auth-fallback",
+      "reason": "Stable LOCKED frontend bundle explicitly sets constraints.no_auth = true."
+    },
+    {
+      "path": "auth-modal",
+      "class": "auth-fallback",
+      "reason": "Stable LOCKED frontend bundle explicitly excludes auth modal surfaces."
+    },
+    {
+      "path": "/privacy",
+      "class": "legal",
+      "reason": "Stable LOCKED frontend bundle does not contain a privacy page brief."
+    },
+    {
+      "path": "/terms",
+      "class": "legal",
+      "reason": "Stable LOCKED frontend bundle does not contain a terms page brief."
+    }
+  ]
+}

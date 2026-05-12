@@ -9,6 +9,7 @@ const targets = [
   "src/ds/styles/ds.base.css",
   "src/ds/styles/ds.utilities.css",
   "src/ds/styles/ds.theme.css",
+  "src/ds/styles/ds.section-variants.css",
 ].map((p) => path.join(repoRoot, p));
 
 const rules = [

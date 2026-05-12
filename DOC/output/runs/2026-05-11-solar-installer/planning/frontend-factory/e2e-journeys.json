@@ -1,0 +1,100 @@
+{
+  "journeys": [
+    {
+      "id": "primary-conversion",
+      "entry_route": "/",
+      "steps": [
+        {
+          "route": "/",
+          "action": "open primary CTA",
+          "expected_ui_checkpoint": "home hero CTA visible above the fold"
+        },
+        {
+          "route": "/free-assessment",
+          "action": "continue lead capture flow",
+          "expected_ui_checkpoint": "assessment/contact form is available"
+        },
+        {
+          "route": "/contact",
+          "action": "confirm direct support options",
+          "expected_ui_checkpoint": "phone and WhatsApp CTAs are visible"
+        }
+      ],
+      "required_assertions": [
+        "no console errors",
+        "CTA visible without hover",
+        "lead capture flow reachable in two interactions or less"
+      ],
+      "critical_components": [
+        "Header",
+        "PrimaryButton",
+        "ContactForm",
+        "WhatsAppButton",
+        "PhoneButton"
+      ]
+    },
+    {
+      "id": "trust-to-conversion",
+      "entry_route": "/portfolio",
+      "steps": [
+        {
+          "route": "/portfolio",
+          "action": "review proof surfaces",
+          "expected_ui_checkpoint": "portfolio or featured project proof is visible"
+        },
+        {
+          "route": "/case-studies",
+          "action": "validate proof depth",
+          "expected_ui_checkpoint": "case study or testimonial content is present"
+        },
+        {
+          "route": "/contact",
+          "action": "enter conversion route",
+          "expected_ui_checkpoint": "contact CTA remains accessible"
+        }
+      ],
+      "required_assertions": [
+        "proof surfaces render with real content",
+        "trust signals appear before final CTA"
+      ],
+      "critical_components": [
+        "PortfolioCard",
+        "BeforeAfterSlider",
+        "TestimonialCard",
+        "CTABand"
+      ]
+    },
+    {
+      "id": "theme-and-mobile-nav",
+      "entry_route": "/",
+      "steps": [
+        {
+          "route": "/",
+          "action": "toggle theme",
+          "expected_ui_checkpoint": "theme switcher updates mode state"
+        },
+        {
+          "route": "/services",
+          "action": "navigate via mobile bottom nav",
+          "expected_ui_checkpoint": "mobile bottom navigation reaches services route"
+        },
+        {
+          "route": "/contact",
+          "action": "reach support route from mobile nav or header",
+          "expected_ui_checkpoint": "contact route resolves successfully"
+        }
+      ],
+      "required_assertions": [
+        "ThemeSwitcher present",
+        "MobileBottomNav present on mobile breakpoints",
+        "reduced motion remains respected"
+      ],
+      "critical_components": [
+        "ThemeSwitcher",
+        "MobileBottomNav",
+        "Header",
+        "Footer"
+      ]
+    }
+  ]
+}

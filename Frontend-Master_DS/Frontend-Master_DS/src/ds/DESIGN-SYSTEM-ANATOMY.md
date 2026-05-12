@@ -201,7 +201,7 @@ Tokens can be modified contextually through HTML attributes:
 
 | Knob | Attribute | Values | Where to apply |
 |------|-----------|--------|----------------|
-| Theme | `class` on `<html>` | `theme-dark`, `theme-light`, `theme-purple` | Set by `ThemeInitScript` |
+| Theme | `class` on `<html>` | `theme-dark`, `theme-light` | Set by `ThemeInitScript` |
 | Density | `data-density` | `"compact"` | Page shell or root wrapper |
 | Visual style | `data-visual` | `"glass"`, `"neumorph"`, `"sleek"` | Page shell or root wrapper |
 | Platform | `data-platform` | `"mobile"` | Page shell or root wrapper |
@@ -218,7 +218,6 @@ Tokens can be modified contextually through HTML attributes:
 |------|-----------|-------------|
 | Dark | `theme-dark` | `dark` |
 | Light | `theme-light` | `light` |
-| Purple | `theme-purple` | `dark` |
 
 Default: `dark`. Stored in `localStorage` key `solarmatch-theme`.
 

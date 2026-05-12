@@ -1,0 +1,3724 @@
+{
+  "target_mode": "standalone_factory",
+  "app_root": "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website",
+  "scope_count": 87,
+  "scopes": [
+    {
+      "id": "foundation.design-system",
+      "kind": "style",
+      "source_files": [
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "visual-reference-pack.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/globals.css",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/design-tokens.ts"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "layout.app-shell",
+      "kind": "layout",
+      "source_files": [
+        "master-ui-architecture.md",
+        "site-inventory.md",
+        "interaction-matrix.md",
+        "components/Header.md",
+        "components/Footer.md",
+        "components/MobileBottomNav.md",
+        "components/ThemeSwitcher.md",
+        "components/MainNav.md",
+        "components/MobileMenu.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/layout.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Header.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Footer.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MobileBottomNav.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ThemeSwitcher.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MainNav.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MobileMenu.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SocialIconRow.tsx",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SocialLink.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "content.site-data",
+      "kind": "provider",
+      "source_files": [
+        "brief.json",
+        "frontend.json",
+        "content-library.md",
+        "content.en-US.json",
+        "site-inventory.md",
+        "master-ui-architecture.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/site-content.ts",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/route-registry.ts",
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/planning-manifest.json"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Header",
+      "kind": "component",
+      "source_files": [
+        "components/Header.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Header.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Footer",
+      "kind": "component",
+      "source_files": [
+        "components/Footer.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Footer.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.MobileBottomNav",
+      "kind": "component",
+      "source_files": [
+        "components/MobileBottomNav.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MobileBottomNav.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ThemeSwitcher",
+      "kind": "component",
+      "source_files": [
+        "components/ThemeSwitcher.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ThemeSwitcher.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.MainNav",
+      "kind": "component",
+      "source_files": [
+        "components/MainNav.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MainNav.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.MobileMenu",
+      "kind": "component",
+      "source_files": [
+        "components/MobileMenu.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MobileMenu.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.HeroSection",
+      "kind": "component",
+      "source_files": [
+        "components/HeroSection.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/HeroSection.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.TrustChip",
+      "kind": "component",
+      "source_files": [
+        "components/TrustChip.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/TrustChip.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.TrustBadge",
+      "kind": "component",
+      "source_files": [
+        "components/TrustBadge.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/TrustBadge.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.MetricCard",
+      "kind": "component",
+      "source_files": [
+        "components/MetricCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MetricCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.CTABand",
+      "kind": "component",
+      "source_files": [
+        "components/CTABand.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/CTABand.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.SectionHeading",
+      "kind": "component",
+      "source_files": [
+        "components/SectionHeading.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SectionHeading.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ServiceCard",
+      "kind": "component",
+      "source_files": [
+        "components/ServiceCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ServiceCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.PortfolioCard",
+      "kind": "component",
+      "source_files": [
+        "components/PortfolioCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/PortfolioCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.BeforeAfterSlider",
+      "kind": "component",
+      "source_files": [
+        "components/BeforeAfterSlider.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/BeforeAfterSlider.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.TestimonialCard",
+      "kind": "component",
+      "source_files": [
+        "components/TestimonialCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/TestimonialCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.BlogCard",
+      "kind": "component",
+      "source_files": [
+        "components/BlogCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/BlogCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.TeamCard",
+      "kind": "component",
+      "source_files": [
+        "components/TeamCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/TeamCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.CaseStudyCard",
+      "kind": "component",
+      "source_files": [
+        "components/CaseStudyCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/CaseStudyCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ContactForm",
+      "kind": "component",
+      "source_files": [
+        "components/ContactForm.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ContactForm.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.TextInput",
+      "kind": "component",
+      "source_files": [
+        "components/TextInput.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/TextInput.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.TextArea",
+      "kind": "component",
+      "source_files": [
+        "components/TextArea.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/TextArea.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.SelectDropdown",
+      "kind": "component",
+      "source_files": [
+        "components/SelectDropdown.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SelectDropdown.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.CheckboxGroup",
+      "kind": "component",
+      "source_files": [
+        "components/CheckboxGroup.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/CheckboxGroup.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.RadioGroup",
+      "kind": "component",
+      "source_files": [
+        "components/RadioGroup.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/RadioGroup.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.FormStepIndicator",
+      "kind": "component",
+      "source_files": [
+        "components/FormStepIndicator.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/FormStepIndicator.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.FormErrorMessage",
+      "kind": "component",
+      "source_files": [
+        "components/FormErrorMessage.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/FormErrorMessage.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.FormSuccessModal",
+      "kind": "component",
+      "source_files": [
+        "components/FormSuccessModal.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/FormSuccessModal.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ROICalculator",
+      "kind": "component",
+      "source_files": [
+        "components/ROICalculator.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ROICalculator.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.RangeSlider",
+      "kind": "component",
+      "source_files": [
+        "components/RangeSlider.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/RangeSlider.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ResultsDisplay",
+      "kind": "component",
+      "source_files": [
+        "components/ResultsDisplay.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ResultsDisplay.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.FeedbackBand",
+      "kind": "component",
+      "source_files": [
+        "components/FeedbackBand.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/FeedbackBand.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ImageGallery",
+      "kind": "component",
+      "source_files": [
+        "components/ImageGallery.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ImageGallery.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Lightbox",
+      "kind": "component",
+      "source_files": [
+        "components/Lightbox.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Lightbox.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.FAQAccordion",
+      "kind": "component",
+      "source_files": [
+        "components/FAQAccordion.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/FAQAccordion.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.AccordionItem",
+      "kind": "component",
+      "source_files": [
+        "components/AccordionItem.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/AccordionItem.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Carousel",
+      "kind": "component",
+      "source_files": [
+        "components/Carousel.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Carousel.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.CarouselNav",
+      "kind": "component",
+      "source_files": [
+        "components/CarouselNav.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/CarouselNav.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ServiceAreaMap",
+      "kind": "component",
+      "source_files": [
+        "components/ServiceAreaMap.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ServiceAreaMap.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ContactInfoStrip",
+      "kind": "component",
+      "source_files": [
+        "components/ContactInfoStrip.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ContactInfoStrip.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.GoogleBusinessCard",
+      "kind": "component",
+      "source_files": [
+        "components/GoogleBusinessCard.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/GoogleBusinessCard.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.HoursDisplay",
+      "kind": "component",
+      "source_files": [
+        "components/HoursDisplay.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/HoursDisplay.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.PrimaryButton",
+      "kind": "component",
+      "source_files": [
+        "components/PrimaryButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/PrimaryButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.SecondaryButton",
+      "kind": "component",
+      "source_files": [
+        "components/SecondaryButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SecondaryButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.OutlineButton",
+      "kind": "component",
+      "source_files": [
+        "components/OutlineButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/OutlineButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.IconButton",
+      "kind": "component",
+      "source_files": [
+        "components/IconButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/IconButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.WhatsAppButton",
+      "kind": "component",
+      "source_files": [
+        "components/WhatsAppButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/WhatsAppButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.PhoneButton",
+      "kind": "component",
+      "source_files": [
+        "components/PhoneButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/PhoneButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.FloatingActionButton",
+      "kind": "component",
+      "source_files": [
+        "components/FloatingActionButton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/FloatingActionButton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.CertificationBadge",
+      "kind": "component",
+      "source_files": [
+        "components/CertificationBadge.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/CertificationBadge.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.RatingStars",
+      "kind": "component",
+      "source_files": [
+        "components/RatingStars.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/RatingStars.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.RatingBadge",
+      "kind": "component",
+      "source_files": [
+        "components/RatingBadge.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/RatingBadge.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.SocialIconRow",
+      "kind": "component",
+      "source_files": [
+        "components/SocialIconRow.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SocialIconRow.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.SocialLink",
+      "kind": "component",
+      "source_files": [
+        "components/SocialLink.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SocialLink.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Container",
+      "kind": "component",
+      "source_files": [
+        "components/Container.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Container.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Grid",
+      "kind": "component",
+      "source_files": [
+        "components/Grid.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Grid.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Stack",
+      "kind": "component",
+      "source_files": [
+        "components/Stack.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Stack.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Cluster",
+      "kind": "component",
+      "source_files": [
+        "components/Cluster.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Cluster.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Divider",
+      "kind": "component",
+      "source_files": [
+        "components/Divider.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Divider.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Skeleton",
+      "kind": "component",
+      "source_files": [
+        "components/Skeleton.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Skeleton.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.EmptyState",
+      "kind": "component",
+      "source_files": [
+        "components/EmptyState.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/EmptyState.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.ErrorBoundary",
+      "kind": "component",
+      "source_files": [
+        "components/ErrorBoundary.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ErrorBoundary.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Modal",
+      "kind": "component",
+      "source_files": [
+        "components/Modal.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Modal.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Drawer",
+      "kind": "component",
+      "source_files": [
+        "components/Drawer.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Drawer.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Toast",
+      "kind": "component",
+      "source_files": [
+        "components/Toast.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Toast.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Tooltip",
+      "kind": "component",
+      "source_files": [
+        "components/Tooltip.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Tooltip.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "component.Popover",
+      "kind": "component",
+      "source_files": [
+        "components/Popover.md",
+        "component-system.md",
+        "design-system.md",
+        "design-system.tokens.json",
+        "motion-system.md",
+        "content-library.md",
+        "content.en-US.json"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Popover.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint"
+      ],
+      "depends_on": [
+        "foundation.design-system"
+      ]
+    },
+    {
+      "id": "route.about",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/about.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/Cluster.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/about/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.Cluster",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.blog",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/blog.md",
+        "components/BlogCard.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CaseStudyCard.md",
+        "components/CertificationBadge.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/blog/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.BlogCard",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CaseStudyCard",
+        "component.CertificationBadge",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.case-studies",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/case-studies.md",
+        "components/AccordionItem.md",
+        "components/BeforeAfterSlider.md",
+        "components/BlogCard.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CaseStudyCard.md",
+        "components/Cluster.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FAQAccordion.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/Lightbox.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/case-studies/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.AccordionItem",
+        "component.BeforeAfterSlider",
+        "component.BlogCard",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CaseStudyCard",
+        "component.Cluster",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FAQAccordion",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.Lightbox",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.certifications",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/certifications.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/Cluster.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/certifications/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.Cluster",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.contact",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/contact.md",
+        "components/AccordionItem.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FAQAccordion.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/contact/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.AccordionItem",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.Divider",
+        "component.Drawer",
+        "component.FAQAccordion",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.faq",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/faq.md",
+        "components/AccordionItem.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/FAQAccordion.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/faq/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.AccordionItem",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.FAQAccordion",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.financing",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/financing.md",
+        "components/AccordionItem.md",
+        "components/BeforeAfterSlider.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FAQAccordion.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/Lightbox.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/financing/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.AccordionItem",
+        "component.BeforeAfterSlider",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FAQAccordion",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.Lightbox",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.free-assessment",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/free-assessment.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/free-assessment/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.home",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/home.md",
+        "components/BeforeAfterSlider.md",
+        "components/BlogCard.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/Lightbox.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.BeforeAfterSlider",
+        "component.BlogCard",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.Lightbox",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.news",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/news.md",
+        "components/BlogCard.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CaseStudyCard.md",
+        "components/CertificationBadge.md",
+        "components/Cluster.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/news/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.BlogCard",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CaseStudyCard",
+        "component.CertificationBadge",
+        "component.Cluster",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.portfolio",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/portfolio.md",
+        "components/BeforeAfterSlider.md",
+        "components/BlogCard.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CaseStudyCard.md",
+        "components/Cluster.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/Lightbox.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/portfolio/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.BeforeAfterSlider",
+        "component.BlogCard",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CaseStudyCard",
+        "component.Cluster",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.Lightbox",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.resources",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/resources.md",
+        "components/AccordionItem.md",
+        "components/BlogCard.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/FAQAccordion.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SelectDropdown.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/resources/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.AccordionItem",
+        "component.BlogCard",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.FAQAccordion",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SelectDropdown",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.service-area",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/service-area.md",
+        "components/BlogCard.md",
+        "components/CertificationBadge.md",
+        "components/Cluster.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/service-area/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.BlogCard",
+        "component.CertificationBadge",
+        "component.Cluster",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.services",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/services.md",
+        "components/AccordionItem.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FAQAccordion.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/services/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.AccordionItem",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FAQAccordion",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.solar-calculator",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/solar-calculator.md",
+        "components/BeforeAfterSlider.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/Lightbox.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/solar-calculator/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.BeforeAfterSlider",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.Lightbox",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.team",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/team.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/Cluster.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PrimaryButton.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/ThemeSwitcher.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/team/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.Cluster",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PrimaryButton",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.ThemeSwitcher",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    },
+    {
+      "id": "route.testimonials",
+      "kind": "route",
+      "source_files": [
+        "frontend-contract.json",
+        "experience-contract.json",
+        "route-coverage-plan.json",
+        "e2e-journeys.json",
+        "content-library.md",
+        "content.en-US.json",
+        "motion-system.md",
+        "pages/testimonials.md",
+        "components/Carousel.md",
+        "components/CarouselNav.md",
+        "components/CertificationBadge.md",
+        "components/CheckboxGroup.md",
+        "components/Cluster.md",
+        "components/ContactForm.md",
+        "components/ContactInfoStrip.md",
+        "components/Container.md",
+        "components/CTABand.md",
+        "components/Divider.md",
+        "components/Drawer.md",
+        "components/FeedbackBand.md",
+        "components/FloatingActionButton.md",
+        "components/Footer.md",
+        "components/FormErrorMessage.md",
+        "components/FormStepIndicator.md",
+        "components/FormSuccessModal.md",
+        "components/GoogleBusinessCard.md",
+        "components/Grid.md",
+        "components/Header.md",
+        "components/HeroSection.md",
+        "components/HoursDisplay.md",
+        "components/IconButton.md",
+        "components/ImageGallery.md",
+        "components/MainNav.md",
+        "components/MetricCard.md",
+        "components/MobileBottomNav.md",
+        "components/MobileMenu.md",
+        "components/Modal.md",
+        "components/OutlineButton.md",
+        "components/PhoneButton.md",
+        "components/PortfolioCard.md",
+        "components/PrimaryButton.md",
+        "components/RadioGroup.md",
+        "components/RangeSlider.md",
+        "components/RatingBadge.md",
+        "components/RatingStars.md",
+        "components/ResultsDisplay.md",
+        "components/ROICalculator.md",
+        "components/SecondaryButton.md",
+        "components/SectionHeading.md",
+        "components/SelectDropdown.md",
+        "components/ServiceAreaMap.md",
+        "components/ServiceCard.md",
+        "components/SocialIconRow.md",
+        "components/SocialLink.md",
+        "components/Stack.md",
+        "components/TeamCard.md",
+        "components/TestimonialCard.md",
+        "components/TextArea.md",
+        "components/TextInput.md",
+        "components/ThemeSwitcher.md",
+        "components/Toast.md",
+        "components/TrustBadge.md",
+        "components/TrustChip.md",
+        "components/WhatsAppButton.md"
+      ],
+      "allowed_outputs": [
+        "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/testimonials/page.tsx"
+      ],
+      "required_checks": [
+        "typecheck",
+        "lint",
+        "smoke"
+      ],
+      "depends_on": [
+        "foundation.design-system",
+        "layout.app-shell",
+        "content.site-data",
+        "component.Carousel",
+        "component.CarouselNav",
+        "component.CertificationBadge",
+        "component.CheckboxGroup",
+        "component.Cluster",
+        "component.ContactForm",
+        "component.ContactInfoStrip",
+        "component.Container",
+        "component.CTABand",
+        "component.Divider",
+        "component.Drawer",
+        "component.FeedbackBand",
+        "component.FloatingActionButton",
+        "component.Footer",
+        "component.FormErrorMessage",
+        "component.FormStepIndicator",
+        "component.FormSuccessModal",
+        "component.GoogleBusinessCard",
+        "component.Grid",
+        "component.Header",
+        "component.HeroSection",
+        "component.HoursDisplay",
+        "component.IconButton",
+        "component.ImageGallery",
+        "component.MainNav",
+        "component.MetricCard",
+        "component.MobileBottomNav",
+        "component.MobileMenu",
+        "component.Modal",
+        "component.OutlineButton",
+        "component.PhoneButton",
+        "component.PortfolioCard",
+        "component.PrimaryButton",
+        "component.RadioGroup",
+        "component.RangeSlider",
+        "component.RatingBadge",
+        "component.RatingStars",
+        "component.ResultsDisplay",
+        "component.ROICalculator",
+        "component.SecondaryButton",
+        "component.SectionHeading",
+        "component.SelectDropdown",
+        "component.ServiceAreaMap",
+        "component.ServiceCard",
+        "component.SocialIconRow",
+        "component.SocialLink",
+        "component.Stack",
+        "component.TeamCard",
+        "component.TestimonialCard",
+        "component.TextArea",
+        "component.TextInput",
+        "component.ThemeSwitcher",
+        "component.Toast",
+        "component.TrustBadge",
+        "component.TrustChip",
+        "component.WhatsAppButton"
+      ]
+    }
+  ]
+}

@@ -16,10 +16,6 @@
     color-scheme: light;
   }
 
-  html.theme-purple {
-    color-scheme: dark;
-  }
-
   /* Scoped theme support (Ch 16 §10) — allows <div data-theme="dark"> sections */
   [data-theme="dark"] {
     color-scheme: dark;

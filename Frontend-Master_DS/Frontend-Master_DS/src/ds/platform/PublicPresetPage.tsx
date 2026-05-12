@@ -9,6 +9,7 @@ import { Button } from "../primitives/Button";
 import { Grid } from "../primitives/Grid";
 import { Stack } from "../primitives/Stack";
 import { Text } from "../primitives/Text";
+import { getDefaultVariantForKind, getSectionVariant } from "../composition/sections/_registry";
 
 import type { PublicPageModel, PublicSectionHeaderModel, PublicSectionModel } from "./publicSitePreset";
 
@@ -25,11 +26,38 @@ function toHeaderProps(header?: PublicSectionHeaderModel) {
   };
 }
 
-function assertNever(value: never): never {
-  throw new Error(`Unhandled section model: ${String(value)}`);
-}
+/**
+ * Resolve which component renders a given section.
+ *
+ * Priority:
+ *  1. Explicit `section.variant` id matching a registry entry of the SAME kind.
+ *  2. Default variant registered for the kind (`isDefault: true`).
+ *  3. Built-in fallback below (preserves original behaviour for `hero`, `features`,
+ *     `testimonials`, `faq`, `blogList`, `cta`, `newsletter`).
+ *
+ * If a `section.variant` is supplied but the registered variant's kind does not
+ * match the section's kind, the variant is ignored and the renderer falls back
+ * to the kind-default. This protects presets from accidental variant/kind
+ * mismatches.
+ */
+function renderSection(section: PublicSectionModel): React.ReactNode {
+  // 1. Explicit variant on the section
+  if (section.variant) {
+    const entry = getSectionVariant(section.variant);
+    if (entry && entry.meta.kind === section.kind) {
+      const Comp = entry.component;
+      return <Comp key={section.id} {...section} />;
+    }
+  }
 
-function renderSection(section: PublicSectionModel) {
+  // 2. Kind-level default variant
+  const def = getDefaultVariantForKind(section.kind);
+  if (def) {
+    const Comp = def.component;
+    return <Comp key={section.id} {...section} />;
+  }
+
+  // 3. Built-in fallbacks (legacy behaviour)
   switch (section.kind) {
     case "hero":
       return (
@@ -121,9 +149,31 @@ function renderSection(section: PublicSectionModel) {
         </SectionPattern>
       );
 
-    default: {
-      return assertNever(section);
-    }
+    // New kinds with no fallback default — registry MUST supply a variant.
+    case "stats-band":
+    case "process-steps":
+    case "logo-cloud":
+    case "case-studies":
+      // If no registry variant matched and no default exists, render a labelled empty
+      // surface so the preset author notices missing wiring rather than a silent gap.
+      return (
+        <SectionPattern key={section.id} container="wide" header={toHeaderProps((section as { header?: PublicSectionHeaderModel }).header)}>
+          <Card>
+            <Stack gap="compact">
+              <Text tone="muted">
+                No variant registered for section kind <code>{section.kind}</code>. Set
+                <code> section.variant</code> on this section or add a default variant to
+                the registry.
+              </Text>
+            </Stack>
+          </Card>
+        </SectionPattern>
+      );
+
+    default:
+      // Exhaustiveness check.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      throw new Error(`Unhandled section kind: ${(section as any).kind}`);
   }
 }
 

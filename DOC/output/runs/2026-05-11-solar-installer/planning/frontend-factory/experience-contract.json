@@ -1,0 +1,134 @@
+{
+  "visual_direction": {
+    "voice": "professional",
+    "tone": "confident, trustworthy, accessible",
+    "density": "comfortable",
+    "motion": "measured",
+    "style": "local-business-trust"
+  },
+  "theme_system": {
+    "supported_modes": [
+      "light",
+      "dark"
+    ],
+    "switcher_location": [
+      "header",
+      "mobile_toolbar"
+    ],
+    "dark_theme_required": true
+  },
+  "layout_structure": {
+    "shared_shell": [
+      "Header",
+      "Footer",
+      "MobileBottomNav",
+      "ThemeSwitcher"
+    ],
+    "social_slots": [
+      "header_topbar",
+      "footer",
+      "hero_side_area_when_declared"
+    ],
+    "footer_attribution": {
+      "enabled": true,
+      "text": "Built by",
+      "link_text": "Growrix OS",
+      "url": "https://www.growrixos.com",
+      "placement": "footer_bottom_bar",
+      "new_tab": true,
+      "aria_label": "Built by Growrix OS (opens in a new tab)"
+    }
+  },
+  "motion_temperament": {
+    "posture": "measured",
+    "reduced_motion_required": true,
+    "hero_animation_style": "restrained_cinematic"
+  },
+  "route_section_density": [
+    {
+      "route": "/about",
+      "section_density": 6,
+      "lead_gen_role": "SECONDARY — Build trust & credibility through company story and team authority"
+    },
+    {
+      "route": "/blog",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — Drive organic SEO traffic; nurture leads with solar education content"
+    },
+    {
+      "route": "/case-studies",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — In-depth social proof; high-intent nurturing"
+    },
+    {
+      "route": "/certifications",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — Credibility + safety assurance; removes last-minute trust barriers"
+    },
+    {
+      "route": "/contact",
+      "section_density": 5,
+      "lead_gen_role": "PRIMARY (Direct lead capture point)"
+    },
+    {
+      "route": "/faq",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — Reduce pre-conversion friction; answer objections before sales call"
+    },
+    {
+      "route": "/financing",
+      "section_density": 6,
+      "lead_gen_role": "SECONDARY — Remove purchase barrier; educate on ROI; convert fence-sitters"
+    },
+    {
+      "route": "/free-assessment",
+      "section_density": 5,
+      "lead_gen_role": "PRIMARY LEAD MAGNET — Collect qualified lead emails; qualify prospects before sales call"
+    },
+    {
+      "route": "/",
+      "section_density": 8,
+      "lead_gen_role": "PRIMARY"
+    },
+    {
+      "route": "/news",
+      "section_density": 5,
+      "lead_gen_role": "TERTIARY — Brand authority; repeat engagement; local SEO"
+    },
+    {
+      "route": "/portfolio",
+      "section_density": 6,
+      "lead_gen_role": "PRIMARY — Proof of capability, trust trigger before conversion"
+    },
+    {
+      "route": "/resources",
+      "section_density": 5,
+      "lead_gen_role": "TERTIARY — Content nurturing; email capture via guide downloads"
+    },
+    {
+      "route": "/service-area",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — Local SEO + geographic qualification; confirm coverage before contact"
+    },
+    {
+      "route": "/services",
+      "section_density": 7,
+      "lead_gen_role": "SECONDARY → Educate on solutions, drive to assessment CTA"
+    },
+    {
+      "route": "/solar-calculator",
+      "section_density": 5,
+      "lead_gen_role": "PRIMARY LEAD MAGNET — Educate via real-time interaction; capture high-intent leads"
+    },
+    {
+      "route": "/team",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — Personal trust building; humanizes the brand"
+    },
+    {
+      "route": "/testimonials",
+      "section_density": 5,
+      "lead_gen_role": "SECONDARY — Social proof at scale; reinforce trust before conversion"
+    }
+  ]
+}

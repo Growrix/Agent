@@ -1,0 +1,10 @@
+{
+  "target_mode": "standalone_factory",
+  "source_planning_root": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend",
+  "planning_root": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend-factory",
+  "runtime_app_root": "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website",
+  "standalone_run_root": "ai-product-factory/generated/runs/solar-bridge-check",
+  "final_product_root": "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website",
+  "project_root_slug": "sunenergy-pro-website",
+  "brief_path": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend/brief.json"
+}

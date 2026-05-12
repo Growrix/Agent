@@ -1,0 +1,36 @@
+{
+  "id": "layout.app-shell",
+  "kind": "layout",
+  "source_files": [
+    "master-ui-architecture.md",
+    "site-inventory.md",
+    "interaction-matrix.md",
+    "components/Header.md",
+    "components/Footer.md",
+    "components/MobileBottomNav.md",
+    "components/ThemeSwitcher.md",
+    "components/MainNav.md",
+    "components/MobileMenu.md",
+    "components/SocialIconRow.md",
+    "components/SocialLink.md"
+  ],
+  "allowed_outputs": [
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/app/layout.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Header.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Footer.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MobileBottomNav.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/ThemeSwitcher.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MainNav.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/MobileMenu.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SocialIconRow.tsx",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/SocialLink.tsx"
+  ],
+  "required_checks": [
+    "typecheck",
+    "lint",
+    "smoke"
+  ],
+  "depends_on": [
+    "foundation.design-system"
+  ]
+}

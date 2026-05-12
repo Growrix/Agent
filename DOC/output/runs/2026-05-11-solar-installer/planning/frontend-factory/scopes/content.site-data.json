@@ -1,0 +1,24 @@
+{
+  "id": "content.site-data",
+  "kind": "provider",
+  "source_files": [
+    "brief.json",
+    "frontend.json",
+    "content-library.md",
+    "content.en-US.json",
+    "site-inventory.md",
+    "master-ui-architecture.md"
+  ],
+  "allowed_outputs": [
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/site-content.ts",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/route-registry.ts",
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/lib/planning-manifest.json"
+  ],
+  "required_checks": [
+    "typecheck",
+    "lint"
+  ],
+  "depends_on": [
+    "foundation.design-system"
+  ]
+}

@@ -5,7 +5,7 @@ import * as React from "react";
 import { Button } from "../primitives/Button";
 import { DropdownMenu, DropdownMenuButton } from "./DropdownMenu";
 import { Icon } from "./Icon";
-import { Check, Sun, Zap } from "../icons";
+import { Check, Moon, Sun } from "../icons";
 import { THEMES, type ThemeName } from "../foundation/themes/registry";
 import { applyTheme, readStoredTheme, storeTheme } from "../foundation/themes/theme";
 
@@ -43,7 +43,7 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
     return (other?.name ?? null) as ThemeName | null;
   }, [canToggle, theme]);
 
-  const triggerIcon = theme === "purple" ? Zap : Sun;
+  const triggerIcon = theme === "dark" ? Sun : Moon;
   const ariaLabel = canToggle
     ? `Toggle theme${nextToggleTheme ? ` (switch to ${nextToggleTheme})` : ""}`
     : "Change theme";

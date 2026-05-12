@@ -1,0 +1,655 @@
+{
+  "version": "1.0",
+  "counts": {
+    "variants": 12,
+    "archetypes": 8,
+    "motionPresets": 8,
+    "themes": 2,
+    "presets": 2
+  },
+  "themes": [
+    {
+      "name": "dark",
+      "label": "Dark",
+      "colorScheme": "dark"
+    },
+    {
+      "name": "light",
+      "label": "Light",
+      "colorScheme": "light"
+    }
+  ],
+  "archetypes": [
+    {
+      "id": "editorial-premium",
+      "label": "Editorial Premium",
+      "description": "Long-form, type-led layouts. Restrained motion. Generous whitespace.",
+      "mood": "Patient and considered. The visitor lingers; the page rewards attention rather than fighting for it.",
+      "preferredScheme": "either",
+      "density": "spacious",
+      "permissions": {
+        "gradientMesh": false,
+        "layeredNoise": true,
+        "conicGradient": false,
+        "glassmorphism": false,
+        "animatedBorder": false,
+        "fullBleedPhotograph": true,
+        "parallaxMedia": false,
+        "scrollDrivenScale": true,
+        "perCaseAccent": false
+      },
+      "motionTemperament": [
+        "rise-soft",
+        "stagger-text-60",
+        "scroll-scale-1.04",
+        "fade-in"
+      ],
+      "variantIdPrefixes": [
+        "hero-editorial-",
+        "features-split-",
+        "case-studies-magazine-",
+        "testimonials-quote-large-"
+      ]
+    },
+    {
+      "id": "modern-saas",
+      "label": "Modern SaaS",
+      "description": "Modular cards, polished accents, medium density.",
+      "mood": "Confident and efficient. The visitor expects polish without ceremony.",
+      "preferredScheme": "either",
+      "density": "comfortable",
+      "permissions": {
+        "gradientMesh": true,
+        "layeredNoise": false,
+        "conicGradient": false,
+        "glassmorphism": true,
+        "animatedBorder": true,
+        "fullBleedPhotograph": false,
+        "parallaxMedia": false,
+        "scrollDrivenScale": true,
+        "perCaseAccent": false
+      },
+      "motionTemperament": [
+        "rise-soft",
+        "stagger-text-60",
+        "magnetic-hover",
+        "idle-pulse-once"
+      ],
+      "variantIdPrefixes": [
+        "hero-modern-saas-",
+        "features-bento-",
+        "pricing-table-",
+        "testimonials-marquee-"
+      ]
+    },
+    {
+      "id": "bold-consumer",
+      "label": "Bold Consumer",
+      "description": "Saturated accents, oversized type, energetic motion.",
+      "mood": "Loud and welcoming. The visitor feels invited to participate, not analyse.",
+      "preferredScheme": "either",
+      "density": "comfortable",
+      "permissions": {
+        "gradientMesh": true,
+        "layeredNoise": false,
+        "conicGradient": true,
+        "glassmorphism": false,
+        "animatedBorder": false,
+        "fullBleedPhotograph": true,
+        "parallaxMedia": true,
+        "scrollDrivenScale": true,
+        "perCaseAccent": true
+      },
+      "motionTemperament": [
+        "rise-soft",
+        "magnetic-hover",
+        "idle-pulse-once",
+        "scroll-scale-1.04"
+      ],
+      "variantIdPrefixes": [
+        "hero-bold-consumer-",
+        "features-bento-",
+        "cta-full-bleed-"
+      ]
+    },
+    {
+      "id": "ai-product",
+      "label": "AI Product",
+      "description": "Streaming text affordances, ambient mesh, deep cool palette.",
+      "mood": "Confident in the underlying machinery. Motion narrates what the system is doing.",
+      "preferredScheme": "dark",
+      "density": "comfortable",
+      "permissions": {
+        "gradientMesh": true,
+        "layeredNoise": true,
+        "conicGradient": false,
+        "glassmorphism": true,
+        "animatedBorder": true,
+        "fullBleedPhotograph": false,
+        "parallaxMedia": false,
+        "scrollDrivenScale": true,
+        "perCaseAccent": false
+      },
+      "motionTemperament": [
+        "reveal-glass",
+        "stagger-text-60",
+        "mesh-drift",
+        "fade-in"
+      ],
+      "variantIdPrefixes": [
+        "hero-ai-product-",
+        "features-bento-",
+        "stats-band-"
+      ]
+    },
+    {
+      "id": "startup-conversion",
+      "label": "Startup Conversion",
+      "description": "Warm accent, aggressive CTA prominence, dense rhythm.",
+      "mood": "Direct. Every section earns its place by moving the visitor closer to action.",
+      "preferredScheme": "either",
+      "density": "compact",
+      "permissions": {
+        "gradientMesh": true,
+        "layeredNoise": false,
+        "conicGradient": false,
+        "glassmorphism": false,
+        "animatedBorder": false,
+        "fullBleedPhotograph": false,
+        "parallaxMedia": false,
+        "scrollDrivenScale": true,
+        "perCaseAccent": false
+      },
+      "motionTemperament": [
+        "rise-soft",
+        "idle-pulse-once",
+        "magnetic-hover"
+      ],
+      "variantIdPrefixes": [
+        "hero-startup-",
+        "pricing-table-",
+        "cta-card-",
+        "cta-full-bleed-"
+      ]
+    },
+    {
+      "id": "local-business-trust",
+      "label": "Local Business Trust",
+      "description": "Warm earth tones, photographic, trust signals first.",
+      "mood": "Hand-shake credibility. The visitor wants to know who, where, when, and how quickly.",
+      "preferredScheme": "light",
+      "density": "comfortable",
+      "permissions": {
+        "gradientMesh": false,
+        "layeredNoise": false,
+        "conicGradient": false,
+        "glassmorphism": false,
+        "animatedBorder": false,
+        "fullBleedPhotograph": true,
+        "parallaxMedia": false,
+        "scrollDrivenScale": true,
+        "perCaseAccent": false
+      },
+      "motionTemperament": [
+        "rise-soft",
+        "fade-in"
+      ],
+      "variantIdPrefixes": [
+        "hero-local-",
+        "features-split-",
+        "testimonials-grid-",
+        "stats-band-"
+      ]
+    },
+    {
+      "id": "dashboard-ops",
+      "label": "Dashboard Ops",
+      "description": "Density-first. Minimal accent. Tables, timelines, charts.",
+      "mood": "Tool, not advertisement. The visitor is an operator already convinced; surface the data.",
+      "preferredScheme": "either",
+      "density": "compact",
+      "permissions": {
+        "gradientMesh": false,
+        "layeredNoise": false,
+        "conicGradient": false,
+        "glassmorphism": false,
+        "animatedBorder": false,
+        "fullBleedPhotograph": false,
+        "parallaxMedia": false,
+        "scrollDrivenScale": false,
+        "perCaseAccent": false
+      },
+      "motionTemperament": [
+        "fade-in",
+        "magnetic-hover"
+      ],
+      "variantIdPrefixes": [
+        "features-bento-",
+        "stats-band-"
+      ]
+    },
+    {
+      "id": "portfolio-craft",
+      "label": "Portfolio Craft",
+      "description": "Editorial restraint with per-case accent overrides.",
+      "mood": "Curated. Each piece of work earns its own visual breath.",
+      "preferredScheme": "either",
+      "density": "spacious",
+      "permissions": {
+        "gradientMesh": false,
+        "layeredNoise": false,
+        "conicGradient": false,
+        "glassmorphism": false,
+        "animatedBorder": false,
+        "fullBleedPhotograph": true,
+        "parallaxMedia": false,
+        "scrollDrivenScale": true,
+        "perCaseAccent": true
+      },
+      "motionTemperament": [
+        "rise-soft",
+        "fade-in",
+        "scroll-scale-1.04"
+      ],
+      "variantIdPrefixes": [
+        "hero-portfolio-",
+        "case-studies-magazine-",
+        "case-studies-grid-"
+      ]
+    }
+  ],
+  "motionPresets": [
+    {
+      "id": "fade-in",
+      "description": "Element fades to full opacity.",
+      "category": "entrance",
+      "duration": "durationNormal",
+      "ease": "easeOut",
+      "staggerMs": null,
+      "transform": "opacity",
+      "repeat": false,
+      "yoyo": false,
+      "reducedMotionFallback": "instant-final-state",
+      "className": "motion-fade-in"
+    },
+    {
+      "id": "rise-soft",
+      "description": "Element rises 16px while fading in. Use for sections and cards on enter.",
+      "category": "entrance",
+      "duration": "durationModerate",
+      "ease": "easeOut",
+      "staggerMs": null,
+      "transform": "opacity+y(16→0)",
+      "repeat": false,
+      "yoyo": false,
+      "reducedMotionFallback": "instant-final-state",
+      "className": "motion-rise-soft"
+    },
+    {
+      "id": "stagger-text-60",
+      "description": "Per-child reveal with 60ms stagger. Use for hero headlines (word-by-word) and feature grids.",
+      "category": "reveal",
+      "duration": "durationFast",
+      "ease": "easeOut",
+      "staggerMs": 60,
+      "transform": "opacity+y(8→0)+stagger",
+      "repeat": false,
+      "yoyo": false,
+      "reducedMotionFallback": "instant-final-state",
+      "className": "motion-stagger-text-60"
+    },
+    {
+      "id": "scroll-scale-1.04",
+      "description": "Hero imagery scales 1.0 → 1.04 across the first 600px of scroll. Settles the page in as the visitor begins reading.",
+      "category": "scroll-driven",
+      "duration": "durationSlow",
+      "ease": "easeOut",
+      "staggerMs": null,
+      "transform": "scroll-scale(1.0→1.04)",
+      "repeat": false,
+      "yoyo": false,
+      "reducedMotionFallback": "no-motion",
+      "className": "motion-scroll-scale-1-04"
+    },
+    {
+      "id": "idle-pulse-once",
+      "description": "Primary CTA pulses once on idle (scale 1.0 → 1.03 → 1.0) to draw a returning eye.",
+      "category": "idle",
+      "duration": "durationSlow",
+      "ease": "easeInOut",
+      "staggerMs": null,
+      "transform": "scale(1.0→1.03→1.0)",
+      "repeat": 1,
+      "yoyo": false,
+      "reducedMotionFallback": "no-motion",
+      "className": "motion-idle-pulse-once"
+    },
+    {
+      "id": "reveal-glass",
+      "description": "Glass / mesh element resolves from blur(12px) opacity 0 → blur(0) opacity 1. Use for layered hero surfaces.",
+      "category": "reveal",
+      "duration": "durationModerate",
+      "ease": "easeOut",
+      "staggerMs": null,
+      "transform": "blur(12→0)+opacity",
+      "repeat": false,
+      "yoyo": false,
+      "reducedMotionFallback": "static-opacity-1",
+      "className": "motion-reveal-glass"
+    },
+    {
+      "id": "mesh-drift",
+      "description": "Ambient background mesh drifts -2% → 2% horizontally (yoyo). Use sparingly on hero backgrounds; pair with reduced-motion suppression.",
+      "category": "ambient",
+      "duration": "durationSlowest",
+      "ease": "easeInOut",
+      "staggerMs": null,
+      "transform": "drift-x(-2%→2%)",
+      "repeat": 9999,
+      "yoyo": true,
+      "reducedMotionFallback": "no-motion",
+      "className": "motion-mesh-drift"
+    },
+    {
+      "id": "magnetic-hover",
+      "description": "Interactive element scales 1.0 → 1.02 on hover. Use for primary CTAs and feature cards.",
+      "category": "hover",
+      "duration": "durationFastest",
+      "ease": "easeOut",
+      "staggerMs": null,
+      "transform": "scale(1.0→1.02)",
+      "repeat": false,
+      "yoyo": false,
+      "reducedMotionFallback": "no-motion",
+      "className": "motion-magnetic-hover"
+    }
+  ],
+  "sectionVariants": [
+    {
+      "id": "hero-editorial-premium-1",
+      "kind": "hero",
+      "archetype": "editorial-premium",
+      "label": "Hero — Editorial Premium 1",
+      "description": "Full-bleed photograph with linear gradient overlay; type panel anchored lower-left; 60ch lede max-width; stagger-reveal text choreography.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "stagger-text-60",
+        "scroll-scale-1.04",
+        "fade-in"
+      ],
+      "effects": {
+        "fullBleedPhotograph": true,
+        "scrollDrivenScale": true,
+        "layeredNoise": false
+      },
+      "density": "full-bleed",
+      "complexity": "rich",
+      "isDefault": false
+    },
+    {
+      "id": "hero-modern-saas-split",
+      "kind": "hero",
+      "archetype": "modern-saas",
+      "label": "Hero — Modern SaaS Split",
+      "description": "Asymmetric 60/40 split with text-left + product preview right; gradient mesh backdrop; staggered text reveal; magnetic-hover primary CTA.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "stagger-text-60",
+        "magnetic-hover",
+        "rise-soft"
+      ],
+      "effects": {
+        "gradientMesh": true,
+        "glassmorphism": false,
+        "scrollDrivenScale": false
+      },
+      "density": "extended",
+      "complexity": "rich",
+      "isDefault": false
+    },
+    {
+      "id": "hero-bold-consumer-oversized",
+      "kind": "hero",
+      "archetype": "bold-consumer",
+      "label": "Hero — Bold Consumer Oversized",
+      "description": "Saturated solid color band; oversized type (max 18ch); compact rhythm; magnetic-hover + idle-pulse primary CTA.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "rise-soft",
+        "magnetic-hover",
+        "idle-pulse-once"
+      ],
+      "effects": {
+        "gradientMesh": false,
+        "conicGradient": false,
+        "fullBleedPhotograph": false
+      },
+      "density": "full-bleed",
+      "complexity": "rich",
+      "isDefault": false
+    },
+    {
+      "id": "hero-ai-product-streaming",
+      "kind": "hero",
+      "archetype": "ai-product",
+      "label": "Hero — AI Product Streaming",
+      "description": "Deep dark base + ambient blurred mesh; centred type (max 22ch); mono kicker; reveal-glass + stagger choreography.",
+      "supportsThemes": [
+        "dark"
+      ],
+      "motionPresets": [
+        "reveal-glass",
+        "stagger-text-60",
+        "fade-in"
+      ],
+      "effects": {
+        "gradientMesh": true,
+        "glassmorphism": true,
+        "animatedBorder": false
+      },
+      "density": "full-bleed",
+      "complexity": "rich",
+      "isDefault": false
+    },
+    {
+      "id": "features-bento-asymmetric",
+      "kind": "features",
+      "archetype": "modern-saas",
+      "label": "Features — Bento Asymmetric",
+      "description": "6-column grid with mixed cell spans (lg/wide/md). Cells stack to single column under 760px. No two adjacent cells share size in desktop layout.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "rise-soft",
+        "magnetic-hover"
+      ],
+      "effects": {
+        "gradientMesh": false
+      },
+      "density": "extended",
+      "complexity": "standard",
+      "isDefault": false
+    },
+    {
+      "id": "features-split-alternating",
+      "kind": "features",
+      "archetype": "editorial-premium",
+      "label": "Features — Split Alternating",
+      "description": "Image-left / text-right rows that alternate direction. Each row is a 1fr/1fr grid that collapses to single column under 760px.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "rise-soft"
+      ],
+      "effects": {
+        "fullBleedPhotograph": false
+      },
+      "density": "extended",
+      "complexity": "standard",
+      "isDefault": false
+    },
+    {
+      "id": "testimonials-marquee",
+      "kind": "testimonials",
+      "archetype": "modern-saas",
+      "label": "Testimonials — Marquee",
+      "description": "Infinite horizontal marquee of testimonial cards. Pauses on hover. Track is duplicated so the loop is seamless. Suppressed under prefers-reduced-motion.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "fade-in"
+      ],
+      "effects": {},
+      "density": "extended",
+      "complexity": "standard",
+      "isDefault": false
+    },
+    {
+      "id": "cta-full-bleed",
+      "kind": "cta",
+      "archetype": "bold-consumer",
+      "label": "CTA — Full Bleed",
+      "description": "Inverse-colored full-bleed banner; centred oversized headline (max 22ch); single primary + optional secondary CTA; large vertical padding.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "rise-soft",
+        "idle-pulse-once"
+      ],
+      "effects": {
+        "fullBleedPhotograph": false
+      },
+      "density": "full-bleed",
+      "complexity": "standard",
+      "isDefault": false
+    },
+    {
+      "id": "stats-band-4col",
+      "kind": "stats-band",
+      "archetype": "modern-saas",
+      "label": "Stats Band — 4 Column",
+      "description": "4-column row of large numbers with labels and optional sublabels. Stacks to 2 columns under 760px. Rule dividers between cells.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "fade-in"
+      ],
+      "effects": {},
+      "density": "compact",
+      "complexity": "minimal",
+      "isDefault": true
+    },
+    {
+      "id": "process-steps-vertical",
+      "kind": "process-steps",
+      "archetype": "local-business-trust",
+      "label": "Process Steps — Vertical Timeline",
+      "description": "Vertically stacked steps with circular numbered badges; max-width 56rem centred; rise-soft entrance per step.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "rise-soft"
+      ],
+      "effects": {},
+      "density": "extended",
+      "complexity": "standard",
+      "isDefault": true
+    },
+    {
+      "id": "logo-cloud-grid",
+      "kind": "logo-cloud",
+      "archetype": "modern-saas",
+      "label": "Logo Cloud — Greyscale Grid",
+      "description": "Auto-fit grid (min 120px per item). Logos render at 60% opacity, lift to 100% on hover. Fade-in entrance. Renders text fallback if no media supplied.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "fade-in"
+      ],
+      "effects": {},
+      "density": "compact",
+      "complexity": "minimal",
+      "isDefault": true
+    },
+    {
+      "id": "case-studies-grid",
+      "kind": "case-studies",
+      "archetype": "portfolio-craft",
+      "label": "Case Studies — 2-Column Grid",
+      "description": "Two-column responsive grid of case-study cards (16:9 media + tags + title). Cards lift 2px and gain shadow-md on hover. Collapses to single column under 760px.",
+      "supportsThemes": [
+        "dark",
+        "light"
+      ],
+      "motionPresets": [
+        "rise-soft",
+        "magnetic-hover"
+      ],
+      "effects": {
+        "fullBleedPhotograph": true
+      },
+      "density": "extended",
+      "complexity": "standard",
+      "isDefault": true
+    }
+  ],
+  "sitePresets": [
+    {
+      "id": "solar-installation",
+      "label": "Solar Installation Service",
+      "archetype": "local-business-trust",
+      "pageIds": [
+        "home",
+        "services",
+        "projects",
+        "blog",
+        "contact"
+      ],
+      "pageSectionCounts": {
+        "home": 7,
+        "services": 2,
+        "projects": 2,
+        "blog": 3,
+        "contact": 2
+      }
+    },
+    {
+      "id": "modern-saas-startup",
+      "label": "Modern SaaS Startup",
+      "archetype": "modern-saas",
+      "pageIds": [
+        "home"
+      ],
+      "pageSectionCounts": {
+        "home": 7
+      }
+    }
+  ],
+  "validation": {
+    "permissionViolations": [],
+    "ok": true
+  }
+}

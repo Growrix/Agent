@@ -11,6 +11,7 @@ import {
 export const SOLAR_INSTALLATION_PRESET: PublicSitePreset = {
   id: "solar-installation",
   label: "Solar Installation Service",
+  archetype: "local-business-trust",
   config: {
     brand: {
       name: "SolarBright",
@@ -94,29 +95,62 @@ export const SOLAR_INSTALLATION_PRESET: PublicSitePreset = {
         {
           id: "hero",
           kind: "hero",
+          variant: "hero-editorial-premium-1",
           kicker: "Solar Installation",
-          title: "Modern solar installs — engineered for performance",
-          lede: "A clean, configurable marketing shell driven by presets and global settings.",
+          title: "Engineered installs that pay back season after season",
+          lede: "From design to commissioning — we manage the full roof-to-grid pipeline so households see stable production from day one.",
           primaryAction: { label: "Get a quote", href: ROUTES.contact },
           secondaryAction: { label: "View projects", href: ROUTES.projects },
+          trustChips: [
+            { id: "licensed", label: "Licensed installers" },
+            { id: "warranty", label: "10-year workmanship warranty" },
+            { id: "speed", label: "24-hour quote turnaround" },
+          ],
+        },
+        {
+          id: "stats",
+          kind: "stats-band",
+          stats: [
+            { id: "installs", value: "1,200+", label: "Homes installed" },
+            { id: "kw", value: "9.4 MW", label: "Combined capacity" },
+            { id: "savings", value: "$3.1M", label: "Customer savings to date" },
+            { id: "csat", value: "4.9 / 5", label: "Customer satisfaction" },
+          ],
         },
         {
           id: "features",
           kind: "features",
+          variant: "features-split-alternating",
           header: {
             kicker: "Why us",
             title: "A predictable process from survey to switch-on",
-            lede: "Designed to scale across projects while still looking premium.",
+            lede: "We measure twice, install once, and document everything so the inspection passes the first time.",
           },
           features: [
-            { id: "design", title: "System design", description: "Roof analysis, shading, and production modeling." },
-            { id: "install", title: "Clean install", description: "Fast, tidy, and inspection-ready work." },
-            { id: "monitor", title: "Monitoring", description: "Track output and savings with a clear dashboard." },
+            { id: "design", title: "System design", description: "Roof analysis, shading study, and production modelling produce a system tuned to your usage profile and orientation." },
+            { id: "install", title: "Clean install", description: "Two-day install with conduit runs hidden in the attic; we leave the site cleaner than we found it." },
+            { id: "monitor", title: "Monitoring", description: "Per-panel monitoring dashboard from day one — see live production, year-over-year output, and savings reports." },
+          ],
+        },
+        {
+          id: "process",
+          kind: "process-steps",
+          header: {
+            kicker: "Our process",
+            title: "From first call to switch-on in under 30 days",
+            lede: "Each step is timed and visible to you. No mystery stages, no surprise fees.",
+          },
+          steps: [
+            { id: "s1", title: "Site survey", description: "On-site within 5 business days; we measure roof orientation, panel placement, and existing electrical capacity." },
+            { id: "s2", title: "Design + quote", description: "Production model + binding quote delivered within 24 hours of the survey." },
+            { id: "s3", title: "Permits + scheduling", description: "We handle the utility paperwork and AHJ permits; you confirm your install date." },
+            { id: "s4", title: "Install + inspection", description: "Two-day install, inspection booked the same week, switch-on within 7 days of inspection clearance." },
           ],
         },
         {
           id: "testimonials",
           kind: "testimonials",
+          variant: "testimonials-marquee",
           header: { kicker: "Proof", title: "Homeowners love the results" },
           items: [
             { id: "t1", quote: "Install was seamless — the crew was punctual and professional.", name: "Ayesha R.", meta: "8.2 kW system" },
@@ -137,8 +171,9 @@ export const SOLAR_INSTALLATION_PRESET: PublicSitePreset = {
         {
           id: "cta",
           kind: "cta",
+          variant: "cta-full-bleed",
           header: { title: "Ready to see your solar savings?" },
-          body: "Switch presets/content to transform the site without rebuilding UI.",
+          body: "Get a binding quote within 24 hours. We handle survey, design, permits, and install — you keep the savings.",
           primaryAction: { label: "Request a quote", href: ROUTES.contact },
           secondaryAction: { label: "Browse insights", href: ROUTES.blog },
         },

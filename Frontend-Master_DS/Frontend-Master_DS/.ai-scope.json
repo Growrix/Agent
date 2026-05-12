@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "version": "1.0",
+  "purpose": "Machine-readable scope contract for AI agents working on this design system. Any AI agent invoked against this repo MUST read this file first and obey it.",
+  "audience": [
+    "Copilot Chat agents",
+    "Claude Code agents",
+    "Replit AI agents",
+    "Custom orchestration agents (e.g., factory_frontend_developer)"
+  ],
+  "topLevelRule": "This design system is the FACTORY, not the deliverable. Per-client sites are exported. Agents may ADD project content via presets; they MUST NOT EDIT the DS core. Violating this contract breaks every site that consumes the DS.",
+  "discoveryFiles": {
+    "humanContract": "AI-AGENT-CONTRACT.md",
+    "machineContract": "generated/ds.contract.json",
+    "registry": "src/ds/composition/sections/_registry.ts",
+    "schema": "src/ds/composition/sections/_schema.ts",
+    "presetTypes": "src/ds/platform/publicSitePreset.ts"
+  },
+  "fileScopes": {
+    "locked": {
+      "description": "Source of truth. Agents MUST NOT edit. Editing breaks downstream sites and audit chains.",
+      "globs": [
+        "src/ds/foundation/**",
+        "src/ds/primitives/**",
+        "src/ds/components/**",
+        "src/ds/composition/sections/_schema.ts",
+        "src/ds/composition/sections/_helpers.ts",
+        "src/ds/composition/patterns/**",
+        "src/ds/composition/templates/**",
+        "src/ds/composition/blocks/**",
+        "src/ds/layouts/**",
+        "src/ds/platform/PublicPresetPage.tsx",
+        "src/ds/platform/PublicSiteShell.tsx",
+        "src/ds/platform/PublicSiteHeader.tsx",
+        "src/ds/platform/PublicSiteFooter.tsx",
+        "src/ds/platform/SupportDock.tsx",
+        "src/ds/platform/publicSitePreset.ts",
+        "src/ds/platform/siteConfig.ts",
+        "src/ds/runtime/**",
+        "src/ds/visuals/**",
+        "src/ds/widgets/**",
+        "src/ds/styles/**",
+        "src/ds/preview/**",
+        "src/ds/icons.ts",
+        "src/ds/patterns/**",
+        "src/ds/utils/**",
+        "src/ds/index.ts",
+        "src/ds/__codegen__/**",
+        "DOC/**",
+        "AI-AGENT-CONTRACT.md",
+        ".ai-scope.json",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "next.config.ts",
+        "next-env.d.ts",
+        "eslint.config.mjs",
+        "jest.config.js",
+        "jest.setup.ts",
+        "scripts/**"
+      ]
+    },
+    "extensible": {
+      "description": "Agents MAY ADD NEW FILES that follow the documented convention. Agents MUST NOT EDIT existing files in these paths — only create new ones with non-colliding names.",
+      "globs": [
+        "src/ds/composition/sections/variants/**/*.tsx",
+        "src/site/presets/*.ts"
+      ],
+      "additionRules": [
+        {
+          "path": "src/ds/composition/sections/variants/<kind>/<variant-id>.tsx",
+          "exports": ["<VARIANT_ID_UPPERCASE>_META", "<VariantIdPascal>"],
+          "metaConformsTo": "SectionVariantMeta in src/ds/composition/sections/_schema.ts",
+          "registerIn": "src/ds/composition/sections/_registry.ts",
+          "registerAction": "Add one import line + one entry to SECTION_REGISTRY (this is the ONLY allowed edit to a locked file when adding a variant)",
+          "thenRun": "npm run ds:contract"
+        },
+        {
+          "path": "src/site/presets/<industry>.ts",
+          "exports": ["<INDUSTRY_UPPERCASE>_PRESET"],
+          "exportConformsTo": "PublicSitePreset in src/ds/platform/publicSitePreset.ts",
+          "registerIn": "src/site/index.ts",
+          "registerAction": "Add one import + one entry to SITE_PRESETS",
+          "thenRun": "npm run ds:contract"
+        }
+      ]
+    },
+    "consumable": {
+      "description": "Agents READ these to know what's available. Reading is free; writing is forbidden.",
+      "globs": [
+        "generated/ds.contract.json",
+        "src/ds/composition/sections/_registry.ts",
+        "src/ds/composition/sections/_schema.ts",
+        "src/ds/foundation/themes/registry.ts",
+        "src/ds/foundation/themes/archetypeRegistry.ts",
+        "src/ds/foundation/motion/presets.ts",
+        "src/ds/foundation/motion/tokens.ts",
+        "src/ds/platform/publicSitePreset.ts"
+      ]
+    },
+    "projectContent": {
+      "description": "Per-project routes that consume the DS. Agents may modify these to build a project; doing so does not edit the DS.",
+      "globs": [
+        "src/app/**",
+        "src/features/**",
+        "src/flows/**"
+      ],
+      "note": "When exporting a final app/site for a client, ONLY these paths (+ tokens & preset overrides via project.config) constitute the project's surface. The DS itself is reset to its locked state for the next project."
+    }
+  },
+  "forbiddenActions": [
+    "Modifying any file matching fileScopes.locked.globs",
+    "Adding new top-level dependencies without explicit human approval",
+    "Removing or renaming registered variants (variantIds are a public contract)",
+    "Introducing raw hex / rgb / px / ms values outside ds.tokens.css (caught by ds:audit)",
+    "Editing the SECTION_REGISTRY map for any reason other than adding a single new entry",
+    "Introducing motion not declared as a motion preset",
+    "Declaring a variant effect outside the variant's archetype permission window (caught by ds:contract permission scan)",
+    "Editing files inside DOC/ (the design-system handbook is human-curated)"
+  ],
+  "allowedActions": [
+    "Reading any file in the repo for context",
+    "Adding new variant files under src/ds/composition/sections/variants/<kind>/",
+    "Adding new preset files under src/site/presets/",
+    "Editing src/app/** route content + per-project pages",
+    "Editing per-project flows under src/flows/**",
+    "Running npm run ds:contract, ds:audit, ds:a11y, verify"
+  ],
+  "verificationGate": {
+    "command": "npm run verify",
+    "chain": ["typecheck", "lint", "test", "build", "ds:audit", "ds:a11y", "ds:contract"],
+    "rule": "An agent MUST run `npm run verify` before claiming an extension is complete. Any non-zero exit fails the extension."
+  }
+}

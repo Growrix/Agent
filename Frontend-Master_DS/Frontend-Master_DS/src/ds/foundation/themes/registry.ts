@@ -1,4 +1,4 @@
-export type ThemeName = "dark" | "light" | "purple";
+export type ThemeName = "dark" | "light";
 
 export type ThemeDefinition = {
   name: ThemeName;
@@ -11,9 +11,8 @@ export const DEFAULT_THEME: ThemeName = "dark";
 export const THEMES: ThemeDefinition[] = [
   { name: "dark", label: "Dark", colorScheme: "dark" },
   { name: "light", label: "Light", colorScheme: "light" },
-  { name: "purple", label: "Purple", colorScheme: "dark" },
 ];
 
 export function isThemeName(value: string | null | undefined): value is ThemeName {
-  return value === "dark" || value === "light" || value === "purple";
+  return value === "dark" || value === "light";
 }

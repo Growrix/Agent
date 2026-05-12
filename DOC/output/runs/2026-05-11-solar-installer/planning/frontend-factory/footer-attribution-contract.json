@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "text": "Built by",
+  "link_text": "Growrix OS",
+  "url": "https://www.growrixos.com",
+  "placement": "footer_bottom_bar",
+  "new_tab": true,
+  "aria_label": "Built by Growrix OS (opens in a new tab)"
+}

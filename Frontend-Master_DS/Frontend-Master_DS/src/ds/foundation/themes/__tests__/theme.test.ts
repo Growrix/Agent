@@ -13,11 +13,9 @@ describe("Theme system", () => {
   /* ------------------------------------------------------------------ */
   /*  Theme registry                                                     */
   /* ------------------------------------------------------------------ */
-  test("THEMES contains all three themes", () => {
+  test("THEMES contains dark and light only", () => {
     const names = THEMES.map((t) => t.name);
-    expect(names).toContain("dark");
-    expect(names).toContain("light");
-    expect(names).toContain("purple");
+    expect(names).toEqual(["dark", "light"]);
   });
 
   test("DEFAULT_THEME is dark", () => {
@@ -27,7 +25,7 @@ describe("Theme system", () => {
   test("isThemeName validates known themes", () => {
     expect(isThemeName("dark")).toBe(true);
     expect(isThemeName("light")).toBe(true);
-    expect(isThemeName("purple")).toBe(true);
+    expect(isThemeName("purple")).toBe(false);
     expect(isThemeName("neon")).toBe(false);
     expect(isThemeName(null)).toBe(false);
     expect(isThemeName(undefined)).toBe(false);
@@ -50,8 +48,8 @@ describe("Theme system", () => {
     expect(document.documentElement.classList.contains("theme-dark")).toBe(false);
   });
 
-  test("applyTheme applies all three themes correctly", () => {
-    const themes: ThemeName[] = ["dark", "light", "purple"];
+  test("applyTheme applies both themes correctly", () => {
+    const themes: ThemeName[] = ["dark", "light"];
 
     for (const theme of themes) {
       applyTheme(theme);
@@ -72,8 +70,8 @@ describe("Theme system", () => {
   });
 
   test("readStoredTheme retrieves stored theme", () => {
-    storeTheme("purple");
-    expect(readStoredTheme()).toBe("purple");
+    storeTheme("light");
+    expect(readStoredTheme()).toBe("light");
   });
 
   test("readStoredTheme returns null for unknown value", () => {
@@ -90,10 +88,11 @@ describe("Theme system", () => {
   /* ------------------------------------------------------------------ */
   test("resolveTheme returns known theme name", () => {
     expect(resolveTheme("light")).toBe("light");
-    expect(resolveTheme("purple")).toBe("purple");
+    expect(resolveTheme("dark")).toBe("dark");
   });
 
   test("resolveTheme falls back to DEFAULT_THEME for unknown", () => {
+    expect(resolveTheme("purple")).toBe(DEFAULT_THEME);
     expect(resolveTheme("neon")).toBe(DEFAULT_THEME);
     expect(resolveTheme(null)).toBe(DEFAULT_THEME);
     expect(resolveTheme(undefined)).toBe(DEFAULT_THEME);

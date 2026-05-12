@@ -1,0 +1,23 @@
+{
+  "id": "component.Carousel",
+  "kind": "component",
+  "source_files": [
+    "components/Carousel.md",
+    "component-system.md",
+    "design-system.md",
+    "design-system.tokens.json",
+    "motion-system.md",
+    "content-library.md",
+    "content.en-US.json"
+  ],
+  "allowed_outputs": [
+    "ai-product-factory/generated/apps/solar-bridge-check/sunenergy-pro-website/src/components/factory/Carousel.tsx"
+  ],
+  "required_checks": [
+    "typecheck",
+    "lint"
+  ],
+  "depends_on": [
+    "foundation.design-system"
+  ]
+}
