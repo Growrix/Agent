@@ -35,6 +35,20 @@ function runCommand(command, args, cwd) {
   }
 }
 
+function hasInstalledPackage(appRoot, packageName) {
+  return existsSync(path.join(appRoot, 'node_modules', ...packageName.split('/'), 'package.json'));
+}
+
+function hasRequiredDependencies(appRoot) {
+  return [
+    'next',
+    'react',
+    'react-dom',
+    '@playwright/test',
+    'typescript'
+  ].every((packageName) => hasInstalledPackage(appRoot, packageName));
+}
+
 export function runGeneratedReleaseCheck(runId = 'demo-run') {
   const summaryPath = path.join(rootDir, 'generated', 'runs', runId, 'reports', 'run-summary.json');
   if (!existsSync(summaryPath)) {
@@ -44,11 +58,11 @@ export function runGeneratedReleaseCheck(runId = 'demo-run') {
   const summary = JSON.parse(readFileSync(summaryPath, 'utf8'));
   const appRoot = path.join(rootDir, summary.appRoot);
 
-  if (!existsSync(path.join(appRoot, 'node_modules'))) {
+  if (!hasRequiredDependencies(appRoot)) {
     runCommand('npm', ['install', '--no-fund', '--no-audit'], appRoot);
   }
 
-  runCommand('npx', ['playwright', 'install', 'chromium'], appRoot);
+  runCommand(process.execPath, [path.join('node_modules', '@playwright', 'test', 'cli.js'), 'install', 'chromium'], appRoot);
   runCommand('npm', ['run', 'release:check'], appRoot);
 
   return {

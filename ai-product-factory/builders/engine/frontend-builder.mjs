@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { buildPlannedFrontendFiles } from './planned-frontend-files.mjs';
 
 function json(value) {
   return JSON.stringify(value, null, 2);
@@ -96,7 +97,7 @@ function packageJsonContent(buildPlan) {
       autoprefixer: '^10.4.20',
       postcss: '^8.4.49',
       tailwindcss: '^3.4.17',
-      typescript: '^6.0.3',
+      typescript: '^5.8.3',
       vitest: '^2.1.8'
     }
   })}\n`;
@@ -119,7 +120,6 @@ function tsconfigContent() {
       isolatedModules: true,
       jsx: 'preserve',
       incremental: true,
-      ignoreDeprecations: '6.0',
       plugins: [{ name: 'next' }]
     },
     include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
@@ -1860,18 +1860,18 @@ function runtimeDetectScriptFile() {
 
 function dependencyCheckScriptFile() {
   return [
-    "import { createRequire } from 'node:module';",
     "import { existsSync } from 'node:fs';",
     '',
-    'const require = createRequire(import.meta.url);',
-    "const requiredModules = ['next/package.json', 'react/package.json', 'react-dom/package.json', '@playwright/test/package.json'];",
+    "const requiredManifests = ['../node_modules/next/package.json', '../node_modules/react/package.json', '../node_modules/react-dom/package.json', '../node_modules/@playwright/test/package.json'];",
     '',
     "if (!existsSync(new URL('../node_modules', import.meta.url))) {",
     "  throw new Error('Dependencies are not installed. Run npm install before release:check.');",
     '}',
     '',
-    'for (const modulePath of requiredModules) {',
-    '  require.resolve(modulePath);',
+    'for (const manifestPath of requiredManifests) {',
+    '  if (!existsSync(new URL(manifestPath, import.meta.url))) {',
+    '    throw new Error(`Missing required dependency manifest: ${manifestPath}`);',
+    '  }',
     '}',
     '',
     "console.log('Generated app dependency validation passed.');",
@@ -2323,7 +2323,61 @@ function stylesDeclarationFile() {
   return "declare module '*.css';\n";
 }
 
-export async function buildFrontendApp({ appRoot, brief, designTokens, composition, buildPlan }) {
+export async function buildFrontendApp({ appRoot, brief, designTokens, composition, buildPlan, plannedExecution = null }) {
+  if (buildPlan.mode === 'planned_frontend') {
+    if (!plannedExecution) {
+      throw new Error('Planned frontend build blocked: missing planned execution context.');
+    }
+
+    const { files: plannedFiles } = buildPlannedFrontendFiles({
+      brief,
+      buildPlan,
+      plannedExecution: {
+        ...plannedExecution,
+        designTokens
+      }
+    });
+
+    const files = {
+      '.gitignore': gitignoreFile(),
+      'package.json': packageJsonContent(buildPlan),
+      'tsconfig.json': tsconfigContent(),
+      'next.config.mjs': nextConfigContent(),
+      'postcss.config.mjs': postcssConfigContent(),
+      'tailwind.config.mjs': tailwindConfigContent(),
+      'vitest.config.mjs': vitestConfigContent(),
+      'playwright.config.ts': playwrightConfigContent(3005),
+      'next-env.d.ts': nextEnvFile(),
+      'src/types/styles.d.ts': stylesDeclarationFile(),
+      'RUN.generated.md': runbookFile(brief.projectName),
+      'public/.gitkeep': publicGitkeepFile(),
+      '.factory-meta/build-plan.json': `${json(buildPlan)}\n`,
+      '.factory-meta/factory-frontend-summary.json': `${json(plannedExecution.factoryFrontendSummary)}\n`,
+      '.factory-meta/planned-execution.json': `${json({
+        frontendContract: plannedExecution.frontendContract,
+        experienceContract: plannedExecution.experienceContract,
+        routeCoveragePlan: plannedExecution.routeCoveragePlan,
+        roots: plannedExecution.roots
+      })}\n`,
+      'scripts/runtime-detect.mjs': runtimeDetectScriptFile(),
+      'scripts/dependency-check.mjs': dependencyCheckScriptFile(),
+      'scripts/run-playwright.mjs': runPlaywrightScriptFile(),
+      'src/app/globals.css': globalsCssContent(designTokens),
+      'src/components/theme-provider.tsx': themeProviderFile(),
+      'src/components/theme-switcher.tsx': themeSwitcherFile(),
+      ...plannedFiles
+    };
+
+    for (const [relativePath, content] of Object.entries(files)) {
+      await writeGeneratedFile(appRoot, relativePath, content);
+    }
+
+    return {
+      fileCount: Object.keys(files).length,
+      relativeFiles: Object.keys(files)
+    };
+  }
+
   const plannedRouteSet = new Set(composition.routePlans.map((plan) => plan.routeId));
 
   const files = {
