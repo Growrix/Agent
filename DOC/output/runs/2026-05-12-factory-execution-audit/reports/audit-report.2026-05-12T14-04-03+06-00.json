@@ -1,0 +1,429 @@
+{
+  "audit_run": {
+    "timestamp": "2026-05-12T14:04:03.3681954+06:00",
+    "target_dir": "f:\\PROJECTS\\Agent\\DOC",
+    "mode": "AUDIT",
+    "fixture": null,
+    "meta_agent_version": 1,
+    "template_version": 1
+  },
+  "summary": {
+    "production_ready_pct": 15,
+    "verdict": "NOT_READY",
+    "verdict_one_liner": "The frontend planning bundle is strong, but the executable factory path bypasses it and emits a different app contract.",
+    "blocker_count": 14,
+    "advisory_count": 1,
+    "drift_count": 1,
+    "sections_passed": "1 / 10",
+    "total_checks_run": 18,
+    "checks_passed": 2,
+    "checks_failed": 15,
+    "checks_not_applicable": 1
+  },
+  "sections": {
+    "A": {
+      "name": "Inventory",
+      "status": "failed",
+      "blockers": 1,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "A.1",
+          "name": "Stable solar planning bundle exists",
+          "status": "pass",
+          "severity": "advisory",
+          "evidence": "ListDir:f:\\PROJECTS\\Agent\\DOC\\output\\runs\\2026-05-11-solar-installer\\planning\\frontend\\pages → 17 page briefs present",
+          "details": ""
+        },
+        {
+          "id": "A.2",
+          "name": "Required factory handoff bundle exists",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Run:Test-Path f:\\PROJECTS\\Agent\\DOC\\output\\runs\\2026-05-11-solar-installer\\planning\\frontend-factory → False",
+          "details": "frontend_factory_developer requires a planning/frontend-factory bundle with factory-frontend.json, frontend-contract.json, experience-contract.json, retrieval-manifest.json, scope-manifest.json, roots.json, and scopes/*.json. The solar run only has the stable planning/frontend bundle."
+        }
+      ]
+    },
+    "B": {
+      "name": "Reference integrity",
+      "status": "failed",
+      "blockers": 0,
+      "advisories": 1,
+      "checks": [
+        {
+          "id": "B.1",
+          "name": "DOC and .github mirror stay in sync",
+          "status": "fail",
+          "severity": "advisory",
+          "evidence": "Run:Get-FileHash DOC/agents/frontend_factory_developer.agent.md; Get-FileHash .github/agents/frontend_factory_developer.agent.md → 22A3E17D... != 2C75E386...",
+          "details": "The public mirror drifted after the no-hardcoded-UI rule hardening. Governance drift is not the primary runtime blocker, but it weakens the source-of-truth contract."
+        },
+        {
+          "id": "B.2",
+          "name": "Factory planner/developer contract is documented",
+          "status": "pass",
+          "severity": "advisory",
+          "evidence": "Grep:planning/frontend-factory|scope-manifest.json|roots.json in DOC/agents/** → 26 matches across frontend_factory_planner.agent.md and frontend_factory_developer.agent.md",
+          "details": ""
+        }
+      ]
+    },
+    "C": {
+      "name": "Schema compliance",
+      "status": "failed",
+      "blockers": 2,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "C.1",
+          "name": "Factory runner input schema matches developer contract",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\ai-product-factory\\scripts\\run-factory.mjs → parseArgs accepts only brief, runId, clean",
+          "details": "The executable runner has no planning_root, factory_context, scope packet, or target_mode input. It cannot consume the packet-driven handoff required by frontend_factory_developer."
+        },
+        {
+          "id": "C.2",
+          "name": "Brief taxonomy normalizes into route-selection taxonomy",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\DOC\\output\\runs\\2026-05-11-solar-installer\\planning\\frontend\\brief.json → productType=marketing_site; constraints.no_auth=true; Read:f:\\PROJECTS\\Agent\\ai-product-factory\\core-engineering\\engine\\product-requirement-analyzer.mjs → defaultRoutesForProductType only handles local-services",
+          "details": "The brief uses marketing_site and local_service semantics, but the analyzer only branches on local-services. no_auth is also ignored, so auth routes remain eligible even when planning explicitly says no_auth."
+        }
+      ]
+    },
+    "D": {
+      "name": "Wiring coverage",
+      "status": "failed",
+      "blockers": 2,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "D.1",
+          "name": "Executable factory code references planner handoff artifacts",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Grep:frontend_factory_developer|frontend_factory_planner in ai-product-factory/** → 0 matches",
+          "details": "The standalone execution code does not invoke or consume the documented factory planner/developer protocol. Only README/CLEANUP documentation mentions frontend-factory artifacts."
+        },
+        {
+          "id": "D.2",
+          "name": "Runtime builder is scope-driven instead of hardcoded",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\ai-product-factory\\builders\\engine\\frontend-build-plan.mjs → fixed components include ThemeSwitcher, MobileBottomNav, AuthModal; Read:f:\\PROJECTS\\Agent\\ai-product-factory\\builders\\engine\\frontend-builder.mjs#route maps → hardcoded labels and pages for /product, /pricing, /sign-in, /sign-up",
+          "details": "The generator emits a fixed route/component family and then conditionally writes files from a predetermined template set. It is not using allowed_outputs from scope packets or stable page/component specs."
+        }
+      ]
+    },
+    "E": {
+      "name": "Orphans and drift",
+      "status": "failed",
+      "blockers": 2,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "E.1",
+          "name": "Planned route inventory reconciles to emitted runtime routes",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Run:planned vs emitted route diff → missing=services,portfolio,financing,about,testimonials,blog,faq,free-assessment,solar-calculator,service-area,certifications,case-studies,team,resources,news; unexpected=product,pricing,sign-in,sign-up",
+          "details": "The stable solar planning bundle has 17 page briefs. The emitted solar runtime app has only 6 page.tsx routes and overlaps on only home and contact."
+        },
+        {
+          "id": "E.2",
+          "name": "Planned component families appear in runtime implementation",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Run:component presence check in emitted solar src → ROICalculator=missing, BeforeAfterSlider=missing, WhatsAppButton=missing, ServiceAreaMap=missing, PortfolioCard=missing, TestimonialCard=missing",
+          "details": "The runtime app does not implement core plan-specific solar components even though the planning bundle specifies them."
+        }
+      ]
+    },
+    "F": {
+      "name": "Determinism",
+      "status": "passed",
+      "blockers": 0,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "F.1",
+          "name": "Two-run determinism audit",
+          "status": "not-applicable",
+          "severity": "n/a",
+          "evidence": "Run:not executed → this audit focused on source-of-truth alignment rather than hash comparison",
+          "details": "The generator appears deterministic, but deterministic wrong output is still wrong output. The binding issue is protocol bypass, not output randomness."
+        }
+      ]
+    },
+    "G": {
+      "name": "Constraint evaluability",
+      "status": "failed",
+      "blockers": 2,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "G.1",
+          "name": "Release gate measures plan-to-runtime alignment",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\ai-product-factory\\validators\\engine\\production-readiness.mjs → checks only generated artifact existence, route counts, hero uniqueness, and mandatory UX",
+          "details": "The production-readiness validator never compares emitted runtime routes/components against the locked solar planning bundle. A generic app can pass the release gate while violating the plan."
+        },
+        {
+          "id": "G.2",
+          "name": "Generated E2E suite evaluates planned journeys",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\ai-product-factory\\builders\\engine\\frontend-builder.mjs#tests → smoke/full tests assert auth modal plus /sign-in and /sign-up routes",
+          "details": "The test suite validates the generator's internal generic contract instead of the planner's declared journeys. This makes E2E green without proving solar-plan compliance."
+        }
+      ]
+    },
+    "H": {
+      "name": "Smoke coverage",
+      "status": "failed",
+      "blockers": 1,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "H.1",
+          "name": "Plan-aware bridge smoke fixture exists",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Grep:e2e-journeys|route-coverage-plan|execution_contract in DOC/output/runs/2026-05-11-solar-installer/planning/frontend/** → 0 matches",
+          "details": "The stable solar planning bundle does not include the factory-native execution contracts the developer protocol expects, and the standalone factory runner has no bridge smoke fixture for stable frontend planning."
+        }
+      ]
+    },
+    "I": {
+      "name": "Frontend quality bar and creative latitude",
+      "status": "failed",
+      "blockers": 2,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "I.1",
+          "name": "Emitted runtime preserves planned route semantics",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\ai-product-factory\\generated\\apps\\solar-fresh-2026-05-12\\sunenergy-pro\\src\\lib\\route-registry.ts → routes are /, /product, /pricing, /contact, /sign-in, /sign-up",
+          "details": "The solar brand and summary were injected into a generic route system. This is not a solar-specific route architecture and does not preserve the planner's page inventory."
+        },
+        {
+          "id": "I.2",
+          "name": "Emitted content preserves planned component and proposition logic",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\ai-product-factory\\generated\\apps\\solar-fresh-2026-05-12\\sunenergy-pro\\src\\lib\\site-content.ts → generic factory copy remains ('Composition, not copy-paste templates', 'Factory V2 preview', 'Review packages')",
+          "details": "The runtime content mixes solar brand fields with generic factory marketing propositions. This is a composition fallback, not a faithful implementation of the locked planner output."
+        }
+      ]
+    },
+    "J": {
+      "name": "Developer completeness contract",
+      "status": "failed",
+      "blockers": 2,
+      "advisories": 0,
+      "checks": [
+        {
+          "id": "J.1",
+          "name": "frontend_factory_developer preconditions are enforced before execution",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "Read:f:\\PROJECTS\\Agent\\DOC\\agents\\frontend_factory_developer.agent.md → planning_root must exist and point to planning/frontend-factory; Run:Test-Path planning/frontend-factory → False",
+          "details": "By contract, execution should have blocked immediately. Instead, the runnable path accepted brief.json and generated a fresh but protocol-incompatible app."
+        },
+        {
+          "id": "J.2",
+          "name": "Required developer audit artifacts are emitted",
+          "status": "fail",
+          "severity": "blocker",
+          "evidence": "FileSearch:ai-product-factory/generated/apps/solar-fresh-2026-05-12/sunenergy-pro/.audit/** → 0 files; Grep:frontend-self-audit|frontend-factory-manifest|.audit in ai-product-factory/builders/** → writes reports/frontend-self-audit.json only",
+          "details": "The documented execution contract requires .audit/frontend-self-audit.md and .audit/frontend-factory-manifest.json. The generator emits reports/frontend-self-audit.json instead, so the completion contract is incomplete."
+        }
+      ]
+    }
+  },
+  "orphans": {
+    "skills_unreferenced": [],
+    "integrations_unreferenced": [],
+    "presets_unselectable": [],
+    "constraints_unloaded": [],
+    "spec_rules_unreferenced": []
+  },
+  "broken_references": [
+    {
+      "source": "DOC/agents/frontend_factory_developer.agent.md",
+      "expected_target": "DOC/output/runs/2026-05-11-solar-installer/planning/frontend-factory/",
+      "actual": "not_found",
+      "section_check": "A.2"
+    }
+  ],
+  "inconsistencies": [
+    {
+      "kind": "execution_contract_bypass",
+      "location": "ai-product-factory/scripts/run-factory.mjs",
+      "description": "Executable runner consumes brief-only input instead of factory_context plus scoped planning packets.",
+      "severity": "blocker"
+    },
+    {
+      "kind": "taxonomy_mismatch",
+      "location": "ai-product-factory/core-engineering/engine/product-requirement-analyzer.mjs",
+      "description": "marketing_site/local_service brief semantics do not normalize into the route taxonomy used by the analyzer.",
+      "severity": "blocker"
+    },
+    {
+      "kind": "route_inventory_drift",
+      "location": "ai-product-factory/generated/apps/solar-fresh-2026-05-12/sunenergy-pro/src/lib/route-registry.ts",
+      "description": "Emitted runtime route set diverges from the locked solar page inventory.",
+      "severity": "blocker"
+    },
+    {
+      "kind": "audit_output_drift",
+      "location": "ai-product-factory/builders/engine/frontend-builder.mjs",
+      "description": "Runtime audit output path does not match the documented .audit contract.",
+      "severity": "advisory"
+    }
+  ],
+  "fixes": [
+    {
+      "rank": 1,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\scripts\\run-factory.mjs",
+      "change_type": "edit",
+      "exact_change": "Replace brief-only execution with a required handoff mode selector. Add --planning-root, --target-mode, and --factory-context arguments. Block when planning_root does not contain factory-frontend.json, frontend-contract.json, experience-contract.json, retrieval-manifest.json, scope-manifest.json, and scopes/*.json.",
+      "blast_radius": "ai-product-factory/scripts/run-factory.mjs, ai-product-factory/README.md, ai-product-factory/RUN.md",
+      "closes_check_ids": ["C.1", "D.1", "J.1"],
+      "risk": "medium"
+    },
+    {
+      "rank": 2,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\core-engineering\\engine\\product-requirement-analyzer.mjs",
+      "change_type": "edit",
+      "exact_change": "Normalize brief product taxonomy and constraints. Map marketing_site plus local_service or businessType=local_service to the local-service route family, and suppress auth/auth-modal/sign-in/sign-up defaults when constraints.no_auth == true.",
+      "blast_radius": "ai-product-factory/core-engineering/engine/product-requirement-analyzer.mjs, tests covering route analysis",
+      "closes_check_ids": ["C.2", "D.2", "E.1"],
+      "risk": "medium"
+    },
+    {
+      "rank": 3,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\builders\\engine\\frontend-build-plan.mjs",
+      "change_type": "edit",
+      "exact_change": "Derive routes, components, required checks, and release journeys from planner contracts and scope packets instead of the fixed ThemeSwitcher/MobileBottomNav/AuthModal/Product/Pricing baseline.",
+      "blast_radius": "ai-product-factory/builders/engine/frontend-build-plan.mjs, downstream generated package.json/scripts",
+      "closes_check_ids": ["D.2", "G.1", "G.2"],
+      "risk": "high"
+    },
+    {
+      "rank": 4,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\builders\\engine\\frontend-builder.mjs",
+      "change_type": "edit",
+      "exact_change": "Replace the hardcoded route/page writers with packet-driven emitters. Only emit files listed in scope.allowed_outputs and map them from stable planner source_files. Remove unconditional product/pricing/auth templates from the baseline emitter.",
+      "blast_radius": "ai-product-factory/builders/engine/frontend-builder.mjs, generated app snapshots, generated test files",
+      "closes_check_ids": ["D.2", "E.1", "E.2", "I.1", "I.2", "J.2"],
+      "risk": "high"
+    },
+    {
+      "rank": 5,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\validators\\engine\\production-readiness.mjs",
+      "change_type": "edit",
+      "exact_change": "Add plan-to-runtime validation. Compare locked route inventory, required component families, mandatory UX exceptions, and expected audit outputs against the emitted app root before returning passed.",
+      "blast_radius": "ai-product-factory/validators/engine/production-readiness.mjs, generated run reports",
+      "closes_check_ids": ["G.1", "E.1", "E.2", "J.2"],
+      "risk": "medium"
+    },
+    {
+      "rank": 6,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\builders\\engine\\frontend-builder.mjs",
+      "change_type": "edit",
+      "exact_change": "Generate Playwright smoke/full/a11y journeys from planner e2e-journeys.json or stable route coverage bridge data. Remove fixed auth-modal smoke assertions when auth is not in scope.",
+      "blast_radius": "ai-product-factory/builders/engine/frontend-builder.mjs, generated tests/e2e/*",
+      "closes_check_ids": ["G.2", "H.1"],
+      "risk": "high"
+    },
+    {
+      "rank": 7,
+      "target_file": "f:\\PROJECTS\\Agent\\DOC\\agents\\frontend_factory_planner.agent.md",
+      "change_type": "edit",
+      "exact_change": "Add a required bridge mode that can transform a stable planning/frontend bundle into a factory-native planning/frontend-factory bundle. Declare this bridge mandatory before frontend_factory_developer may run against a stable planner output.",
+      "blast_radius": "DOC/agents/frontend_factory_planner.agent.md, .github/agents/frontend_factory_planner.agent.md, DOC/agents/_index.md",
+      "closes_check_ids": ["A.2", "H.1", "J.1"],
+      "risk": "medium"
+    },
+    {
+      "rank": 8,
+      "target_file": "f:\\PROJECTS\\Agent\\DOC\\agents\\frontend_factory_developer.agent.md",
+      "change_type": "edit",
+      "exact_change": "Add an explicit block for stable planning/frontend bundles presented without a corresponding frontend-factory bridge bundle. Require the developer to stop instead of falling back to brief-only generation.",
+      "blast_radius": "DOC/agents/frontend_factory_developer.agent.md, .github/agents/frontend_factory_developer.agent.md",
+      "closes_check_ids": ["J.1"],
+      "risk": "low"
+    },
+    {
+      "rank": 9,
+      "target_file": "f:\\PROJECTS\\Agent\\.github\\agents\\frontend_factory_developer.agent.md",
+      "change_type": "edit",
+      "exact_change": "Sync the public mirror with the DOC source, including the new no-hardcoded-UI rules and any added block conditions.",
+      "blast_radius": ".github/agents/frontend_factory_developer.agent.md",
+      "closes_check_ids": ["B.1"],
+      "risk": "low"
+    },
+    {
+      "rank": 10,
+      "target_file": "f:\\PROJECTS\\Agent\\ai-product-factory\\scripts\\run-generated-release-check.mjs",
+      "change_type": "edit",
+      "exact_change": "Add an optional plan-alignment verification step before npm run release:check, and install the full Playwright browser set when the generated suite uses WebKit or Firefox.",
+      "blast_radius": "ai-product-factory/scripts/run-generated-release-check.mjs, ai-product-factory/RUN.md",
+      "closes_check_ids": ["G.1", "G.2"],
+      "risk": "low"
+    }
+  ],
+  "determinism": {
+    "fixture": null,
+    "run_1_hash": null,
+    "run_2_hash": null,
+    "match": null,
+    "drifting_fields": []
+  },
+  "smoke": {
+    "fixture": null,
+    "expected_outcome": "pass",
+    "actual_outcome": "drift",
+    "chain_walk": [
+      {
+        "stage": "frontend_factory_planner handoff",
+        "input_ok": false,
+        "output_ok": false,
+        "block_raised": false
+      },
+      {
+        "stage": "standalone factory runner",
+        "input_ok": true,
+        "output_ok": true,
+        "block_raised": false
+      }
+    ],
+    "contract_mismatches": [
+      "Execution ran without planning/frontend-factory handoff.",
+      "Generated routes and tests followed the standalone fallback contract, not the locked solar plan."
+    ],
+    "artifact_producers": [
+      {
+        "artifact": "frontend-factory bundle",
+        "producer": "frontend_factory_planner",
+        "ok": false
+      },
+      {
+        "artifact": "generated runtime app",
+        "producer": "run-factory.mjs",
+        "ok": true
+      }
+    ]
+  },
+  "verdict": {
+    "state": "NOT_READY",
+    "reason": "The stable solar planner output is not the problem. The blocking defect is that the executable factory path does not consume the planner's contract. It accepts brief-only input, hardcodes a generic route/component/test model, and therefore can generate a fresh app that passes its own gates while violating the planned site.",
+    "next_action": "Apply fix #1 first: make the runner consume a factory-native planning bundle or block. Then re-audit route coverage and plan-aware release checks before any new site build."
+  }
+}
